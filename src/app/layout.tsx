@@ -8,14 +8,14 @@ import { TRPCReactProvider } from "@/trpc/react";
 export const metadata: Metadata = {
   title: "WebTitan",
   description: "WebTitan",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
+  icons: [{ rel: "icon", url: "/webtitan_32px.ico" }],
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${GeistSans.variable}`}>
+    <html lang="cs" className={`${GeistSans.variable}`}>
       <body>
         <TRPCReactProvider>{children}</TRPCReactProvider>
       </body>
