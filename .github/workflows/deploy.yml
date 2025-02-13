@@ -32,6 +32,17 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: pnpm build
 
+      - name: Copy files to server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SERVER_PORT }}
+          source: ".,!node_modules,!.git"
+          target: "/var/www/webtitan.cz"
+          strip_components: 0
+
       - name: Deploy to Server
         uses: appleboy/ssh-action@master
         env:
@@ -47,11 +58,9 @@ jobs:
           envs: AUTH_SECRET,AUTH_DISCORD_ID,AUTH_DISCORD_SECRET,DATABASE_URL
           script: |
             cd /var/www/webtitan.cz
-            git pull origin main
             echo "AUTH_SECRET=$AUTH_SECRET" > .env
             echo "AUTH_DISCORD_ID=$AUTH_DISCORD_ID" >> .env
             echo "AUTH_DISCORD_SECRET=$AUTH_DISCORD_SECRET" >> .env
             echo "DATABASE_URL=$DATABASE_URL" >> .env
-            pnpm install
-            pnpm build
+            pnpm install --prod
             pm2 restart webtitan
