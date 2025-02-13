@@ -25,18 +25,33 @@ jobs:
         run: pnpm install
 
       - name: Build
+        env:
+          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+          AUTH_DISCORD_ID: ${{ secrets.AUTH_DISCORD_ID }}
+          AUTH_DISCORD_SECRET: ${{ secrets.AUTH_DISCORD_SECRET }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: pnpm build
 
       - name: Deploy to Server
         uses: appleboy/ssh-action@master
+        env:
+          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+          AUTH_DISCORD_ID: ${{ secrets.AUTH_DISCORD_ID }}
+          AUTH_DISCORD_SECRET: ${{ secrets.AUTH_DISCORD_SECRET }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_PORT }}
+          envs: AUTH_SECRET,AUTH_DISCORD_ID,AUTH_DISCORD_SECRET,DATABASE_URL
           script: |
             cd /var/www/webtitan.cz
             git pull origin main
+            echo "AUTH_SECRET=$AUTH_SECRET" > .env
+            echo "AUTH_DISCORD_ID=$AUTH_DISCORD_ID" >> .env
+            echo "AUTH_DISCORD_SECRET=$AUTH_DISCORD_SECRET" >> .env
+            echo "DATABASE_URL=$DATABASE_URL" >> .env
             pnpm install
             pnpm build
             pm2 restart webtitan
