@@ -13,6 +13,12 @@ const config = {
   typescript: {
     ignoreBuildErrors: true,
   },
+
+  experimental: {
+    serverActions: {
+      allowedOrigins: ["webtitan.cz", "localhost:3000", "127.0.0.1"],
+    },
+  },
 };
 
 export default config;
