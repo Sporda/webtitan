@@ -30,17 +30,18 @@ RUN pnpm build
 FROM node:20-alpine AS runner
 
 WORKDIR /app
+# Instalace pnpm
+RUN npm install -g pnpm
 
 # Nastavení produkčního módu
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
 
 # Kopírování potřebných souborů z builder stage
-COPY --from=builder /app/package.json ./package.json
-COPY --from=builder /app/next.config.js ./next.config.js
+COPY --from=builder /app/next.config.js ./
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
 
 # Nastavení uživatele pro lepší bezpečnost
 RUN addgroup --system --gid 1001 nodejs
@@ -56,4 +57,4 @@ ENV PORT 3000
 ENV HOSTNAME "0.0.0.0"
 
 # Spuštění aplikace
-CMD ["node", "node_modules/next/dist/bin/next", "start"] 
+CMD ["pnpm", "start"] 
