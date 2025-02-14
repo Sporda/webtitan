@@ -57,4 +57,4 @@ ENV PORT 3000
 ENV HOSTNAME "0.0.0.0"
 
 # Spuštění aplikace
-CMD ["pnpm", "start"] 
+CMD ["pnpm", "run", "start"] 
