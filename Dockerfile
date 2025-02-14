@@ -7,13 +7,13 @@ WORKDIR /app
 COPY package*.json ./
 
 # Instalace závislostí
-RUN npm ci
+RUN pnpm install
 
 # Kopírování zdrojových souborů
 COPY . .
 
 # Build aplikace
-RUN npm run build
+RUN pnpm build
 
 # Stage 2: Produkční obraz
 FROM node:20-alpine AS runner
