@@ -8,6 +8,9 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     steps:
       - uses: actions/checkout@v3
 
@@ -31,6 +34,7 @@ jobs:
           tags: ghcr.io/${{ env.REPO_LC }}:latest
           build-args: |
             DATABASE_URL=${{ secrets.DATABASE_URL }}
+            NEXT_PUBLIC_URL=https://webtitan.cz
 
       - name: Deploy to Server
         uses: appleboy/ssh-action@master
