@@ -55,6 +55,7 @@ export const authConfig = {
     sessionsTable: sessions,
     verificationTokensTable: verificationTokens,
   }),
+  trustHost: true,
   callbacks: {
     session: ({ session, user }) => ({
       ...session,
