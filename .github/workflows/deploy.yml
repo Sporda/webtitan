@@ -64,9 +64,27 @@ jobs:
             echo "AUTH_DISCORD_ID=$AUTH_DISCORD_ID" >> .env
             echo "AUTH_DISCORD_SECRET=$AUTH_DISCORD_SECRET" >> .env
             echo "DATABASE_URL=$DATABASE_URL" >> .env
+            echo "PORT=3000" >> .env
+            echo "NEXT_PUBLIC_PORT=3000" >> .env
 
             # Instalace pouze produkčních závislostí
             pnpm install --prod --frozen-lockfile
 
-            # Restart aplikace
-            pm2 restart webtitan
+            # Správa PM2 procesu
+            if pm2 describe webtitan > /dev/null; then
+              # Pokud proces existuje, restartujeme ho
+              pm2 restart webtitan --update-env
+            else
+              # Pokud proces neexistuje, vytvoříme ho
+              pm2 start npm --name "webtitan" -- start -- -p 3000
+            fi
+
+            # Uložení PM2 konfigurace
+            pm2 save
+
+            # Nastavení automatického startu PM2 po rebootu
+            # Generuje a nastaví startup skript pro aktuální OS
+            pm2 startup
+
+            # Uložení aktuální konfigurace pro startup
+            pm2 save
