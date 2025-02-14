@@ -6,6 +6,14 @@ WORKDIR /app
 # Instalace pnpm
 RUN npm install -g pnpm
 
+# Nastavení build argumentů
+ARG DATABASE_URL
+ARG NEXT_PUBLIC_URL
+
+# Nastavení env proměnných pro build
+ENV DATABASE_URL=${DATABASE_URL}
+ENV NEXT_PUBLIC_URL=${NEXT_PUBLIC_URL}
+
 # Kopírování package.json a package-lock.json
 COPY package*.json pnpm-lock.yaml ./
 
