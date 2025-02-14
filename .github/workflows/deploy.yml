@@ -76,7 +76,7 @@ jobs:
               pm2 restart webtitan --update-env
             else
               # Pokud proces neexistuje, vytvoříme ho
-              pm2 start npm --name "webtitan" -- start -- -p 3000
+              pm2 start pnpm --name "webtitan" -- start
             fi
 
             # Uložení PM2 konfigurace
