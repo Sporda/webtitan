@@ -30,8 +30,6 @@ RUN pnpm build
 FROM node:20-alpine AS runner
 
 WORKDIR /app
-# Instalace pnpm
-RUN npm install -g pnpm
 
 # Nastavení produkčního módu
 ENV NODE_ENV production
@@ -57,4 +55,4 @@ ENV PORT 3000
 ENV HOSTNAME "0.0.0.0"
 
 # Spuštění aplikace
-CMD ["pnpm", "run", "start"] 
+CMD ["node", "server.js"] 
