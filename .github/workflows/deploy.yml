@@ -3,34 +3,13 @@ name: Deploy to Production
 on:
   push:
     branches:
-      - main # nebo master, podle toho, jakou hlavní větev používáte
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "18"
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
-
-      - name: Install Dependencies
-        run: pnpm install
-
-      - name: Build
-        env:
-          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
-          AUTH_DISCORD_ID: ${{ secrets.AUTH_DISCORD_ID }}
-          AUTH_DISCORD_SECRET: ${{ secrets.AUTH_DISCORD_SECRET }}
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        run: pnpm build
 
       - name: Copy files to server
         uses: appleboy/scp-action@master
@@ -39,7 +18,7 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_PORT }}
-          source: ".,!node_modules,!.git,.next"
+          source: ".,!node_modules,!.git,!.next"
           target: "/var/www/webtitan.cz"
           strip_components: 0
 
@@ -63,5 +42,13 @@ jobs:
             echo "AUTH_DISCORD_ID=$AUTH_DISCORD_ID" >> .env
             echo "AUTH_DISCORD_SECRET=$AUTH_DISCORD_SECRET" >> .env
             echo "DATABASE_URL=$DATABASE_URL" >> .env
-            pnpm install --prod --prefer-offline --frozen-lockfile
+
+            # Instalace pnpm pokud není nainstalován
+            if ! command -v pnpm &> /dev/null; then
+              npm install -g pnpm
+            fi
+
+            # Čistá instalace a build
+            pnpm install
+            pnpm build
             pm2 restart webtitan
