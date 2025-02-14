@@ -39,7 +39,7 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_PORT }}
-          source: ".,!node_modules,!.git"
+          source: ".,!node_modules,!.git,.next"
           target: "/var/www/webtitan.cz"
           strip_components: 0
 
@@ -56,11 +56,12 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_PORT }}
           envs: AUTH_SECRET,AUTH_DISCORD_ID,AUTH_DISCORD_SECRET,DATABASE_URL
+          command_timeout: "20m"
           script: |
             cd /var/www/webtitan.cz
             echo "AUTH_SECRET=$AUTH_SECRET" > .env
             echo "AUTH_DISCORD_ID=$AUTH_DISCORD_ID" >> .env
             echo "AUTH_DISCORD_SECRET=$AUTH_DISCORD_SECRET" >> .env
             echo "DATABASE_URL=$DATABASE_URL" >> .env
-            pnpm install --prod
+            pnpm install --prod --prefer-offline --frozen-lockfile
             pm2 restart webtitan
