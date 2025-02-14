@@ -40,7 +40,7 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_PORT }}
-          source: ".next,package.json,pnpm-lock.yaml"
+          source: ".next,package.json,pnpm-lock.yaml,ecosystem.config.js"
           target: "/var/www/webtitan.cz"
           strip_components: 0
 
@@ -66,8 +66,8 @@ jobs:
             echo "AUTH_DISCORD_ID=$AUTH_DISCORD_ID" >> .env
             echo "AUTH_DISCORD_SECRET=$AUTH_DISCORD_SECRET" >> .env
             echo "DATABASE_URL=$DATABASE_URL" >> .env
+            echo "HOST=0.0.0.0" >> .env
             echo "PORT=3000" >> .env
-            echo "NEXT_PUBLIC_PORT=3000" >> .env
             echo "NEXTAUTH_URL=$NEXTAUTH_URL" >> .env
             echo "NEXTAUTH_SECRET=$AUTH_SECRET" >> .env
             echo "NEXTAUTH_URL_INTERNAL=http://localhost:3000" >> .env
@@ -76,17 +76,17 @@ jobs:
             # Instalace pouze produkčních závislostí
             pnpm install --prod --frozen-lockfile
 
-            # Zastavení a vyčištění existujícího procesu
+            # Zastavení existujícího procesu
             pm2 delete webtitan || true
 
-            # Spuštění nového procesu s NODE_ENV=production
-            NODE_ENV=production pm2 start pnpm --name "webtitan" -- start
+            # Spuštění nového procesu pomocí ecosystem config
+            pm2 start ecosystem.config.js
 
             # Uložení PM2 konfigurace
             pm2 save
 
-            # Nastavení automatického startu PM2 po rebootu
-            pm2 startup
+            # Nastavení automatického startu PM2 po rebootu (pouze pokud ještě není nastaveno)
+            pm2 startup || true
 
             # Uložení aktuální konfigurace pro startup
             pm2 save

@@ -16,8 +16,36 @@ const config = {
 
   experimental: {
     serverActions: {
-      allowedOrigins: ["webtitan.cz", "localhost:3000", "127.0.0.1"],
+      allowedOrigins: [
+        "webtitan.cz",
+        "www.webtitan.cz",
+        "localhost:3000",
+        "127.0.0.1",
+      ],
     },
+  },
+
+  server: {
+    port: 3000,
+    host: "0.0.0.0",
+  },
+
+  headers: async () => {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          {
+            key: "X-DNS-Prefetch-Control",
+            value: "on",
+          },
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=63072000; includeSubDomains; preload",
+          },
+        ],
+      },
+    ];
   },
 };
 
