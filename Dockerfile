@@ -10,7 +10,7 @@ RUN npm install -g pnpm
 COPY package*.json pnpm-lock.yaml ./
 
 # Instalace závislostí
-RUN pnpm install --frozen-lockfile
+RUN pnpm install
 
 # Kopírování zdrojových souborů
 COPY . .
