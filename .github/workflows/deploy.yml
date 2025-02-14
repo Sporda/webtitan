@@ -67,6 +67,7 @@ jobs:
             echo "AUTH_DISCORD_SECRET=$AUTH_DISCORD_SECRET" >> .env
             echo "DATABASE_URL=$DATABASE_URL" >> .env
             echo "HOST=0.0.0.0" >> .env
+            echo "HOSTNAME=0.0.0.0" >> .env
             echo "PORT=3000" >> .env
             echo "NEXTAUTH_URL=$NEXTAUTH_URL" >> .env
             echo "NEXTAUTH_SECRET=$AUTH_SECRET" >> .env
