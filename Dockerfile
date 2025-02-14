@@ -3,11 +3,14 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
+# Instalace pnpm
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
 # Kopírování package.json a package-lock.json
-COPY package*.json ./
+COPY package*.json pnpm-lock.yaml ./
 
 # Instalace závislostí
-RUN pnpm install
+RUN pnpm install --frozen-lockfile
 
 # Kopírování zdrojových souborů
 COPY . .
