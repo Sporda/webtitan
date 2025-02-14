@@ -69,23 +69,20 @@ jobs:
             echo "PORT=3000" >> .env
             echo "NEXT_PUBLIC_PORT=3000" >> .env
             echo "NEXTAUTH_URL=$NEXTAUTH_URL" >> .env
+
             # Instalace pouze produkčních závislostí
             pnpm install --prod --frozen-lockfile
 
-            # Správa PM2 procesu
-            if pm2 describe webtitan > /dev/null; then
-              # Pokud proces existuje, restartujeme ho
-              pm2 restart webtitan --update-env
-            else
-              # Pokud proces neexistuje, vytvoříme ho
-              pm2 start pnpm --name "webtitan" -- start
-            fi
+            # Zastavení a vyčištění existujícího procesu
+            pm2 delete webtitan || true  # || true zajistí, že skript pokračuje i když proces neexistuje
+
+            # Spuštění nového procesu
+            pm2 start pnpm --name "webtitan" -- start
 
             # Uložení PM2 konfigurace
             pm2 save
 
             # Nastavení automatického startu PM2 po rebootu
-            # Generuje a nastaví startup skript pro aktuální OS
             pm2 startup
 
             # Uložení aktuální konfigurace pro startup
