@@ -18,12 +18,17 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Convert repository name to lowercase
+        id: repo-name
+        run: |
+          echo "REPO_LC=${GITHUB_REPOSITORY,,}" >> $GITHUB_ENV
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.repository }}:latest
+          tags: ghcr.io/${{ env.REPO_LC }}:latest
           build-args: |
             DATABASE_URL=${{ secrets.DATABASE_URL }}
 
@@ -36,7 +41,7 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_PORT }}
-          envs: DATABASE_URL
+          envs: DATABASE_URL,REPO_LC
           script: |
             # Přihlášení do GitHub Container Registry
             echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
@@ -46,10 +51,10 @@ jobs:
             docker rm webtitan || true
 
             # Odstranění starého image
-            docker image rm ghcr.io/${{ github.repository }}:latest || true
+            docker image rm ghcr.io/${{ env.REPO_LC }}:latest || true
 
             # Stažení nového image
-            docker pull ghcr.io/${{ github.repository }}:latest
+            docker pull ghcr.io/${{ env.REPO_LC }}:latest
 
             # Vytvoření .env souboru
             cat > /var/www/webtitan.cz/.env << EOL
@@ -63,4 +68,4 @@ jobs:
               --restart always \
               -p 3000:3000 \
               --env-file /var/www/webtitan.cz/.env \
-              ghcr.io/${{ github.repository }}:latest
+              ghcr.io/${{ env.REPO_LC }}:latest
