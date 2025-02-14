@@ -36,10 +36,12 @@ ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
 
 # Kopírování potřebných souborů z builder stage
-COPY --from=builder /app/next.config.js ./
+COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/pnpm-lock.yaml ./pnpm-lock.yaml
+COPY --from=builder /app/next.config.js ./next.config.js
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next/standalone ./
-COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/node_modules ./node_modules
 
 # Nastavení uživatele pro lepší bezpečnost
 RUN addgroup --system --gid 1001 nodejs
@@ -54,5 +56,8 @@ EXPOSE 3000
 ENV PORT 3000
 ENV HOSTNAME "0.0.0.0"
 
+# Instalace pnpm v produkčním obrazu
+RUN npm install -g pnpm
+
 # Spuštění aplikace
-CMD ["node", "server.js"] 
+CMD ["pnpm", "start"] 
