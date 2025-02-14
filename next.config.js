@@ -53,6 +53,10 @@ const config = {
   },
 
   output: "standalone",
+
+  sassOptions: {
+    includePaths: ["./src/styles"],
+  },
 };
 
 export default config;

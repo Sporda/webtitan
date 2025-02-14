@@ -2,16 +2,18 @@ import Link from "next/link";
 import Image from "next/image";
 export function Header() {
   return (
-    <header className="border-b">
+    <header>
       <div className="container mx-auto flex items-center justify-between px-4 py-4">
         <div className="flex items-center gap-2">
           <Link href="/">
-            <Image
-              src="/webtitanLogo_32px.png"
-              alt="WebTitan"
-              width={32}
-              height={32}
-            />
+            <div className="image-wrapper">
+              <Image
+                src="/webtitanLogo_32px.png"
+                alt="WebTitan"
+                width={32}
+                height={32}
+              />
+            </div>
           </Link>
           <Link href="/" className="text-2xl font-bold">
             WebTitan

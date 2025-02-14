@@ -1,3 +1,5 @@
+@import "./SphereCube.scss";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -27,7 +29,7 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --radius: 0.5rem
+    --radius: 0.5rem;
   }
   .dark {
     --background: 0 0% 3.9%;
@@ -53,7 +55,7 @@
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%
+    --chart-5: 340 75% 55%;
   }
 }
 @layer base {
@@ -62,5 +64,19 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+  a {
+    color: white;
+  }
+  .image-wrapper {
+    img {
+      /* Pro změnu na modrou */
+      filter: brightness(0) saturate(100%) invert(48%) sepia(79%)
+        saturate(2476%) hue-rotate(186deg) brightness(118%) contrast(119%);
+
+      /* Pro změnu na červenou */
+      filter: brightness(0) saturate(100%) invert(27%) sepia(51%)
+        saturate(2878%) hue-rotate(346deg) brightness(104%) contrast(97%);
+    }
   }
 }

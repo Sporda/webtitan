@@ -8,7 +8,7 @@ import { TRPCReactProvider } from "@/trpc/react";
 export const metadata: Metadata = {
   title: "WebTitan",
   description: "WebTitan",
-  icons: [{ rel: "icon", url: "/webtitan_32px.ico" }],
+  icons: [{ rel: "icon", url: "/webtitan_32pxWhite.ico" }],
 };
 
 export default function RootLayout({

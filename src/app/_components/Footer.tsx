@@ -5,7 +5,7 @@ export function Footer() {
   return (
     <footer className="border-t py-8">
       <div className="container mx-auto flex items-center justify-between px-4">
-        <p>
+        <p className="text-white">
           &copy; {new Date().getFullYear()} WebTitan. Všechna práva vyhrazena.
         </p>
         <div className="flex space-x-4">
