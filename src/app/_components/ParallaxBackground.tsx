@@ -70,9 +70,19 @@ export const ParallaxBackground = () => {
     scene1.to("#info", { y: 8 * speed }, 0);
 
     // Pták
+    gsap.set("#bird", {
+      transformOrigin: "50% 50%",
+      x: -50, // Posuneme ptáka více vlevo na začátku
+      y: -100, // Upravíme i vertikální pozici
+    });
+
     gsap.fromTo(
       "#bird",
-      { opacity: 1 },
+      {
+        opacity: 1,
+        x: -50, // Začínáme z nové počáteční pozice
+        y: -100,
+      },
       {
         y: -250,
         x: 800,
@@ -82,8 +92,27 @@ export const ParallaxBackground = () => {
           start: "15% top",
           end: "60% 100%",
           scrub: 4,
-          onEnter: () => gsap.to("#bird", { scaleX: 1, rotation: 0 }),
-          onLeave: () => gsap.to("#bird", { scaleX: -1, rotation: -15 }),
+          onEnter: () => {
+            gsap.to("#bird", { scaleX: 1, rotation: 0 });
+            // Výraznější animace křídel
+            gsap.to("#bird", {
+              scaleY: 0.8, // Zmenšeno pro větší rozsah pohybu
+              yoyo: true,
+              repeat: -1,
+              duration: 0.3, // Zrychleno
+              ease: "power2.inOut", // Změněn ease pro dynamičtější pohyb
+            });
+          },
+          onLeave: () => {
+            gsap.to("#bird", { scaleX: -1, rotation: -15 });
+            gsap.to("#bird", {
+              scaleY: 0.8,
+              yoyo: true,
+              repeat: -1,
+              duration: 0.3,
+              ease: "power2.inOut",
+            });
+          },
         },
       },
     );
@@ -168,6 +197,19 @@ export const ParallaxBackground = () => {
               });
             });
             gsap.set("#bats", { opacity: 1 });
+          },
+          onEnterBack: () => {
+            const batPaths = gsap.utils.toArray<SVGPathElement>("#bats path");
+            batPaths.forEach((item, i) => {
+              gsap.to(item, {
+                scaleX: 0.5,
+                yoyo: true,
+                repeat: 9,
+                transformOrigin: "50% 50%",
+                duration: 0.15,
+                delay: 0.7 + i / 10,
+              });
+            });
           },
         },
       },
