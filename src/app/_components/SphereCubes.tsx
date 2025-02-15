@@ -1,3 +1,5 @@
+import "@/styles/sphereCube.scss";
+
 export function SphereCubes() {
   return (
     <div className="wrapper">

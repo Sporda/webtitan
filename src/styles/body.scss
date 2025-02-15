@@ -1,0 +1,33 @@
+:root {
+  --color-background: conic-gradient(
+    black,
+    #192d39,
+    #0e1e2e,
+    #281133,
+    #14293d,
+    #16031a,
+    black
+  );
+  --color-on-background: white;
+
+  --c1: #6eccee;
+  --c2: #ffdc99;
+  --c3: #e3a4d0;
+  --c4: #d455ff;
+  --animation-duration: 2.8s;
+  --border-width: 0.6vmin;
+  --glow: drop-shadow(0 0 6vmin rgba(255, 255, 255, 0.19));
+
+  --hole-pos-y: 20%;
+  --hole-radius: 22vmin;
+  --offset-per-surface: calc(360deg / 24);
+}
+body {
+  width: 100vw;
+  height: 100vh;
+  // display: grid;
+  place-items: center;
+  background: var(--color-background);
+  color: var(--color-on-background);
+  mix-blend-mode: plus-lighter;
+}
