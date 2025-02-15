@@ -57,6 +57,25 @@ const config = {
   sassOptions: {
     includePaths: ["./src/styles"],
   },
+
+  webpack(config) {
+    const fileLoaderRule = config.module.rules.find(
+      (/** @type {{ test: { test: (arg0: string) => any; }; }} */ rule) =>
+        rule.test?.test?.(".svg"),
+    );
+    config.module.rules.push({
+      ...fileLoaderRule,
+      test: /\.svg$/i,
+      type: "asset/resource",
+    });
+    return config;
+  },
+
+  images: {
+    dangerouslyAllowSVG: true,
+    contentDispositionType: "attachment",
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+  },
 };
 
 export default config;

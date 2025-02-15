@@ -1,7 +1,9 @@
-import { Button } from "@/components/ui/button";
-import { SphereCubes } from "./SphereCubes";
+"use client";
 
-export function HeroSection() {
+import { Button } from "@/components/ui/button";
+// import { SphereCubes } from "./SphereCubes";
+
+export const HeroSection = () => {
   return (
     <section className="relative">
       <div className="relative z-10">
@@ -10,7 +12,7 @@ export function HeroSection() {
           <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2 lg:grid-cols-3">
             <div className="order-2 flex max-h-[300px] justify-start md:order-1 md:max-h-[350px] md:justify-end lg:max-h-[500px]">
               <div className="relative left-[-20%] origin-center scale-[0.25] transform sm:left-[10%] md:left-[15%] md:mt-[-20px] md:scale-[0.28] lg:left-[30%] lg:mt-[-20px] lg:scale-[0.3] xl:left-[0%]">
-                <SphereCubes />
+                {/* <SphereCubes /> */}
               </div>
             </div>
             <div className="order-1 col-span-1 flex flex-col items-center text-center text-white md:order-2 md:col-span-1 md:items-start md:text-left lg:col-span-2">
@@ -35,4 +37,4 @@ export function HeroSection() {
       </div>
     </section>
   );
-}
+};
