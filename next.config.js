@@ -29,6 +29,11 @@ const config = {
     keepAlive: true,
   },
 
+  server: {
+    hostname: "0.0.0.0",
+    port: 3000,
+  },
+
   headers: async () => {
     return [
       {
@@ -48,6 +53,10 @@ const config = {
   },
 
   output: "standalone",
+
+  sassOptions: {
+    includePaths: ["./src/styles"],
+  },
 };
 
 export default config;
