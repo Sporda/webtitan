@@ -28,3 +28,10 @@ body {
   width: 100%;
   height: 100%;
 }
+
+.gsap-marker-scroller-start,
+.gsap-marker-scroller-end,
+.gsap-marker-start,
+.gsap-marker-end {
+  opacity: 0;
+}
