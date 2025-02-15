@@ -1,5 +1,6 @@
 import "@/styles/globals.css";
 import "@/styles/body.scss";
+import "@/styles/sphereCube.scss";
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 
