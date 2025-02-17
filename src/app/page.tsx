@@ -7,25 +7,34 @@ import { ContactSection } from "./_components/ContactSection";
 import { Footer } from "./_components/Footer";
 import { Providers } from "./_components/Providers";
 import { ParallaxBackground } from "./_components/ParallaxBackground";
-
+import { Birds } from "./_components/Parallax/birds/Birds";
 export default async function Home() {
   const hello = await api.post.hello({ text: "from tRPC" });
 
   return (
     <HydrateClient>
       <Providers>
-        <div id="container">
+        {/* Parallax kontejner */}
+        <div className="fixed inset-0 h-[6000px]">
           <ParallaxBackground />
-          <div className="fixed top-0 z-10">
+        </div>
+
+        <Birds />
+
+        {/* Obsah */}
+        <div className="relative">
+          <div className="sticky top-0 z-50 w-full">
             <Header />
           </div>
-          <main>
-            {/* <HeroSection /> */}
+
+          <main className="relative z-40">
+            <HeroSection />
             {/* <SkillsSection />
             <ProjectsSection />
             <ContactSection /> */}
           </main>
-          <div className="fixed bottom-0 z-10 w-full bg-black/50">
+
+          <div className="fixed bottom-0 z-50 w-full bg-black/50">
             <Footer />
           </div>
         </div>

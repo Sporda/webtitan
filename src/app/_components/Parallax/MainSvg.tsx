@@ -11,7 +11,7 @@ interface MainSvgProps {
 
 export const MainSvg = ({ svgRef }: MainSvgProps) => {
   return (
-    <div className="parallax-wrapper" style={{ position: "relative" }}>
+    <>
       {/* Hlavní SVG */}
       <svg
         ref={svgRef}
@@ -40,9 +40,6 @@ export const MainSvg = ({ svgRef }: MainSvgProps) => {
         {/* <!-- SCENE 1 --> */}
         <Scene1 />
       </svg>
-
-      {/* Ptáci před SVG */}
-      <Birds />
-    </div>
+    </>
   );
 };
