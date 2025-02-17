@@ -3,13 +3,12 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import "./parallax.css";
+import "@/styles/parallax.css";
 import { MainSvg } from "./Parallax/MainSvg";
 gsap.registerPlugin(ScrollTrigger);
 
 export const ParallaxBackground = () => {
   const svgRef = useRef<SVGSVGElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!svgRef.current) return;
@@ -68,54 +67,6 @@ export const ParallaxBackground = () => {
     scene1.to("#cloudStart-L", { x: -300 }, 0);
     scene1.to("#cloudStart-R", { x: 300 }, 0);
     scene1.to("#info", { y: 8 * speed }, 0);
-
-    // Pták
-    gsap.set("#bird", {
-      transformOrigin: "50% 50%",
-      x: -50, // Posuneme ptáka více vlevo na začátku
-      y: -100, // Upravíme i vertikální pozici
-    });
-
-    gsap.fromTo(
-      "#bird",
-      {
-        opacity: 1,
-        x: -50, // Začínáme z nové počáteční pozice
-        y: -100,
-      },
-      {
-        y: -250,
-        x: 800,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: ".scrollElement",
-          start: "15% top",
-          end: "60% 100%",
-          scrub: 4,
-          onEnter: () => {
-            gsap.to("#bird", { scaleX: 1, rotation: 0 });
-            // Výraznější animace křídel
-            gsap.to("#bird", {
-              scaleY: 0.8, // Zmenšeno pro větší rozsah pohybu
-              yoyo: true,
-              repeat: -1,
-              duration: 0.3, // Zrychleno
-              ease: "power2.inOut", // Změněn ease pro dynamičtější pohyb
-            });
-          },
-          onLeave: () => {
-            gsap.to("#bird", { scaleX: -1, rotation: -15 });
-            gsap.to("#bird", {
-              scaleY: 0.8,
-              yoyo: true,
-              repeat: -1,
-              duration: 0.3,
-              ease: "power2.inOut",
-            });
-          },
-        },
-      },
-    );
 
     // Mraky
     let clouds = gsap.timeline();
@@ -227,9 +178,9 @@ export const ParallaxBackground = () => {
 
     sun2.to("#sun", { attr: { offset: "1.4" } }, 0);
     sun2.to("#bg_grad stop:nth-child(2)", { attr: { offset: "0.7" } }, 0);
-    sun2.to("#sun", { attr: { "stop-color": "#ffff00" } }, 0);
-    sun2.to("#lg4 stop:nth-child(1)", { attr: { "stop-color": "#623951" } }, 0);
-    sun2.to("#lg4 stop:nth-child(2)", { attr: { "stop-color": "#261F36" } }, 0);
+    sun2.to("#sun", { attr: { "stop-color": "#ffffff" } }, 0);
+    sun2.to("#lg4 stop:nth-child(1)", { attr: { "stop-color": "#1A4160" } }, 0);
+    sun2.to("#lg4 stop:nth-child(2)", { attr: { "stop-color": "#062B48" } }, 0);
     sun2.to(
       "#bg_grad stop:nth-child(6)",
       { attr: { "stop-color": "#45224A" } },

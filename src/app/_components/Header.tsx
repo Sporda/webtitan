@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 export function Header() {
   return (
-    <header>
+    <header className="fixed top-0 z-10 w-full bg-black/50 backdrop-blur-sm">
       <div className="container mx-auto flex items-center justify-between px-4 py-4">
         <div className="flex items-center gap-2">
           <Link href="/">

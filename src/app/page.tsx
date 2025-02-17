@@ -16,6 +16,18 @@ export default async function Home() {
       <Providers>
         <div id="container">
           <ParallaxBackground />
+          <div className="fixed top-0 z-10">
+            <Header />
+          </div>
+          <main>
+            {/* <HeroSection /> */}
+            {/* <SkillsSection />
+            <ProjectsSection />
+            <ContactSection /> */}
+          </main>
+          <div className="fixed bottom-0 z-10 w-full bg-black/50">
+            <Footer />
+          </div>
         </div>
       </Providers>
     </HydrateClient>

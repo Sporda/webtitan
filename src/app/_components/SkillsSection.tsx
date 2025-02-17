@@ -51,7 +51,7 @@ export function SkillsSection() {
   const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
 
   return (
-    <section id="skills" className="bg-muted py-20">
+    <section id="skills" className="bg-transparent py-20">
       <div className="container mx-auto px-4">
         <h2 className="mb-12 text-center text-3xl font-bold">
           Technologie, které používám
