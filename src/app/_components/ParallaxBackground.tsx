@@ -41,7 +41,7 @@ export const ParallaxBackground = () => {
       animation: scene1,
       trigger: ".scrollElement",
       start: "top top",
-      end: `${45 * (4000 / 6000)}% 100%`,
+      end: "45% 100%",
       scrub: 3,
     });
 
@@ -75,7 +75,7 @@ export const ParallaxBackground = () => {
       animation: clouds,
       trigger: ".scrollElement",
       start: "top top",
-      end: `${70 * (4000 / 6000)}% 100%`,
+      end: "70% 100%",
       scrub: 1,
     });
 
@@ -90,7 +90,7 @@ export const ParallaxBackground = () => {
       animation: sun,
       trigger: ".scrollElement",
       start: "1% top",
-      end: `${2150 * (4000 / 6000)} 100%`,
+      end: "2150 100%",
       scrub: 2,
     });
 
@@ -110,8 +110,8 @@ export const ParallaxBackground = () => {
     ScrollTrigger.create({
       animation: scene2,
       trigger: ".scrollElement",
-      start: `${15 * (4000 / 6000)}% top`,
-      end: `${40 * (4000 / 6000)}% 100%`,
+      start: "15% top",
+      end: "40% 100%",
       scrub: 3,
     });
 
@@ -122,7 +122,7 @@ export const ParallaxBackground = () => {
     scene2.fromTo("#h2-5", { y: 800 }, { y: 0 }, 0.3);
     scene2.fromTo("#h2-6", { y: 900 }, { y: 0 }, 0.3);
 
-    // Netopýři - upravené načasování
+    // Netopýři
     gsap.set("#bats", { transformOrigin: "50% 50%" });
     gsap.fromTo(
       "#bats",
@@ -134,19 +134,18 @@ export const ParallaxBackground = () => {
         scrollTrigger: {
           trigger: ".scrollElement",
           start: "40% top",
-          end: "70% 100%", // Prodlouženo pro pomalejší pohyb
-          scrub: 2, // Zvýšeno pro plynulejší pohyb
-          toggleActions: "play reverse play reverse",
+          end: "70% 100%",
+          scrub: 3,
           onEnter: () => {
             const batPaths = gsap.utils.toArray<SVGPathElement>("#bats path");
             batPaths.forEach((item, i) => {
               gsap.to(item, {
                 scaleX: 0.5,
                 yoyo: true,
-                repeat: 9, // Vráceno na původní hodnotu
+                repeat: 9,
                 transformOrigin: "50% 50%",
-                duration: 0.15, // Vráceno na původní hodnotu
-                delay: 0.7 + i / 10, // Vráceno na původní hodnotu
+                duration: 0.15,
+                delay: 0.7 + i / 10,
               });
             });
             gsap.set("#bats", { opacity: 1 });
@@ -157,10 +156,10 @@ export const ParallaxBackground = () => {
               gsap.to(item, {
                 scaleX: 0.5,
                 yoyo: true,
-                repeat: 9, // Vráceno na původní hodnotu
+                repeat: 9,
                 transformOrigin: "50% 50%",
-                duration: 0.15, // Vráceno na původní hodnotu
-                delay: 0.7 + i / 10, // Vráceno na původní hodnotu
+                duration: 0.15,
+                delay: 0.7 + i / 10,
               });
             });
           },
@@ -168,13 +167,13 @@ export const ParallaxBackground = () => {
       },
     );
 
-    // Zvětšení slunce - ponecháno jak je
+    // Zvětšení slunce
     let sun2 = gsap.timeline();
     ScrollTrigger.create({
       animation: sun2,
       trigger: ".scrollElement",
-      start: `${2000 * (4000 / 6000)} top`,
-      end: `${5000 * (4000 / 6000)} 100%`,
+      start: "2000 top",
+      end: "5000 100%",
       scrub: 2,
     });
 
@@ -195,7 +194,7 @@ export const ParallaxBackground = () => {
     ScrollTrigger.create({
       animation: sceneTransition,
       trigger: ".scrollElement",
-      start: `${70 * (4000 / 6000)}% top`,
+      start: "70% top",
       end: "bottom 100%",
       scrub: 3,
     });
@@ -217,7 +216,7 @@ export const ParallaxBackground = () => {
     ScrollTrigger.create({
       animation: scene3,
       trigger: ".scrollElement",
-      start: `${70 * (4000 / 6000)}% 50%`,
+      start: "70% 50%",
       end: "bottom 100%",
       scrub: 3,
     });
@@ -243,8 +242,8 @@ export const ParallaxBackground = () => {
     ScrollTrigger.create({
       animation: fstarTL,
       trigger: ".scrollElement",
-      start: `${4200 * (4000 / 6000)} top`,
-      end: `${6000 * (4000 / 6000)} bottom`,
+      start: "4200 top",
+      end: "6000 bottom",
       scrub: 2,
       onEnter: () => gsap.set("#fstar", { opacity: 1 }),
       onLeave: () => gsap.set("#fstar", { opacity: 0 }),
@@ -276,11 +275,8 @@ export const ParallaxBackground = () => {
 
   return (
     <>
-      <div className="scrollElement" />
-      <div className="fixed inset-0 z-[3]">
-        <MainSvg svgRef={svgRef} />
-      </div>
-      {/* <Birds /> */}
+      <div className="scrollElement"></div>
+      <MainSvg svgRef={svgRef} />
     </>
   );
 };
