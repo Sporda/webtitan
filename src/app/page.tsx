@@ -29,9 +29,9 @@ export default async function Home() {
 
           <main className="relative z-40">
             <HeroSection />
-            {/* <SkillsSection />
+            <SkillsSection />
             <ProjectsSection />
-            <ContactSection /> */}
+            <ContactSection />
           </main>
 
           <div className="fixed bottom-0 z-50 w-full bg-black/50">

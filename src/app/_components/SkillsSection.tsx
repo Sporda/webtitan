@@ -27,6 +27,8 @@ import { MysqlIcon } from "@/components/icons/MysqlIcon";
 import { WordpressIcon } from "@/components/icons/WordpressIcon";
 import { LinuxIcon } from "@/components/icons/LinuxIcon";
 import { JestIcon } from "@/components/icons/JestIcon";
+import "@/styles/skillsSection.css";
+
 const technologies = [
   { name: "React", icon: ReactIcon },
   { name: "TypeScript", icon: TypescriptIcon },
@@ -51,37 +53,35 @@ export function SkillsSection() {
   const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
 
   return (
-    <section id="skills" className="bg-transparent py-20">
-      <div className="container mx-auto px-4">
-        <h2 className="mb-12 text-center text-3xl font-bold">
-          Technologie, které používám
-        </h2>
-        <Carousel
-          opts={{
-            align: "start",
-            loop: true,
-            slidesToScroll: 1,
-          }}
-          plugins={[plugin.current]}
-          className="w-full"
-        >
-          <CarouselContent className="-ml-2 md:-ml-4">
-            {technologies.map((tech) => (
-              <CarouselItem
-                key={tech.name}
-                className="basis-1/2 pl-2 md:basis-1/3 md:pl-4 lg:basis-1/6"
-              >
-                <div className="flex flex-col items-center">
-                  {tech.icon && <tech.icon size={60} className="mb-2" />}
-                  <span>{tech.name}</span>
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
-        </Carousel>
-      </div>
+    <section id="skills" className="bg-transparent">
+      <h2 className="mb-12 text-center text-3xl font-bold">
+        Technologie, které používám
+      </h2>
+      <Carousel
+        opts={{
+          align: "start",
+          loop: true,
+          slidesToScroll: 1,
+        }}
+        plugins={[plugin.current]}
+        className="w-full"
+      >
+        <CarouselContent className="-ml-2 md:-ml-4">
+          {technologies.map((tech) => (
+            <CarouselItem
+              key={tech.name}
+              className="basis-1/2 pl-2 md:basis-1/3 md:pl-4 lg:basis-1/6"
+            >
+              <div className="flex flex-col items-center">
+                {tech.icon && <tech.icon size={60} className="mb-2" />}
+                <span>{tech.name}</span>
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
     </section>
   );
 }
