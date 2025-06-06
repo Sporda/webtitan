@@ -27,7 +27,7 @@ export default async function Home() {
             <Header />
           </div>
 
-          <main className="relative z-40">
+          <main className="relative z-40 flex flex-col items-center">
             <HeroSection />
             <SkillsSection />
             <ProjectsSection />

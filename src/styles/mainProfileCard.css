@@ -70,3 +70,35 @@
   background: #ffffff;
   color: #121017;
 }
+
+@media (max-width: 768px) {
+  .card {
+    flex-direction: column;
+    padding: 30px 20px;
+    width: 90vw;
+  }
+
+  .card img {
+    width: 100%;
+    max-width: 280px;
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+
+  .card h2 {
+    margin-right: 0;
+    text-align: center;
+  }
+
+  .card h3 {
+    text-align: center;
+  }
+
+  .card p {
+    text-align: center;
+  }
+
+  .card .buttons {
+    justify-content: center;
+  }
+}
