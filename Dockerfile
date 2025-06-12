@@ -37,8 +37,8 @@ WORKDIR /app
 RUN apk add --no-cache libc6-compat
 
 # Nastavení produkčního módu
-ENV NODE_ENV production
-ENV NEXT_TELEMETRY_DISABLED 1
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
 
 # Kopírování potřebných souborů z builder stage
 COPY --from=builder /app/next.config.js ./
@@ -57,8 +57,8 @@ USER nextjs
 EXPOSE 3000
 
 # Nastavení proměnných pro správné fungování
-ENV PORT 3000
-ENV HOSTNAME "0.0.0.0"
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
 
 # Spuštění aplikace
 CMD ["node", "server.js"] 

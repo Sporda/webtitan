@@ -2,6 +2,9 @@
 import * as dotenv from "dotenv";
 dotenv.config();
 
+// Pro skripty přeskočíme validaci env proměnných
+process.env.SKIP_ENV_VALIDATION = "true";
+
 import connectToMongoDB from "../src/server/db/mongoose";
 import Project from "../src/server/db/models/Project";
 

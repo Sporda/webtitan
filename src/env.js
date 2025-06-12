@@ -7,7 +7,7 @@ export const env = createEnv({
    * isn't built with invalid env vars.
    */
   server: {
-    DATABASE_URL: z.string().url(),
+    DATABASE_URL: z.string().url().optional(),
     // MONGODB_URI je volitelná při buildu, ale bude potřebná při runtime
     MONGODB_URI: z.string().url().optional(),
     NODE_ENV: z
@@ -29,7 +29,7 @@ export const env = createEnv({
    * middlewares) or client-side so we need to destruct manually.
    */
   runtimeEnv: {
-    DATABASE_URL: process.env.DATABASE_URL,
+    DATABASE_URL: process.env.DATABASE_URL || undefined,
     MONGODB_URI: process.env.MONGODB_URI || undefined,
     NODE_ENV: process.env.NODE_ENV,
   },
