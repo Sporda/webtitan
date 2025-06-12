@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { env } from "@/env";
 
 // Pro skripty - načtení .env pokud není načtený
 if (!process.env.MONGODB_URI && !process.env.VERCEL) {
@@ -20,15 +19,27 @@ declare global {
     | undefined;
 }
 
-// Při buildu může být MONGODB_URI undefined, při runtime musí být nastavené
-const MONGODB_URI = env.MONGODB_URI || process.env.MONGODB_URI;
+// Přímo používáme process.env.MONGODB_URI pro vyhnutí se problémům s env.js na serveru
+const MONGODB_URI = process.env.MONGODB_URI;
 
 // Zkontrolujeme pouze pokud to není build proces
 function checkMongoDBURI() {
+  // Debug informace pro server
+  console.log("🔍 Debug MongoDB URI:");
+  console.log(`   NODE_ENV: ${process.env.NODE_ENV}`);
+  console.log(`   MONGODB_URI exists: ${!!process.env.MONGODB_URI}`);
+  console.log(
+    `   Environment keys containing MONGO: ${Object.keys(process.env).filter((key) => key.includes("MONGO"))}`,
+  );
+
   if (!MONGODB_URI) {
     console.error("❌ CHYBA: MONGODB_URI není nastavené!");
-    console.error("💡 Ujistěte se, že máte v .env souboru:");
-    console.error('   MONGODB_URI="mongodb://localhost:27017/webtitan"');
+    console.error(
+      "💡 Zkontrolujte Environment Variables v deployment nastavení!",
+    );
+    console.error(
+      "💡 Pro GitHub Pages: Settings > Environments > main > Environment variables",
+    );
     throw new Error("Chybí MONGODB_URI v environment variables");
   }
   return MONGODB_URI;
