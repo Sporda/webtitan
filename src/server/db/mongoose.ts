@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { env } from "@/env";
 
 // Pro skripty - načtení .env pokud není načtený
 if (!process.env.MONGODB_URI && !process.env.VERCEL) {
@@ -19,23 +20,30 @@ declare global {
     | undefined;
 }
 
-const MONGODB_URI = process.env.MONGODB_URI;
+// Při buildu může být MONGODB_URI undefined, při runtime musí být nastavené
+const MONGODB_URI = env.MONGODB_URI || process.env.MONGODB_URI;
 
-if (!MONGODB_URI) {
-  console.error("❌ CHYBA: MONGODB_URI není nastavené!");
-  console.error("💡 Ujistěte se, že máte v .env souboru:");
-  console.error('   MONGODB_URI="mongodb://localhost:27017/webtitan"');
-  throw new Error("Chybí MONGODB_URI v environment variables");
+// Zkontrolujeme pouze pokud to není build proces
+function checkMongoDBURI() {
+  if (!MONGODB_URI) {
+    console.error("❌ CHYBA: MONGODB_URI není nastavené!");
+    console.error("💡 Ujistěte se, že máte v .env souboru:");
+    console.error('   MONGODB_URI="mongodb://localhost:27017/webtitan"');
+    throw new Error("Chybí MONGODB_URI v environment variables");
+  }
+  return MONGODB_URI;
 }
 
-// Ověření, že URI končí správnou databází
-if (
-  !MONGODB_URI.endsWith("/webtitan") &&
-  !MONGODB_URI.includes("dbName=webtitan")
-) {
-  console.warn(`⚠️  POZOR: MONGODB_URI nespecifikuje databázi "webtitan"`);
-  console.warn(`   Aktuální URI: ${MONGODB_URI}`);
-  console.warn(`   Doporučené: mongodb://localhost:27017/webtitan`);
+// Ověření URI pouze pokud je dostupné
+if (MONGODB_URI) {
+  if (
+    !MONGODB_URI.endsWith("/webtitan") &&
+    !MONGODB_URI.includes("dbName=webtitan")
+  ) {
+    console.warn(`⚠️  POZOR: MONGODB_URI nespecifikuje databázi "webtitan"`);
+    console.warn(`   Aktuální URI: ${MONGODB_URI}`);
+    console.warn(`   Doporučené: mongodb://localhost:27017/webtitan`);
+  }
 }
 
 let cached = global.mongooseConnection;
@@ -50,12 +58,15 @@ async function connectToMongoDB() {
   }
 
   if (!cached!.promise) {
+    // Zkontrolujeme URI při pokusu o připojení
+    const uri = checkMongoDBURI();
+
     const opts = {
       bufferCommands: false,
       dbName: "webtitan", // EXPLICITNÍ nastavení databáze
     };
 
-    cached!.promise = mongoose.connect(MONGODB_URI!, opts).then((mongoose) => {
+    cached!.promise = mongoose.connect(uri, opts).then((mongoose) => {
       // Ověření, že používáme správnou databázi
       const dbName = mongoose.connection.db?.databaseName;
       if (dbName !== "webtitan") {

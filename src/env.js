@@ -8,7 +8,8 @@ export const env = createEnv({
    */
   server: {
     DATABASE_URL: z.string().url(),
-    MONGODB_URI: z.string().url(),
+    // MONGODB_URI je volitelná při buildu, ale bude potřebná při runtime
+    MONGODB_URI: z.string().url().optional(),
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
@@ -29,7 +30,7 @@ export const env = createEnv({
    */
   runtimeEnv: {
     DATABASE_URL: process.env.DATABASE_URL,
-    MONGODB_URI: process.env.MONGODB_URI,
+    MONGODB_URI: process.env.MONGODB_URI || undefined,
     NODE_ENV: process.env.NODE_ENV,
   },
   /**
