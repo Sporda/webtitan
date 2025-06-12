@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document } from "mongoose";
 
-export interface IProject extends Document {
+export interface IProject {
   title: string;
   description: string;
   image: string;
@@ -74,6 +74,6 @@ ProjectSchema.index({ category: 1, order: 1 });
 
 // Model se automaticky vytvoří v databázi specifikované v mongoose připojení
 const Project =
-  mongoose.models.Project || mongoose.model<IProject>("Project", ProjectSchema);
+  mongoose.models.Project || mongoose.model("Project", ProjectSchema);
 
 export default Project;

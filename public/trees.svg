@@ -32,23 +32,28 @@
        spreadMethod="pad"
        id="linearGradient5">
       <stop
-         style="stop-opacity:1;stop-color:#32f6f6 icc-color(sRGB-IEC61966-2.1, 0.19607544, 0.96469116, 0.96469116);"
+         style="stopOpacity
+:1;stopColor:#32f6f6 icc-color(sRGB-IEC61966-2.1, 0.19607544, 0.96469116, 0.96469116);"
          offset="0"
          id="stop1" />
       <stop
-         style="stop-opacity:1;stop-color:#32f6f6 icc-color(sRGB-IEC61966-2.1, 0.19607544, 0.96469116, 0.96469116);"
+         style="stopOpacity
+:1;stopColor:#32f6f6 icc-color(sRGB-IEC61966-2.1, 0.19607544, 0.96469116, 0.96469116);"
          offset="0.304885"
          id="stop2" />
       <stop
-         style="stop-opacity:1;stop-color:#32f6f6 icc-color(sRGB-IEC61966-2.1, 0.19607544, 0.96469116, 0.96469116);"
+         style="stopOpacity
+:1;stopColor:#32f6f6 icc-color(sRGB-IEC61966-2.1, 0.19607544, 0.96469116, 0.96469116);"
          offset="0.52165481"
          id="stop3" />
       <stop
-         style="stop-opacity:1;stop-color:#29738e icc-color(sRGB-IEC61966-2.1, 0.16078186, 0.45097351, 0.55685425);"
+         style="stopOpacity
+:1;stopColor:#29738e icc-color(sRGB-IEC61966-2.1, 0.16078186, 0.45097351, 0.55685425);"
          offset="0.960967"
          id="stop4" />
       <stop
-         style="stop-opacity:1;stop-color:#29738e icc-color(sRGB-IEC61966-2.1, 0.16078186, 0.45097351, 0.55685425);"
+         style="stopOpacity
+:1;stopColor:#29738e icc-color(sRGB-IEC61966-2.1, 0.16078186, 0.45097351, 0.55685425);"
          offset="1"
          id="stop5" />
     </linearGradient>
@@ -110,11 +115,13 @@
        spreadMethod="pad"
        id="linearGradient15">
       <stop
-         style="stop-opacity:1;stop-color:#00979c icc-color(sRGB-IEC61966-2.1, 0, 0.59214783, 0.61175537);"
+         style="stopOpacity
+:1;stopColor:#00979c icc-color(sRGB-IEC61966-2.1, 0, 0.59214783, 0.61175537);"
          offset="0"
          id="stop14" />
       <stop
-         style="stop-opacity:1;stop-color:#00697a icc-color(sRGB-IEC61966-2.1, 0, 0.41175842, 0.47842407);"
+         style="stopOpacity
+:1;stopColor:#00697a icc-color(sRGB-IEC61966-2.1, 0, 0.41175842, 0.47842407);"
          offset="1"
          id="stop15" />
     </linearGradient>
@@ -136,11 +143,13 @@
        spreadMethod="pad"
        id="linearGradient17">
       <stop
-         style="stop-opacity:1;stop-color:#00697a icc-color(sRGB-IEC61966-2.1, 0, 0.41175842, 0.47842407);"
+         style="stopOpacity
+:1;stopColor:#00697a icc-color(sRGB-IEC61966-2.1, 0, 0.41175842, 0.47842407);"
          offset="0"
          id="stop16" />
       <stop
-         style="stop-opacity:1;stop-color:#00979c icc-color(sRGB-IEC61966-2.1, 0, 0.59214783, 0.61175537);"
+         style="stopOpacity
+:1;stopColor:#00979c icc-color(sRGB-IEC61966-2.1, 0, 0.59214783, 0.61175537);"
          offset="1"
          id="stop17" />
     </linearGradient>
@@ -162,11 +171,13 @@
        spreadMethod="pad"
        id="linearGradient19">
       <stop
-         style="stop-opacity:1;stop-color:#00697a icc-color(sRGB-IEC61966-2.1, 0, 0.41175842, 0.47842407);"
+         style="stopOpacity
+:1;stopColor:#00697a icc-color(sRGB-IEC61966-2.1, 0, 0.41175842, 0.47842407);"
          offset="0"
          id="stop18" />
       <stop
-         style="stop-opacity:1;stop-color:#00979c icc-color(sRGB-IEC61966-2.1, 0, 0.59214783, 0.61175537);"
+         style="stopOpacity
+:1;stopColor:#00979c icc-color(sRGB-IEC61966-2.1, 0, 0.59214783, 0.61175537);"
          offset="1"
          id="stop19" />
     </linearGradient>
@@ -180,11 +191,13 @@
        spreadMethod="pad"
        id="linearGradient21">
       <stop
-         style="stop-opacity:1;stop-color:#006376 icc-color(sRGB-IEC61966-2.1, 0, 0.38822937, 0.46273804);"
+         style="stopOpacity
+:1;stopColor:#006376 icc-color(sRGB-IEC61966-2.1, 0, 0.38822937, 0.46273804);"
          offset="0"
          id="stop20" />
       <stop
-         style="stop-opacity:1;stop-color:#1b9e9c icc-color(sRGB-IEC61966-2.1, 0.10588074, 0.61959839, 0.61175537);"
+         style="stopOpacity
+:1;stopColor:#1b9e9c icc-color(sRGB-IEC61966-2.1, 0.10588074, 0.61959839, 0.61175537);"
          offset="1"
          id="stop21" />
     </linearGradient>
@@ -206,11 +219,13 @@
        spreadMethod="pad"
        id="linearGradient23">
       <stop
-         style="stop-opacity:1;stop-color:#00697a icc-color(sRGB-IEC61966-2.1, 0, 0.41175842, 0.47842407);"
+         style="stopOpacity
+:1;stopColor:#00697a icc-color(sRGB-IEC61966-2.1, 0, 0.41175842, 0.47842407);"
          offset="0"
          id="stop22" />
       <stop
-         style="stop-opacity:1;stop-color:#00979c icc-color(sRGB-IEC61966-2.1, 0, 0.59214783, 0.61175537);"
+         style="stopOpacity
+:1;stopColor:#00979c icc-color(sRGB-IEC61966-2.1, 0, 0.59214783, 0.61175537);"
          offset="1"
          id="stop23" />
     </linearGradient>
@@ -224,11 +239,13 @@
        spreadMethod="pad"
        id="linearGradient25">
       <stop
-         style="stop-opacity:1;stop-color:#006376 icc-color(sRGB-IEC61966-2.1, 0, 0.38822937, 0.46273804);"
+         style="stopOpacity
+:1;stopColor:#006376 icc-color(sRGB-IEC61966-2.1, 0, 0.38822937, 0.46273804);"
          offset="0"
          id="stop24" />
       <stop
-         style="stop-opacity:1;stop-color:#1b9e9c icc-color(sRGB-IEC61966-2.1, 0.10588074, 0.61959839, 0.61175537);"
+         style="stopOpacity
+:1;stopColor:#1b9e9c icc-color(sRGB-IEC61966-2.1, 0.10588074, 0.61959839, 0.61175537);"
          offset="1"
          id="stop25" />
     </linearGradient>
@@ -262,11 +279,13 @@
        spreadMethod="pad"
        id="linearGradient27">
       <stop
-         style="stop-opacity:0;stop-color:#ffffff"
+         style="stopOpacity
+:0;stopColor:#ffffff"
          offset="0"
          id="stop26" />
       <stop
-         style="stop-opacity:1;stop-color:#ffffff"
+         style="stopOpacity
+:1;stopColor:#ffffff"
          offset="1"
          id="stop27" />
     </linearGradient>
@@ -280,11 +299,13 @@
        spreadMethod="pad"
        id="linearGradient29">
       <stop
-         style="stop-opacity:1;stop-color:#1b9e9c icc-color(sRGB-IEC61966-2.1, 0.10588074, 0.61959839, 0.61175537);"
+         style="stopOpacity
+:1;stopColor:#1b9e9c icc-color(sRGB-IEC61966-2.1, 0.10588074, 0.61959839, 0.61175537);"
          offset="0"
          id="stop28" />
       <stop
-         style="stop-opacity:1;stop-color:#006376 icc-color(sRGB-IEC61966-2.1, 0, 0.38822937, 0.46273804);"
+         style="stopOpacity
+:1;stopColor:#006376 icc-color(sRGB-IEC61966-2.1, 0, 0.38822937, 0.46273804);"
          offset="1"
          id="stop29" />
     </linearGradient>
@@ -326,11 +347,13 @@
        spreadMethod="pad"
        id="linearGradient32">
       <stop
-         style="stop-opacity:0;stop-color:#ffffff"
+         style="stopOpacity
+:0;stopColor:#ffffff"
          offset="0"
          id="stop31" />
       <stop
-         style="stop-opacity:1;stop-color:#ffffff"
+         style="stopOpacity
+:1;stopColor:#ffffff"
          offset="1"
          id="stop32" />
     </linearGradient>
@@ -344,11 +367,13 @@
        spreadMethod="pad"
        id="linearGradient34">
       <stop
-         style="stop-opacity:1;stop-color:#1b9e9c icc-color(sRGB-IEC61966-2.1, 0.10588074, 0.61959839, 0.61175537);"
+         style="stopOpacity
+:1;stopColor:#1b9e9c icc-color(sRGB-IEC61966-2.1, 0.10588074, 0.61959839, 0.61175537);"
          offset="0"
          id="stop33" />
       <stop
-         style="stop-opacity:1;stop-color:#006376 icc-color(sRGB-IEC61966-2.1, 0, 0.38822937, 0.46273804);"
+         style="stopOpacity
+:1;stopColor:#006376 icc-color(sRGB-IEC61966-2.1, 0, 0.38822937, 0.46273804);"
          offset="1"
          id="stop34" />
     </linearGradient>
@@ -378,11 +403,13 @@
        spreadMethod="pad"
        id="linearGradient37">
       <stop
-         style="stop-opacity:1;stop-color:#006376 icc-color(sRGB-IEC61966-2.1, 0, 0.38822937, 0.46273804);"
+         style="stopOpacity
+:1;stopColor:#006376 icc-color(sRGB-IEC61966-2.1, 0, 0.38822937, 0.46273804);"
          offset="0"
          id="stop36" />
       <stop
-         style="stop-opacity:1;stop-color:#1b9e9c icc-color(sRGB-IEC61966-2.1, 0.10588074, 0.61959839, 0.61175537);"
+         style="stopOpacity
+:1;stopColor:#1b9e9c icc-color(sRGB-IEC61966-2.1, 0.10588074, 0.61959839, 0.61175537);"
          offset="1"
          id="stop37" />
     </linearGradient>
@@ -396,11 +423,13 @@
        spreadMethod="pad"
        id="linearGradient39">
       <stop
-         style="stop-opacity:1;stop-color:#006376 icc-color(sRGB-IEC61966-2.1, 0, 0.38822937, 0.46273804);"
+         style="stopOpacity
+:1;stopColor:#006376 icc-color(sRGB-IEC61966-2.1, 0, 0.38822937, 0.46273804);"
          offset="0"
          id="stop38" />
       <stop
-         style="stop-opacity:1;stop-color:#1b9e9c icc-color(sRGB-IEC61966-2.1, 0.10588074, 0.61959839, 0.61175537);"
+         style="stopOpacity
+:1;stopColor:#1b9e9c icc-color(sRGB-IEC61966-2.1, 0.10588074, 0.61959839, 0.61175537);"
          offset="1"
          id="stop39" />
     </linearGradient>
@@ -434,11 +463,13 @@
        spreadMethod="pad"
        id="linearGradient41">
       <stop
-         style="stop-opacity:0;stop-color:#ffffff"
+         style="stopOpacity
+:0;stopColor:#ffffff"
          offset="0"
          id="stop40" />
       <stop
-         style="stop-opacity:1;stop-color:#ffffff"
+         style="stopOpacity
+:1;stopColor:#ffffff"
          offset="1"
          id="stop41" />
     </linearGradient>
@@ -452,11 +483,13 @@
        spreadMethod="pad"
        id="linearGradient43">
       <stop
-         style="stop-opacity:1;stop-color:#1b9e9c icc-color(sRGB-IEC61966-2.1, 0.10588074, 0.61959839, 0.61175537);"
+         style="stopOpacity
+:1;stopColor:#1b9e9c icc-color(sRGB-IEC61966-2.1, 0.10588074, 0.61959839, 0.61175537);"
          offset="0"
          id="stop42" />
       <stop
-         style="stop-opacity:1;stop-color:#006376 icc-color(sRGB-IEC61966-2.1, 0, 0.38822937, 0.46273804);"
+         style="stopOpacity
+:1;stopColor:#006376 icc-color(sRGB-IEC61966-2.1, 0, 0.38822937, 0.46273804);"
          offset="1"
          id="stop43" />
     </linearGradient>
@@ -486,15 +519,18 @@
        spreadMethod="pad"
        id="linearGradient47">
       <stop
-         style="stop-opacity:1;stop-color:#057187 icc-color(sRGB-IEC61966-2.1, 0.01960754, 0.44313049, 0.52940369);"
+         style="stopOpacity
+:1;stopColor:#057187 icc-color(sRGB-IEC61966-2.1, 0.01960754, 0.44313049, 0.52940369);"
          offset="0"
          id="stop45" />
       <stop
-         style="stop-opacity:1;stop-color:#27a3bb icc-color(sRGB-IEC61966-2.1, 0.15293884, 0.63920593, 0.73332214);"
+         style="stopOpacity
+:1;stopColor:#27a3bb icc-color(sRGB-IEC61966-2.1, 0.15293884, 0.63920593, 0.73332214);"
          offset="0.517052"
          id="stop46" />
       <stop
-         style="stop-opacity:1;stop-color:#006a7b icc-color(sRGB-IEC61966-2.1, 0, 0.41567993, 0.48234558);"
+         style="stopOpacity
+:1;stopColor:#006a7b icc-color(sRGB-IEC61966-2.1, 0, 0.41567993, 0.48234558);"
          offset="1"
          id="stop47" />
     </linearGradient>
@@ -520,11 +556,13 @@
        spreadMethod="pad"
        id="linearGradient49">
       <stop
-         style="stop-opacity:1;stop-color:#ffffff"
+         style="stopOpacity
+:1;stopColor:#ffffff"
          offset="0"
          id="stop48" />
       <stop
-         style="stop-opacity:0.29999237;stop-color:#ffffff"
+         style="stopOpacity
+:0.29999237;stopColor:#ffffff"
          offset="1"
          id="stop49" />
     </linearGradient>
@@ -538,11 +576,13 @@
        spreadMethod="pad"
        id="linearGradient51">
       <stop
-         style="stop-opacity:1;stop-color:#057187 icc-color(sRGB-IEC61966-2.1, 0.01960754, 0.44313049, 0.52940369);"
+         style="stopOpacity
+:1;stopColor:#057187 icc-color(sRGB-IEC61966-2.1, 0.01960754, 0.44313049, 0.52940369);"
          offset="0"
          id="stop50" />
       <stop
-         style="stop-opacity:1;stop-color:#27a3bb icc-color(sRGB-IEC61966-2.1, 0.15293884, 0.63920593, 0.73332214);"
+         style="stopOpacity
+:1;stopColor:#27a3bb icc-color(sRGB-IEC61966-2.1, 0.15293884, 0.63920593, 0.73332214);"
          offset="1"
          id="stop51" />
     </linearGradient>
@@ -572,11 +612,13 @@
        spreadMethod="pad"
        id="linearGradient54">
       <stop
-         style="stop-opacity:1;stop-color:#006376 icc-color(sRGB-IEC61966-2.1, 0, 0.38822937, 0.46273804);"
+         style="stopOpacity
+:1;stopColor:#006376 icc-color(sRGB-IEC61966-2.1, 0, 0.38822937, 0.46273804);"
          offset="0"
          id="stop53" />
       <stop
-         style="stop-opacity:1;stop-color:#1b9e9c icc-color(sRGB-IEC61966-2.1, 0.10588074, 0.61959839, 0.61175537);"
+         style="stopOpacity
+:1;stopColor:#1b9e9c icc-color(sRGB-IEC61966-2.1, 0.10588074, 0.61959839, 0.61175537);"
          offset="1"
          id="stop54" />
     </linearGradient>
@@ -590,11 +632,13 @@
        spreadMethod="pad"
        id="linearGradient56">
       <stop
-         style="stop-opacity:1;stop-color:#006376 icc-color(sRGB-IEC61966-2.1, 0, 0.38822937, 0.46273804);"
+         style="stopOpacity
+:1;stopColor:#006376 icc-color(sRGB-IEC61966-2.1, 0, 0.38822937, 0.46273804);"
          offset="0"
          id="stop55" />
       <stop
-         style="stop-opacity:1;stop-color:#1b9e9c icc-color(sRGB-IEC61966-2.1, 0.10588074, 0.61959839, 0.61175537);"
+         style="stopOpacity
+:1;stopColor:#1b9e9c icc-color(sRGB-IEC61966-2.1, 0.10588074, 0.61959839, 0.61175537);"
          offset="1"
          id="stop56" />
     </linearGradient>
@@ -635,15 +679,18 @@
        spreadMethod="pad"
        id="linearGradient61">
       <stop
-         style="stop-opacity:0.2;stop-color:#ffffff"
+         style="stopOpacity
+:0.2;stopColor:#ffffff"
          offset="0"
          id="stop59" />
       <stop
-         style="stop-opacity:0.2;stop-color:#ffffff"
+         style="stopOpacity
+:0.2;stopColor:#ffffff"
          offset="0.00322901"
          id="stop60" />
       <stop
-         style="stop-opacity:1;stop-color:#ffffff"
+         style="stopOpacity
+:1;stopColor:#ffffff"
          offset="1"
          id="stop61" />
     </linearGradient>
@@ -657,15 +704,18 @@
        spreadMethod="pad"
        id="linearGradient64">
       <stop
-         style="stop-opacity:1;stop-color:#27a3bb icc-color(sRGB-IEC61966-2.1, 0.15293884, 0.63920593, 0.73332214);"
+         style="stopOpacity
+:1;stopColor:#27a3bb icc-color(sRGB-IEC61966-2.1, 0.15293884, 0.63920593, 0.73332214);"
          offset="0"
          id="stop62" />
       <stop
-         style="stop-opacity:1;stop-color:#27a3bb icc-color(sRGB-IEC61966-2.1, 0.15293884, 0.63920593, 0.73332214);"
+         style="stopOpacity
+:1;stopColor:#27a3bb icc-color(sRGB-IEC61966-2.1, 0.15293884, 0.63920593, 0.73332214);"
          offset="0.00322901"
          id="stop63" />
       <stop
-         style="stop-opacity:1;stop-color:#057187 icc-color(sRGB-IEC61966-2.1, 0.01960754, 0.44313049, 0.52940369);"
+         style="stopOpacity
+:1;stopColor:#057187 icc-color(sRGB-IEC61966-2.1, 0.01960754, 0.44313049, 0.52940369);"
          offset="1"
          id="stop64" />
     </linearGradient>
@@ -771,11 +821,13 @@
        spreadMethod="pad"
        id="linearGradient82">
       <stop
-         style="stop-opacity:0;stop-color:#ffffff"
+         style="stopOpacity
+:0;stopColor:#ffffff"
          offset="0"
          id="stop81" />
       <stop
-         style="stop-opacity:1;stop-color:#ffffff"
+         style="stopOpacity
+:1;stopColor:#ffffff"
          offset="1"
          id="stop82" />
     </linearGradient>
@@ -789,11 +841,13 @@
        spreadMethod="pad"
        id="linearGradient84">
       <stop
-         style="stop-opacity:1;stop-color:#1b9e9c icc-color(sRGB-IEC61966-2.1, 0.10588074, 0.61959839, 0.61175537);"
+         style="stopOpacity
+:1;stopColor:#1b9e9c icc-color(sRGB-IEC61966-2.1, 0.10588074, 0.61959839, 0.61175537);"
          offset="0"
          id="stop83" />
       <stop
-         style="stop-opacity:1;stop-color:#006376 icc-color(sRGB-IEC61966-2.1, 0, 0.38822937, 0.46273804);"
+         style="stopOpacity
+:1;stopColor:#006376 icc-color(sRGB-IEC61966-2.1, 0, 0.38822937, 0.46273804);"
          offset="1"
          id="stop84" />
     </linearGradient>
@@ -835,11 +889,13 @@
        spreadMethod="pad"
        id="linearGradient87">
       <stop
-         style="stop-opacity:0;stop-color:#ffffff"
+         style="stopOpacity
+:0;stopColor:#ffffff"
          offset="0"
          id="stop86" />
       <stop
-         style="stop-opacity:1;stop-color:#ffffff"
+         style="stopOpacity
+:1;stopColor:#ffffff"
          offset="1"
          id="stop87" />
     </linearGradient>
@@ -853,11 +909,13 @@
        spreadMethod="pad"
        id="linearGradient89">
       <stop
-         style="stop-opacity:1;stop-color:#1b9e9c icc-color(sRGB-IEC61966-2.1, 0.10588074, 0.61959839, 0.61175537);"
+         style="stopOpacity
+:1;stopColor:#1b9e9c icc-color(sRGB-IEC61966-2.1, 0.10588074, 0.61959839, 0.61175537);"
          offset="0"
          id="stop88" />
       <stop
-         style="stop-opacity:1;stop-color:#006376 icc-color(sRGB-IEC61966-2.1, 0, 0.38822937, 0.46273804);"
+         style="stopOpacity
+:1;stopColor:#006376 icc-color(sRGB-IEC61966-2.1, 0, 0.38822937, 0.46273804);"
          offset="1"
          id="stop89" />
     </linearGradient>
@@ -2431,11 +2489,13 @@
        spreadMethod="pad"
        id="linearGradient478">
       <stop
-         style="stop-opacity:1;stop-color:#006376 icc-color(sRGB-IEC61966-2.1, 0, 0.38822937, 0.46273804);"
+         style="stopOpacity
+:1;stopColor:#006376 icc-color(sRGB-IEC61966-2.1, 0, 0.38822937, 0.46273804);"
          offset="0"
          id="stop477" />
       <stop
-         style="stop-opacity:1;stop-color:#1b9e9c icc-color(sRGB-IEC61966-2.1, 0.10588074, 0.61959839, 0.61175537);"
+         style="stopOpacity
+:1;stopColor:#1b9e9c icc-color(sRGB-IEC61966-2.1, 0.10588074, 0.61959839, 0.61175537);"
          offset="1"
          id="stop478" />
     </linearGradient>
@@ -2449,11 +2509,13 @@
        spreadMethod="pad"
        id="linearGradient480">
       <stop
-         style="stop-opacity:1;stop-color:#006376 icc-color(sRGB-IEC61966-2.1, 0, 0.38822937, 0.46273804);"
+         style="stopOpacity
+:1;stopColor:#006376 icc-color(sRGB-IEC61966-2.1, 0, 0.38822937, 0.46273804);"
          offset="0"
          id="stop479" />
       <stop
-         style="stop-opacity:1;stop-color:#1b9e9c icc-color(sRGB-IEC61966-2.1, 0.10588074, 0.61959839, 0.61175537);"
+         style="stopOpacity
+:1;stopColor:#1b9e9c icc-color(sRGB-IEC61966-2.1, 0.10588074, 0.61959839, 0.61175537);"
          offset="1"
          id="stop480" />
     </linearGradient>

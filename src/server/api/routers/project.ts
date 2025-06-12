@@ -38,12 +38,13 @@ export const projectRouter = createTRPCRouter({
       }
 
       try {
-        const projects = await Project.find(filter)
+        const projects = await (Project as any)
+          .find(filter)
           .sort({ order: 1 })
           .limit(input?.limit ?? 50)
           .skip(input?.offset ?? 0);
 
-        return projects.map((project) => ({
+        return projects.map((project: any) => ({
           _id: project._id.toString(),
           title: project.title,
           description: project.description,
@@ -66,7 +67,7 @@ export const projectRouter = createTRPCRouter({
     await connectToMongoDB();
 
     try {
-      const project = await Project.findById(input);
+      const project = await (Project as any).findById(input);
 
       if (!project) {
         throw new Error("Projekt nebyl nalezen");
@@ -154,10 +155,14 @@ export const projectRouter = createTRPCRouter({
       try {
         const { id, ...updateData } = input;
 
-        const project = await Project.findByIdAndUpdate(id, updateData, {
-          new: true,
-          runValidators: true,
-        });
+        const project = await (Project as any).findByIdAndUpdate(
+          id,
+          updateData,
+          {
+            new: true,
+            runValidators: true,
+          },
+        );
 
         if (!project) {
           throw new Error("Projekt nebyl nalezen");
@@ -186,7 +191,7 @@ export const projectRouter = createTRPCRouter({
     await connectToMongoDB();
 
     try {
-      const project = await Project.findByIdAndDelete(input);
+      const project = await (Project as any).findByIdAndDelete(input);
 
       if (!project) {
         throw new Error("Projekt nebyl nalezen");
@@ -203,7 +208,7 @@ export const projectRouter = createTRPCRouter({
     await connectToMongoDB();
 
     try {
-      const stats = await Project.aggregate([
+      const stats = await (Project as any).aggregate([
         {
           $group: {
             _id: "$category",
@@ -215,7 +220,7 @@ export const projectRouter = createTRPCRouter({
         },
       ]);
 
-      const totalCount = await Project.countDocuments();
+      const totalCount = await (Project as any).countDocuments();
 
       return {
         total: totalCount,

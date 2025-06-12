@@ -14,8 +14,8 @@ export function LinuxIcon({ className = "", size = 60 }: IconProps) {
         gradientTransform="matrix(.7 0 0 .35 782.303 444.575)"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-opacity=".502"></stop>
-        <stop offset="1" stop-opacity="0"></stop>
+        <stop offset="0" stopOpacity=".502"></stop>
+        <stop offset="1" stopOpacity="0"></stop>
       </radialGradient>
       <path
         fill="url(#linux-original-a)"
@@ -29,8 +29,8 @@ export function LinuxIcon({ className = "", size = 60 }: IconProps) {
         gradientTransform="matrix(.719 0 0 .35 595.327 443.952)"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-opacity=".502"></stop>
-        <stop offset="1" stop-opacity="0"></stop>
+        <stop offset="0" stopOpacity=".502"></stop>
+        <stop offset="1" stopOpacity="0"></stop>
       </radialGradient>
       <path
         fill="url(#linux-original-b)"
@@ -2758,9 +2758,9 @@ export function LinuxIcon({ className = "", size = 60 }: IconProps) {
           y2="-130.856"
           gradientTransform="translate(375.489 179.416) scale(1.234)"
         >
-          <stop offset="0" stop-color="#FAC700"></stop>
-          <stop offset=".415" stop-color="#F7C400"></stop>
-          <stop offset="1" stop-color="#F7C400"></stop>
+          <stop offset="0" stopColor="#FAC700"></stop>
+          <stop offset=".415" stopColor="#F7C400"></stop>
+          <stop offset="1" stopColor="#F7C400"></stop>
         </linearGradient>
         <path
           fill="url(#linux-original-c)"
@@ -2775,9 +2775,9 @@ export function LinuxIcon({ className = "", size = 60 }: IconProps) {
           y2="-130.857"
           gradientTransform="translate(375.489 179.416) scale(1.234)"
         >
-          <stop offset="0" stop-color="#F6C200"></stop>
-          <stop offset=".415" stop-color="#EFBC00"></stop>
-          <stop offset="1" stop-color="#EFBC00"></stop>
+          <stop offset="0" stopColor="#F6C200"></stop>
+          <stop offset=".415" stopColor="#EFBC00"></stop>
+          <stop offset="1" stopColor="#EFBC00"></stop>
         </linearGradient>
         <path
           fill="url(#linux-original-d)"
@@ -2792,9 +2792,9 @@ export function LinuxIcon({ className = "", size = 60 }: IconProps) {
           y2="-130.859"
           gradientTransform="translate(375.489 179.416) scale(1.234)"
         >
-          <stop offset="0" stop-color="#F1BD00"></stop>
-          <stop offset=".415" stop-color="#E8B500"></stop>
-          <stop offset="1" stop-color="#E8B500"></stop>
+          <stop offset="0" stopColor="#F1BD00"></stop>
+          <stop offset=".415" stopColor="#E8B500"></stop>
+          <stop offset="1" stopColor="#E8B500"></stop>
         </linearGradient>
         <path
           fill="url(#linux-original-e)"
@@ -2809,9 +2809,9 @@ export function LinuxIcon({ className = "", size = 60 }: IconProps) {
           y2="-130.86"
           gradientTransform="translate(375.489 179.416) scale(1.234)"
         >
-          <stop offset="0" stop-color="#EDB800"></stop>
-          <stop offset=".415" stop-color="#E0AD00"></stop>
-          <stop offset="1" stop-color="#E0AD00"></stop>
+          <stop offset="0" stopColor="#EDB800"></stop>
+          <stop offset=".415" stopColor="#E0AD00"></stop>
+          <stop offset="1" stopColor="#E0AD00"></stop>
         </linearGradient>
         <path
           fill="url(#linux-original-f)"
@@ -2826,9 +2826,9 @@ export function LinuxIcon({ className = "", size = 60 }: IconProps) {
           y2="-130.862"
           gradientTransform="translate(375.489 179.416) scale(1.234)"
         >
-          <stop offset="0" stop-color="#E9B300"></stop>
-          <stop offset=".415" stop-color="#D8A500"></stop>
-          <stop offset="1" stop-color="#D8A500"></stop>
+          <stop offset="0" stopColor="#E9B300"></stop>
+          <stop offset=".415" stopColor="#D8A500"></stop>
+          <stop offset="1" stopColor="#D8A500"></stop>
         </linearGradient>
         <path
           fill="url(#linux-original-g)"
@@ -2843,9 +2843,9 @@ export function LinuxIcon({ className = "", size = 60 }: IconProps) {
           y2="-130.863"
           gradientTransform="translate(375.489 179.416) scale(1.234)"
         >
-          <stop offset="0" stop-color="#E4AE00"></stop>
-          <stop offset=".415" stop-color="#D19E00"></stop>
-          <stop offset="1" stop-color="#D19E00"></stop>
+          <stop offset="0" stopColor="#E4AE00"></stop>
+          <stop offset=".415" stopColor="#D19E00"></stop>
+          <stop offset="1" stopColor="#D19E00"></stop>
         </linearGradient>
         <path
           fill="url(#linux-original-h)"
@@ -2860,9 +2860,9 @@ export function LinuxIcon({ className = "", size = 60 }: IconProps) {
           y2="-130.864"
           gradientTransform="translate(375.489 179.416) scale(1.234)"
         >
-          <stop offset="0" stop-color="#E0A900"></stop>
-          <stop offset=".415" stop-color="#C99600"></stop>
-          <stop offset="1" stop-color="#C99600"></stop>
+          <stop offset="0" stopColor="#E0A900"></stop>
+          <stop offset=".415" stopColor="#C99600"></stop>
+          <stop offset="1" stopColor="#C99600"></stop>
         </linearGradient>
         <path
           fill="url(#linux-original-i)"
@@ -2877,9 +2877,9 @@ export function LinuxIcon({ className = "", size = 60 }: IconProps) {
           y2="-130.866"
           gradientTransform="translate(375.489 179.416) scale(1.234)"
         >
-          <stop offset="0" stop-color="#DCA400"></stop>
-          <stop offset=".415" stop-color="#C18E00"></stop>
-          <stop offset="1" stop-color="#C18E00"></stop>
+          <stop offset="0" stopColor="#DCA400"></stop>
+          <stop offset=".415" stopColor="#C18E00"></stop>
+          <stop offset="1" stopColor="#C18E00"></stop>
         </linearGradient>
         <path
           fill="url(#linux-original-j)"
@@ -2894,9 +2894,9 @@ export function LinuxIcon({ className = "", size = 60 }: IconProps) {
           y2="-130.866"
           gradientTransform="translate(375.489 179.416) scale(1.234)"
         >
-          <stop offset="0" stop-color="#D79F00"></stop>
-          <stop offset=".415" stop-color="#BA8700"></stop>
-          <stop offset="1" stop-color="#BA8700"></stop>
+          <stop offset="0" stopColor="#D79F00"></stop>
+          <stop offset=".415" stopColor="#BA8700"></stop>
+          <stop offset="1" stopColor="#BA8700"></stop>
         </linearGradient>
         <path
           fill="url(#linux-original-k)"
@@ -2911,9 +2911,9 @@ export function LinuxIcon({ className = "", size = 60 }: IconProps) {
           y2="-130.867"
           gradientTransform="translate(375.489 179.416) scale(1.234)"
         >
-          <stop offset="0" stop-color="#D39B00"></stop>
-          <stop offset=".415" stop-color="#B27F00"></stop>
-          <stop offset="1" stop-color="#B27F00"></stop>
+          <stop offset="0" stopColor="#D39B00"></stop>
+          <stop offset=".415" stopColor="#B27F00"></stop>
+          <stop offset="1" stopColor="#B27F00"></stop>
         </linearGradient>
         <path
           fill="url(#linux-original-l)"
@@ -2928,9 +2928,9 @@ export function LinuxIcon({ className = "", size = 60 }: IconProps) {
           y2="-130.868"
           gradientTransform="translate(375.489 179.416) scale(1.234)"
         >
-          <stop offset="0" stop-color="#CF9600"></stop>
-          <stop offset=".415" stop-color="#a70"></stop>
-          <stop offset="1" stop-color="#a70"></stop>
+          <stop offset="0" stopColor="#CF9600"></stop>
+          <stop offset=".415" stopColor="#a70"></stop>
+          <stop offset="1" stopColor="#a70"></stop>
         </linearGradient>
         <path
           fill="url(#linux-original-m)"
@@ -2945,9 +2945,9 @@ export function LinuxIcon({ className = "", size = 60 }: IconProps) {
           y2="-130.869"
           gradientTransform="translate(375.489 179.416) scale(1.234)"
         >
-          <stop offset="0" stop-color="#CA9100"></stop>
-          <stop offset=".415" stop-color="#A37000"></stop>
-          <stop offset="1" stop-color="#A37000"></stop>
+          <stop offset="0" stopColor="#CA9100"></stop>
+          <stop offset=".415" stopColor="#A37000"></stop>
+          <stop offset="1" stopColor="#A37000"></stop>
         </linearGradient>
         <path
           fill="url(#linux-original-n)"
@@ -2962,9 +2962,9 @@ export function LinuxIcon({ className = "", size = 60 }: IconProps) {
           y2="-130.869"
           gradientTransform="translate(375.489 179.416) scale(1.234)"
         >
-          <stop offset="0" stop-color="#C68C00"></stop>
-          <stop offset=".415" stop-color="#9B6800"></stop>
-          <stop offset="1" stop-color="#9B6800"></stop>
+          <stop offset="0" stopColor="#C68C00"></stop>
+          <stop offset=".415" stopColor="#9B6800"></stop>
+          <stop offset="1" stopColor="#9B6800"></stop>
         </linearGradient>
         <path
           fill="url(#linux-original-o)"
@@ -2979,9 +2979,9 @@ export function LinuxIcon({ className = "", size = 60 }: IconProps) {
           y2="-130.87"
           gradientTransform="translate(375.489 179.416) scale(1.234)"
         >
-          <stop offset="0" stop-color="#C28700"></stop>
-          <stop offset=".415" stop-color="#936000"></stop>
-          <stop offset="1" stop-color="#936000"></stop>
+          <stop offset="0" stopColor="#C28700"></stop>
+          <stop offset=".415" stopColor="#936000"></stop>
+          <stop offset="1" stopColor="#936000"></stop>
         </linearGradient>
         <path
           fill="url(#linux-original-p)"
@@ -2996,9 +2996,9 @@ export function LinuxIcon({ className = "", size = 60 }: IconProps) {
           y2="-130.871"
           gradientTransform="translate(375.489 179.416) scale(1.234)"
         >
-          <stop offset="0" stop-color="#BD8200"></stop>
-          <stop offset=".415" stop-color="#8C5900"></stop>
-          <stop offset="1" stop-color="#8C5900"></stop>
+          <stop offset="0" stopColor="#BD8200"></stop>
+          <stop offset=".415" stopColor="#8C5900"></stop>
+          <stop offset="1" stopColor="#8C5900"></stop>
         </linearGradient>
         <path
           fill="url(#linux-original-q)"
@@ -3013,9 +3013,9 @@ export function LinuxIcon({ className = "", size = 60 }: IconProps) {
           y2="-130.871"
           gradientTransform="translate(375.489 179.416) scale(1.234)"
         >
-          <stop offset="0" stop-color="#B97D00"></stop>
-          <stop offset=".415" stop-color="#845100"></stop>
-          <stop offset="1" stop-color="#845100"></stop>
+          <stop offset="0" stopColor="#B97D00"></stop>
+          <stop offset=".415" stopColor="#845100"></stop>
+          <stop offset="1" stopColor="#845100"></stop>
         </linearGradient>
         <path
           fill="url(#linux-original-r)"
@@ -3030,9 +3030,9 @@ export function LinuxIcon({ className = "", size = 60 }: IconProps) {
           y2="-130.872"
           gradientTransform="translate(375.489 179.416) scale(1.234)"
         >
-          <stop offset="0" stop-color="#B57800"></stop>
-          <stop offset=".415" stop-color="#7C4900"></stop>
-          <stop offset="1" stop-color="#7C4900"></stop>
+          <stop offset="0" stopColor="#B57800"></stop>
+          <stop offset=".415" stopColor="#7C4900"></stop>
+          <stop offset="1" stopColor="#7C4900"></stop>
         </linearGradient>
         <path
           fill="url(#linux-original-s)"
@@ -3047,9 +3047,9 @@ export function LinuxIcon({ className = "", size = 60 }: IconProps) {
           y2="-130.872"
           gradientTransform="translate(375.489 179.416) scale(1.234)"
         >
-          <stop offset="0" stop-color="#B07300"></stop>
-          <stop offset=".415" stop-color="#754200"></stop>
-          <stop offset="1" stop-color="#754200"></stop>
+          <stop offset="0" stopColor="#B07300"></stop>
+          <stop offset=".415" stopColor="#754200"></stop>
+          <stop offset="1" stopColor="#754200"></stop>
         </linearGradient>
         <path
           fill="url(#linux-original-t)"
@@ -3064,9 +3064,9 @@ export function LinuxIcon({ className = "", size = 60 }: IconProps) {
           y2="-130.872"
           gradientTransform="translate(375.489 179.416) scale(1.234)"
         >
-          <stop offset="0" stop-color="#AC6E00"></stop>
-          <stop offset=".415" stop-color="#6D3A00"></stop>
-          <stop offset="1" stop-color="#6D3A00"></stop>
+          <stop offset="0" stopColor="#AC6E00"></stop>
+          <stop offset=".415" stopColor="#6D3A00"></stop>
+          <stop offset="1" stopColor="#6D3A00"></stop>
         </linearGradient>
         <path
           fill="url(#linux-original-u)"
@@ -3081,9 +3081,9 @@ export function LinuxIcon({ className = "", size = 60 }: IconProps) {
           y2="-130.873"
           gradientTransform="translate(375.489 179.416) scale(1.234)"
         >
-          <stop offset="0" stop-color="#A86A00"></stop>
-          <stop offset=".415" stop-color="#663200"></stop>
-          <stop offset="1" stop-color="#663200"></stop>
+          <stop offset="0" stopColor="#A86A00"></stop>
+          <stop offset=".415" stopColor="#663200"></stop>
+          <stop offset="1" stopColor="#663200"></stop>
         </linearGradient>
         <path
           fill="url(#linux-original-v)"

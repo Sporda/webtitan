@@ -29,11 +29,6 @@ const config = {
     keepAlive: true,
   },
 
-  server: {
-    hostname: "0.0.0.0",
-    port: 3000,
-  },
-
   headers: async () => {
     return [
       {
@@ -58,18 +53,18 @@ const config = {
     includePaths: ["./src/styles"],
   },
 
-  webpack(config) {
-    const fileLoaderRule = config.module.rules.find(
-      (/** @type {{ test: { test: (arg0: string) => any; }; }} */ rule) =>
-        rule.test?.test?.(".svg"),
-    );
-    config.module.rules.push({
-      ...fileLoaderRule,
-      test: /\.svg$/i,
-      type: "asset/resource",
-    });
-    return config;
-  },
+  // webpack(config) {
+  //   const fileLoaderRule = config.module.rules.find(
+  //     (/** @type {{ test: { test: (arg0: string) => any; }; }} */ rule) =>
+  //       rule.test?.test?.(".svg"),
+  //   );
+  //   config.module.rules.push({
+  //     ...fileLoaderRule,
+  //     test: /\.svg$/i,
+  //     type: "asset/resource",
+  //   });
+  //   return config;
+  // },
 
   images: {
     dangerouslyAllowSVG: true,

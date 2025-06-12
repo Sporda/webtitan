@@ -50,7 +50,7 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_PORT }}
-          envs: DATABASE_URL,NEXT_PUBLIC_POSTHOG_KEY,NEXT_PUBLIC_POSTHOG_HOST,REPO_LC
+          envs: DATABASE_URL,NEXT_PUBLIC_POSTHOG_KEY,NEXT_PUBLIC_POSTHOG_HOST,REPO_LC,MONGODB_URI
           script: |
             # Přihlášení do GitHub Container Registry
             echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
@@ -68,6 +68,7 @@ jobs:
             # Vytvoření .env souboru
             cat > /var/www/webtitan.cz/.env << EOL
             DATABASE_URL=${DATABASE_URL}
+            MONGODB_URI=${MONGODB_URI}
             NEXT_PUBLIC_URL=https://webtitan.cz
             NEXT_PUBLIC_POSTHOG_KEY=${NEXT_PUBLIC_POSTHOG_KEY}
             NEXT_PUBLIC_POSTHOG_HOST=${NEXT_PUBLIC_POSTHOG_HOST}

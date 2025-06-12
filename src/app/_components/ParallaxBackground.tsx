@@ -99,11 +99,7 @@ export const ParallaxBackground = () => {
     sun.to("#bg_grad stop:nth-child(3)", { attr: { offset: "0.18" } }, 0);
     sun.to("#bg_grad stop:nth-child(4)", { attr: { offset: "0.25" } }, 0);
     sun.to("#bg_grad stop:nth-child(5)", { attr: { offset: "0.46" } }, 0);
-    sun.to(
-      "#bg_grad stop:nth-child(6)",
-      { attr: { "stop-color": "#FF9171" } },
-      0,
-    );
+    sun.to("#bg_grad stop:nth-child(6)", { attr: { stopColor: "#FF9171" } }, 0);
 
     // SCENE 2
     let scene2 = gsap.timeline();
@@ -179,12 +175,12 @@ export const ParallaxBackground = () => {
 
     sun2.to("#sun", { attr: { offset: "1.4" } }, 0);
     sun2.to("#bg_grad stop:nth-child(2)", { attr: { offset: "0.7" } }, 0);
-    sun2.to("#sun", { attr: { "stop-color": "#ffffff" } }, 0);
-    sun2.to("#lg4 stop:nth-child(1)", { attr: { "stop-color": "#1A4160" } }, 0);
-    sun2.to("#lg4 stop:nth-child(2)", { attr: { "stop-color": "#062B48" } }, 0);
+    sun2.to("#sun", { attr: { stopColor: "#ffffff" } }, 0);
+    sun2.to("#lg4 stop:nth-child(1)", { attr: { stopColor: "#1A4160" } }, 0);
+    sun2.to("#lg4 stop:nth-child(2)", { attr: { stopColor: "#062B48" } }, 0);
     sun2.to(
       "#bg_grad stop:nth-child(6)",
-      { attr: { "stop-color": "#45224A" } },
+      { attr: { stopColor: "#45224A" } },
       0,
     );
 
