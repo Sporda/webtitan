@@ -22,11 +22,14 @@ export async function ProjectsSection() {
           {projects.map((project) => (
             <Card key={project._id} className="overflow-hidden">
               <Image
-                src={project.image}
+                src={`/images/projects/optimized/${project.image.split("/")[2]}.webp`}
                 alt={project.title}
-                width={400}
-                height={200}
+                width={800}
+                height={400}
                 className="h-48 w-full object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                quality={85}
+                priority={false}
               />
               <CardHeader>
                 <CardTitle>{project.title}</CardTitle>
