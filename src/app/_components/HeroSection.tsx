@@ -16,7 +16,7 @@ export const HeroSection = () => {
     gsap.fromTo(
       heroRef.current,
       {
-        y: "100vh",
+        y: "-100vh",
         opacity: 0,
       },
       {
@@ -29,19 +29,27 @@ export const HeroSection = () => {
     );
   }, []);
 
+  const onContact = () => {
+    // zascrolovat na kontakt sekci
+    const contactSection = document.getElementById("contact");
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <section
       ref={heroRef}
-      className="hero-section relative z-[5] flex min-h-screen items-center justify-center"
+      className="hero-section relative z-[5] flex items-center justify-center pb-20 pt-36"
     >
       <div className="container mx-auto px-4">
         <MainProfileCard
           image={image}
           title="Jan Šporek"
-          subtitle="Senior full-stack JavaScript vývojář"
+          subtitle="Full-stack JavaScript vývojář"
           description="Díky mnohaletým zkušenostem dokážu navrhnout a realizovat řešení na míru – ať už jde o webové stránky, aplikace, nebo komplexní API napojené na externí služby."
           onDownloadCV={() => {}}
-          onFollow={() => {}}
+          onContact={onContact}
         />
       </div>
     </section>

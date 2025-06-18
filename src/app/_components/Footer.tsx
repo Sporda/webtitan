@@ -12,7 +12,11 @@ export function Footer() {
           <Link href="#" aria-label="GitHub">
             <Github />
           </Link>
-          <Link href="#" aria-label="LinkedIn">
+          <Link
+            href="https://www.linkedin.com/in/jan-%C5%A1porek-07a39168/"
+            target="_blank"
+            aria-label="LinkedIn"
+          >
             <Linkedin />
           </Link>
           <Link href="#" aria-label="Twitter">

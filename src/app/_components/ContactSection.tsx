@@ -75,13 +75,13 @@ export function ContactSection() {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Textarea placeholder="Vaše zpráva" {...field} />
+                    <Textarea placeholder="Vaše zpráva" rows={8} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full border border-white">
               Odeslat zprávu
             </Button>
           </form>

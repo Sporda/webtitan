@@ -17,7 +17,9 @@ export async function ProjectsSection() {
   return (
     <section id="projects" className="py-20">
       <div className="container mx-auto px-4">
-        <h2 className="mb-12 text-center text-3xl font-bold">Moje projekty</h2>
+        <h2 className="mb-12 text-center text-3xl font-bold text-white drop-shadow-lg">
+          Moje projekty
+        </h2>
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {projects.map((project) => (
             <Card key={project._id} className="overflow-hidden">

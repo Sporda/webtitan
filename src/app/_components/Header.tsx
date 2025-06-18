@@ -7,6 +7,17 @@ import { useState } from "react";
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+    setIsMenuOpen(false);
+  };
+
   return (
     <header className="fixed top-0 z-10 w-full bg-black/50 backdrop-blur-sm">
       <div className="container mx-auto flex items-center justify-between px-4 py-4">
@@ -51,40 +62,52 @@ export function Header() {
         >
           <ul className="flex flex-col space-y-4 p-4 md:flex-row md:space-x-4 md:space-y-0 md:p-0">
             <li>
-              <Link
-                href="#about"
-                className="block hover:underline"
-                onClick={() => setIsMenuOpen(false)}
+              <button
+                className="nav-link"
+                onClick={() => scrollToSection("about")}
               >
                 O mně
-              </Link>
+              </button>
             </li>
             <li>
-              <Link
-                href="#skills"
-                className="block hover:underline"
-                onClick={() => setIsMenuOpen(false)}
+              <button
+                className="nav-link"
+                onClick={() => scrollToSection("services")}
+              >
+                Služby
+              </button>
+            </li>
+            <li>
+              <button
+                className="nav-link"
+                onClick={() => scrollToSection("skills")}
               >
                 Technologie
-              </Link>
+              </button>
             </li>
             <li>
-              <Link
-                href="#projects"
-                className="block hover:underline"
-                onClick={() => setIsMenuOpen(false)}
+              <button
+                className="nav-link"
+                onClick={() => scrollToSection("projects")}
               >
                 Projekty
-              </Link>
+              </button>
             </li>
             <li>
-              <Link
-                href="#contact"
-                className="block hover:underline"
-                onClick={() => setIsMenuOpen(false)}
+              <button
+                className="nav-link"
+                onClick={() => scrollToSection("career")}
+              >
+                Kariéra
+              </button>
+            </li>
+            <li>
+              <button
+                className="nav-link"
+                onClick={() => scrollToSection("contact")}
               >
                 Kontakt
-              </Link>
+              </button>
             </li>
           </ul>
         </nav>

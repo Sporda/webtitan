@@ -78,3 +78,22 @@
     }
   }
 }
+
+/* Navigation link styles */
+.nav-link {
+  display: block;
+  color: white;
+  text-decoration: none;
+  transition: 0.4s;
+  border-radius: 5px;
+  padding: 8px 12px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.nav-link:hover {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  background: white;
+  color: #120e22;
+}

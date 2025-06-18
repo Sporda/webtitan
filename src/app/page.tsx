@@ -1,8 +1,11 @@
 import { api, HydrateClient } from "@/trpc/server";
 import { Header } from "./_components/Header";
 import { HeroSection } from "./_components/HeroSection";
+import { ServicesSection } from "./_components/ServicesSection";
 import { SkillsSection } from "./_components/SkillsSection";
 import { ProjectsSection } from "./_components/ProjectsSection";
+import { CareerSection } from "./_components/CareerSection";
+import { AboutSection } from "./_components/AboutSection";
 import { ContactSection } from "./_components/ContactSection";
 import { Footer } from "./_components/Footer";
 import { Providers } from "./_components/Providers";
@@ -29,8 +32,11 @@ export default async function Home() {
 
           <main className="relative z-40 flex flex-col items-center">
             <HeroSection />
+            <ServicesSection />
             <SkillsSection />
             <ProjectsSection />
+            <CareerSection />
+            <AboutSection />
             <ContactSection />
           </main>
 
