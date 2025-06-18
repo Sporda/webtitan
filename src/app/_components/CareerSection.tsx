@@ -83,7 +83,7 @@ export const CareerSection = () => {
   return (
     <section id="career" className="relative z-[4] py-20">
       <div className="container mx-auto px-4">
-        <h2 className="mb-16 text-center text-3xl font-bold text-white drop-shadow-lg">
+        <h2 className="text-shadow-strong mb-16 text-center text-3xl font-bold text-white">
           Kariéra
         </h2>
 

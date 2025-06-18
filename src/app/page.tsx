@@ -11,11 +11,16 @@ import { Footer } from "./_components/Footer";
 import { Providers } from "./_components/Providers";
 import { ParallaxBackground } from "./_components/ParallaxBackground";
 import { Birds } from "./_components/Parallax/birds/Birds";
+import { JsonLd } from "./_components/JsonLd";
 export default async function Home() {
   const hello = await api.post.hello({ text: "from tRPC" });
 
+  // Prefetch projects data for better UX
+  void api.project.getAll.prefetch();
+
   return (
     <HydrateClient>
+      <JsonLd />
       <Providers>
         {/* Parallax kontejner */}
         <div className="fixed inset-0 h-[6000px]">
@@ -30,7 +35,7 @@ export default async function Home() {
             <Header />
           </div>
 
-          <main className="relative z-40 flex flex-col items-center">
+          <main className="relative z-40 mb-20 flex flex-col items-center">
             <HeroSection />
             <ServicesSection />
             <SkillsSection />
@@ -40,7 +45,7 @@ export default async function Home() {
             <ContactSection />
           </main>
 
-          <div className="fixed bottom-0 z-50 w-full bg-black/50">
+          <div className="w-full bg-black/50">
             <Footer />
           </div>
         </div>

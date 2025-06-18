@@ -47,7 +47,7 @@ export const MainProfileCard = ({
         // Pauza po dokončení psaní
         const timeout = setTimeout(() => {
           setIsTyping(false);
-        }, 2000);
+        }, 3000);
         return () => clearTimeout(timeout);
       }
     } else {
@@ -82,16 +82,16 @@ export const MainProfileCard = ({
       />
 
       <div className="card-content">
-        <h2 className="text-white drop-shadow-lg">{title}</h2>
-        <h3 className="text-white drop-shadow-lg">
+        <h1 className="text-white drop-shadow-lg">{title}</h1>
+        <h2 className="text-white drop-shadow-lg">
           {displayedText}
           <span className="typing-cursor">|</span>
-        </h3>
+        </h2>
         <p className="text-white drop-shadow-lg">{description}</p>
 
         <div className="buttons">
           <button onClick={onContact} className="button-85">
-            Kontaktujte mě
+            Kontaktujte&nbsp;mě
           </button>
         </div>
       </div>

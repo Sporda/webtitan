@@ -68,13 +68,9 @@
   }
   .image-wrapper {
     img {
-      /* Pro změnu na modrou */
-      filter: brightness(0) saturate(100%) invert(48%) sepia(79%)
-        saturate(2476%) hue-rotate(186deg) brightness(118%) contrast(119%);
-
-      /* Pro změnu na červenou */
-      filter: brightness(0) saturate(100%) invert(27%) sepia(51%)
-        saturate(2878%) hue-rotate(346deg) brightness(104%) contrast(97%);
+      /* Pro změnu na světle modrou #32e6f0 */
+      filter: brightness(0) saturate(100%) invert(79%) sepia(95%) saturate(615%)
+        hue-rotate(150deg) brightness(113%) contrast(107%);
     }
   }
 }
@@ -96,4 +92,44 @@
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   background: white;
   color: #120e22;
+}
+
+/* Fade project effect */
+.fade-project {
+  mask: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(255, 255, 255, 0.7) 70%,
+    rgba(255, 255, 255, 0.4) 85%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  -webkit-mask: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(255, 255, 255, 0.7) 70%,
+    rgba(255, 255, 255, 0.4) 85%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+@layer components {
+  .nav-link {
+    @apply transition-colors duration-300 hover:text-cyan-300;
+  }
+
+  /* Silnější drop-shadow pro nadpisy na světlém pozadí */
+  .text-shadow-strong {
+    text-shadow:
+      0 2px 4px rgba(0, 0, 0, 0.8),
+      0 4px 8px rgba(0, 0, 0, 0.6),
+      0 8px 16px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* Logo barva změna na světle modrou */
+.image-wrapper img {
+  filter: brightness(0) saturate(100%) invert(79%) sepia(95%) saturate(615%)
+    hue-rotate(150deg) brightness(113%) contrast(107%);
 }

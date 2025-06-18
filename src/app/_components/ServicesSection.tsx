@@ -87,7 +87,7 @@ export const ServicesSection = () => {
   return (
     <section id="services" className="relative z-[4] py-20">
       <div className="container mx-auto px-4">
-        <h2 className="mb-12 text-center text-3xl font-bold text-white drop-shadow-lg">
+        <h2 className="text-shadow-strong mb-12 text-center text-3xl font-bold text-white">
           Jak vám pomohu
         </h2>
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">

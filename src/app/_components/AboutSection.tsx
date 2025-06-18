@@ -8,7 +8,7 @@ export const AboutSection = () => {
           id="about-content"
           className="mx-auto max-w-4xl rounded-xl bg-[rgba(18,16,23,0.8)] p-8 shadow-[0_80px_60px_rgba(0,0,0,0.12)] backdrop-blur-[10px] md:p-12"
         >
-          <h2 className="mb-8 text-center text-3xl font-bold text-white drop-shadow-lg">
+          <h2 className="text-shadow-strong mb-8 text-center text-3xl font-bold text-white">
             O mně
           </h2>
 

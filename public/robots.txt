@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://webtitan.cz/sitemap.xml
+
+# Disallow crawling of admin and api endpoints
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+
+# Allow crawling of images
+Allow: /images/
+Allow: /*.webp
+Allow: /*.jpg
+Allow: /*.png
+
+# Crawl delay (optional)
+Crawl-delay: 1 

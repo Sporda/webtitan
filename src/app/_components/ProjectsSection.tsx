@@ -1,60 +1,50 @@
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { api } from "@/trpc/server";
 import type { ProjectData } from "@/types/project";
+import { ProjectsClient } from "./ProjectsClient";
 
 export async function ProjectsSection() {
   // Načteme projekty z databáze přes tRPC
-  const projects: ProjectData[] = await api.project.getAll();
+  const allProjects: ProjectData[] = await api.project.getAll();
+
+  // Definujeme pořadí projektů
+  const featuredProjectNames = [
+    "Tepp",
+    "Unlikely",
+    "Fitness Ural",
+    "2MSKV",
+    "Markop Okna",
+    "Sokolov Ubytování",
+  ];
+
+  const fadeProjectNames = ["Rybar Transport", "Plenkový servis", "Kotelna 55"];
+
+  // Filtrujeme a seřadíme projekty
+  const featuredProjects = featuredProjectNames
+    .map((name) => allProjects.find((p: ProjectData) => p.title === name))
+    .filter(Boolean) as ProjectData[];
+
+  const fadeProjects = fadeProjectNames
+    .map((name) => allProjects.find((p: ProjectData) => p.title === name))
+    .filter(Boolean) as ProjectData[];
+
+  // Ostatní projekty (ty co nejsou featured ani fade)
+  const usedProjectNames = [...featuredProjectNames, ...fadeProjectNames];
+  const otherProjects = allProjects.filter(
+    (project: ProjectData) => !usedProjectNames.includes(project.title),
+  );
 
   return (
     <section id="projects" className="py-20">
       <div className="container mx-auto px-4">
-        <h2 className="mb-12 text-center text-3xl font-bold text-white drop-shadow-lg">
+        <h2 className="text-shadow-strong mb-12 text-center text-3xl font-bold text-white">
           Moje projekty
         </h2>
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project) => (
-            <Card key={project._id} className="overflow-hidden">
-              <Image
-                src={`/images/projects/optimized/${project.image.split("/")[2]}.webp`}
-                alt={project.title}
-                width={800}
-                height={400}
-                className="h-48 w-full object-cover"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                quality={85}
-                priority={false}
-              />
-              <CardHeader>
-                <CardTitle>{project.title}</CardTitle>
-                <CardDescription>{project.description}</CardDescription>
-                {project.technologies && project.technologies.length > 0 && (
-                  <div className="mt-2 flex flex-wrap gap-1">
-                    {project.technologies.map((tech, index) => (
-                      <span
-                        key={index}
-                        className="rounded-full bg-blue-100 px-2 py-1 text-xs text-blue-800"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </CardHeader>
-              <CardFooter>
-                <Button className="w-full">Zobrazit projekt</Button>
-              </CardFooter>
-            </Card>
-          ))}
-        </div>
+
+        <ProjectsClient
+          featuredProjects={featuredProjects}
+          fadeProjects={fadeProjects}
+          otherProjects={otherProjects}
+        />
       </div>
     </section>
   );
