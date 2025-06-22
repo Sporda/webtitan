@@ -7,6 +7,7 @@ import { type Metadata } from "next";
 
 import { TRPCReactProvider } from "@/trpc/react";
 import { Providers } from "./_components/Providers";
+import { ToastProvider } from "@/components/ui/toast";
 
 export const metadata: Metadata = {
   title: {
@@ -94,9 +95,11 @@ export default function RootLayout({
         <meta name="theme-color" content="#32e6f0" />
       </head>
       <body>
-        <Providers>
-          <TRPCReactProvider>{children}</TRPCReactProvider>
-        </Providers>
+        <ToastProvider>
+          <Providers>
+            <TRPCReactProvider>{children}</TRPCReactProvider>
+          </Providers>
+        </ToastProvider>
       </body>
     </html>
   );

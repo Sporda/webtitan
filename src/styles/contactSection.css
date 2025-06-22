@@ -17,3 +17,50 @@
 #contact span {
   color: #fdfcfd;
 }
+
+/* Input a textarea styly pro bílý text */
+#contact input,
+#contact textarea {
+  color: white !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+#contact input::placeholder,
+#contact textarea::placeholder {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+#contact input:focus,
+#contact textarea:focus {
+  border-color: #32e6f0 !important;
+  box-shadow: 0 0 0 2px rgba(50, 230, 240, 0.2) !important;
+}
+
+/* Form message styly */
+#contact [data-radix-form-message] {
+  color: #ff6b6b !important;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+/* Button styly */
+#contact button[type="submit"] {
+  background: linear-gradient(45deg, #32e6f0, #32d6e6) !important;
+  color: #120e22 !important;
+  border: none !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+}
+
+#contact button[type="submit"]:hover {
+  background: linear-gradient(45deg, #32d6e6, #32c6dc) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(50, 230, 240, 0.3) !important;
+}
+
+#contact button[type="submit"]:disabled {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+}

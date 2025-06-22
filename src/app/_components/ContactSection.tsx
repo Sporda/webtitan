@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -13,6 +14,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/components/ui/toast";
 import "@/styles/contactSection.css";
 
 const formSchema = z.object({
@@ -22,6 +24,9 @@ const formSchema = z.object({
 });
 
 export function ContactSection() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { addToast } = useToast();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -31,9 +36,47 @@ export function ContactSection() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Zde přidejte logiku pro odeslání formuláře
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        addToast({
+          title: "Úspěch!",
+          description:
+            "Zpráva byla úspěšně odeslána. Budeme vás kontaktovat co nejdříve.",
+          type: "success",
+        });
+
+        // Vyčistit formulář
+        form.reset();
+      } else {
+        addToast({
+          title: "Chyba",
+          description: data.error || "Došlo k chybě při odesílání zprávy.",
+          type: "error",
+        });
+      }
+    } catch (error) {
+      console.error("Chyba při odesílání:", error);
+      addToast({
+        title: "Chyba připojení",
+        description: "Nepodařilo se odeslat zprávu. Zkuste to prosím znovu.",
+        type: "error",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -83,8 +126,12 @@ export function ContactSection() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full border border-white">
-              Odeslat zprávu
+            <Button
+              type="submit"
+              className="w-full border border-white"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Odesílám..." : "Odeslat zprávu"}
             </Button>
           </form>
         </Form>
