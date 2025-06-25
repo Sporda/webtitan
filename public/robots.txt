@@ -1,6 +1,10 @@
 User-agent: *
 Allow: /
 
+# SeznamBot specific rules
+User-agent: SeznamBot
+Disallow:
+
 # Sitemaps
 Sitemap: https://webtitan.cz/sitemap.xml
 
