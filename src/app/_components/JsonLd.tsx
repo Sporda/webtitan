@@ -3,9 +3,9 @@ export function JsonLd() {
     "@context": "https://schema.org",
     "@type": "Person",
     name: "Jan Šporek",
-    jobTitle: "Senior Full-stack JavaScript Developer",
+    jobTitle: "Full-stack JavaScript Developer",
     description:
-      "Senior full-stack JavaScript vývojář specializující se na React, Next.js, Node.js a TypeScript. Nabízím webové aplikace na míru, e-shopy, API integrace a DevOps služby.",
+      "Full-stack JavaScript vývojář specializující se na React, Next.js, Node.js a TypeScript. Nabízím webové aplikace na míru, e-shopy, API integrace a DevOps služby.",
     image: "https://webtitan.cz/JanSporekProfile.jpg",
     url: "https://webtitan.cz",
     email: "mailto:kontakt@webtitan.cz",
