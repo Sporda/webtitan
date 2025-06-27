@@ -68,7 +68,6 @@ export function ContactSection() {
         });
       }
     } catch (error) {
-      console.error("Chyba při odesílání:", error);
       addToast({
         title: "Chyba připojení",
         description: "Nepodařilo se odeslat zprávu. Zkuste to prosím znovu.",

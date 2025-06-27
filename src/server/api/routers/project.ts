@@ -24,7 +24,6 @@ export const projectRouter = createTRPCRouter({
       try {
         await connectToMongoDB();
       } catch (error) {
-        console.error("❌ MongoDB connection failed in getAll:", error);
         // Fallback - vraťme prázdné pole, pokud DB není dostupná
         return [];
       }

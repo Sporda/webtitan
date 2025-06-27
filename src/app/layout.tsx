@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     template: "%s | WebTitan",
   },
   description:
-    "Jan Šporek je senior full-stack JavaScript vývojář specializující se na React, Next.js, Node.js a TypeScript. Nabízím webové aplikace na míru, e-shopy, API integrace a DevOps služby.",
+    "Jan Šporek je full-stack JavaScript vývojář specializující se na React, Next.js, Node.js a TypeScript. Nabízím webové aplikace na míru, e-shopy, API integrace a DevOps služby.",
   keywords: [
     "full-stack vývojář",
     "JavaScript vývojář",
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     url: "https://webtitan.cz",
     title: "Jan Šporek - Full-stack JavaScript vývojář | WebTitan",
     description:
-      "Senior full-stack JavaScript vývojář specializující se na React, Next.js, Node.js a TypeScript. Nabízím webové aplikace na míru, e-shopy, API integrace a DevOps služby.",
+      "Full-stack JavaScript vývojář specializující se na React, Next.js, Node.js a TypeScript. Nabízím webové aplikace na míru, e-shopy, API integrace a DevOps služby.",
     siteName: "WebTitan",
     images: [
       {
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Jan Šporek - Full-stack JavaScript vývojář | WebTitan",
     description:
-      "Senior full-stack JavaScript vývojář specializující se na React, Next.js, Node.js a TypeScript. Nabízím webové aplikace na míru, e-shopy, API integrace a DevOps služby.",
+      "Full-stack JavaScript vývojář specializující se na React, Next.js, Node.js a TypeScript. Nabízím webové aplikace na míru, e-shopy, API integrace a DevOps služby.",
     images: ["/JanSporekProfile.jpg"],
   },
   robots: {

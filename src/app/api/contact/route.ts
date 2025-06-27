@@ -47,7 +47,6 @@ export async function POST(request: NextRequest) {
 
     // Spam detekce
     if (detectSpam(sanitizedData)) {
-      console.log("🚫 Spam detekován:", sanitizedData);
       return NextResponse.json(
         { error: "Zpráva byla označena jako spam" },
         { status: 400 },
@@ -56,12 +55,7 @@ export async function POST(request: NextRequest) {
 
     // Kontrola RESEND_API_KEY
     if (!process.env.RESEND_API_KEY) {
-      console.log("❌ RESEND_API_KEY není nastavené!");
-      console.log("📧 Simulace odesílání emailu (RESEND_API_KEY chybí):");
-      console.log(`Jméno: ${name}`);
-      console.log(`Email: ${email}`);
-      console.log(`Zpráva: ${message}`);
-
+      // V produkci by to mělo být správně nastavené
       return NextResponse.json({
         success: true,
         message: "Zpráva byla úspěšně odeslána (simulace)",
@@ -99,8 +93,6 @@ export async function POST(request: NextRequest) {
         { status: 500 },
       );
     }
-
-    console.log("✅ Email úspěšně odeslán:", data);
 
     return NextResponse.json({
       success: true,

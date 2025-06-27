@@ -74,6 +74,6 @@ ProjectSchema.index({ category: 1, order: 1 });
 
 // Model se automaticky vytvoří v databázi specifikované v mongoose připojení
 const Project =
-  mongoose.models.Project || mongoose.model("Project", ProjectSchema);
+  mongoose.models.Project || mongoose.model<IProject>("Project", ProjectSchema);
 
-export default Project;
+export default Project as mongoose.Model<IProject>;

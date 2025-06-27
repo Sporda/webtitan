@@ -21,7 +21,8 @@
     "import:projects": "tsx scripts/import-projects.ts",
     "test:mongo": "tsx scripts/test-mongo-connection.ts",
     "optimize:images": "tsx scripts/optimize-images.js",
-    "clean:optimized-images": "tsx scripts/clean-unused-optimized-images.js"
+    "clean:optimized-images": "tsx scripts/clean-unused-optimized-images.js",
+    "create:admin": "tsx scripts/create-admin-simple.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.0.0",
@@ -35,12 +36,15 @@
     "@trpc/react-query": "^11.0.0-rc.446",
     "@trpc/server": "^11.0.0-rc.446",
     "@types/mongoose": "^5.11.97",
+    "bcryptjs": "^3.0.2",
     "dotenv": "^16.5.0",
     "drizzle-orm": "^0.33.0",
     "embla-carousel-autoplay": "^8.5.2",
     "embla-carousel-react": "^8.5.2",
     "geist": "^1.3.0",
     "gsap": "^3.12.7",
+    "jose": "^6.0.11",
+    "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.475.0",
     "mongoose": "^8.15.1",
     "next": "^15.3.3",
@@ -58,7 +62,9 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^3.0.0",
     "@types/eslint": "^8.56.10",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^22.13.2",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",

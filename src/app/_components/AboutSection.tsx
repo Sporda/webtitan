@@ -16,7 +16,7 @@ export const AboutSection = () => {
             <p className="text-lg">
               Jsem{" "}
               <strong className="text-white">
-                senior full-stack JavaScript vývojář
+                full-stack JavaScript vývojář
               </strong>{" "}
               se specializací na vývoj webových aplikací na míru, tvorbu
               webových stránek, interních systémů a komplexních API integrací.

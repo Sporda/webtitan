@@ -24,25 +24,28 @@ const MONGODB_URI = process.env.MONGODB_URI;
 
 // Zkontrolujeme pouze pokud to není build proces
 function checkMongoDBURI() {
-  // Debug informace pro server
-  console.log("🔍 Debug MongoDB URI:");
-  console.log(`   NODE_ENV: ${process.env.NODE_ENV}`);
-  console.log(`   MONGODB_URI exists: ${!!process.env.MONGODB_URI}`);
-  console.log(
-    `   Environment keys containing MONGO: ${Object.keys(process.env).filter((key) => key.includes("MONGO"))}`,
-  );
+  if (!process.env.MONGODB_URI) {
+    // Debug info pouze v development
+    if (process.env.NODE_ENV === "development") {
+      console.log("🔍 Debug MongoDB URI:");
+      console.log(`   NODE_ENV: ${process.env.NODE_ENV}`);
+      console.log(`   MONGODB_URI exists: ${!!process.env.MONGODB_URI}`);
+      console.log(
+        `   První 20 znaků: ${process.env.MONGODB_URI?.substring(0, 20) || "N/A"}...`,
+      );
+    }
 
-  if (!MONGODB_URI) {
     console.error("❌ CHYBA: MONGODB_URI není nastavené!");
     console.error(
-      "💡 Zkontrolujte Environment Variables v deployment nastavení!",
+      "💡 Nastavte MONGODB_URI environment proměnnou v .env souboru",
     );
     console.error(
-      "💡 Pro GitHub Pages: Settings > Environments > main > Environment variables",
+      "💡 Příklad: MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/dbname",
     );
-    throw new Error("Chybí MONGODB_URI v environment variables");
+
+    throw new Error("MONGODB_URI environment proměnná není nastavená");
   }
-  return MONGODB_URI;
+  return process.env.MONGODB_URI;
 }
 
 // Ověření URI pouze pokud je dostupné
@@ -85,7 +88,11 @@ async function connectToMongoDB() {
           `Připojeno k nesprávné databázi: "${dbName}" místo "webtitan"`,
         );
       }
-      console.log(`✅ MongoDB připojeno k databázi: "${dbName}"`);
+
+      // Log pouze v development
+      if (process.env.NODE_ENV === "development") {
+        console.log(`✅ MongoDB připojeno k databázi: "${dbName}"`);
+      }
       return mongoose;
     });
   }
