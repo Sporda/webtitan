@@ -34,6 +34,7 @@ jobs:
           tags: ghcr.io/${{ env.REPO_LC }}:latest
           build-args: |
             DATABASE_URL=${{ secrets.DATABASE_URL }}
+            MONGODB_URI=${{ secrets.MONGODB_URI }}
             NEXT_PUBLIC_URL=https://webtitan.cz
             NEXT_PUBLIC_POSTHOG_KEY=${{ secrets.NEXT_PUBLIC_POSTHOG_KEY }}
             NEXT_PUBLIC_POSTHOG_HOST=${{ secrets.NEXT_PUBLIC_POSTHOG_HOST }}
@@ -54,7 +55,7 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_PORT }}
-          envs: DATABASE_URL,NEXT_PUBLIC_POSTHOG_KEY,NEXT_PUBLIC_POSTHOG_HOST,REPO_LC,MONGODB_URI,RESEND_API_KEY
+          envs: DATABASE_URL,NEXT_PUBLIC_POSTHOG_KEY,NEXT_PUBLIC_POSTHOG_HOST,REPO_LC,MONGODB_URI,RESEND_API_KEY,JWT_SECRET
           script: |
             # Přihlášení do GitHub Container Registry
             echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
