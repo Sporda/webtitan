@@ -9,6 +9,8 @@ import connectToMongoDB from "@/server/db/mongoose";
 import Admin from "@/server/db/models/Admin";
 import Project from "@/server/db/models/Project";
 import { createSession, deleteSession } from "@/lib/auth";
+import crypto from "crypto";
+import { Resend } from "resend";
 
 export const adminRouter = createTRPCRouter({
   // Přihlášení
@@ -364,62 +366,77 @@ export const adminRouter = createTRPCRouter({
       }
     }),
 
-  // Reset hesla pomocí emailu
+  // Zapomenuté heslo - vygeneruje token a pošle e-mail
+  forgotPassword: publicProcedure
+    .input(z.object({ email: z.string().email() }))
+    .mutation(async ({ input }) => {
+      await connectToMongoDB();
+      const admin = await Admin.findOne({ email: input.email, isActive: true });
+      if (!admin) {
+        // Neprozrazujeme, že admin neexistuje
+        return { success: true };
+      }
+      // Vygenerovat token
+      const token = crypto.randomBytes(32).toString("hex");
+      const expires = new Date(Date.now() + 60 * 60 * 1000); // 1 hodina
+      admin.resetPasswordToken = token;
+      admin.resetPasswordExpires = expires;
+      await admin.save();
+      // Odeslat e-mail přes Resend
+      if (!process.env.RESEND_API_KEY) {
+        return { success: true, message: "E-mail by byl odeslán (simulace)" };
+      }
+      const resend = new Resend(process.env.RESEND_API_KEY);
+      const resetUrl = `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/admin/reset-password?token=${token}`;
+      const { error } = await resend.emails.send({
+        from: process.env.SMTP_FROM || "no-reply@webtitan.cz",
+        to: admin.email,
+        subject: "Obnova hesla - WebTitan",
+        html: `<p>Pro resetování hesla klikněte na tento odkaz:</p><p><a href="${resetUrl}">${resetUrl}</a></p><p>Odkaz je platný 1 hodinu.</p>`,
+      });
+      if (error) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Chyba při odesílání e-mailu: " + error.message,
+        });
+      }
+      return { success: true };
+    }),
+
+  // Reset hesla pomocí tokenu
   resetPassword: publicProcedure
     .input(
       z.object({
-        username: z.string().min(1, "Uživatelské jméno je povinné"),
-        email: z.string().email("Neplatný email"),
+        token: z.string(),
         newPassword: z.string().min(6, "Nové heslo musí mít alespoň 6 znaků"),
         confirmPassword: z.string().min(6),
       }),
     )
     .mutation(async ({ input }) => {
       await connectToMongoDB();
-
       if (input.newPassword !== input.confirmPassword) {
         throw new TRPCError({
           code: "BAD_REQUEST",
           message: "Hesla se neshodují",
         });
       }
-
-      try {
-        const admin = await Admin.findOne({
-          username: input.username,
-          email: input.email,
-          isActive: true,
-        });
-
-        if (!admin) {
-          throw new TRPCError({
-            code: "NOT_FOUND",
-            message:
-              "Admin s tímto uživatelským jménem a emailem nebyl nalezen",
-          });
-        }
-
-        // Manuálně hashovat nové heslo pro reset
-        const bcrypt = require("bcryptjs");
-        const salt = await bcrypt.genSalt(12);
-        const hashedPassword = await bcrypt.hash(input.newPassword, salt);
-
-        // Nastavit hashované heslo přímo (aby se middleware nespustil)
-        await Admin.findByIdAndUpdate(admin._id, {
-          password: hashedPassword,
-          updatedAt: new Date(),
-        });
-
-        return { success: true, message: "Heslo bylo úspěšně resetováno" };
-      } catch (error: any) {
-        if (error instanceof TRPCError) {
-          throw error;
-        }
+      const admin = await Admin.findOne({
+        resetPasswordToken: input.token,
+        resetPasswordExpires: { $gt: new Date() },
+        isActive: true,
+      });
+      if (!admin) {
         throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "Chyba při resetování hesla",
+          code: "BAD_REQUEST",
+          message: "Token je neplatný nebo expirovaný",
         });
       }
+      // Nastavit nové heslo
+      admin.password = input.newPassword;
+      admin.resetPasswordToken = undefined;
+      admin.resetPasswordExpires = undefined;
+      await admin.save();
+      return { success: true, message: "Heslo bylo úspěšně resetováno" };
     }),
 
   // Zkontrolovat, zda existuje nějaký admin
@@ -435,48 +452,48 @@ export const adminRouter = createTRPCRouter({
   }),
 
   // Vytvořit prvního admina (pouze pokud neexistuje žádný)
-  createFirstAdmin: publicProcedure
-    .input(
-      z.object({
-        username: z.string().min(3).max(30),
-        password: z.string().min(6),
-        email: z.string().email().optional(),
-      }),
-    )
-    .mutation(async ({ input }) => {
-      await connectToMongoDB();
+  // createFirstAdmin: publicProcedure
+  //   .input(
+  //     z.object({
+  //       username: z.string().min(3).max(30),
+  //       password: z.string().min(6),
+  //       email: z.string().email().optional(),
+  //     }),
+  //   )
+  //   .mutation(async ({ input }) => {
+  //     await connectToMongoDB();
 
-      try {
-        // Zkontrolovat, zda už existuje nějaký admin
-        const existingAdmin = await Admin.findOne();
+  //     try {
+  //       // Zkontrolovat, zda už existuje nějaký admin
+  //       const existingAdmin = await Admin.findOne();
 
-        if (existingAdmin) {
-          throw new TRPCError({
-            code: "FORBIDDEN",
-            message: "Admin už existuje",
-          });
-        }
+  //       if (existingAdmin) {
+  //         throw new TRPCError({
+  //           code: "FORBIDDEN",
+  //           message: "Admin už existuje",
+  //         });
+  //       }
 
-        // Vytvořit prvního admina
-        const admin = new Admin(input);
-        const savedAdmin = await admin.save();
+  //       // Vytvořit prvního admina
+  //       const admin = new Admin(input);
+  //       const savedAdmin = await admin.save();
 
-        return {
-          success: true,
-          admin: {
-            id: String(savedAdmin._id),
-            username: savedAdmin.username,
-            email: savedAdmin.email,
-          },
-        };
-      } catch (error: any) {
-        if (error instanceof TRPCError) {
-          throw error;
-        }
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "Chyba při vytváření admina",
-        });
-      }
-    }),
+  //       return {
+  //         success: true,
+  //         admin: {
+  //           id: String(savedAdmin._id),
+  //           username: savedAdmin.username,
+  //           email: savedAdmin.email,
+  //         },
+  //       };
+  //     } catch (error: any) {
+  //       if (error instanceof TRPCError) {
+  //         throw error;
+  //       }
+  //       throw new TRPCError({
+  //         code: "INTERNAL_SERVER_ERROR",
+  //         message: "Chyba při vytváření admina",
+  //       });
+  //     }
+  //   }),
 });
