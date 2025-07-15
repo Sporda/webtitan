@@ -56,7 +56,7 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_PORT }}
-          envs: DATABASE_URL,NEXT_PUBLIC_POSTHOG_KEY,NEXT_PUBLIC_POSTHOG_HOST,REPO_LC,MONGODB_URI,RESEND_API_KEY,JWT_SECRET
+          envs: DATABASE_URL,NEXT_PUBLIC_POSTHOG_KEY,NEXT_PUBLIC_POSTHOG_HOST,REPO_LC,MONGODB_URI,RESEND_API_KEY,JWT_SECRET,NEXT_PUBLIC_BASE_URL
           script: |
             # Přihlášení do GitHub Container Registry
             echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
@@ -80,6 +80,7 @@ jobs:
             NEXT_PUBLIC_POSTHOG_HOST=${NEXT_PUBLIC_POSTHOG_HOST}
             RESEND_API_KEY=${RESEND_API_KEY}
             JWT_SECRET=${JWT_SECRET}
+            NEXT_PUBLIC_BASE_URL=${NEXT_PUBLIC_BASE_URL}
             EOL
 
             # Spuštění nového kontejneru
