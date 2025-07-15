@@ -13,54 +13,24 @@ export default function AdminLoginPage() {
     username: "",
     password: "",
     email: "",
-    newPassword: "",
-    confirmPassword: "",
   });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [showResetPassword, setShowResetPassword] = useState(false);
   const router = useRouter();
 
-  // Zkontrolovat, zda už existuje admin
   const loginMutation = api.admin.login.useMutation({
     onSuccess: (data) => {
       setSuccess("Přihlášení úspěšné, přesměrovávám...");
-
-      // Nastavíme cookie na client-side pokud máme token
       if (data.sessionToken) {
         document.cookie = `admin-session=${data.sessionToken}; path=/; max-age=86400; SameSite=Lax`;
       }
-
-      // Pokusíme se o redirect
       setTimeout(() => {
         window.location.href = "/admin/dashboard";
       }, 1000);
     },
     onError: (error) => {
       setError(error.message || "Chyba při přihlašování");
-      // Pokud admin neexistuje, nabídneme vytvoření prvního
-      if (error.message?.includes("Neplatné přihlašovací údaje")) {
-        setTimeout(() => {
-          setShowResetPassword(true);
-        }, 1000);
-      }
-    },
-  });
-
-  const resetPasswordMutation = api.admin.resetPassword.useMutation({
-    onSuccess: () => {
-      setShowResetPassword(false);
-      setError("");
-      setSuccess("Heslo bylo úspěšně resetováno! Můžete se nyní přihlásit.");
-      setCredentials((prev) => ({
-        ...prev,
-        newPassword: "",
-        confirmPassword: "",
-        email: "",
-      }));
-    },
-    onError: (error) => {
-      setError(error.message || "Chyba při resetování hesla");
     },
   });
 
@@ -76,7 +46,6 @@ export default function AdminLoginPage() {
     });
   };
 
-  // Upravím handleResetPasswordSubmit, aby posílal pouze email na forgotPassword
   const handleForgotPasswordSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -112,7 +81,6 @@ export default function AdminLoginPage() {
           </p>
         </div>
         {showResetPassword ? (
-          // Reset Password Form
           <form onSubmit={handleForgotPasswordSubmit} className="space-y-4">
             <div>
               <Label htmlFor="reset-email">Email *</Label>
@@ -166,7 +134,6 @@ export default function AdminLoginPage() {
             </div>
           </form>
         ) : (
-          // Login Form
           <form onSubmit={handleLoginSubmit} className="space-y-4">
             <div>
               <Label htmlFor="username">Uživatelské jméno</Label>

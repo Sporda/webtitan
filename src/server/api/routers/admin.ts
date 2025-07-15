@@ -369,7 +369,7 @@ export const adminRouter = createTRPCRouter({
   // Zapomenuté heslo - vygeneruje token a pošle e-mail
   forgotPassword: publicProcedure
     .input(z.object({ email: z.string().email() }))
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input, ctx }) => {
       await connectToMongoDB();
       const admin = await Admin.findOne({ email: input.email, isActive: true });
       if (!admin) {
@@ -382,12 +382,16 @@ export const adminRouter = createTRPCRouter({
       admin.resetPasswordToken = token;
       admin.resetPasswordExpires = expires;
       await admin.save();
+      // Zjistit base URL
+      let baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+      // Pokud by bylo potřeba, lze zde v budoucnu použít request host z contextu (pokud bude dostupný)
+      if (!baseUrl) baseUrl = "http://localhost:3000";
+      const resetUrl = `${baseUrl}/admin/reset-password?token=${token}`;
       // Odeslat e-mail přes Resend
       if (!process.env.RESEND_API_KEY) {
         return { success: true, message: "E-mail by byl odeslán (simulace)" };
       }
       const resend = new Resend(process.env.RESEND_API_KEY);
-      const resetUrl = `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/admin/reset-password?token=${token}`;
       const { error } = await resend.emails.send({
         from: process.env.SMTP_FROM || "no-reply@webtitan.cz",
         to: admin.email,
