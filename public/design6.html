@@ -5,7 +5,7 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Aplikace a systémy na míru pro firmy | Jan Šporek – WebTitan</title>
-<meta name="description" content="Z Excelu, e-mailů a papírků do jedné přehledné aplikace. Aplikace na míru od 24 950 Kč, weby od 9 970 Kč, e-shopy od 19 870 Kč a správa serverů od Jana Šporka – pevná cena předem, konzultace zdarma.">
+<meta name="description" content="Z Excelu, e-mailů a papírků do jedné přehledné aplikace. Aplikace na míru od 24 950 Kč, mobilní aplikace pro iOS i Android, weby od 9 970 Kč, e-shopy od 19 870 Kč a správa serverů od Jana Šporka – pevná cena předem, konzultace zdarma.">
 <meta name="theme-color" content="#ffffff">
 <link rel="icon" href="/design-assets/logo.png">
 <link rel="preload" as="image" href="/design-assets/projects/Tepp.webp" fetchpriority="high">
@@ -277,7 +277,10 @@
   .names b { color: var(--ink); }
 
   /* ---------- offers ---------- */
-  .offers { display: grid; grid-template-columns: 1.25fr repeat(3, 1fr); gap: 16px; align-items: stretch; }
+  .offers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: stretch; }
+  .offers .offer.featured { grid-column: span 2; }
+  .offer.offer-mob { border-color: var(--blue-soft); box-shadow: 0 24px 50px -40px rgba(36, 87, 255, .55); }
+  .badge.badge-soft { background: var(--blue-soft); color: var(--blue-d); }
   .offer { position: relative; display: flex; flex-direction: column; gap: 14px; padding: 26px; border-radius: var(--r-lg); background: #fff; border: 1px solid var(--line); }
   .offer.featured { border: 2px solid var(--blue); box-shadow: 0 34px 60px -38px rgba(36, 87, 255, .7); }
   .badge { position: absolute; top: -13px; left: 24px; font-size: 12.5px; font-weight: 800; color: #fff; background: var(--blue); padding: 5px 12px; border-radius: 999px; }
@@ -466,7 +469,12 @@
   .qp-head h2 span { font-weight: 500; color: var(--muted); }
   .qp-trust { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: var(--muted); }
   .qp-trust .i { width: 17px; height: 17px; color: var(--green); }
-  .qp-tiles { display: grid; grid-template-columns: 1.3fr repeat(4, 1fr); gap: 10px; }
+  .qp-tiles { display: grid; grid-template-columns: 1.15fr repeat(5, minmax(0, 1fr)); gap: 10px; }
+  .qp-tiles .tile-btn { min-width: 0; }
+  .qp-tiles .tile-btn:not(.feat) { padding: 10px 11px; gap: 9px; }
+  .qp-tiles .tile-btn:not(.feat) .t-ic { width: 32px; height: 32px; }
+  .qp-tiles .tile-btn:not(.feat) .t-ic .i { width: 18px; height: 18px; }
+  .qp-tiles .tile-btn small { font-size: 13px; }
   .tile-btn {
     display: flex;
     align-items: center;
@@ -496,7 +504,7 @@
   .tile-btn[aria-pressed="true"] small { color: rgba(255, 255, 255, .85); }
   .tile-btn[aria-pressed="true"] .t-ic { background: rgba(255, 255, 255, .18); color: #fff; }
   .f-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .f-tiles .feat { grid-column: 1 / -1; }
+  .f-tiles .feat, .f-tiles > :last-child { grid-column: 1 / -1; }
 
   /* ---------- multi-step form ---------- */
   .fc-meta { display: flex; justify-content: space-between; gap: 12px; font-size: 13.5px; font-weight: 700; color: var(--muted); margin-bottom: 8px; }
@@ -639,6 +647,7 @@
   /* ---------- responsive ---------- */
   @media (max-width: 1100px) {
     .offers { grid-template-columns: 1fr 1fr; }
+    .offers .offer.featured { grid-column: 1 / -1; }
     .guar { grid-template-columns: 1fr 1fr; }
     .cmp-col > * { padding-left: 14px; padding-right: 14px; font-size: 14.5px; }
   }
@@ -665,7 +674,7 @@
     .final-grid { grid-template-rows: auto; grid-template-areas: "head" "form" "aside"; }
     .form-card { position: static; }
     .qp-tiles { grid-template-columns: 1fr 1fr; }
-    .qp-tiles .feat { grid-column: 1 / -1; }
+    .qp-tiles .feat, .qp-tiles > :last-child { grid-column: 1 / -1; }
     .hero-visual { max-width: 640px; }
     .faq-side { position: static; }
     .ba { grid-template-columns: 1fr; }
@@ -841,6 +850,7 @@
         </div>
         <div class="qp-tiles">
           <a href="#poptavka" class="tile-btn feat" data-type="Aplikace na míru" data-cta="quickpick"><span class="t-ic"><svg class="i"><use href="#i-app"/></svg></span><span><b>Aplikace na míru</b><small>od 24&nbsp;950&nbsp;Kč</small></span><span class="t-go"><svg class="i"><use href="#i-arrow"/></svg></span></a>
+          <a href="#poptavka" class="tile-btn" data-type="Mobilní aplikace" data-cta="quickpick"><span class="t-ic"><svg class="i"><use href="#i-phone"/></svg></span><span><b>Mobilní aplikace</b><small>iOS i&nbsp;Android</small></span></a>
           <a href="#poptavka" class="tile-btn" data-type="Web" data-cta="quickpick"><span class="t-ic"><svg class="i"><use href="#i-monitor"/></svg></span><span><b>Web</b><small>od 9&nbsp;970&nbsp;Kč</small></span></a>
           <a href="#poptavka" class="tile-btn" data-type="E-shop" data-cta="quickpick"><span class="t-ic"><svg class="i"><use href="#i-cart"/></svg></span><span><b>E-shop</b><small>od 19&nbsp;870&nbsp;Kč</small></span></a>
           <a href="#poptavka" class="tile-btn" data-type="Správa serveru" data-cta="quickpick"><span class="t-ic"><svg class="i"><use href="#i-server"/></svg></span><span><b>Správa serveru</b><small>od 990&nbsp;Kč/měs.</small><!-- DOPLNIT: cena --></span></a>
@@ -931,7 +941,7 @@
       </div>
       <div class="benefits">
         <article class="benefit rv"><span class="ic"><svg class="i"><use href="#i-grow"/></svg></span><h3>Začnete v malém</h3><p>První verze vyřeší jeden konkrétní proces. Další části přidáme, až budou dávat smysl.</p></article>
-        <article class="benefit rv"><span class="ic"><svg class="i"><use href="#i-phone"/></svg></span><h3>Funguje všude</h3><p>V&nbsp;prohlížeči na počítači, tabletu i&nbsp;mobilu. Nic se neinstaluje.</p></article>
+        <article class="benefit rv"><span class="ic"><svg class="i"><use href="#i-phone"/></svg></span><h3>Funguje všude</h3><p>V&nbsp;prohlížeči na počítači, tabletu i&nbsp;mobilu. A&nbsp;pro lidi v&nbsp;terénu i&nbsp;jako mobilní aplikace pro iOS a&nbsp;Android.</p></article>
         <article class="benefit rv"><span class="ic"><svg class="i"><use href="#i-plug"/></svg></span><h3>Napojím, co už používáte</h3><p>Platební brány, účetnictví, e-mail nebo jiné systémy – propojování služeb je moje specialita.</p></article>
         <article class="benefit rv"><span class="ic"><svg class="i"><use href="#i-users"/></svg></span><h3>Každý vidí, co potřebuje</h3><p>Přístupová práva podle rolí – kancelář, terén, vedení i&nbsp;vaši zákazníci.</p></article>
         <article class="benefit rv"><span class="ic"><svg class="i"><use href="#i-shield"/></svg></span><h3>Bezpečně a zálohovaně</h3><p>Provoz na serverech, které sám spravuji: aktualizace, zálohy a&nbsp;dohled nad dostupností.</p></article>
@@ -1035,7 +1045,7 @@
       <div class="sec-head rv">
         <span class="kicker">Nabídka a ceny</span>
         <h2>Nenašli jste se? Postavím i&nbsp;vaše zadání.</h2>
-        <p>Hlavní specializací jsou aplikace na míru. Stejně tak vám ale udělám web, e-shop nebo se postarám o&nbsp;servery, na kterých to všechno běží.</p>
+        <p>Hlavní specializací jsou aplikace na míru – webové i&nbsp;mobilní. Stejně tak vám ale udělám web, e-shop nebo se postarám o&nbsp;servery, na kterých to všechno běží.</p>
       </div>
       <div class="offers">
         <article class="offer featured rv">
@@ -1050,6 +1060,19 @@
           </ul>
           <div class="price"><b>od 24&nbsp;950&nbsp;Kč</b><span>jednorázově, bez licencí za uživatele</span></div>
           <a href="#poptavka" class="btn btn-primary offer-cta" data-type="Aplikace na míru" data-cta="offer-app">Poptat aplikaci <svg class="i"><use href="#i-arrow"/></svg></a>
+        </article>
+        <article class="offer offer-mob rv">
+          <span class="badge badge-soft">iOS i&nbsp;Android</span>
+          <span class="ic"><svg class="i"><use href="#i-phone"/></svg></span>
+          <h3>Mobilní aplikace</h3>
+          <p>Aplikace pro iOS i&nbsp;Android – pro vaše zákazníky nebo zaměstnance, napojená na váš systém, web nebo e-shop.</p>
+          <ul>
+            <li><svg class="i"><use href="#i-check"/></svg>iOS i&nbsp;Android z&nbsp;jednoho kódu</li>
+            <li><svg class="i"><use href="#i-check"/></svg>Napojení na váš systém a&nbsp;data</li>
+            <li><svg class="i"><use href="#i-check"/></svg>Vydání v&nbsp;App Store a&nbsp;Google Play</li>
+          </ul>
+          <div class="price"><b>podle rozsahu</b><!-- DOPLNIT: cena mobilní aplikace --><span>cenu řeknu po úvodním hovoru</span></div>
+          <a href="#poptavka" class="btn btn-ghost offer-cta" data-type="Mobilní aplikace" data-cta="offer-mobile">Poptat mobilní aplikaci <svg class="i"><use href="#i-arrow"/></svg></a>
         </article>
         <article class="offer rv">
           <span class="ic"><svg class="i"><use href="#i-monitor"/></svg></span>
@@ -1352,7 +1375,11 @@
         </details>
         <details>
           <summary>Bude to fungovat na mobilu?<span class="pm"><svg class="i"><use href="#i-plus"/></svg></span></summary>
-          <div class="ans">Ano. Aplikace běží v&nbsp;prohlížeči na počítači, tabletu i&nbsp;mobilu, nic se neinstaluje.</div>
+          <div class="ans">Ano. Webová aplikace běží v&nbsp;prohlížeči na počítači, tabletu i&nbsp;mobilu, nic se neinstaluje.</div>
+        </details>
+        <details>
+          <summary>Děláte i&nbsp;mobilní aplikace?<span class="pm"><svg class="i"><use href="#i-plus"/></svg></span></summary>
+          <div class="ans">Ano. K&nbsp;systému vám postavím i&nbsp;mobilní aplikaci pro iOS a&nbsp;Android – třeba pro techniky a&nbsp;řidiče v&nbsp;terénu nebo pro vaše zákazníky. Pracuje se stejnými daty jako hlavní systém a&nbsp;vydám ji do App Store i&nbsp;Google Play. Cenu řeknu po úvodním hovoru podle rozsahu.</div>
         </details>
         <details>
           <summary>Napojíte to na účetnictví, platby nebo jiný systém?<span class="pm"><svg class="i"><use href="#i-plus"/></svg></span></summary>
@@ -1416,6 +1443,7 @@
             <p class="hint">Vyberte, co je vám nejblíž. Přesný rozsah upřesníme spolu.</p>
             <div class="f-tiles" role="group" aria-label="Typ projektu">
               <button type="button" class="tile-btn feat" data-type="Aplikace na míru" aria-pressed="false"><span class="t-ic"><svg class="i"><use href="#i-app"/></svg></span><span><b>Aplikace na míru</b><small>od 24&nbsp;950&nbsp;Kč · evidence, rezervace, interní systém</small></span></button>
+              <button type="button" class="tile-btn" data-type="Mobilní aplikace" aria-pressed="false"><span class="t-ic"><svg class="i"><use href="#i-phone"/></svg></span><span><b>Mobilní aplikace</b><small>iOS i&nbsp;Android · cena podle rozsahu</small></span></button>
               <button type="button" class="tile-btn" data-type="Web" aria-pressed="false"><span class="t-ic"><svg class="i"><use href="#i-monitor"/></svg></span><span><b>Web</b><small>od 9&nbsp;970&nbsp;Kč</small></span></button>
               <button type="button" class="tile-btn" data-type="E-shop" aria-pressed="false"><span class="t-ic"><svg class="i"><use href="#i-cart"/></svg></span><span><b>E-shop</b><small>od 19&nbsp;870&nbsp;Kč</small></span></button>
               <button type="button" class="tile-btn" data-type="Správa serveru" aria-pressed="false"><span class="t-ic"><svg class="i"><use href="#i-server"/></svg></span><span><b>Správa serveru</b><small>od 990&nbsp;Kč/měs.</small><!-- DOPLNIT: cena --></span></button>
@@ -1448,6 +1476,14 @@
                 <label class="chip"><input type="radio" name="q_app" value="Papír"><span>Papír</span></label>
                 <label class="chip"><input type="radio" name="q_app" value="Jiný systém"><span>Jiný systém</span></label>
                 <label class="chip"><input type="radio" name="q_app" value="Nic"><span>Nic</span></label>
+              </div>
+            </fieldset>
+            <fieldset class="q" data-for="Mobilní aplikace" data-label="Pro koho je aplikace" hidden>
+              <legend>Pro koho je aplikace?</legend>
+              <div class="chips">
+                <label class="chip"><input type="radio" name="q_mobile" value="Pro zákazníky"><span>Pro zákazníky</span></label>
+                <label class="chip"><input type="radio" name="q_mobile" value="Pro zaměstnance"><span>Pro zaměstnance</span></label>
+                <label class="chip"><input type="radio" name="q_mobile" value="Obojí"><span>Obojí</span></label>
               </div>
             </fieldset>
             <fieldset class="q" data-for="Správa serveru" data-label="Co spravovat" hidden>

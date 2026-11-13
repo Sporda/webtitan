@@ -5,7 +5,7 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Jan Šporek — weby, e-shopy a aplikace na míru</title>
-<meta name="description" content="Weby na míru od 9 970 Kč, e-shopy od 19 870 Kč a aplikace od 24 950 Kč. Pevná cena předem, konzultace zdarma a jednáte přímo s vývojářem. Jan Šporek – WebTitan.">
+<meta name="description" content="Weby na míru od 9 970 Kč, e-shopy od 19 870 Kč a aplikace od 24 950 Kč. Mobilní aplikace pro iOS i Android. Pevná cena předem, konzultace zdarma a jednáte přímo s vývojářem. Jan Šporek – WebTitan.">
 <meta name="theme-color" content="#f5f6fa">
 <link rel="icon" href="/design-assets/logo.png">
 <link rel="preload" as="image" href="/design-assets/jan-cut.png">
@@ -339,8 +339,18 @@
   .svc-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--gap); }
   .svc { padding: 28px; display: flex; flex-direction: column; gap: 12px; }
   .svc-app { grid-column: span 6; grid-row: span 2; border: 2px solid transparent; background: linear-gradient(#fff, #fff) padding-box, var(--grad) border-box; }
-  .svc-web { grid-column: span 6; }
-  .svc-shop, .svc-srv { grid-column: span 3; }
+  .svc-web, .svc-mob { grid-column: span 6; }
+  .svc-shop, .svc-srv { grid-column: span 6; }
+  .tagline.soft { background: var(--violet-bg); color: var(--violet); }
+  .mob-body { display: grid; grid-template-columns: minmax(0, 1fr) 112px; gap: 20px; align-items: start; }
+  .mob-copy { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+  .mob-phone { width: 112px; aspect-ratio: 9 / 18.5; border-radius: 22px; padding: 5px; background: var(--text); box-shadow: var(--shadow-lg); margin-top: 6px; }
+  .mob-screen { height: 100%; border-radius: 17px; background: var(--grad-soft); padding: 12px 8px 8px; display: flex; flex-direction: column; gap: 7px; }
+  .mob-screen i { display: block; border-radius: 6px; background: #fff; }
+  .mob-screen .ms-top { height: 7px; width: 55%; background: rgba(18, 17, 26, .18); border-radius: 4px; }
+  .mob-screen .ms-hero { height: 52px; background: var(--grad); border-radius: 10px; }
+  .mob-screen .ms-row { height: 24px; box-shadow: 0 1px 2px rgba(18, 17, 26, .06); }
+  .mob-screen .ms-tab { height: 18px; margin-top: auto; border-radius: 9px; }
   .svc-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
   .svc-ic { width: 52px; height: 52px; border-radius: 15px; display: grid; place-items: center; background: var(--grad-soft); flex: none; }
   .svc-ic svg { width: 24px; height: 24px; stroke: var(--violet); fill: none; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
@@ -568,7 +578,7 @@
   .qf-sub { color: var(--muted); margin: 6px 0 18px; font-size: 15.5px; }
   .qf-tiles { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
   .qf-tiles .qtile { grid-column: span 2; flex-direction: column; align-items: flex-start; gap: 10px; min-height: 112px; padding: 16px; }
-  .qf-tiles .qtile:nth-child(n+4) { grid-column: span 3; min-height: 0; }
+  .qf-tiles .qtile:nth-child(n+4) { grid-column: span 2; }
   .qf-tiles .qtile[aria-pressed="true"] { border-color: var(--violet); background: var(--violet-bg); box-shadow: 0 0 0 3px rgba(109, 74, 255, .18); }
   .qf-tiles .qtile[aria-pressed="true"]::after {
     content: "✓";
@@ -729,7 +739,7 @@
     .photo { grid-column: span 5; order: 2; min-height: 340px; }
     .stat { order: 3; }
     .clients { order: 4; }
-    .svc-app, .svc-web { grid-column: span 12; grid-row: auto; }
+    .svc-app, .svc-web, .svc-mob { grid-column: span 12; grid-row: auto; }
     .svc-shop, .svc-srv { grid-column: span 6; }
     .steps, .guarantees { grid-template-columns: 1fr 1fr; }
     .compare { grid-template-columns: 1fr; }
@@ -799,6 +809,8 @@
     .pains, .steps, .guarantees, .milestones { grid-template-columns: 1fr; }
     .svc-shop, .svc-srv { grid-column: span 12; }
     .svc { padding: 24px; }
+    .mob-body { grid-template-columns: 1fr; }
+    .mob-phone { display: none; }
     .proj-grid { grid-template-columns: 1fr; grid-auto-rows: 250px; }
     .proj.big, .proj.wide { grid-column: span 1; grid-row: span 1; }
     .proj.big .cap p, .proj.big .tags { display: none; }
@@ -808,7 +820,6 @@
     .about-photo img { width: 112%; transform: translateX(-48%); }
     .qf-tiles { grid-template-columns: 1fr 1fr; }
     .qf-tiles .qtile, .qf-tiles .qtile:nth-child(n+4) { grid-column: span 1; min-height: 104px; }
-    .qf-tiles .qtile:last-child { grid-column: 1 / -1; min-height: 0; }
     .qf-grid2 { grid-template-columns: 1fr; }
     .qf-nav .btn-grad { order: -1; flex: 1 1 100%; }
     .qf-nav .btn-line { min-height: 44px; padding: 8px 16px; }
@@ -835,6 +846,7 @@
   <symbol id="i-web" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></symbol>
   <symbol id="i-shop" viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.7 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L22 7H6"/></symbol>
   <symbol id="i-app" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 17.5h7M17.5 14v7"/></symbol>
+  <symbol id="i-mob" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M11 18h2"/></symbol>
   <symbol id="i-srv" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></symbol>
   <symbol id="i-q" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .8-1 1.5v.7M12 17h.01"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
@@ -866,7 +878,7 @@
           <div>
             <span class="badge"><span class="dot"></span>Weby, e-shopy a&nbsp;aplikace na míru pro firmy</span>
             <h1>Weby a&nbsp;aplikace, které <span class="gt">přivedou zákazníky</span> a&nbsp;ušetří vám čas.</h1>
-            <p class="lead">Navrhnu, naprogramuji a&nbsp;spustím web, e-shop nebo interní systém přesně pro vaši firmu. Jednáte přímo se mnou – od prvního hovoru až po provoz.</p>
+            <p class="lead">Navrhnu, naprogramuji a&nbsp;spustím web, e-shop, interní systém nebo mobilní aplikaci přesně pro vaši firmu. Jednáte přímo se mnou – od prvního hovoru až po provoz.</p>
             <ul class="checks">
               <li><span class="tick"><svg><use href="#i-check"/></svg></span>Pevná cena předem, žádné skryté poplatky</li>
               <li><span class="tick"><svg><use href="#i-check"/></svg></span>Konzultace zdarma a&nbsp;nezávazně</li>
@@ -898,11 +910,12 @@
             <span>Vyberte a&nbsp;poptávku máte za minutu hotovou.</span>
           </div>
           <div class="qtiles" role="group" aria-label="Rychlá volba typu projektu">
+            <button type="button" class="qtile" data-pick="Aplikace na míru" data-loc="hero"><span class="qt-ic"><svg><use href="#i-app"/></svg></span><span class="qt-tx"><b>Aplikace na míru</b><small>od&nbsp;24&nbsp;950&nbsp;Kč</small></span><span class="qt-arr" aria-hidden="true">→</span></button>
+            <button type="button" class="qtile" data-pick="Mobilní aplikace" data-loc="hero"><span class="qt-ic"><svg><use href="#i-mob"/></svg></span><span class="qt-tx"><b>Mobilní aplikace</b><small>iOS i&nbsp;Android</small></span><span class="qt-arr" aria-hidden="true">→</span></button>
             <button type="button" class="qtile" data-pick="Web" data-loc="hero"><span class="qt-ic"><svg><use href="#i-web"/></svg></span><span class="qt-tx"><b>Web</b><small>od&nbsp;9&nbsp;970&nbsp;Kč</small></span><span class="qt-arr" aria-hidden="true">→</span></button>
             <button type="button" class="qtile" data-pick="E-shop" data-loc="hero"><span class="qt-ic"><svg><use href="#i-shop"/></svg></span><span class="qt-tx"><b>E-shop</b><small>od&nbsp;19&nbsp;870&nbsp;Kč</small></span><span class="qt-arr" aria-hidden="true">→</span></button>
-            <button type="button" class="qtile" data-pick="Aplikace na míru" data-loc="hero"><span class="qt-ic"><svg><use href="#i-app"/></svg></span><span class="qt-tx"><b>Aplikace na míru</b><small>od&nbsp;24&nbsp;950&nbsp;Kč</small></span><span class="qt-arr" aria-hidden="true">→</span></button>
             <button type="button" class="qtile" data-pick="Správa serveru" data-loc="hero"><span class="qt-ic"><svg><use href="#i-srv"/></svg></span><span class="qt-tx"><b>Správa serveru</b><small>od&nbsp;990&nbsp;Kč/měs.</small></span><span class="qt-arr" aria-hidden="true">→</span></button><!-- DOPLNIT: cena -->
-            <button type="button" class="qtile wide" data-pick="Zatím nevím" data-loc="hero"><span class="qt-ic"><svg><use href="#i-q"/></svg></span><span class="qt-tx"><b>Zatím nevím</b><small>Poradím vám zdarma, co dává smysl</small></span><span class="qt-arr" aria-hidden="true">→</span></button>
+            <button type="button" class="qtile" data-pick="Zatím nevím" data-loc="hero"><span class="qt-ic"><svg><use href="#i-q"/></svg></span><span class="qt-tx"><b>Zatím nevím</b><small>Poradím vám zdarma</small></span><span class="qt-arr" aria-hidden="true">→</span></button>
           </div>
           <p class="qp-foot"><span><svg><use href="#i-check"/></svg>Nezávazně</span><span><svg><use href="#i-check"/></svg>Odpověď do 24 hodin</span><span><svg><use href="#i-check"/></svg>Pevná cena předem</span></p>
         </div>
@@ -1007,6 +1020,36 @@
           <div class="svc-shot"><img src="/design-assets/projects/Tepp.webp" alt="Ukázka aplikace pro plánování zakázek" loading="lazy" width="800" height="400"></div>
           <p class="tech">Next.js · React · Node.js · TypeScript · MongoDB</p>
           <a href="#poptavka" class="link-cta" data-pick="Aplikace na míru" data-loc="svc_app" data-cta="svc_app">Chci nezávaznou konzultaci <span class="arr">→</span></a>
+        </article>
+        <article class="card svc svc-mob lift rv">
+          <div class="svc-top">
+            <span class="svc-ic"><svg><use href="#i-mob"/></svg></span>
+            <span class="tagline soft">iOS i&nbsp;Android</span>
+          </div>
+          <div class="mob-body">
+            <div class="mob-copy">
+              <h3>Mobilní aplikace</h3>
+              <p class="price">cena <b class="gt">podle rozsahu</b><!-- DOPLNIT: cena mobilní aplikace --></p>
+              <p>Aplikace pro iOS i&nbsp;Android – pro vaše zákazníky nebo zaměstnance, napojená na váš systém, web nebo e-shop.</p>
+              <ul class="bul">
+                <li>iOS i&nbsp;Android z&nbsp;jednoho kódu</li>
+                <li>Napojení na váš systém a&nbsp;data</li>
+                <li>Vydání v&nbsp;App Store a&nbsp;Google Play</li>
+              </ul>
+              <p class="tech">React Native · iOS · Android<!-- POTVRDIT: technologie --></p>
+            </div>
+            <div class="mob-phone" aria-hidden="true">
+              <div class="mob-screen">
+                <i class="ms-top"></i>
+                <i class="ms-hero"></i>
+                <i class="ms-row"></i>
+                <i class="ms-row"></i>
+                <i class="ms-row"></i>
+                <i class="ms-tab"></i>
+              </div>
+            </div>
+          </div>
+          <a href="#poptavka" class="link-cta" data-pick="Mobilní aplikace" data-loc="svc_mob" data-cta="svc_mob">Chci nezávaznou konzultaci <span class="arr">→</span></a>
         </article>
         <article class="card svc svc-web lift rv">
           <div class="svc-top">
@@ -1344,6 +1387,10 @@
             <p class="ans">Ano. Servery spravuji sám – hosting, aktualizace, zálohy i&nbsp;dohled. Správa začíná na 990&nbsp;Kč měsíčně.</p>
           </details>
           <details class="rv">
+            <summary>Děláte i&nbsp;mobilní aplikace?<span class="pm"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+            <p class="ans">Ano. Mobilní aplikace pro iOS i&nbsp;Android stavím pro vaše zákazníky nebo zaměstnance – samostatně, nebo napojené na váš web, e-shop či interní systém. Cenu vám řeknu po krátkém hovoru podle rozsahu.</p>
+          </details>
+          <details class="rv">
             <summary>Pracujete i&nbsp;mimo Prahu?<span class="pm"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></summary>
             <p class="ans">Ano, pro klienty z&nbsp;celé republiky. Většinu věcí vyřešíme online, v&nbsp;Praze se rád potkám i&nbsp;osobně.</p>
           </details>
@@ -1404,9 +1451,10 @@
               <h3 class="qf-title" id="qs1" tabindex="-1">Co potřebujete?</h3>
               <p class="qf-sub">Vyberte jednu možnost – zbytek doladíme spolu.</p>
               <div class="qf-tiles">
+                <button type="button" class="qtile" data-type="Aplikace na míru" aria-pressed="false"><span class="qt-ic"><svg><use href="#i-app"/></svg></span><span class="qt-tx"><b>Aplikace na míru</b><small>od&nbsp;24&nbsp;950&nbsp;Kč</small></span></button>
+                <button type="button" class="qtile" data-type="Mobilní aplikace" aria-pressed="false"><span class="qt-ic"><svg><use href="#i-mob"/></svg></span><span class="qt-tx"><b>Mobilní aplikace</b><small>iOS i&nbsp;Android</small></span></button>
                 <button type="button" class="qtile" data-type="Web" aria-pressed="false"><span class="qt-ic"><svg><use href="#i-web"/></svg></span><span class="qt-tx"><b>Web</b><small>od&nbsp;9&nbsp;970&nbsp;Kč</small></span></button>
                 <button type="button" class="qtile" data-type="E-shop" aria-pressed="false"><span class="qt-ic"><svg><use href="#i-shop"/></svg></span><span class="qt-tx"><b>E-shop</b><small>od&nbsp;19&nbsp;870&nbsp;Kč</small></span></button>
-                <button type="button" class="qtile" data-type="Aplikace na míru" aria-pressed="false"><span class="qt-ic"><svg><use href="#i-app"/></svg></span><span class="qt-tx"><b>Aplikace na míru</b><small>od&nbsp;24&nbsp;950&nbsp;Kč</small></span></button>
                 <button type="button" class="qtile" data-type="Správa serveru" aria-pressed="false"><span class="qt-ic"><svg><use href="#i-srv"/></svg></span><span class="qt-tx"><b>Správa serveru</b><small>od&nbsp;990&nbsp;Kč/měs.</small></span></button><!-- DOPLNIT: cena -->
                 <button type="button" class="qtile" data-type="Zatím nevím" aria-pressed="false"><span class="qt-ic"><svg><use href="#i-q"/></svg></span><span class="qt-tx"><b>Zatím nevím</b><small>Poradím vám zdarma</small></span></button>
               </div>
@@ -1441,6 +1489,14 @@
                   <label><input type="radio" name="up_app" value="Papír"><span>Papír</span></label>
                   <label><input type="radio" name="up_app" value="Jiný systém"><span>Jiný systém</span></label>
                   <label><input type="radio" name="up_app" value="Nic"><span>Nic</span></label>
+                </div>
+              </div>
+              <div class="qf-q" data-for="Mobilní aplikace" hidden>
+                <p class="qf-label" id="ql-mob">Pro koho je aplikace?</p>
+                <div class="chips" role="radiogroup" aria-labelledby="ql-mob">
+                  <label><input type="radio" name="up_mob" value="Pro zákazníky"><span>Pro zákazníky</span></label>
+                  <label><input type="radio" name="up_mob" value="Pro zaměstnance"><span>Pro zaměstnance</span></label>
+                  <label><input type="radio" name="up_mob" value="Obojí"><span>Obojí</span></label>
                 </div>
               </div>
               <div class="qf-q" data-for="Správa serveru" hidden>
@@ -1716,6 +1772,7 @@
       "Web": ["up_web", "Máte už web?"],
       "E-shop": ["up_eshop", "Kolik produktů?"],
       "Aplikace na míru": ["up_app", "Co dnes používáte?"],
+      "Mobilní aplikace": ["up_mob", "Pro koho je aplikace?"],
       "Správa serveru": ["up_srv", "Co spravovat?"]
     };
     const TEXT_IDS = ["qf-url", "qf-msg", "qf-name", "qf-email", "qf-phone"];
