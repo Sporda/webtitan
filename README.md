@@ -10,6 +10,27 @@
     [x] - Typing effect do main profile card
     [x] - Admin sekce pro správu obsahu
 
+## Návrhy nového webu (webtitan.cz/designs.html)
+
+Rozcestník návrhů a samotné návrhy jsou statické soubory v `public/`:
+
+- `public/designs.html` – rozcestník s náhledy a lajkováním
+- `public/design<N>.html` – jednotlivé návrhy
+- `public/design-assets/` – obrázky a náhledy
+- `public/api/likes.php` – lajky (jeden návštěvník = jeden lajk na návrh, data v `/var/www/webtitan/data` mimo web)
+
+### Nasazení
+
+Web běží na hostingu v panelu (panel.webtitan.cz) bez Dockeru. Po pushi do `main` se změny v souborech výše
+nasadí automaticky přes GitHub Actions (`.github/workflows/deploy.yml`) – zkopírují se do
+`/var/www/webtitan/public_html` a ověří se, že stránky odpovídají. Ručně jde workflow spustit v záložce Actions.
+
+Ruční nasazení z počítače:
+
+```bash
+env DEPLOY_HOST=158.180.50.98 DEPLOY_USER=ubuntu bash scripts/deploy-designs.sh
+```
+
 ## Admin systém
 
 ### Nastavení

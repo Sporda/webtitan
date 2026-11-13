@@ -1,92 +1,54 @@
-name: Deploy to Production
+name: Deploy návrhů na webtitan.cz
 
+# Web běží na hostingu v panelu (panel.webtitan.cz) bez Dockeru.
+# Zatím se nasazují jen návrhy: designs.html, design<N>.html, design-assets/ a api/likes.php.
 on:
   push:
     branches:
       - main
+    paths:
+      - "public/designs.html"
+      - "public/design[0-9]*.html"
+      - "public/design-assets/**"
+      - "public/api/likes.php"
+      - "scripts/deploy-designs.sh"
+      - ".github/workflows/deploy.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-designs
+  cancel-in-progress: false
+
+permissions:
+  contents: read
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
 
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Convert repository name to lowercase
-        id: repo-name
-        run: |
-          echo "REPO_LC=${GITHUB_REPOSITORY,,}" >> $GITHUB_ENV
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          push: true
-          tags: ghcr.io/${{ env.REPO_LC }}:latest
-          build-args: |
-            DATABASE_URL=${{ secrets.DATABASE_URL }}
-            MONGODB_URI=${{ secrets.MONGODB_URI }}
-            NEXT_PUBLIC_BASE_URL=https://webtitan.cz
-            NEXT_PUBLIC_POSTHOG_KEY=${{ secrets.NEXT_PUBLIC_POSTHOG_KEY }}
-            NEXT_PUBLIC_POSTHOG_HOST=${{ secrets.NEXT_PUBLIC_POSTHOG_HOST }}
-            RESEND_API_KEY=${{ secrets.RESEND_API_KEY }}
-            JWT_SECRET=${{ secrets.JWT_SECRET }}
-
-      - name: Deploy to Server
-        uses: appleboy/ssh-action@master
+      - name: Připravit SSH klíč a otisk serveru
         env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          NEXT_PUBLIC_POSTHOG_KEY: ${{ secrets.NEXT_PUBLIC_POSTHOG_KEY }}
-          NEXT_PUBLIC_POSTHOG_HOST: ${{ secrets.NEXT_PUBLIC_POSTHOG_HOST }}
-          MONGODB_URI: ${{ secrets.MONGODB_URI }}
-          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
-          NEXT_PUBLIC_BASE_URL: https://webtitan.cz
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.SERVER_PORT }}
-          envs: DATABASE_URL,NEXT_PUBLIC_POSTHOG_KEY,NEXT_PUBLIC_POSTHOG_HOST,REPO_LC,MONGODB_URI,RESEND_API_KEY,JWT_SECRET,NEXT_PUBLIC_BASE_URL
-          script: |
-            # Přihlášení do GitHub Container Registry
-            echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          # Otisk klíče serveru webtitan.cz – připojení k jinému (podvrženému) serveru selže.
+          echo '* ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGAULs93rZBiQ8SVfUe4QiQVLWD24UW9b/uTKjvn+NAT' > ~/.ssh/known_hosts_deploy
 
-            # Zastavení a odstranění starého kontejneru
-            docker stop webtitan || true
-            docker rm webtitan || true
+      - name: Nasadit návrhy
+        env:
+          DEPLOY_HOST: ${{ secrets.SERVER_HOST }}
+          DEPLOY_USER: ${{ secrets.SERVER_USERNAME }}
+          DEPLOY_PORT: ${{ secrets.SERVER_PORT }}
+        run: |
+          DEPLOY_KEY="$HOME/.ssh/deploy_key" \
+          DEPLOY_KNOWN_HOSTS="$HOME/.ssh/known_hosts_deploy" \
+          bash scripts/deploy-designs.sh
 
-            # Odstranění starého image
-            docker image rm ghcr.io/${{ env.REPO_LC }}:latest || true
-
-            # Stažení nového image
-            docker pull ghcr.io/${{ env.REPO_LC }}:latest
-
-            # Vytvoření .env souboru
-            cat > /var/www/webtitan.cz/.env << EOL
-            DATABASE_URL=${DATABASE_URL}
-            MONGODB_URI=${MONGODB_URI}
-            NEXT_PUBLIC_BASE_URL=${NEXT_PUBLIC_BASE_URL}
-            NEXT_PUBLIC_POSTHOG_KEY=${NEXT_PUBLIC_POSTHOG_KEY}
-            NEXT_PUBLIC_POSTHOG_HOST=${NEXT_PUBLIC_POSTHOG_HOST}
-            RESEND_API_KEY=${RESEND_API_KEY}
-            JWT_SECRET=${JWT_SECRET}
-            NEXT_PUBLIC_BASE_URL=${NEXT_PUBLIC_BASE_URL}
-            EOL
-
-            # Spuštění nového kontejneru
-            docker run -d \
-              --name webtitan \
-              --restart always \
-              -p 3000:3000 \
-              --env-file /var/www/webtitan.cz/.env \
-              ghcr.io/${{ env.REPO_LC }}:latest
+      - name: Uklidit klíč
+        if: always()
+        run: rm -f ~/.ssh/deploy_key
