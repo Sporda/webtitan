@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zásady ochrany osobních údajů | WebTitan</title>
+<meta name="description" content="Jak WebTitan (Jan Šporek) zpracovává osobní údaje z poptávkových formulářů na webtitan.cz – jaké údaje, proč, jak dlouho a jaká máte práva.">
+<link rel="canonical" href="https://webtitan.cz/ochrana-osobnich-udaju.html">
+<meta name="theme-color" content="#dfdbeb">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="cs_CZ">
+<meta property="og:site_name" content="WebTitan">
+<meta property="og:url" content="https://webtitan.cz/ochrana-osobnich-udaju.html">
+<meta property="og:title" content="Zásady ochrany osobních údajů | WebTitan">
+<meta property="og:image" content="https://webtitan.cz/assets/og.jpg">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #dfdbeb;
+    --card: #f7f5fb;
+    --soft: #ebe8f3;
+    --line: #d3cee3;
+    --navy: #2d2f66;
+    --text: #26285a;
+    --muted: #565779;
+    --dim: #5c5d82;
+    --orange: #ff8a1c;
+    --orange-ink: #a34400;
+    --shadow: 0 1px 2px rgba(45, 47, 102, .05), 0 14px 34px -14px rgba(45, 47, 102, .18);
+    --display: "Unbounded", system-ui, sans-serif;
+    --sans: "Manrope", system-ui, -apple-system, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 16.5px; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  img { max-width: 100%; height: auto; display: block; }
+  ul { list-style: none; }
+  :focus-visible { outline: 3px solid #d35400; outline-offset: 2px; border-radius: 8px; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+
+  .nav-wrap { position: sticky; top: 12px; z-index: 10; padding-left: 16px; padding-right: 16px; }
+  .nav { max-width: 1192px; margin: 12px auto 0; display: flex; align-items: center; gap: 12px; padding: 8px 8px 8px 16px; border-radius: 999px; background: rgba(247, 245, 251, .9); border: 1px solid var(--line); box-shadow: 0 10px 30px -18px rgba(45, 47, 102, .3); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+  .brand { display: inline-flex; align-items: center; gap: 10px; font-family: var(--display); font-weight: 700; font-size: 16px; letter-spacing: -.03em; color: var(--navy); text-decoration: none; min-height: 44px; }
+  .brand img { width: 26px; height: 26px; }
+  .brand small { font-family: var(--sans); font-weight: 600; font-size: 14px; color: var(--muted); letter-spacing: 0; }
+  .back { margin-left: auto; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px; border-radius: 999px; background: var(--orange); color: var(--navy); font-weight: 800; font-size: 15px; text-decoration: none; box-shadow: 0 10px 26px -8px rgba(255, 138, 28, .6); }
+  .back:hover { background: #ff9733; }
+
+  main { padding-top: 34px; }
+  .doc { max-width: 860px; margin: 0 auto; background: var(--card); border: 1px solid var(--line); border-radius: 26px; box-shadow: var(--shadow); padding: clamp(26px, 5vw, 56px); }
+  .kicker { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--navy); }
+  .kicker::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 10px 1px rgba(255, 138, 28, .75); }
+  h1 { font-family: var(--display); font-weight: 700; font-size: clamp(28px, 4.4vw, 42px); line-height: 1.08; letter-spacing: -.045em; color: var(--navy); margin: 12px 0 14px; }
+  .intro { color: var(--muted); font-size: 17.5px; max-width: 62ch; }
+  .updated { margin-top: 12px; font-size: 14px; font-weight: 700; color: var(--dim); }
+  section { padding-top: 30px; margin-top: 30px; border-top: 1px solid var(--line); }
+  h2 { font-family: var(--display); font-weight: 700; font-size: clamp(19px, 2.3vw, 22px); letter-spacing: -.035em; color: var(--navy); margin-bottom: 10px; display: flex; gap: 12px; align-items: baseline; }
+  h2 .n { flex: none; width: 30px; height: 30px; border-radius: 9px; display: inline-grid; place-items: center; background: var(--navy); color: #fff; font-size: 14px; position: relative; top: 4px; }
+  p + p, p + ul, ul + p { margin-top: 10px; }
+  .doc p, .doc li { color: var(--muted); }
+  .doc strong { color: var(--text); }
+  .doc a { color: var(--navy); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
+  .list { display: flex; flex-direction: column; gap: 8px; }
+  .list li { display: flex; gap: 12px; }
+  .list li::before { content: ""; flex: none; width: 7px; height: 7px; border-radius: 50%; background: var(--orange); margin-top: 10px; }
+  .box { margin-top: 12px; padding: 16px 18px; border-radius: 16px; background: var(--soft); }
+  .contact-cta { margin-top: 34px; padding: 22px; border-radius: 20px; background: #fff; border: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; justify-content: space-between; }
+  .contact-cta p { color: var(--text); font-weight: 700; }
+  .contact-cta a.btn { display: inline-flex; align-items: center; min-height: 46px; padding: 0 20px; border-radius: 999px; background: var(--navy); color: #fff; font-weight: 800; text-decoration: none; }
+
+  footer { margin-top: 70px; border-top: 1px solid var(--line); background: var(--card); }
+  .foot { display: flex; justify-content: space-between; align-items: center; gap: 4px 28px; flex-wrap: wrap; padding-top: 22px; padding-bottom: 26px; color: var(--muted); font-size: 14.5px; font-weight: 600; }
+  .foot nav { display: flex; gap: 0 20px; flex-wrap: wrap; }
+  .foot nav a, .foot-contact a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; }
+  .foot a:hover { color: var(--text); }
+  .foot-bottom { flex: 1 1 100%; display: flex; justify-content: space-between; align-items: center; gap: 4px 24px; flex-wrap: wrap; padding-top: 12px; border-top: 1px solid var(--line); }
+  .foot-contact { display: flex; gap: 0 18px; flex-wrap: wrap; }
+
+  @media (max-width: 600px) {
+    .wrap { padding-left: 16px; padding-right: 16px; }
+    .nav-wrap { padding-left: 10px; padding-right: 10px; }
+    .brand small { display: none; }
+    .back { padding: 0 14px; font-size: 14px; }
+    main { padding-top: 22px; }
+    .doc { border-radius: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="nav-wrap">
+  <header class="nav">
+    <a href="/" class="brand" aria-label="WebTitan – Jan Šporek, úvod"><img src="/assets/logo.png" alt="" width="26" height="26">WebTitan <small>· Jan Šporek</small></a>
+    <a href="/" class="back">← Zpět na web</a>
+  </header>
+</div>
+
+<main class="wrap">
+  <article class="doc">
+    <span class="kicker">Ochrana osobních údajů</span>
+    <h1>Zásady ochrany osobních údajů</h1>
+    <p class="intro">Když mi přes web pošlete poptávku, žádost o&nbsp;hovor nebo o&nbsp;bezplatné posouzení, svěřujete mi své údaje. Tady srozumitelně popisuji, co s&nbsp;nimi dělám – a&nbsp;co ne.</p>
+    <p class="updated">Platné od 13. 11. 2026</p>
+
+    <section aria-labelledby="h-spravce">
+      <h2 id="h-spravce"><span class="n">1</span>Kdo vaše údaje zpracovává</h2>
+      <!-- DOPLNIT: IČO a sídlo -->
+      <p>Správcem osobních údajů je <strong>Jan Šporek</strong>, provozovatel webu webtitan.cz (WebTitan). Ve všech otázkách ohledně osobních údajů mi pište na <a href="mailto:kontakt@webtitan.cz">kontakt@webtitan.cz</a>.</p>
+    </section>
+
+    <section aria-labelledby="h-udaje">
+      <h2 id="h-udaje"><span class="n">2</span>Jaké údaje zpracovávám</h2>
+      <p>Jen to, co mi sami vyplníte ve formulářích na webu:</p>
+      <ul class="list">
+        <li><span><strong>jméno a&nbsp;e-mail</strong> – abych vám mohl odpovědět,</span></li>
+        <li><span><strong>telefon</strong> – jen pokud ho vyplníte (nepovinné, u&nbsp;telefonického hovoru potřebné),</span></li>
+        <li><span><strong>obsah zprávy</strong> – co potřebujete, typ projektu, termín, rozpočet, zvolený termín hovoru,</span></li>
+        <li><span><strong>odkaz na váš web</strong> nebo tabulku – pokud ho pošlete k&nbsp;posouzení.</span></li>
+      </ul>
+      <p>Pro ochranu formulářů před zneužitím a&nbsp;spamem se při odeslání zpracuje také technický údaj o&nbsp;vašem připojení: IP adresa (ukládá se jen jako nevratný otisk, ze kterého IP adresu nejde zpětně zjistit) a&nbsp;typ prohlížeče.</p>
+    </section>
+
+    <section aria-labelledby="h-proc">
+      <h2 id="h-proc"><span class="n">3</span>Proč a&nbsp;na jakém základě</h2>
+      <ul class="list">
+        <li><span><strong>Odpověď na poptávku, domluva hovoru a&nbsp;příprava nabídky.</strong> Jde o&nbsp;kroky před uzavřením smlouvy, které děláte na vlastní žádost – čl. 6 odst. 1 písm. b) GDPR.</span></li>
+        <li><span><strong>Základní ochrana formulářů proti spamu a&nbsp;zneužití.</strong> Jde o&nbsp;můj oprávněný zájem na bezpečném provozu webu – čl. 6 odst. 1 písm. f) GDPR.</span></li>
+      </ul>
+      <p>Údaje nepoužívám k&nbsp;rozesílání reklamy a&nbsp;nikomu je neprodávám.</p>
+    </section>
+
+    <section aria-labelledby="h-doba">
+      <h2 id="h-doba"><span class="n">4</span>Jak dlouho údaje uchovávám</h2>
+      <p>Po dobu nutnou k&nbsp;vyřízení vaší poptávky, <strong>nejdéle 2 roky</strong>, pokud mezi námi nevznikne smluvní vztah. Pokud spolupráce vznikne, uchovávám údaje po dobu jejího trvání a&nbsp;dále jen v&nbsp;rozsahu a&nbsp;po dobu, kterou ukládají právní předpisy (například účetní a&nbsp;daňové).</p>
+    </section>
+
+    <section aria-labelledby="h-komu">
+      <h2 id="h-komu"><span class="n">5</span>Kdo k&nbsp;údajům má přístup</h2>
+      <p>Vaše zprávy čtu jen já. Odeslaná poptávka se uloží jako záloha na serveru webu (aby se neztratila, kdyby selhalo doručení e-mailu) a&nbsp;zároveň se mi pošle e-mailem. Technicky se na zpracování podílejí pouze:</p>
+      <ul class="list">
+        <li><span><strong>poskytovatel serveru (hostingu)</strong>, na kterém web běží – Oracle Cloud (datacentrum ve Frankfurtu, EU),</span></li>
+        <li><span><strong>Resend</strong> (Plus Five Five, Inc., USA) – služba, která zprávu z&nbsp;formuláře doručí do mé e-mailové schránky. Předání do USA probíhá na základě standardních smluvních doložek EU,</span></li>
+        <li><span><strong>Google</strong> (Gmail) – poskytovatel mé e-mailové schránky.</span></li>
+      </ul>
+      <p>Všichni zpracovávají údaje jen pro tyto účely. Nikomu dalšímu údaje nepředávám ani neprodávám.</p>
+    </section>
+
+    <section aria-labelledby="h-prohlizec">
+      <h2 id="h-prohlizec"><span class="n">6</span>Co se ukládá jen ve vašem prohlížeči</h2>
+      <p>Aby se rozpracovaná poptávka neztratila, ukládá si ji formulář <strong>jen ve vašem prohlížeči</strong> (tzv. localStorage). Na server se nic nedostane, dokud formulář sami neodešlete. Prohlížeč si také pamatuje vaši volbu „aplikace / web“ a&nbsp;to, zda jste už viděli nabídku bezplatné kontroly.</p>
+      <p class="box">Rozpracovanou poptávku smažete tlačítkem <strong>„Začít znovu“</strong> ve formuláři, nebo vymazáním dat webu v&nbsp;nastavení prohlížeče. Po odeslání se smaže sama.</p>
+    </section>
+
+    <section aria-labelledby="h-cookies">
+      <h2 id="h-cookies"><span class="n">7</span>Cookies a&nbsp;měření návštěvnosti</h2>
+      <p>Web <strong>nepoužívá marketingové ani analytické cookies</strong> a&nbsp;neměří vás žádnými analytickými nástroji. Proto se vás ani neptám na souhlas s&nbsp;cookies.</p>
+    </section>
+
+    <section aria-labelledby="h-prava">
+      <h2 id="h-prava"><span class="n">8</span>Vaše práva</h2>
+      <p>Kdykoli mi můžete napsat na <a href="mailto:kontakt@webtitan.cz">kontakt@webtitan.cz</a> a&nbsp;požádat o:</p>
+      <ul class="list">
+        <li><span><strong>přístup</strong> k&nbsp;údajům, které o&nbsp;vás mám,</span></li>
+        <li><span><strong>opravu</strong> nepřesných údajů,</span></li>
+        <li><span><strong>výmaz</strong> údajů,</span></li>
+        <li><span><strong>omezení</strong> zpracování,</span></li>
+        <li><span><strong>přenositelnost</strong> údajů,</span></li>
+        <li><span>a&nbsp;můžete vznést <strong>námitku</strong> proti zpracování na základě oprávněného zájmu.</span></li>
+      </ul>
+      <p>Odpovím vám bez zbytečného odkladu, nejpozději do jednoho měsíce.</p>
+    </section>
+
+    <section aria-labelledby="h-stiznost">
+      <h2 id="h-stiznost"><span class="n">9</span>Stížnost u&nbsp;dozorového úřadu</h2>
+      <p>Pokud si myslíte, že s&nbsp;vašimi údaji nezacházím správně, můžete podat stížnost u&nbsp;Úřadu pro ochranu osobních údajů, Pplk. Sochora 27, 170&nbsp;00 Praha&nbsp;7, <a href="https://www.uoou.cz" target="_blank" rel="noopener">www.uoou.cz</a>. Budu ale rád, když se nejdřív ozvete mně – většinu věcí vyřešíme rychle.</p>
+    </section>
+
+    <div class="contact-cta">
+      <p>Máte dotaz k&nbsp;ochraně údajů?</p>
+      <a class="btn" href="mailto:kontakt@webtitan.cz">Napište na kontakt@webtitan.cz</a>
+    </div>
+  </article>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a href="/" class="brand"><img src="/assets/logo.png" alt="" width="26" height="26" loading="lazy" decoding="async">WebTitan <small>· Jan Šporek</small></a>
+    <nav aria-label="Patička">
+      <a href="/#sluzby">Služby a&nbsp;ceny</a>
+      <a href="/#reference">Reference</a>
+      <a href="/#faq">Otázky</a>
+      <a href="/#kontakt">Kontakt</a>
+      <a href="/ochrana-osobnich-udaju.html" aria-current="page">Ochrana osobních údajů</a>
+    </nav>
+    <div class="foot-bottom">
+      <span>© <span id="year">2026</span> Jan Šporek · WebTitan</span>
+      <span class="foot-contact">
+        <a href="mailto:kontakt@webtitan.cz">kontakt@webtitan.cz</a>
+        <a href="https://www.linkedin.com/in/jan-%C5%A1porek-07a39168/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/jansporek" target="_blank" rel="noopener">GitHub</a>
+      </span>
+    </div>
+  </div>
+</footer>
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

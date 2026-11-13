@@ -1,22 +1,19 @@
-name: Deploy návrhů na webtitan.cz
+name: Deploy webu na webtitan.cz
 
-# Web běží na hostingu v panelu (panel.webtitan.cz) bez Dockeru.
-# Zatím se nasazují jen návrhy: designs.html, design<N>.html, design-assets/ a api/likes.php.
+# Web je statický (složka site/) + pár PHP endpointů. Běží na hostingu v panelu (panel.webtitan.cz),
+# žádný build ani Docker – nasazení jen zkopíruje site/ na server a ověří, že web odpovídá.
 on:
   push:
     branches:
       - main
     paths:
-      - "public/designs.html"
-      - "public/design[0-9]*.html"
-      - "public/design-assets/**"
-      - "public/api/likes.php"
-      - "scripts/deploy-designs.sh"
+      - "site/**"
+      - "scripts/deploy.sh"
       - ".github/workflows/deploy.yml"
   workflow_dispatch:
 
 concurrency:
-  group: deploy-designs
+  group: deploy-webtitan
   cancel-in-progress: false
 
 permissions:
@@ -39,7 +36,7 @@ jobs:
           # Otisk klíče serveru webtitan.cz – připojení k jinému (podvrženému) serveru selže.
           echo '* ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGAULs93rZBiQ8SVfUe4QiQVLWD24UW9b/uTKjvn+NAT' > ~/.ssh/known_hosts_deploy
 
-      - name: Nasadit návrhy
+      - name: Nasadit web
         env:
           DEPLOY_HOST: ${{ secrets.SERVER_HOST }}
           DEPLOY_USER: ${{ secrets.SERVER_USERNAME }}
@@ -47,7 +44,7 @@ jobs:
         run: |
           DEPLOY_KEY="$HOME/.ssh/deploy_key" \
           DEPLOY_KNOWN_HOSTS="$HOME/.ssh/known_hosts_deploy" \
-          bash scripts/deploy-designs.sh
+          bash scripts/deploy.sh
 
       - name: Uklidit klíč
         if: always()
