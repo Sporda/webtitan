@@ -1,0 +1,2031 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aplikace a systémy na míru pro firmy | Jan Šporek – WebTitan</title>
+<meta name="description" content="Z Excelu, e-mailů a papírků do jedné přehledné aplikace. Aplikace na míru od 24 950 Kč, weby od 9 970 Kč, e-shopy od 19 870 Kč a správa serverů od Jana Šporka – pevná cena předem, konzultace zdarma.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="/design-assets/logo.png">
+<link rel="preload" as="image" href="/design-assets/projects/Tepp.webp" fetchpriority="high">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-2: #f4f7fb;
+    --bg-3: #eaf0f8;
+    --ink: #0d1b34;
+    --ink-2: #2b3953;
+    --muted: #5d6b84;
+    --line: #e2e8f1;
+    --line-2: #cdd7e5;
+    --blue: #2457ff;
+    --blue-d: #173bd1;
+    --blue-soft: #ebf0ff;
+    --cyan: #14c6d4;
+    --cyan-d: #0a8f9a;
+    --cyan-soft: #e1f8fa;
+    --green: #10a067;
+    --green-soft: #e4f6ed;
+    --red: #e0484d;
+    --red-soft: #fdeeee;
+    --navy: #0d1b34;
+    --sans: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    --r: 16px;
+    --r-lg: 24px;
+    --shadow: 0 1px 2px rgba(13, 27, 52, .05), 0 10px 30px -12px rgba(13, 27, 52, .16);
+    --shadow-lg: 0 40px 80px -30px rgba(13, 27, 52, .35);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; height: auto; display: block; }
+  ul, ol { list-style: none; }
+  button, input, textarea { font: inherit; color: inherit; }
+  ::selection { background: var(--blue); color: #fff; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  [hidden] { display: none !important; }
+  :focus-visible { outline: 3px solid rgba(36, 87, 255, .5); outline-offset: 3px; border-radius: 8px; }
+
+  .container { max-width: 1200px; margin-left: auto; margin-right: auto; padding-left: 24px; padding-right: 24px; }
+  .sec { padding-top: clamp(72px, 9vw, 112px); padding-bottom: clamp(72px, 9vw, 112px); }
+  .sec-alt { background: var(--bg-2); }
+
+  .i { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+
+  /* ---------- type ---------- */
+  .kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    font-weight: 500;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 14px;
+  }
+  .kicker::before { content: ""; width: 18px; height: 2px; background: var(--cyan); border-radius: 2px; }
+  h1, h2, h3 { letter-spacing: -.025em; line-height: 1.12; }
+  h2 { font-size: clamp(30px, 3.7vw, 46px); font-weight: 800; }
+  h3 { font-weight: 700; }
+  .sec-head { max-width: 760px; margin-bottom: clamp(36px, 5vw, 56px); }
+  .sec-head.center { text-align: center; margin-left: auto; margin-right: auto; }
+  .sec-head p { color: var(--muted); font-size: 18.5px; margin-top: 16px; }
+  .hl { color: var(--blue); background: linear-gradient(transparent 72%, var(--cyan-soft) 72%); }
+
+  /* ---------- buttons ---------- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 13px 22px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 16px;
+    border: 1.5px solid transparent;
+    cursor: pointer;
+    transition: background .2s, box-shadow .2s, transform .2s, border-color .2s, color .2s;
+    white-space: nowrap;
+  }
+  .btn .i { width: 18px; height: 18px; transition: transform .2s; }
+  .btn:hover .i { transform: translateX(3px); }
+  .btn-primary { background: var(--blue); color: #fff; box-shadow: 0 10px 24px -10px rgba(36, 87, 255, .7); }
+  .btn-primary:hover { background: var(--blue-d); transform: translateY(-1px); }
+  .btn-ghost { background: #fff; color: var(--ink); border-color: var(--line-2); }
+  .btn-ghost:hover { border-color: var(--ink); }
+  .btn-lg { padding: 16px 26px; font-size: 17px; border-radius: 14px; }
+  .btn-white { background: #fff; color: var(--navy); }
+  .btn-white:hover { background: var(--cyan-soft); }
+  .btn-outline-white { border-color: rgba(255, 255, 255, .35); color: #fff; }
+  .btn-outline-white:hover { border-color: #fff; }
+
+  /* ---------- header ---------- */
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    background: rgba(255, 255, 255, .88);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid transparent;
+    transition: border-color .25s, box-shadow .25s;
+  }
+  .header.scrolled { border-color: var(--line); box-shadow: 0 6px 20px -16px rgba(13, 27, 52, .4); }
+  .header-in { display: flex; align-items: center; justify-content: space-between; gap: 20px; height: 72px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 17px; letter-spacing: -.02em; white-space: nowrap; }
+  .brand img { width: 28px; height: 28px; }
+  .brand small { font-weight: 500; color: var(--muted); font-size: 14px; letter-spacing: 0; }
+  .nav { display: flex; gap: 4px; font-size: 15px; font-weight: 600; color: var(--ink-2); }
+  .nav a { padding: 8px 12px; border-radius: 8px; transition: background .2s, color .2s; }
+  .nav a:hover { background: var(--bg-2); color: var(--ink); }
+  .header .btn { padding: 11px 18px; font-size: 15px; }
+  .burger { display: none; width: 44px; height: 44px; border-radius: 10px; border: 1.5px solid var(--line-2); background: #fff; cursor: pointer; place-items: center; }
+  .burger .i { width: 20px; height: 20px; }
+
+  /* ---------- hero ---------- */
+  .hero { position: relative; overflow: hidden; padding-top: clamp(28px, 3.6vw, 48px); padding-bottom: clamp(48px, 6vw, 80px); }
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 44px 44px;
+    -webkit-mask-image: radial-gradient(ellipse 70% 70% at 75% 20%, #000 10%, transparent 70%);
+            mask-image: radial-gradient(ellipse 70% 70% at 75% 20%, #000 10%, transparent 70%);
+    opacity: .7;
+    pointer-events: none;
+  }
+  .hero-grid { position: relative; display: grid; grid-template-columns: 1.02fr 1fr; grid-template-areas: "copy visual" "pick pick"; gap: 26px clamp(32px, 5vw, 64px); align-items: center; }
+  .hero-copy { grid-area: copy; }
+  .hero-visual { grid-area: visual; }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    background: var(--blue-soft);
+    color: var(--blue-d);
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 22px;
+  }
+  .eyebrow .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 0 4px rgba(20, 198, 212, .2); }
+  .hero h1 { font-size: clamp(34px, 4.3vw, 54px); font-weight: 800; letter-spacing: -.035em; line-height: 1.06; margin-bottom: 18px; }
+  .hero .lead { font-size: clamp(17px, 1.35vw, 19px); color: var(--ink-2); max-width: 54ch; margin-bottom: 20px; }
+  .checks { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+  .checks li { display: flex; gap: 12px; align-items: flex-start; font-weight: 600; }
+  .checks .tick { width: 24px; height: 24px; border-radius: 50%; background: var(--green-soft); color: var(--green); display: grid; place-items: center; flex: none; margin-top: 1px; }
+  .checks .tick .i { width: 15px; height: 15px; stroke-width: 2.6; }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 12px; }
+  .price-anchor { font-size: 15px; color: var(--muted); }
+  .price-anchor b { color: var(--ink); }
+  .avatar { position: relative; width: 52px; height: 52px; border-radius: 50%; overflow: hidden; background: linear-gradient(135deg, var(--blue-soft), var(--cyan-soft)); flex: none; box-shadow: 0 0 0 3px #fff, 0 0 0 4px var(--line); }
+  .avatar img { position: absolute; width: 200%; max-width: none; left: -52%; top: -10%; }
+
+  .hero-visual { position: relative; padding: 36px 0 56px; }
+  .hero-visual::before {
+    content: "";
+    position: absolute;
+    inset: 0 -8% 8% 10%;
+    background: radial-gradient(circle at 60% 40%, rgba(36, 87, 255, .16), transparent 60%), radial-gradient(circle at 30% 80%, rgba(20, 198, 212, .18), transparent 55%);
+    filter: blur(10px);
+  }
+  .browser { position: relative; background: #fff; border: 1px solid var(--line-2); border-radius: 14px; overflow: hidden; box-shadow: var(--shadow-lg); }
+  .browser-bar { display: flex; align-items: center; gap: 6px; padding: 10px 14px; background: var(--bg-2); border-bottom: 1px solid var(--line); }
+  .browser-bar i { width: 10px; height: 10px; border-radius: 50%; background: #d4dbe6; }
+  .browser-bar .url { margin-left: 12px; flex: 1; max-width: 300px; font-family: var(--mono); font-size: 11.5px; color: var(--muted); background: #fff; border: 1px solid var(--line); border-radius: 6px; padding: 3px 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .browser img { width: 100%; aspect-ratio: 2 / 1; object-fit: cover; object-position: top left; }
+  .float { position: absolute; z-index: 2; background: #fff; border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); }
+  .float-toast { top: 0; right: -10px; display: flex; align-items: center; gap: 12px; padding: 12px 16px; }
+  .float-toast .ok { width: 34px; height: 34px; border-radius: 10px; background: var(--green-soft); color: var(--green); display: grid; place-items: center; }
+  .float-toast .ok .i { width: 18px; height: 18px; stroke-width: 2.5; }
+  .float-toast b { display: block; font-size: 14.5px; }
+  .float-toast span { font-size: 13px; color: var(--muted); }
+  .float-contact { left: -24px; bottom: 0; display: flex; align-items: center; gap: 14px; padding: 14px 20px 14px 14px; }
+  .float-contact .small { display: block; font-size: 12.5px; color: var(--muted); line-height: 1.35; }
+  .float-contact b { display: block; font-size: 15.5px; line-height: 1.3; }
+  .float-chips { right: -16px; bottom: 22px; display: flex; gap: 6px; padding: 9px; }
+  .float-chips span { font-size: 12.5px; font-weight: 700; padding: 5px 10px; border-radius: 8px; background: var(--bg-2); color: var(--ink-2); white-space: nowrap; }
+  .float-chips span:first-child { background: var(--blue-soft); color: var(--blue-d); }
+
+  /* ---------- trust strip ---------- */
+  .trust { background: var(--bg-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .trust-in { padding-top: 34px; padding-bottom: 34px; }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .stat b { display: block; font-size: clamp(30px, 3.2vw, 40px); font-weight: 800; letter-spacing: -.04em; line-height: 1.1; }
+  .stat b em { font-style: normal; color: var(--blue); }
+  .stat span { font-size: 15px; color: var(--muted); font-weight: 500; }
+  .clients { margin-top: 26px; padding-top: 22px; border-top: 1px dashed var(--line-2); display: flex; flex-wrap: wrap; align-items: center; gap: 8px 26px; font-weight: 700; color: #8a96ab; font-size: 15.5px; }
+  .clients small { font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); margin-right: 4px; }
+
+  /* ---------- pains ---------- */
+  .pains { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .pain { background: #fff; border: 1px solid var(--line); border-radius: var(--r); padding: 24px; transition: border-color .25s, transform .25s, box-shadow .25s; }
+  .pain:hover { border-color: var(--line-2); transform: translateY(-3px); box-shadow: var(--shadow); }
+  .pain .ic { width: 46px; height: 46px; border-radius: 12px; background: var(--red-soft); color: var(--red); display: grid; place-items: center; margin-bottom: 18px; }
+  .pain h3 { font-size: 19px; margin-bottom: 8px; }
+  .pain p { color: var(--muted); font-size: 16px; }
+  .after-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; margin-top: 36px; }
+  .after-cta p { color: var(--muted); font-weight: 500; }
+  .after-cta.center { justify-content: center; text-align: center; }
+
+  /* ---------- before / after ---------- */
+  .ba { display: grid; grid-template-columns: 1fr auto 1fr; gap: 20px; align-items: stretch; }
+  .ba-col { border-radius: var(--r-lg); padding: clamp(24px, 3vw, 36px); border: 1px solid var(--line); background: #fff; }
+  .ba-col.after { border: 2px solid var(--green); box-shadow: 0 30px 60px -36px rgba(16, 160, 103, .55); }
+  .ba-label { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; padding: 6px 12px; border-radius: 999px; margin-bottom: 14px; }
+  .before .ba-label { background: var(--red-soft); color: var(--red); }
+  .after .ba-label { background: var(--green-soft); color: var(--green); }
+  .ba-col h3 { font-size: clamp(22px, 2.2vw, 26px); margin-bottom: 20px; }
+  .ba-col ul { display: flex; flex-direction: column; gap: 14px; }
+  .ba-col li { display: flex; gap: 12px; align-items: flex-start; font-weight: 500; }
+  .ba-col li .mk { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; flex: none; margin-top: 1px; }
+  .ba-col li .mk .i { width: 14px; height: 14px; stroke-width: 2.8; }
+  .before li .mk { background: var(--red-soft); color: var(--red); }
+  .before li { color: var(--ink-2); }
+  .after li .mk { background: var(--green); color: #fff; }
+  .ba-arrow { display: grid; place-items: center; }
+  .ba-arrow span { width: 52px; height: 52px; border-radius: 50%; background: var(--blue); color: #fff; display: grid; place-items: center; box-shadow: 0 12px 24px -10px rgba(36, 87, 255, .7); }
+
+  /* ---------- benefits ---------- */
+  .benefits { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .benefit { padding: 26px; border-radius: var(--r); background: #fff; border: 1px solid var(--line); }
+  .benefit .ic { width: 46px; height: 46px; border-radius: 12px; background: var(--blue-soft); color: var(--blue); display: grid; place-items: center; margin-bottom: 18px; }
+  .benefit h3 { font-size: 19px; margin-bottom: 8px; }
+  .benefit p { color: var(--muted); font-size: 16px; }
+
+  /* ---------- cases ---------- */
+  .cases { display: flex; flex-direction: column; gap: clamp(28px, 4vw, 44px); }
+  .case { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(24px, 4vw, 56px); align-items: center; background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); padding: clamp(20px, 3vw, 36px); }
+  .case:nth-child(even) .case-shot { order: 2; }
+  .case-shot .browser { box-shadow: var(--shadow); }
+  .case-tag { display: inline-block; font-size: 13px; font-weight: 700; color: var(--cyan-d); background: var(--cyan-soft); padding: 5px 11px; border-radius: 8px; margin-bottom: 12px; }
+  .case h3 { font-size: clamp(22px, 2.3vw, 28px); margin-bottom: 18px; }
+  .case dl { display: grid; gap: 14px; }
+  .case dt { font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+  .case dd { color: var(--ink-2); }
+  .case dd.win { color: var(--ink); font-weight: 600; padding-left: 14px; border-left: 3px solid var(--green); }
+  .case .tech { margin-top: 18px; font-family: var(--mono); font-size: 12.5px; color: var(--muted); }
+  .more-refs { margin-top: clamp(40px, 5vw, 56px); }
+  .more-refs h3 { font-size: 20px; margin-bottom: 18px; }
+  .thumbs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .thumb { border-radius: 14px; overflow: hidden; border: 1px solid var(--line); background: #fff; transition: transform .25s, box-shadow .25s; }
+  .thumb:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+  .thumb img { width: 100%; aspect-ratio: 2 / 1; object-fit: cover; object-position: top; border-bottom: 1px solid var(--line); }
+  .thumb div { padding: 12px 16px 14px; display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+  .thumb b { font-size: 15.5px; }
+  .thumb span { font-size: 13px; color: var(--muted); text-align: right; }
+  .names { margin-top: 18px; color: var(--muted); font-size: 15.5px; }
+  .names b { color: var(--ink); }
+
+  /* ---------- offers ---------- */
+  .offers { display: grid; grid-template-columns: 1.25fr repeat(3, 1fr); gap: 16px; align-items: stretch; }
+  .offer { position: relative; display: flex; flex-direction: column; gap: 14px; padding: 26px; border-radius: var(--r-lg); background: #fff; border: 1px solid var(--line); }
+  .offer.featured { border: 2px solid var(--blue); box-shadow: 0 34px 60px -38px rgba(36, 87, 255, .7); }
+  .badge { position: absolute; top: -13px; left: 24px; font-size: 12.5px; font-weight: 800; color: #fff; background: var(--blue); padding: 5px 12px; border-radius: 999px; }
+  .offer .ic { width: 46px; height: 46px; border-radius: 12px; background: var(--blue-soft); color: var(--blue); display: grid; place-items: center; }
+  .offer h3 { font-size: 20px; }
+  .offer p { color: var(--muted); font-size: 15.5px; }
+  .offer ul { display: flex; flex-direction: column; gap: 9px; font-size: 15px; font-weight: 500; color: var(--ink-2); }
+  .offer li { display: flex; gap: 9px; align-items: flex-start; }
+  .offer li .i { width: 17px; height: 17px; color: var(--green); stroke-width: 2.6; margin-top: 3px; }
+  .price { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--line); }
+  .price b { display: block; font-size: 24px; font-weight: 800; letter-spacing: -.03em; }
+  .price span { font-size: 13.5px; color: var(--muted); }
+  .offers-note { margin-top: 22px; color: var(--muted); font-size: 15px; text-align: center; }
+
+  /* ---------- comparison ---------- */
+  .cmp { display: grid; grid-template-columns: 1.05fr repeat(4, 1fr); grid-template-rows: repeat(7, auto); gap: 0 12px; }
+  .cmp-col { grid-row: span 7; display: grid; grid-template-rows: subgrid; background: #fff; border: 1px solid var(--line); border-radius: 18px; position: relative; }
+  .cmp-col > * { padding: 14px 18px; border-top: 1px solid var(--line); font-size: 15px; }
+  .cmp-col > .cmp-head { border-top: none; padding-top: 22px; padding-bottom: 18px; }
+  .cmp-head b { display: block; font-size: 17px; letter-spacing: -.01em; }
+  .cmp-head span { font-size: 13.5px; color: var(--muted); }
+  .cmp-labels { background: transparent; border-color: transparent; }
+  .cmp-labels > * { font-weight: 700; color: var(--ink); padding-left: 0; }
+  .cmp-col.me { border: 2px solid var(--blue); background: linear-gradient(180deg, var(--blue-soft), #fff 40%); box-shadow: 0 34px 60px -38px rgba(36, 87, 255, .7); }
+  .cmp-col.me .cmp-head b { color: var(--blue-d); }
+  .cell { display: flex; gap: 10px; align-items: flex-start; color: var(--ink-2); }
+  .cell .lbl { display: none; }
+  .st { width: 10px; height: 10px; border-radius: 50%; flex: none; margin-top: 7px; }
+  .st.good { background: var(--green); }
+  .st.mid { background: #f0b429; }
+  .st.bad { background: var(--red); }
+  .cmp-col.me .cell { color: var(--ink); font-weight: 600; }
+  .cmp-note { margin-top: 18px; text-align: center; color: var(--muted); font-size: 15px; }
+
+  /* ---------- fit ---------- */
+  .fit { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .fit-col { padding: clamp(24px, 3vw, 34px); border-radius: var(--r-lg); background: #fff; border: 1px solid var(--line); }
+  .fit-col.yes { border-color: rgba(16, 160, 103, .45); }
+  .fit-col h3 { font-size: 21px; margin-bottom: 18px; display: flex; gap: 12px; align-items: center; }
+  .fit-col h3 .mk { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; }
+  .fit-col.yes h3 .mk { background: var(--green-soft); color: var(--green); }
+  .fit-col.no h3 .mk { background: var(--bg-3); color: var(--muted); }
+  .fit-col ul { display: flex; flex-direction: column; gap: 12px; }
+  .fit-col li { display: flex; gap: 12px; color: var(--ink-2); font-weight: 500; }
+  .fit-col li::before { content: ""; width: 7px; height: 7px; border-radius: 50%; flex: none; margin-top: 10px; }
+  .fit-col.yes li::before { background: var(--green); }
+  .fit-col.no li::before { background: var(--line-2); }
+
+  /* ---------- offer band (low threshold) ---------- */
+  .band { background: var(--navy); color: #fff; position: relative; overflow: hidden; }
+  .band::before { content: ""; position: absolute; width: 620px; height: 620px; right: -160px; top: -260px; background: radial-gradient(circle, rgba(36, 87, 255, .55), transparent 65%); }
+  .band::after { content: ""; position: absolute; width: 480px; height: 480px; left: -200px; bottom: -280px; background: radial-gradient(circle, rgba(20, 198, 212, .35), transparent 65%); }
+  .band-in { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr minmax(0, 480px); gap: clamp(28px, 5vw, 72px); align-items: center; padding-top: clamp(56px, 7vw, 88px); padding-bottom: clamp(56px, 7vw, 88px); }
+  .band-ic { width: 64px; height: 64px; border-radius: 18px; background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .16); display: grid; place-items: center; color: var(--cyan); margin-bottom: 22px; }
+  .band-ic .i { width: 30px; height: 30px; stroke-width: 1.6; }
+  .band h2 { font-size: clamp(28px, 3vw, 40px); margin-bottom: 14px; }
+  .band-copy > p { color: #b6c2d9; max-width: 52ch; font-size: 18px; }
+  .band-list { display: flex; flex-direction: column; gap: 10px; margin-top: 24px; }
+  .band-list li { display: flex; gap: 12px; align-items: center; color: #e2e8f4; font-weight: 600; }
+  .band-list .tick { width: 26px; height: 26px; border-radius: 50%; background: rgba(20, 198, 212, .16); color: var(--cyan); display: grid; place-items: center; flex: none; }
+  .band-list .tick .i { width: 14px; height: 14px; stroke-width: 2.8; }
+
+  /* ---------- process ---------- */
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; counter-reset: step; position: relative; }
+  .steps::before { content: ""; position: absolute; top: 27px; left: 28px; right: calc((100% - 48px) / 4 - 28px); height: 2px; background: repeating-linear-gradient(90deg, var(--line-2) 0 8px, transparent 8px 14px); }
+  .step { position: relative; }
+  .step .num { position: relative; z-index: 1; width: 56px; height: 56px; border-radius: 16px; background: #fff; border: 2px solid var(--blue); color: var(--blue); display: grid; place-items: center; font-weight: 800; font-size: 20px; margin-bottom: 20px; }
+  .step:first-child .num { background: var(--blue); color: #fff; }
+  .dur { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: var(--cyan-d); background: var(--cyan-soft); padding: 4px 10px; border-radius: 999px; margin-bottom: 10px; }
+  .dur .i { width: 14px; height: 14px; }
+  .step h3 { font-size: 19px; margin-bottom: 8px; }
+  .step p { color: var(--muted); font-size: 16px; }
+
+  /* ---------- guarantees ---------- */
+  .guar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .g { padding: 24px; border-radius: var(--r); background: #fff; border: 1px solid var(--line); }
+  .g .ic { width: 46px; height: 46px; border-radius: 12px; background: var(--green-soft); color: var(--green); display: grid; place-items: center; margin-bottom: 16px; }
+  .g h3 { font-size: 18px; margin-bottom: 6px; }
+  .g p { color: var(--muted); font-size: 15.5px; }
+
+  /* ---------- testimonials (placeholders) ---------- */
+  .tst { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .t-ph { border: 2px dashed var(--line-2); border-radius: var(--r); padding: 26px; background: repeating-linear-gradient(135deg, #fff 0 14px, var(--bg-2) 14px 28px); display: flex; flex-direction: column; gap: 18px; }
+  .t-ph .tag { align-self: flex-start; font-family: var(--mono); font-size: 11.5px; font-weight: 500; letter-spacing: .05em; text-transform: uppercase; color: #9a6b00; background: #fff4d6; border: 1px solid #f3dc9c; padding: 3px 9px; border-radius: 6px; }
+  .t-ph p { color: var(--muted); font-style: italic; flex: 1; }
+  .t-ph .who { display: flex; align-items: center; gap: 12px; color: var(--muted); font-size: 14.5px; font-weight: 600; }
+  .t-ph .who i { width: 40px; height: 40px; border-radius: 50%; border: 2px dashed var(--line-2); background: #fff; }
+
+  /* ---------- about ---------- */
+  .about { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(32px, 5vw, 72px); align-items: center; }
+  .about-photo { position: relative; border-radius: var(--r-lg); background: linear-gradient(160deg, var(--blue-soft), var(--cyan-soft)); aspect-ratio: 1 / 1.02; overflow: hidden; }
+  .about-photo::before { content: ""; position: absolute; inset: 0; background-image: radial-gradient(rgba(36, 87, 255, .18) 1px, transparent 1px); background-size: 18px 18px; -webkit-mask-image: linear-gradient(#000, transparent 70%); mask-image: linear-gradient(#000, transparent 70%); }
+  .about-photo img { position: absolute; bottom: 0; left: 50%; width: 112%; max-width: none; transform: translateX(-48%); }
+  .about-photo .card { position: absolute; left: 16px; bottom: 16px; right: 16px; background: rgba(255, 255, 255, .92); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid var(--line); border-radius: 14px; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .about-photo .card b { display: block; font-size: 17px; }
+  .about-photo .card span { font-size: 14px; color: var(--muted); }
+  .socials { display: flex; gap: 8px; }
+  .socials a { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--line-2); display: grid; place-items: center; background: #fff; transition: border-color .2s, color .2s; color: var(--ink); }
+  .socials a:hover { border-color: var(--blue); color: var(--blue); }
+  .socials svg { width: 18px; height: 18px; fill: currentColor; }
+  .about-text h2 { margin-bottom: 20px; }
+  .about-text p { color: var(--ink-2); margin-bottom: 14px; font-size: 17.5px; }
+  .facts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 26px 0; }
+  .fact { padding: 14px 16px; border-radius: 12px; background: var(--bg-2); border: 1px solid var(--line); }
+  .fact b { display: block; font-size: 15px; }
+  .fact span { font-size: 14px; color: var(--muted); }
+  .stack-line { font-family: var(--mono); font-size: 12.5px; color: var(--muted); margin-bottom: 26px; }
+
+  /* ---------- faq ---------- */
+  .faq-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(32px, 5vw, 64px); align-items: start; }
+  .faq-side { position: sticky; top: 100px; }
+  .faq-side .help { margin-top: 26px; padding: 22px; border-radius: var(--r); background: #fff; border: 1px solid var(--line); }
+  .faq-side .help b { display: block; font-size: 17px; margin-bottom: 4px; }
+  .faq-side .help p { color: var(--muted); font-size: 15.5px; margin-bottom: 16px; }
+  .faq { display: flex; flex-direction: column; gap: 10px; }
+  .faq details { background: #fff; border: 1px solid var(--line); border-radius: 14px; transition: border-color .2s, box-shadow .2s; }
+  .faq details[open] { border-color: var(--line-2); box-shadow: var(--shadow); }
+  .faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 22px; font-weight: 700; font-size: 17px; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary .pm { width: 30px; height: 30px; border-radius: 8px; background: var(--bg-2); display: grid; place-items: center; flex: none; transition: transform .25s, background .2s, color .2s; }
+  .faq summary .pm .i { width: 16px; height: 16px; stroke-width: 2.4; }
+  .faq details[open] summary .pm { transform: rotate(45deg); background: var(--blue); color: #fff; }
+  .faq .ans { padding: 0 22px 20px; color: var(--ink-2); }
+
+  /* ---------- final CTA / form ---------- */
+  .final { background: linear-gradient(180deg, var(--bg-2), var(--blue-soft)); }
+  .final-grid { display: grid; grid-template-columns: .9fr 1.1fr; grid-template-rows: auto 1fr; grid-template-areas: "head form" "aside form"; gap: 26px clamp(32px, 5vw, 64px); align-items: start; }
+  .final-head { grid-area: head; }
+  .final-aside { grid-area: aside; }
+  .final h2 { font-size: clamp(32px, 3.8vw, 48px); margin-bottom: 16px; }
+  .final .sub { color: var(--ink-2); font-size: 18.5px; margin-bottom: 26px; }
+  .assure { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+  .assure li { display: flex; gap: 12px; align-items: center; font-weight: 700; }
+  .assure .tick { width: 28px; height: 28px; border-radius: 50%; background: var(--green); color: #fff; display: grid; place-items: center; flex: none; }
+  .assure .tick .i { width: 15px; height: 15px; stroke-width: 2.8; }
+  .next { background: #fff; border: 1px solid var(--line); border-radius: var(--r); padding: 22px 24px; }
+  .next h3 { font-size: 16px; font-family: var(--mono); font-weight: 500; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
+  .next ol { display: flex; flex-direction: column; gap: 14px; }
+  .next li { display: grid; grid-template-columns: 32px 1fr; gap: 12px; }
+  .next li > span { width: 32px; height: 32px; border-radius: 10px; background: var(--blue-soft); color: var(--blue); display: grid; place-items: center; font-weight: 800; }
+  .next li b { display: block; }
+  .next li p { color: var(--muted); font-size: 15px; }
+  .direct { margin-top: 18px; font-size: 15.5px; color: var(--muted); }
+  .direct a { color: var(--blue); font-weight: 700; }
+
+  .form-card { grid-area: form; position: sticky; top: 96px; background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); padding: clamp(22px, 3vw, 34px); box-shadow: var(--shadow-lg); }
+  .pane > h3 { font-size: 22px; margin-bottom: -8px; outline: none; }
+  .form-card .hint { color: var(--muted); font-size: 15px; }
+  .form { display: flex; flex-direction: column; gap: 16px; }
+  .pane { display: flex; flex-direction: column; gap: 16px; }
+  .pane h3 .opt { font-size: 15px; font-weight: 600; color: var(--muted); letter-spacing: 0; }
+  .form fieldset { border: none; }
+  .form legend, .form label.fl { display: block; font-size: 14.5px; font-weight: 700; margin-bottom: 8px; color: var(--ink); }
+  .form .opt { font-weight: 500; color: var(--muted); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { position: relative; }
+  .chip input { position: absolute; opacity: 0; pointer-events: none; }
+  .chip span { display: inline-flex; align-items: center; min-height: 44px; padding: 9px 14px; border-radius: 10px; border: 1.5px solid var(--line-2); font-size: 15px; font-weight: 600; cursor: pointer; transition: all .15s; background: #fff; }
+  .chip span:hover { border-color: var(--blue); }
+  .chip input:checked + span { background: var(--blue); border-color: var(--blue); color: #fff; }
+  .chip input:focus-visible + span { outline: 3px solid rgba(36, 87, 255, .35); outline-offset: 2px; }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .form input[type="text"], .form input[type="email"], .form input[type="tel"], .form textarea {
+    width: 100%;
+    border: 1.5px solid var(--line-2);
+    border-radius: 12px;
+    padding: 13px 15px;
+    font-size: 16px;
+    background: #fff;
+    outline: none;
+    transition: border-color .2s, box-shadow .2s;
+    resize: vertical;
+  }
+  .form input::placeholder, .form textarea::placeholder { color: #98a3b6; }
+  .form input:focus, .form textarea:focus { border-color: var(--blue); box-shadow: 0 0 0 4px rgba(36, 87, 255, .14); }
+  .form .btn { width: 100%; }
+  .form-foot { font-size: 13.5px; color: var(--muted); text-align: center; }
+  .status { font-size: 15px; font-weight: 600; min-height: 1.4em; text-align: center; }
+  .status.ok { color: var(--green); }
+  .status.err { color: var(--red); }
+
+  /* ---------- quick-pick (hero) + type tiles (form) ---------- */
+  .qp { grid-area: pick; position: relative; z-index: 3; background: #fff; border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); padding: 16px 18px 18px; }
+  .qp-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 6px 20px; margin-bottom: 12px; }
+  .qp-head h2 { font-size: 18px; font-weight: 800; letter-spacing: -.015em; line-height: 1.3; }
+  .qp-head h2 span { font-weight: 500; color: var(--muted); }
+  .qp-trust { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: var(--muted); }
+  .qp-trust .i { width: 17px; height: 17px; color: var(--green); }
+  .qp-tiles { display: grid; grid-template-columns: 1.3fr repeat(4, 1fr); gap: 10px; }
+  .tile-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 64px;
+    padding: 11px 14px;
+    border-radius: 14px;
+    border: 1.5px solid var(--line-2);
+    background: #fff;
+    text-align: left;
+    cursor: pointer;
+    font: inherit;
+    color: var(--ink);
+    transition: border-color .2s, background .2s, transform .2s, box-shadow .2s, color .2s;
+  }
+  .tile-btn:hover { border-color: var(--blue); transform: translateY(-2px); box-shadow: var(--shadow); }
+  .tile-btn .t-ic { width: 38px; height: 38px; border-radius: 10px; background: var(--blue-soft); color: var(--blue); display: grid; place-items: center; flex: none; transition: background .2s, color .2s; }
+  .tile-btn .t-ic .i { width: 20px; height: 20px; }
+  .tile-btn b { display: block; font-size: 15.5px; line-height: 1.25; }
+  .tile-btn small { display: block; font-size: 13.5px; font-weight: 600; color: var(--muted); margin-top: 2px; }
+  .tile-btn.feat { border-color: var(--blue); background: linear-gradient(180deg, var(--blue-soft), #fff); }
+  .tile-btn.feat small { color: var(--blue-d); }
+  .tile-btn .t-go { margin-left: auto; color: var(--blue); }
+  .tile-btn .t-go .i { width: 18px; height: 18px; transition: transform .2s; }
+  .tile-btn:hover .t-go .i { transform: translateX(3px); }
+  .tile-btn[aria-pressed="true"] { border-color: var(--blue); background: var(--blue); color: #fff; }
+  .tile-btn[aria-pressed="true"] small { color: rgba(255, 255, 255, .85); }
+  .tile-btn[aria-pressed="true"] .t-ic { background: rgba(255, 255, 255, .18); color: #fff; }
+  .f-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .f-tiles .feat { grid-column: 1 / -1; }
+
+  /* ---------- multi-step form ---------- */
+  .fc-meta { display: flex; justify-content: space-between; gap: 12px; font-size: 13.5px; font-weight: 700; color: var(--muted); margin-bottom: 8px; }
+  .fc-meta .stepno { color: var(--blue); }
+  .fc-progress { height: 6px; border-radius: 99px; background: var(--bg-3); overflow: hidden; margin-bottom: 22px; }
+  .fc-progress span { display: block; height: 100%; width: 33.34%; border-radius: inherit; background: linear-gradient(90deg, var(--blue), var(--cyan)); transition: width .35s ease; }
+  .resume { display: flex; align-items: center; justify-content: space-between; gap: 6px 12px; flex-wrap: wrap; font-size: 14px; font-weight: 600; color: var(--ink-2); background: var(--cyan-soft); border-radius: 10px; padding: 6px 6px 6px 12px; margin-bottom: 16px; }
+  .resume button { background: none; border: none; color: var(--cyan-d); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; min-height: 36px; padding: 0 8px; cursor: pointer; }
+  .pane-nav { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; margin-top: 4px; }
+  .pane-nav .btn { width: auto; flex: 1 1 auto; }
+  .btn-back, .btn-skip { background: none; border: none; font-weight: 700; min-height: 44px; padding: 0 8px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+  .btn-back { color: var(--muted); }
+  .btn-back .i { width: 17px; height: 17px; transform: rotate(180deg); }
+  .btn-back:hover { color: var(--ink); }
+  .btn-skip { color: var(--blue); text-decoration: underline; text-underline-offset: 3px; }
+  .recap { display: flex; align-items: center; gap: 6px 12px; flex-wrap: wrap; background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 6px 6px 6px 14px; font-size: 14.5px; color: var(--ink-2); }
+  .recap > span { flex: 1; min-width: 0; }
+  .recap button { background: none; border: none; color: var(--blue); font-weight: 700; min-height: 36px; padding: 0 10px; cursor: pointer; }
+  .field-err { font-size: 13.5px; font-weight: 600; color: var(--red); margin-top: 6px; }
+  .field-err:empty { display: none; }
+  .form [aria-invalid="true"] { border-color: var(--red) !important; box-shadow: 0 0 0 4px rgba(224, 72, 77, .12) !important; }
+  .check { display: flex; align-items: center; gap: 10px; min-height: 44px; font-weight: 600; font-size: 15.5px; cursor: pointer; align-self: flex-start; }
+  .check input { width: 20px; height: 20px; accent-color: var(--blue); flex: none; }
+  .micro { display: flex; flex-direction: column; gap: 6px; font-size: 14px; color: var(--muted); }
+  .micro li { display: flex; gap: 8px; align-items: center; }
+  .micro .i { width: 16px; height: 16px; color: var(--green); stroke-width: 2.6; }
+  .btn.loading { pointer-events: none; opacity: .85; }
+  .btn.loading::before { content: ""; width: 16px; height: 16px; border-radius: 50%; border: 2px solid rgba(255, 255, 255, .45); border-top-color: #fff; animation: spin .8s linear infinite; }
+  .btn.loading .i { display: none; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .fc-fail { display: flex; flex-direction: column; gap: 10px; padding: 16px 18px; border-radius: 14px; background: var(--red-soft); border: 1.5px solid #f4c3c5; }
+  .fc-fail p { font-size: 15px; color: var(--ink-2); }
+  .fc-fail p b { color: var(--ink); }
+  .fc-fail .btn { width: 100%; }
+  .fc-fail .small { font-size: 14px; color: var(--muted); }
+  .fc-fail .small a, .lm-fail .small a { color: var(--blue); font-weight: 700; }
+  .fc-done, .lm-done { outline: none; }
+  .done-ic { width: 56px; height: 56px; border-radius: 16px; background: var(--green); color: #fff; display: grid; place-items: center; margin-bottom: 18px; box-shadow: 0 14px 30px -14px rgba(16, 160, 103, .8); }
+  .done-ic .i { width: 28px; height: 28px; stroke-width: 2.6; }
+  .fc-done > h3 { font-size: 26px; margin-bottom: 8px; }
+  .status.err { color: var(--red); }
+  .fc-done > p { color: var(--ink-2); margin-bottom: 20px; }
+  .fc-done .next { margin-bottom: 20px; }
+  .fc-done .btn { width: 100%; }
+
+  /* final aside */
+  .me-card { display: flex; align-items: center; gap: 16px; padding: 16px 18px; border-radius: var(--r); background: #fff; border: 1px solid var(--line); margin-bottom: 22px; }
+  .me-card .avatar { width: 64px; height: 64px; }
+  .me-card b { display: block; font-size: 17px; }
+  .me-card span { font-size: 14.5px; color: var(--muted); }
+  .final-clients { margin-top: 18px; font-size: 14.5px; color: var(--muted); }
+  .final-clients b { color: var(--ink-2); }
+
+  /* ---------- lead magnet ---------- */
+  .lm-card { background: #fff; color: var(--ink); border-radius: var(--r-lg); padding: clamp(22px, 3vw, 30px); box-shadow: 0 40px 80px -30px rgba(0, 0, 0, .55); }
+  .lm-card > h3, .lm-title { font-size: 20px; margin-bottom: 16px; }
+  .lm-form { gap: 12px; }
+  .lm-form textarea { min-height: 110px; }
+  .lm-foot { font-size: 14px; color: var(--muted); text-align: center; }
+  .lm-mail { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; font-weight: 700; color: var(--blue); }
+  .lm-mail .i { width: 18px; height: 18px; }
+  .lm-fail { display: flex; flex-direction: column; gap: 10px; padding: 14px 16px; border-radius: 12px; background: var(--red-soft); border: 1.5px solid #f4c3c5; font-size: 15px; }
+  .lm-fail .btn { width: 100%; }
+  .lm-fail .small { font-size: 14px; color: var(--muted); }
+  .lm-done h3 { font-size: 22px; margin-bottom: 8px; }
+  .lm-done p { color: var(--ink-2); }
+
+  /* ---------- comparison anchor ---------- */
+  .cmp-anchor { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px 28px; background: #fff; border: 1px solid var(--line); border-left: 4px solid var(--blue); border-radius: 14px; padding: 18px 22px; margin-bottom: 24px; box-shadow: var(--shadow); }
+  .cmp-anchor p { max-width: 64ch; color: var(--ink-2); }
+  .cmp-anchor p b { color: var(--ink); }
+  .cell b { color: var(--blue-d); }
+  .cell > span:not(.lbl):not(.st) { flex: 1 1 0; min-width: 0; }
+
+  /* offer CTA buttons */
+  .offer-cta { width: 100%; }
+
+  /* ---------- exit-intent dialog ---------- */
+  .dlg { border: none; padding: 0; margin: auto; width: min(860px, calc(100% - 32px)); max-height: calc(100% - 32px); border-radius: var(--r-lg); background: #fff; color: var(--ink); box-shadow: var(--shadow-lg); overflow: auto; }
+  .dlg::backdrop { background: rgba(13, 27, 52, .6); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); }
+  .dlg[open] { animation: dlg-in .3s ease; }
+  @keyframes dlg-in { from { opacity: 0; transform: translateY(14px) scale(.98); } }
+  .dlg-in { display: grid; grid-template-columns: .9fr 1.1fr; }
+  .dlg-side { position: relative; overflow: hidden; background: var(--navy); color: #fff; padding: 34px 32px; }
+  .dlg-side::before { content: ""; position: absolute; width: 420px; height: 420px; right: -200px; bottom: -220px; background: radial-gradient(circle, rgba(36, 87, 255, .55), transparent 65%); }
+  .dlg-side > * { position: relative; }
+  .dlg-side .kicker { color: var(--cyan); }
+  .dlg-side h2 { font-size: clamp(24px, 2.6vw, 30px); margin-bottom: 12px; }
+  .dlg-side p { color: #b6c2d9; font-size: 16px; }
+  .dlg-side .band-list { margin-top: 20px; }
+  .dlg-body { padding: 30px 32px 28px; }
+  .dlg-body .lm-form > div:first-child .fl { padding-right: 46px; }
+  .status:empty { min-height: 0; }
+  .dlg-close { position: absolute; top: 12px; right: 12px; z-index: 2; width: 44px; height: 44px; border-radius: 12px; border: none; background: var(--bg-2); color: var(--ink); cursor: pointer; display: grid; place-items: center; }
+  .dlg-close:hover { background: var(--bg-3); }
+  .dlg-close .i { width: 20px; height: 20px; }
+  .dlg-alt { display: flex; justify-content: center; align-items: center; gap: 6px; min-height: 44px; margin-top: 4px; font-weight: 700; color: var(--blue); }
+  .dlg-alt .i { width: 17px; height: 17px; }
+
+  /* ---------- footer ---------- */
+  .footer { background: var(--navy); color: #b6c2d9; }
+  .footer-in { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 32px; padding-top: 56px; padding-bottom: 40px; }
+  .footer .brand { color: #fff; margin-bottom: 12px; }
+  .footer .brand img { filter: invert(1); }
+  .footer p { font-size: 15px; max-width: 40ch; }
+  .footer h4 { color: #fff; font-size: 14px; margin-bottom: 12px; }
+  .footer ul { display: flex; flex-direction: column; gap: 8px; font-size: 15px; }
+  .footer a:hover { color: #fff; }
+  .footer-bottom { border-top: 1px solid rgba(255, 255, 255, .1); }
+  .footer-bottom .container { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding-top: 20px; padding-bottom: 24px; font-size: 14px; color: #8496b6; }
+
+  /* ---------- mobile sticky CTA ---------- */
+  .mobile-cta {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 70;
+    display: none;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+    background: rgba(255, 255, 255, .96);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-top: 1px solid var(--line);
+    box-shadow: 0 -10px 30px -16px rgba(13, 27, 52, .35);
+    transform: translateY(110%);
+    transition: transform .3s ease;
+  }
+  .mobile-cta.show { transform: none; }
+  .mobile-cta .btn { flex: 1; padding: 13px 16px; font-size: 15.5px; }
+  .mobile-cta small { font-size: 12.5px; color: var(--muted); line-height: 1.3; max-width: 96px; }
+  .mobile-cta small b { color: var(--ink); }
+
+  /* ---------- reveal ---------- */
+  .rv { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+  .rv.in { opacity: 1; transform: none; }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 1100px) {
+    .offers { grid-template-columns: 1fr 1fr; }
+    .guar { grid-template-columns: 1fr 1fr; }
+    .cmp-col > * { padding-left: 14px; padding-right: 14px; font-size: 14.5px; }
+  }
+  @media (max-width: 980px) {
+    .nav {
+      display: none;
+      position: absolute;
+      top: 72px;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      gap: 2px;
+      background: #fff;
+      border-bottom: 1px solid var(--line);
+      padding: 10px 16px 18px;
+      box-shadow: 0 20px 30px -20px rgba(13, 27, 52, .3);
+    }
+    .nav.open { display: flex; }
+    .nav a { padding: 12px; font-size: 17px; }
+    .burger { display: grid; }
+    .header .btn { display: none; }
+    .hero-grid, .about, .faq-grid, .final-grid { grid-template-columns: 1fr; }
+    .hero-grid { grid-template-areas: "copy" "pick" "visual"; }
+    .final-grid { grid-template-rows: auto; grid-template-areas: "head" "form" "aside"; }
+    .form-card { position: static; }
+    .qp-tiles { grid-template-columns: 1fr 1fr; }
+    .qp-tiles .feat { grid-column: 1 / -1; }
+    .hero-visual { max-width: 640px; }
+    .faq-side { position: static; }
+    .ba { grid-template-columns: 1fr; }
+    .ba-arrow span { transform: rotate(90deg); }
+    .case { grid-template-columns: 1fr; }
+    .case:nth-child(even) .case-shot { order: 0; }
+    .band-in { grid-template-columns: 1fr; gap: 28px; }
+    .steps { grid-template-columns: 1fr 1fr; row-gap: 32px; }
+    .steps::before { display: none; }
+    .about-photo { max-width: 520px; }
+    .cmp { display: flex; flex-direction: column; gap: 14px; }
+    .cmp-col { display: block; }
+    .cmp-col.cmp-labels { display: none; }
+    .cmp-col.me { order: -1; }
+    .cell { flex-wrap: wrap; }
+    .cell .lbl { display: block; width: 100%; font-size: 12.5px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; margin-bottom: -4px; padding-left: 20px; }
+    .mobile-cta { display: flex; }
+    .footer-bottom .container { padding-bottom: 96px; }
+  }
+  @media (max-width: 760px) {
+    .pains, .benefits, .tst { grid-template-columns: 1fr; }
+    .pains, .benefits { gap: 10px; }
+    .pain, .benefit { display: grid; grid-template-columns: 42px 1fr; column-gap: 14px; padding: 18px; }
+    .pain .ic, .benefit .ic { width: 42px; height: 42px; margin-bottom: 0; grid-row: span 2; }
+    .pain h3, .benefit h3 { font-size: 17.5px; margin-bottom: 4px; align-self: center; }
+    .pain p, .benefit p { font-size: 15.5px; }
+    .g { display: grid; grid-template-columns: 42px 1fr; column-gap: 14px; padding: 18px; }
+    .g .ic { width: 42px; height: 42px; margin-bottom: 0; grid-row: span 2; }
+    .g h3 { align-self: center; }
+    .stats { grid-template-columns: 1fr 1fr; row-gap: 22px; }
+    .thumbs { grid-template-columns: 1fr 1fr; }
+    .fit { grid-template-columns: 1fr; }
+    .footer-in { grid-template-columns: 1fr 1fr; }
+    .footer-in > :first-child { grid-column: 1 / -1; }
+  }
+  @media (max-width: 560px) {
+    .container { padding-left: 16px; padding-right: 16px; }
+    body { font-size: 16.5px; }
+    .offers, .guar, .steps { grid-template-columns: 1fr; }
+    .guar { gap: 10px; }
+    .steps { row-gap: 22px; }
+    .step { display: grid; grid-template-columns: 48px 1fr; column-gap: 16px; align-items: start; }
+    .step .num { width: 48px; height: 48px; font-size: 18px; margin-bottom: 0; grid-row: span 3; }
+    .step .dur { justify-self: start; margin-bottom: 6px; }
+    .row2 { grid-template-columns: 1fr; }
+    .facts { grid-template-columns: 1fr; }
+    .cta-row .btn { width: 100%; }
+    .hero-visual { padding: 30px 0 64px; }
+    .float-toast { right: 0; padding: 10px 12px; }
+    .float-toast span { display: none; }
+    .float-contact { left: 0; padding: 10px 14px 10px 10px; }
+    .float-chips { display: none; }
+    .thumbs { gap: 10px; }
+    .thumb div { flex-direction: column; gap: 0; padding: 10px 12px 12px; }
+    .thumb b { font-size: 14.5px; }
+    .thumb span { text-align: left; font-size: 12.5px; }
+    .brand small { display: none; }
+    .qp { padding: 14px; }
+    .qp-head h2 span { display: block; }
+    .qp-trust { font-size: 13px; }
+    .tile-btn { padding: 10px 12px; gap: 10px; min-height: 60px; }
+    .tile-btn:not(.feat) .t-ic { display: none; }
+    .tile-btn .t-ic { width: 34px; height: 34px; }
+    .tile-btn b { font-size: 15px; }
+    .tile-btn small { font-size: 13px; }
+    .pane-nav .btn { order: -1; flex-basis: 100%; }
+    .btn-skip { margin-left: auto; }
+    .form-card { padding: 20px 16px 22px; border-radius: 20px; }
+    .lm-card { padding: 20px 16px; }
+    .cmp-anchor { padding: 16px; }
+    .cmp-anchor .btn { width: 100%; }
+  }
+  @media (max-width: 720px) {
+    .dlg-in { grid-template-columns: 1fr; }
+    .dlg-side { padding: 26px 22px 22px; }
+    .dlg-side .band-list { display: none; }
+    .dlg-body { padding: 22px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    html { scroll-behavior: auto; }
+    .rv { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- icon sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-sheet" viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h8M12 11v8"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></symbol>
+  <symbol id="i-repeat" viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 1-15.5 6.2M3 12A9 9 0 0 1 18.5 5.8"/><path d="M21 4v5h-5M3 20v-5h5"/></symbol>
+  <symbol id="i-coins" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M14.8 9.4C14.3 8.5 13.3 8 12 8c-1.6 0-2.7.8-2.7 2s1 1.7 2.7 2 2.7.8 2.7 2-1.1 2-2.7 2c-1.3 0-2.3-.5-2.8-1.4M12 6.5v11"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-grow" viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M11 18.5h2"/></symbol>
+  <symbol id="i-plug" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.66 0l3-3a4 4 0 0 0-5.66-5.66l-1 1"/><path d="M14 10a4 4 0 0 0-5.66 0l-3 3a4 4 0 0 0 5.66 5.66l1-1"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.4-5.5 6.5-5.5s5.7 2 6.5 5.5M16 4.5a3.5 3.5 0 0 1 0 7M21.5 20c-.5-2.6-2-4.4-4-5.1"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 4.5 3.4 8.3 8 9 4.6-.7 8-4.5 8-9V6l-8-3z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></symbol>
+  <symbol id="i-app" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></symbol>
+  <symbol id="i-monitor" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></symbol>
+  <symbol id="i-cart" viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.7 12.4a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.6L21 7H6"/></symbol>
+  <symbol id="i-server" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><path d="M7.5 7.5h.01"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L3 21l1.9-6.4A8 8 0 1 1 21 12z"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="m10.8 12.2 8.2-8.2M17 6l2 2M15 8l2 2"/></symbol>
+  <symbol id="i-handshake" viewBox="0 0 24 24"><path d="M12 7 9.5 4.5a2.1 2.1 0 0 0-3 0L3 8v6l7 7a1.4 1.4 0 0 0 2-2"/><path d="m12 7 2.5-2.5a2.1 2.1 0 0 1 3 0L21 8v6l-5.5 5.5"/><path d="m9 13 3-3 4 4"/></symbol>
+</svg>
+
+<header class="header" id="header">
+  <div class="container header-in">
+    <a href="#" class="brand"><img src="/design-assets/logo.png" alt="" width="28" height="28">WebTitan <small>· Jan Šporek</small></a>
+    <nav class="nav" id="nav" aria-label="Hlavní navigace">
+      <a href="#reseni">Řešení</a>
+      <a href="#reference">Reference</a>
+      <a href="#nabidka">Ceník</a>
+      <a href="#postup">Postup</a>
+      <a href="#o-mne">O mně</a>
+      <a href="#faq">Otázky</a>
+    </nav>
+    <a href="#poptavka" class="btn btn-primary" data-cta="header">Chci nezávaznou konzultaci</a>
+    <button class="burger" id="burger" aria-label="Otevřít menu" aria-expanded="false" aria-controls="nav"><svg class="i"><use href="#i-menu"/></svg></button>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow"><span class="dot"></span>Aplikace a systémy na míru pro malé a střední firmy</span>
+        <h1>Z Excelu, e-mailů a&nbsp;papírků do <span class="hl">jedné přehledné aplikace</span></h1>
+        <p class="lead">Zakázky, termíny, zákazníci i&nbsp;rezervace na jednom místě. Navrhnu a&nbsp;postavím systém přesně podle toho, jak vaše firma pracuje – a&nbsp;postarám se, aby spolehlivě běžel.</p>
+        <ul class="checks">
+          <li><span class="tick"><svg class="i"><use href="#i-check"/></svg></span>Pevná cena předem – co odsouhlasíme, to platí</li>
+          <li><span class="tick"><svg class="i"><use href="#i-check"/></svg></span>Začnete v malém, rozšíříte, až to bude dávat smysl</li>
+          <li><span class="tick"><svg class="i"><use href="#i-check"/></svg></span>Aplikace, kód i data patří vám</li>
+        </ul>
+        <div class="cta-row">
+          <a href="#poptavka" class="btn btn-primary btn-lg" data-cta="hero">Chci nezávaznou konzultaci <svg class="i"><use href="#i-arrow"/></svg></a>
+          <a href="#reference" class="btn btn-ghost btn-lg" data-cta="hero-references">Ukázky realizací</a>
+        </div>
+        <p class="price-anchor">Aplikace na míru <b>od 24&nbsp;950&nbsp;Kč jednorázově</b> · úvodní hovor zdarma</p>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <div class="browser">
+          <div class="browser-bar"><i></i><i></i><i></i><span class="url">app.vase-firma.cz/planovani</span></div>
+          <img src="/design-assets/projects/Tepp.webp" alt="" width="800" height="400" fetchpriority="high">
+        </div>
+        <div class="float float-toast">
+          <span class="ok"><svg class="i"><use href="#i-check"/></svg></span>
+          <div><b>Zakázka naplánována</b><span>Všichni vidí aktuální stav</span></div>
+        </div>
+        <div class="float float-chips"><span>Zakázky</span><span>Termíny</span><span>Zákazníci</span></div>
+        <div class="float float-contact">
+          <div class="avatar"><img src="/design-assets/jan-cut.png" alt="" width="1000" height="900" decoding="async"></div>
+          <div><span class="small">Váš kontakt od začátku do konce</span><b>Jan Šporek</b><span class="small">vývojář a správce serverů</span></div>
+        </div>
+      </div>
+
+      <div class="qp" role="group" aria-labelledby="qp-title">
+        <div class="qp-head">
+          <h2 id="qp-title">Co potřebujete? <span>Vyberte – poptávka vám zabere minutu.</span></h2>
+          <p class="qp-trust"><svg class="i"><use href="#i-clock"/></svg>Ozvu se do 24 hodin (v pracovní dny) · 20+ let praxe · 23 projektů</p>
+        </div>
+        <div class="qp-tiles">
+          <a href="#poptavka" class="tile-btn feat" data-type="Aplikace na míru" data-cta="quickpick"><span class="t-ic"><svg class="i"><use href="#i-app"/></svg></span><span><b>Aplikace na míru</b><small>od 24&nbsp;950&nbsp;Kč</small></span><span class="t-go"><svg class="i"><use href="#i-arrow"/></svg></span></a>
+          <a href="#poptavka" class="tile-btn" data-type="Web" data-cta="quickpick"><span class="t-ic"><svg class="i"><use href="#i-monitor"/></svg></span><span><b>Web</b><small>od 9&nbsp;970&nbsp;Kč</small></span></a>
+          <a href="#poptavka" class="tile-btn" data-type="E-shop" data-cta="quickpick"><span class="t-ic"><svg class="i"><use href="#i-cart"/></svg></span><span><b>E-shop</b><small>od 19&nbsp;870&nbsp;Kč</small></span></a>
+          <a href="#poptavka" class="tile-btn" data-type="Správa serveru" data-cta="quickpick"><span class="t-ic"><svg class="i"><use href="#i-server"/></svg></span><span><b>Správa serveru</b><small>od 990&nbsp;Kč/měs.</small><!-- DOPLNIT: cena --></span></a>
+          <a href="#poptavka" class="tile-btn" data-type="Zatím nevím" data-cta="quickpick"><span class="t-ic"><svg class="i"><use href="#i-chat"/></svg></span><span><b>Zatím nevím</b><small>poradím zdarma</small></span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST -->
+  <section class="trust" aria-label="Fakta">
+    <div class="container trust-in">
+      <div class="stats">
+        <div class="stat"><b>20<em>+</em></b><span>let praxe, weby stavím od roku 2006</span></div>
+        <div class="stat"><b>23</b><span>realizovaných webů, e-shopů a&nbsp;aplikací</span></div>
+        <div class="stat"><b>1</b><span>člověk od návrhu přes vývoj po provoz</span></div>
+        <div class="stat"><b>24<em> h</em></b><span>do odpovědi na poptávku (v pracovní dny)</span></div>
+      </div>
+      <div class="clients"><small>Realizace mimo jiné</small><span>Tepp</span><span>GP Rooms</span><span>Fitness Ural</span><span>Skripta Prokop</span><span>Hostel Loket</span><span>GP Tents</span><span>Sunpoint</span><span>2MSKV</span></div>
+    </div>
+  </section>
+
+  <!-- PAINS -->
+  <section class="sec">
+    <div class="container">
+      <div class="sec-head rv">
+        <span class="kicker">Poznáváte se?</span>
+        <h2>Firma roste, ale agenda pořád žije v&nbsp;tabulkách</h2>
+        <p>Většina firem, které mě osloví, nemá problém s&nbsp;prací. Mají problém s&nbsp;tím, kde se o&nbsp;ní dozvědět.</p>
+      </div>
+      <div class="pains">
+        <article class="pain rv"><span class="ic"><svg class="i"><use href="#i-sheet"/></svg></span><h3>Excel, kterému rozumí jen jeden člověk</h3><p>Když je na dovolené, nikdo neví, co platí. A&nbsp;verzí té tabulky je pět.</p></article>
+        <article class="pain rv"><span class="ic"><svg class="i"><use href="#i-cal"/></svg></span><h3>Termíny v diáři a v hlavě</h3><p>Stačí jeden zapomenutý termín a&nbsp;zákazník příště zavolá jinam.</p></article>
+        <article class="pain rv"><span class="ic"><svg class="i"><use href="#i-mail"/></svg></span><h3>Informace rozházené v e-mailech</h3><p>Místo práce dohledáváte, kdo co komu slíbil a&nbsp;kdy.</p></article>
+        <article class="pain rv"><span class="ic"><svg class="i"><use href="#i-repeat"/></svg></span><h3>Pořád dokola stejné přepisování</h3><p>Objednávky, rezervace a&nbsp;výkazy přepisujete ručně z&nbsp;jednoho místa do druhého.</p></article>
+        <article class="pain rv"><span class="ic"><svg class="i"><use href="#i-coins"/></svg></span><h3>Krabicový software, který neumí, co potřebujete</h3><p>Platíte měsíčně za každého uživatele a&nbsp;stejně si pomáháte tabulkou bokem.</p></article>
+        <article class="pain rv"><span class="ic"><svg class="i"><use href="#i-clock"/></svg></span><h3>Agentura chce statisíce a půl roku</h3><p>Na velký projekt nemáte rozpočet ani čas. Potřebujete začít menším krokem.</p></article>
+      </div>
+      <div class="after-cta rv">
+        <a href="#poptavka" class="btn btn-primary btn-lg" data-cta="pains">Chci nezávaznou konzultaci <svg class="i"><use href="#i-arrow"/></svg></a>
+        <p>Úvodní hovor je zdarma. Řeknu vám rovnou, jestli to má smysl.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BEFORE / AFTER -->
+  <section class="sec sec-alt" id="reseni">
+    <div class="container">
+      <div class="sec-head center rv">
+        <span class="kicker">Řešení</span>
+        <h2>Jedno místo, kde všechno sedí</h2>
+        <p>Aplikace na míru nekopíruje cizí postupy. Převezme ten váš a&nbsp;odstraní z&nbsp;něj ruční práci.</p>
+      </div>
+      <div class="ba">
+        <div class="ba-col before rv">
+          <span class="ba-label"><svg class="i" style="width:14px;height:14px"><use href="#i-x"/></svg>Dnes</span>
+          <h3>Excel, diář a papírky</h3>
+          <ul>
+            <li><span class="mk"><svg class="i"><use href="#i-x"/></svg></span>Data v několika tabulkách a&nbsp;e-mailech</li>
+            <li><span class="mk"><svg class="i"><use href="#i-x"/></svg></span>Aktuální stav zná jen ten, kdo zrovna zvedl telefon</li>
+            <li><span class="mk"><svg class="i"><use href="#i-x"/></svg></span>Stejné údaje přepisujete několikrát – i&nbsp;s&nbsp;chybami</li>
+            <li><span class="mk"><svg class="i"><use href="#i-x"/></svg></span>Přehled pro vedení znamená obvolat lidi</li>
+            <li><span class="mk"><svg class="i"><use href="#i-x"/></svg></span>Zaučit nového kolegu trvá dlouho</li>
+          </ul>
+        </div>
+        <div class="ba-arrow" aria-hidden="true"><span><svg class="i"><use href="#i-arrow"/></svg></span></div>
+        <div class="ba-col after rv">
+          <span class="ba-label"><svg class="i" style="width:14px;height:14px"><use href="#i-check"/></svg>S aplikací na míru</span>
+          <h3>Jedna přehledná aplikace</h3>
+          <ul>
+            <li><span class="mk"><svg class="i"><use href="#i-check"/></svg></span>Zakázky, zákazníci a&nbsp;termíny na jednom místě</li>
+            <li><span class="mk"><svg class="i"><use href="#i-check"/></svg></span>Každý vidí aktuální stav – v&nbsp;kanceláři i&nbsp;z&nbsp;mobilu</li>
+            <li><span class="mk"><svg class="i"><use href="#i-check"/></svg></span>Údaj zadáte jednou, aplikace ho použije všude</li>
+            <li><span class="mk"><svg class="i"><use href="#i-check"/></svg></span>Přehledy a&nbsp;exporty na jedno kliknutí</li>
+            <li><span class="mk"><svg class="i"><use href="#i-check"/></svg></span>Aplikace vede krok za krokem – i&nbsp;nováčka</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENEFITS -->
+  <section class="sec">
+    <div class="container">
+      <div class="sec-head rv">
+        <span class="kicker">Co z toho budete mít</span>
+        <h2>Méně hledání. Víc přehledu.</h2>
+      </div>
+      <div class="benefits">
+        <article class="benefit rv"><span class="ic"><svg class="i"><use href="#i-grow"/></svg></span><h3>Začnete v malém</h3><p>První verze vyřeší jeden konkrétní proces. Další části přidáme, až budou dávat smysl.</p></article>
+        <article class="benefit rv"><span class="ic"><svg class="i"><use href="#i-phone"/></svg></span><h3>Funguje všude</h3><p>V&nbsp;prohlížeči na počítači, tabletu i&nbsp;mobilu. Nic se neinstaluje.</p></article>
+        <article class="benefit rv"><span class="ic"><svg class="i"><use href="#i-plug"/></svg></span><h3>Napojím, co už používáte</h3><p>Platební brány, účetnictví, e-mail nebo jiné systémy – propojování služeb je moje specialita.</p></article>
+        <article class="benefit rv"><span class="ic"><svg class="i"><use href="#i-users"/></svg></span><h3>Každý vidí, co potřebuje</h3><p>Přístupová práva podle rolí – kancelář, terén, vedení i&nbsp;vaši zákazníci.</p></article>
+        <article class="benefit rv"><span class="ic"><svg class="i"><use href="#i-shield"/></svg></span><h3>Bezpečně a zálohovaně</h3><p>Provoz na serverech, které sám spravuji: aktualizace, zálohy a&nbsp;dohled nad dostupností.</p></article>
+        <article class="benefit rv"><span class="ic"><svg class="i"><use href="#i-download"/></svg></span><h3>Data máte vždy u sebe</h3><p>Kdykoli si je vyexportujete. Nejste uzamčení u&nbsp;žádného poskytovatele.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASES -->
+  <section class="sec sec-alt" id="reference">
+    <div class="container">
+      <div class="sec-head rv">
+        <span class="kicker">Reference</span>
+        <h2>Jak to vypadá v praxi</h2>
+        <p>Tři ukázky z&nbsp;23 realizací. Každá začala jedním konkrétním problémem klienta.</p>
+      </div>
+      <div class="cases">
+        <article class="case rv">
+          <div class="case-shot">
+            <div class="browser">
+              <div class="browser-bar"><i></i><i></i><i></i><span class="url">Tepp – plánování zakázek</span></div>
+              <img src="/design-assets/projects/Tepp.webp" alt="Ukázka aplikace Tepp – plánovací tabule zakázek a vozidel" width="800" height="400" loading="lazy">
+            </div>
+          </div>
+          <div>
+            <span class="case-tag">Aplikace na míru</span>
+            <h3>Tepp – dispečink a plánování zakázek</h3>
+            <!-- DOPLNIT: ověřit popis zadání a přínosu s klientem -->
+            <dl>
+              <div><dt>Zadání</dt><dd>Dispečink potřeboval plánovat zakázky a&nbsp;přidělovat je vozidlům a&nbsp;posádkám na jednom místě.</dd></div>
+              <div><dt>Řešení</dt><dd>Webová plánovací tabule: vozidla, zakázky, termíny a&nbsp;jejich stavy přehledně vedle sebe, změny se propisují v&nbsp;reálném čase.</dd></div>
+              <div><dt>Přínos</dt><dd class="win">Celý dispečink pracuje se stejným aktuálním plánem – bez přeposílání tabulek.</dd></div>
+            </dl>
+            <p class="tech">Next.js · MongoDB · real-time</p>
+          </div>
+        </article>
+
+        <article class="case rv">
+          <div class="case-shot">
+            <div class="browser">
+              <div class="browser-bar"><i></i><i></i><i></i><span class="url">Skripta Prokop</span></div>
+              <img src="/design-assets/projects/SkriptaProkop.webp" alt="Ukázka webu Skripta Prokop – středoškolská skripta" width="800" height="400" loading="lazy">
+            </div>
+          </div>
+          <div>
+            <span class="case-tag">E-learning s prodejem</span>
+            <h3>Skripta Prokop – prodej studijních materiálů online</h3>
+            <!-- DOPLNIT: ověřit popis zadání a přínosu s klientem -->
+            <dl>
+              <div><dt>Zadání</dt><dd>Autor středoškolských skript chtěl své materiály nabízet a&nbsp;prodávat online.</dd></div>
+              <div><dt>Řešení</dt><dd>E-learningová platforma s&nbsp;katalogem skript, uživatelskými účty a&nbsp;online platbami.</dd></div>
+              <div><dt>Přínos</dt><dd class="win">Objednávky, platby a&nbsp;přístup k&nbsp;materiálům řeší web sám – bez ručního vyřizování.</dd></div>
+            </dl>
+            <p class="tech">Platby · uživatelské účty · e-learning</p>
+          </div>
+        </article>
+
+        <article class="case rv">
+          <div class="case-shot">
+            <div class="browser">
+              <div class="browser-bar"><i></i><i></i><i></i><span class="url">GP Rooms – rezervace</span></div>
+              <img src="/design-assets/projects/Gprooms.webp" alt="Ukázka webu GP Rooms – rezervace ubytování a vstupenek na MotoGP v Brně" width="800" height="400" loading="lazy">
+            </div>
+          </div>
+          <div>
+            <span class="case-tag">Rezervační systém</span>
+            <h3>GP Rooms – ubytování a vstupenky na MotoGP</h3>
+            <!-- DOPLNIT: ověřit popis zadání a přínosu s klientem -->
+            <dl>
+              <div><dt>Zadání</dt><dd>Nabídnout návštěvníkům Velké ceny v&nbsp;Brně ubytování, vstupenky a&nbsp;dopravu na okruh online.</dd></div>
+              <div><dt>Řešení</dt><dd>Rezervační systém pro ubytovací zařízení s&nbsp;online platbami.</dd></div>
+              <div><dt>Přínos</dt><dd class="win">Hosté si vyberou, zarezervují a&nbsp;zaplatí sami – bez dlouhého dopisování e-mailem.</dd></div>
+            </dl>
+            <p class="tech">React · Node.js · platby</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="more-refs rv">
+        <h3>Další realizace – weby, e-shopy a rezervace</h3>
+        <div class="thumbs">
+          <div class="thumb"><img src="/design-assets/projects/FitnessUral.webp" alt="Web Fitness Ural" width="800" height="400" loading="lazy"><div><b>Fitness Ural</b><span>web s rezervacemi</span></div></div>
+          <div class="thumb"><img src="/design-assets/projects/HostelLoket.webp" alt="Web Hostel Loket" width="800" height="400" loading="lazy"><div><b>Hostel Loket</b><span>web s rezervacemi</span></div></div>
+          <div class="thumb"><img src="/design-assets/projects/GPtents.webp" alt="E-shop GP Tents" width="800" height="400" loading="lazy"><div><b>GP Tents</b><span>e-shop</span></div></div>
+          <div class="thumb"><img src="/design-assets/projects/VyrobaSperku.webp" alt="E-shop Výroba šperků" width="800" height="400" loading="lazy"><div><b>Výroba šperků</b><span>e-shop a prezentace</span></div></div>
+          <div class="thumb"><img src="/design-assets/projects/Sunpoint.webp" alt="Web Sunpoint" width="800" height="400" loading="lazy"><div><b>Sunpoint</b><span>e-shop</span></div></div>
+          <div class="thumb"><img src="/design-assets/projects/Unlikely.webp" alt="Web Unlikely" width="800" height="400" loading="lazy"><div><b>Unlikely</b><span>prezentační web</span></div></div>
+        </div>
+        <p class="names"><b>A dalších 14:</b> 2MSKV, Astos, BMP, Firemní balíček, František Slovák, Geowestmaster, Kanya Kage, Kotelna 55, Markop Okna, Penzion Loket, Plenkový servis, Recysmach, Rybar Transport, Sokolov Ubytování.</p>
+      </div>
+      <div class="after-cta rv">
+        <a href="#poptavka" class="btn btn-primary btn-lg" data-cta="references">Chci nezávaznou konzultaci <svg class="i"><use href="#i-arrow"/></svg></a>
+        <p>Probereme, co by fungovalo u&nbsp;vás.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- OFFERS -->
+  <section class="sec" id="nabidka">
+    <div class="container">
+      <div class="sec-head rv">
+        <span class="kicker">Nabídka a ceny</span>
+        <h2>Nenašli jste se? Postavím i&nbsp;vaše zadání.</h2>
+        <p>Hlavní specializací jsou aplikace na míru. Stejně tak vám ale udělám web, e-shop nebo se postarám o&nbsp;servery, na kterých to všechno běží.</p>
+      </div>
+      <div class="offers">
+        <article class="offer featured rv">
+          <span class="badge">Hlavní specializace</span>
+          <span class="ic"><svg class="i"><use href="#i-app"/></svg></span>
+          <h3>Aplikace a interní systémy</h3>
+          <p>Software přesně podle toho, jak vaše firma pracuje.</p>
+          <ul>
+            <li><svg class="i"><use href="#i-check"/></svg>Evidence zakázek, zákazníků a&nbsp;termínů</li>
+            <li><svg class="i"><use href="#i-check"/></svg>Rezervace, objednávky, klientské zóny</li>
+            <li><svg class="i"><use href="#i-check"/></svg>Napojení na platby, účetnictví a&nbsp;další služby</li>
+          </ul>
+          <div class="price"><b>od 24&nbsp;950&nbsp;Kč</b><span>jednorázově, bez licencí za uživatele</span></div>
+          <a href="#poptavka" class="btn btn-primary offer-cta" data-type="Aplikace na míru" data-cta="offer-app">Poptat aplikaci <svg class="i"><use href="#i-arrow"/></svg></a>
+        </article>
+        <article class="offer rv">
+          <span class="ic"><svg class="i"><use href="#i-monitor"/></svg></span>
+          <h3>Firemní web</h3>
+          <p>Web, který jasně řekne, co děláte, a&nbsp;přivede poptávky.</p>
+          <ul>
+            <li><svg class="i"><use href="#i-check"/></svg>Rychlý a&nbsp;čitelný i&nbsp;na mobilu</li>
+            <li><svg class="i"><use href="#i-check"/></svg>Poptávkový formulář přímo do e-mailu</li>
+            <li><svg class="i"><use href="#i-check"/></svg>Obsah si upravíte sami</li>
+          </ul>
+          <div class="price"><b>od 9&nbsp;970&nbsp;Kč</b><span>jednorázově</span></div>
+          <a href="#poptavka" class="btn btn-ghost offer-cta" data-type="Web" data-cta="offer-web">Poptat web <svg class="i"><use href="#i-arrow"/></svg></a>
+        </article>
+        <article class="offer rv">
+          <span class="ic"><svg class="i"><use href="#i-cart"/></svg></span>
+          <h3>E-shop</h3>
+          <p>Prodávejte online a&nbsp;mějte objednávky pod kontrolou.</p>
+          <ul>
+            <li><svg class="i"><use href="#i-check"/></svg>Online platby a&nbsp;přehledná administrace</li>
+            <li><svg class="i"><use href="#i-check"/></svg>Produkty, objednávky a&nbsp;zákazníci na jednom místě</li>
+            <li><svg class="i"><use href="#i-check"/></svg>Napojení na platební bránu</li>
+          </ul>
+          <div class="price"><b>od 19&nbsp;870&nbsp;Kč</b><span>jednorázově</span></div>
+          <a href="#poptavka" class="btn btn-ghost offer-cta" data-type="E-shop" data-cta="offer-eshop">Poptat e-shop <svg class="i"><use href="#i-arrow"/></svg></a>
+        </article>
+        <article class="offer rv">
+          <span class="ic"><svg class="i"><use href="#i-server"/></svg></span>
+          <h3>Správa serveru a webu</h3>
+          <p>Aby všechno běželo a&nbsp;vy jste to nemuseli řešit.</p>
+          <ul>
+            <li><svg class="i"><use href="#i-check"/></svg>Aktualizace a&nbsp;pravidelné zálohy</li>
+            <li><svg class="i"><use href="#i-check"/></svg>Hlídání dostupnosti a&nbsp;bezpečnosti</li>
+            <li><svg class="i"><use href="#i-check"/></svg>Jeden člověk, který ví, jak to funguje</li>
+          </ul>
+          <div class="price"><b>od 990 Kč/měsíc</b><!-- DOPLNIT: cena --><span>měsíčně, bez závazku</span></div>
+          <a href="#poptavka" class="btn btn-ghost offer-cta" data-type="Správa serveru" data-cta="offer-server">Poptat správu <svg class="i"><use href="#i-arrow"/></svg></a>
+        </article>
+      </div>
+      <p class="offers-note rv">Ceny jsou orientační. Po úvodním hovoru dostanete pevnou cenu za konkrétní rozsah – co odsouhlasíme, to platí.</p>
+    </div>
+  </section>
+
+  <!-- COMPARISON -->
+  <section class="sec sec-alt">
+    <div class="container">
+      <div class="sec-head center rv">
+        <span class="kicker">Srovnání</span>
+        <h2>Excel, krabice, agentura – nebo aplikace na míru?</h2>
+        <p>Každá cesta má své místo. Tady je poctivé srovnání, ať se rozhodnete správně.</p>
+      </div>
+      <div class="cmp-anchor rv">
+        <p><b>Aplikace na míru od 24&nbsp;950&nbsp;Kč jednorázově.</b> Žádné měsíční licence za každého uživatele – zaplatíte jednou a&nbsp;aplikace je vaše. Platíte jen provoz a&nbsp;správu.</p>
+        <a href="#poptavka" class="btn btn-primary" data-type="Aplikace na míru" data-cta="comparison">Chci cenu pro svou firmu <svg class="i"><use href="#i-arrow"/></svg></a>
+      </div>
+      <div class="cmp rv" role="table" aria-label="Srovnání alternativ">
+        <div class="cmp-col cmp-labels" role="rowgroup">
+          <div class="cmp-head"></div>
+          <div>Cena na začátku</div>
+          <div>Co platíte dlouhodobě</div>
+          <div>Přizpůsobení vašemu procesu</div>
+          <div>Čas do spuštění</div>
+          <div>Komu patří data a aplikace</div>
+          <div>S kým jednáte</div>
+        </div>
+        <div class="cmp-col">
+          <div class="cmp-head"><b>Excel a tabulky</b><span>„nějak to jde“</span></div>
+          <div class="cell"><span class="lbl">Cena na začátku</span><span class="st good"></span>Zdarma</div>
+          <div class="cell"><span class="lbl">Dlouhodobě</span><span class="st bad"></span>Čas lidí na ruční přepisování a&nbsp;dohledávání</div>
+          <div class="cell"><span class="lbl">Přizpůsobení</span><span class="st bad"></span>Ručně – a&nbsp;každý si to dělá po svém</div>
+          <div class="cell"><span class="lbl">Čas do spuštění</span><span class="st good"></span>Hned</div>
+          <div class="cell"><span class="lbl">Data</span><span class="st mid"></span>Vám, ale rozházená v&nbsp;souborech</div>
+          <div class="cell"><span class="lbl">S kým jednáte</span><span class="st bad"></span>Sami se sebou</div>
+        </div>
+        <div class="cmp-col">
+          <div class="cmp-head"><b>Krabicový software</b><span>hotová online služba</span></div>
+          <div class="cell"><span class="lbl">Cena na začátku</span><span class="st good"></span>Nízká, často zkušební verze</div>
+          <div class="cell"><span class="lbl">Dlouhodobě</span><span class="st bad"></span>Poplatek za každého uživatele, každý měsíc – dokud službu používáte</div>
+          <div class="cell"><span class="lbl">Přizpůsobení</span><span class="st mid"></span>Omezené – přizpůsobujete se vy jemu</div>
+          <div class="cell"><span class="lbl">Čas do spuštění</span><span class="st good"></span>Dny</div>
+          <div class="cell"><span class="lbl">Data</span><span class="st bad"></span>Poskytovateli, vy si službu pronajímáte</div>
+          <div class="cell"><span class="lbl">S kým jednáte</span><span class="st mid"></span>S podporou nebo chatbotem</div>
+        </div>
+        <div class="cmp-col">
+          <div class="cmp-head"><b>Velká agentura</b><span>tým a projektový manažer</span></div>
+          <div class="cell"><span class="lbl">Cena na začátku</span><span class="st bad"></span>Často stovky tisíc Kč</div>
+          <div class="cell"><span class="lbl">Dlouhodobě</span><span class="st mid"></span>Každá úprava podle ceníku agentury</div>
+          <div class="cell"><span class="lbl">Přizpůsobení</span><span class="st good"></span>Ano</div>
+          <div class="cell"><span class="lbl">Čas do spuštění</span><span class="st bad"></span>Měsíce</div>
+          <div class="cell"><span class="lbl">Data</span><span class="st mid"></span>Podle smlouvy</div>
+          <div class="cell"><span class="lbl">S kým jednáte</span><span class="st mid"></span>S obchodníkem a&nbsp;projektovým manažerem</div>
+        </div>
+        <div class="cmp-col me">
+          <div class="cmp-head"><b>Aplikace se mnou</b><span>na míru, bez prostředníků</span></div>
+          <div class="cell"><span class="lbl">Cena na začátku</span><span class="st good"></span><span><b>Od 24&nbsp;950&nbsp;Kč</b> jednorázově</span></div>
+          <div class="cell"><span class="lbl">Dlouhodobě</span><span class="st good"></span><span>Bez licencí za uživatele – jen provoz a&nbsp;správa od 990&nbsp;Kč/měsíc<!-- DOPLNIT: cena --></span></div>
+          <div class="cell"><span class="lbl">Přizpůsobení</span><span class="st good"></span>Přesně podle toho, jak pracujete</div>
+          <div class="cell"><span class="lbl">Čas do spuštění</span><span class="st good"></span>Typicky 3–6 týdnů</div>
+          <div class="cell"><span class="lbl">Data</span><span class="st good"></span>Vám – kód, data i&nbsp;doména</div>
+          <div class="cell"><span class="lbl">S kým jednáte</span><span class="st good"></span>Přímo s&nbsp;tím, kdo aplikaci staví</div>
+        </div>
+      </div>
+      <p class="cmp-note rv">Srovnání je zjednodušené. Když bude pro vás lepší hotová krabice, rád vám to řeknu.</p>
+    </div>
+  </section>
+
+  <!-- FIT -->
+  <section class="sec">
+    <div class="container">
+      <div class="sec-head rv">
+        <span class="kicker">Pro koho to je</span>
+        <h2>Neberu všechno. Řeknu to rovnou.</h2>
+      </div>
+      <div class="fit">
+        <div class="fit-col yes rv">
+          <h3><span class="mk"><svg class="i"><use href="#i-check"/></svg></span>Dává to smysl, když…</h3>
+          <ul>
+            <li>máte opakující se proces, který dnes řešíte v&nbsp;tabulkách, e-mailech nebo na papíře,</li>
+            <li>hledáte řešení, které poroste s&nbsp;firmou,</li>
+            <li>chcete jednat přímo s&nbsp;tím, kdo to staví,</li>
+            <li>chcete aplikaci vlastnit, ne si ji pronajímat.</li>
+          </ul>
+        </div>
+        <div class="fit-col no rv">
+          <h3><span class="mk"><svg class="i"><use href="#i-x"/></svg></span>Radši vás pošlu jinam, když…</h3>
+          <ul>
+            <li>vám stačí hotová krabicová aplikace – poradím vám, kterou,</li>
+            <li>potřebujete velký vývojový tým na roky dopředu,</li>
+            <li>hledáte za každou cenu nejlevnější řešení,</li>
+            <li>potřebujete mít hotovo do zítřka.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="after-cta rv">
+        <a href="#poptavka" class="btn btn-primary btn-lg" data-cta="fit">Chci nezávaznou konzultaci <svg class="i"><use href="#i-arrow"/></svg></a>
+        <p>Nevíte, kam patříte? Proberme to.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOW-THRESHOLD BAND -->
+  <section class="band" id="posouzeni" aria-labelledby="band-title">
+    <div class="container band-in">
+      <div class="band-copy rv">
+        <span class="band-ic"><svg class="i"><use href="#i-sheet"/></svg></span>
+        <h2 id="band-title">Pošlete mi svou tabulku nebo popis procesu</h2>
+        <p>Zdarma vám řeknu, jestli a&nbsp;jak se dá převést do aplikace a&nbsp;kolik by to zhruba stálo. Stačí pár vět nebo odkaz na tabulku.</p>
+        <ul class="band-list">
+          <li><span class="tick"><svg class="i"><use href="#i-check"/></svg></span>Odpověď do 2 pracovních dnů</li>
+          <li><span class="tick"><svg class="i"><use href="#i-check"/></svg></span>Zdarma, bez závazku a&nbsp;bez obchodních telefonátů</li>
+          <li><span class="tick"><svg class="i"><use href="#i-check"/></svg></span>Fotku tabulky z&nbsp;mobilu můžete poslat e-mailem</li>
+        </ul>
+      </div>
+      <div class="lm-card rv">
+        <h3>Bezplatné posouzení procesu</h3>
+        <form class="form lm-form" data-source="band" novalidate>
+          <div>
+            <label class="fl" for="lmb-text">Popište proces nebo vložte odkaz na tabulku <span class="opt">(Google Sheets apod.)</span></label>
+            <textarea id="lmb-text" name="text" rows="4" required aria-describedby="lmb-text-err" placeholder="Např. zakázky vedeme v Excelu, termíny v diáři a každý pátek všechno ručně přepisujeme do plánu…"></textarea>
+            <p class="field-err" id="lmb-text-err"></p>
+          </div>
+          <div>
+            <label class="fl" for="lmb-email">Kam vám pošlu posouzení</label>
+            <input id="lmb-email" name="email" type="email" required autocomplete="email" aria-describedby="lmb-email-err" placeholder="jan@firma.cz">
+            <p class="field-err" id="lmb-email-err"></p>
+          </div>
+          <button class="btn btn-primary btn-lg" type="submit" data-cta="leadmagnet-band"><span class="lbl">Chci posouzení zdarma</span> <svg class="i"><use href="#i-arrow"/></svg></button>
+          <p class="lm-foot">Do 2 pracovních dnů vám zdarma napíšu, jestli a&nbsp;jak se to dá zjednodušit.</p>
+          <a class="lm-mail" href="mailto:kontakt@webtitan.cz?subject=Tabulka%20k%20posouzen%C3%AD" data-cta="leadmagnet-band-mail"><svg class="i"><use href="#i-mail"/></svg>Raději pošlete soubor e-mailem</a>
+          <p class="status" role="status" aria-live="polite"></p>
+          <div class="lm-fail" role="alert" hidden>
+            <p><b>Odeslání se nepovedlo.</b> Pošlete to prosím e-mailem – text jsem vám připravil.</p>
+            <a class="btn btn-primary lm-mailto" href="mailto:kontakt@webtitan.cz">Odeslat e-mailem <svg class="i"><use href="#i-mail"/></svg></a>
+            <p class="small">nebo napište na <a href="mailto:kontakt@webtitan.cz">kontakt@webtitan.cz</a></p>
+          </div>
+        </form>
+        <div class="lm-done" hidden tabindex="-1">
+          <span class="done-ic"><svg class="i"><use href="#i-check"/></svg></span>
+          <h3>Díky, mám to u&nbsp;sebe.</h3>
+          <p>Do 2 pracovních dnů vám napíšu, jestli a&nbsp;jak se dá váš proces zjednodušit.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="sec" id="postup">
+    <div class="container">
+      <div class="sec-head rv">
+        <span class="kicker">Postup</span>
+        <h2>Od prvního hovoru ke spuštění</h2>
+        <p>Víte, co se kdy děje a&nbsp;kolik to bude stát – ještě než se do čehokoli pustíme.</p>
+      </div>
+      <ol class="steps">
+        <li class="step rv"><span class="num">1</span><span class="dur"><svg class="i"><use href="#i-clock"/></svg>do 24 h · zdarma</span><h3>Úvodní hovor</h3><p>Projdeme, co vás dnes zdržuje. Řeknu vám, jestli a&nbsp;jak to jde – online nebo osobně.</p></li>
+        <li class="step rv"><span class="num">2</span><span class="dur"><svg class="i"><use href="#i-clock"/></svg>cca 1 týden</span><h3>Návrh a pevná cena</h3><p>Sepíšu, co bude aplikace umět, ukážu náhled obrazovek a&nbsp;pošlu pevnou cenu. Teprve pak se rozhodnete.</p></li>
+        <li class="step rv"><span class="num">3</span><span class="dur"><svg class="i"><use href="#i-clock"/></svg>typicky 3–6 týdnů</span><h3>Vývoj s průběžnými ukázkami</h3><p>Průběžně vidíte pokrok a&nbsp;můžete říct, co upravit. Žádná černá skříňka.</p></li>
+        <li class="step rv"><span class="num">4</span><span class="dur"><svg class="i"><use href="#i-clock"/></svg>průběžně</span><h3>Spuštění a provoz</h3><p>Převedu data z&nbsp;tabulek, zaškolím vás a&nbsp;postarám se o&nbsp;servery, zálohy i&nbsp;další rozvoj.</p></li>
+      </ol>
+      <div class="after-cta rv">
+        <a href="#poptavka" class="btn btn-primary btn-lg" data-cta="process">Chci nezávaznou konzultaci <svg class="i"><use href="#i-arrow"/></svg></a>
+        <p>První krok nic nestojí.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GUARANTEES -->
+  <section class="sec sec-alt">
+    <div class="container">
+      <div class="sec-head center rv">
+        <span class="kicker">Jistoty</span>
+        <h2>Na čem se můžete spolehnout</h2>
+      </div>
+      <div class="guar">
+        <article class="g rv"><span class="ic"><svg class="i"><use href="#i-tag"/></svg></span><h3>Pevná cena předem</h3><p>Co odsouhlasíme, to platí. Žádné dodatečné faktury za „to se nečekalo“.</p></article>
+        <article class="g rv"><span class="ic"><svg class="i"><use href="#i-chat"/></svg></span><h3>Konzultace zdarma</h3><p>Úvodní hovor i&nbsp;posouzení zadání jsou nezávazné. Nic nepodepisujete.</p></article>
+        <article class="g rv"><span class="ic"><svg class="i"><use href="#i-key"/></svg></span><h3>Všechno patří vám</h3><p>Kód, data i&nbsp;doména jsou vaše. Kdykoli můžete odejít jinam.</p></article>
+        <article class="g rv"><span class="ic"><svg class="i"><use href="#i-handshake"/></svg></span><h3>Jednáte přímo se mnou</h3><p>Žádný obchodník ani prostředník. Kdo s&nbsp;vámi mluví, ten to i&nbsp;staví.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS (placeholders) -->
+  <section class="sec">
+    <div class="container">
+      <div class="sec-head rv">
+        <span class="kicker">Co říkají klienti</span>
+        <h2>Zkušenosti klientů</h2>
+      </div>
+      <!-- DOPLNIT: 3 skutečné reference (jméno, firma, 2–3 věty, ideálně fotka) -->
+      <div class="tst">
+        <article class="t-ph rv"><span class="tag">Místo pro referenci</span><p>„Sem patří skutečná reference klienta – 2–3 věty o&nbsp;tom, co jste mu vyřešil a&nbsp;jak se s&nbsp;vámi spolupracovalo.“</p><div class="who"><i></i>Jméno, firma – doplnit</div></article>
+        <article class="t-ph rv"><span class="tag">Místo pro referenci</span><p>„Sem patří skutečná reference klienta – ideálně konkrétní výsledek: co dřív trvalo a&nbsp;jak je to teď.“</p><div class="who"><i></i>Jméno, firma – doplnit</div></article>
+        <article class="t-ph rv"><span class="tag">Místo pro referenci</span><p>„Sem patří skutečná reference klienta – například o&nbsp;tom, jak probíhala spolupráce a&nbsp;péče po spuštění.“</p><div class="who"><i></i>Jméno, firma – doplnit</div></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="sec sec-alt" id="o-mne">
+    <div class="container about">
+      <div class="about-photo rv">
+        <img src="/design-assets/jan-cut.png" alt="Jan Šporek" width="1000" height="900" loading="lazy">
+        <div class="card">
+          <div><b>Jan Šporek</b><span>Full-stack vývojář · WebTitan</span></div>
+          <div class="socials">
+            <a href="https://www.linkedin.com/in/jan-%C5%A1porek-07a39168/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a>
+            <a href="https://github.com/jansporek" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.18 1.84 1.18 3.1 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.68.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg></a>
+          </div>
+        </div>
+      </div>
+      <div class="about-text rv">
+        <span class="kicker">O mně</span>
+        <h2>Nejsem agentura. Jsem člověk, který to postaví i&nbsp;udrží v&nbsp;chodu.</h2>
+        <p>Jmenuji se Jan Šporek a&nbsp;weby a&nbsp;aplikace stavím od roku 2006. Prošel jsem kódováním šablon, správou firemních sítí i&nbsp;serverů – a&nbsp;dnes navrhuji a&nbsp;programuji aplikace na míru pro firmy.</p>
+        <p>Díky tomu vidím celý obraz: od toho, jak u&nbsp;vás vypadá běžný pracovní den, přes samotný program až po server, na kterém poběží. Mluvím lidsky, ne v&nbsp;technických zkratkách.</p>
+        <div class="facts">
+          <div class="fact"><b>Od 2023</b><span>Full-stack vývoj a&nbsp;správa serverů (Šikmo s.r.o. / OSVČ)</span></div>
+          <div class="fact"><b>2017–2023</b><span>IT specialista, programátor a&nbsp;správce sítí (VUJO s.r.o.)</span></div>
+          <div class="fact"><b>2010–2015</b><span>IT a&nbsp;webové aplikace (DISTRACT s.r.o.)</span></div>
+          <div class="fact"><b>Od 2006</b><span>Webmaster a&nbsp;kódování webů</span></div>
+        </div>
+        <p class="stack-line">React · Next.js · Node.js · TypeScript · MongoDB · MySQL · Docker · Linux</p>
+        <a href="#poptavka" class="btn btn-primary btn-lg" data-cta="about">Chci nezávaznou konzultaci <svg class="i"><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="sec" id="faq">
+    <div class="container faq-grid">
+      <div class="faq-side rv">
+        <span class="kicker">Časté otázky</span>
+        <h2>Co vás může zajímat</h2>
+        <div class="help">
+          <b>Nenašli jste odpověď?</b>
+          <p>Napište mi, co řešíte. Odpovím osobně, obvykle ještě týž den.</p>
+          <a href="#poptavka" class="btn btn-primary" data-cta="faq">Chci nezávaznou konzultaci <svg class="i"><use href="#i-arrow"/></svg></a>
+        </div>
+      </div>
+      <div class="faq rv">
+        <details open>
+          <summary>Nemám přesné zadání. Vadí to?<span class="pm"><svg class="i"><use href="#i-plus"/></svg></span></summary>
+          <div class="ans">Nevadí – většina klientů ho nemá. Stačí popsat, co vás dnes zdržuje. Zadání dáme dohromady na úvodním hovoru a&nbsp;já ho pak sepíšu.</div>
+        </details>
+        <details>
+          <summary>Kolik to bude stát?<span class="pm"><svg class="i"><use href="#i-plus"/></svg></span></summary>
+          <div class="ans">Jednodušší aplikace začínají od 24&nbsp;950&nbsp;Kč, firemní web od 9&nbsp;970&nbsp;Kč a&nbsp;e-shop od 19&nbsp;870&nbsp;Kč – vždy jednorázově, bez licencí za uživatele. Po úvodním hovoru dostanete pevnou cenu za konkrétní rozsah. Co odsouhlasíme, to platí. Provoz a&nbsp;správa se platí zvlášť, od 990&nbsp;Kč měsíčně<!-- DOPLNIT: cena -->.</div>
+        </details>
+        <details>
+          <summary>Jak dlouho to trvá?<span class="pm"><svg class="i"><use href="#i-plus"/></svg></span></summary>
+          <div class="ans">Typicky 3–6 týdnů od schválení rozsahu, podle složitosti. Začít můžete i&nbsp;menší první verzí a&nbsp;další části přidat později.</div>
+        </details>
+        <details>
+          <summary>Komu patří aplikace a data?<span class="pm"><svg class="i"><use href="#i-plus"/></svg></span></summary>
+          <div class="ans">Vám. Kód, data i&nbsp;doména jsou vaše a&nbsp;data si můžete kdykoli vyexportovat. Nejste na mně závislí.</div>
+        </details>
+        <details>
+          <summary>Umíte převzít data z Excelu?<span class="pm"><svg class="i"><use href="#i-plus"/></svg></span></summary>
+          <div class="ans">Ano. Převod dat ze stávajících tabulek je běžnou součástí spuštění, abyste nezačínali od nuly.</div>
+        </details>
+        <details>
+          <summary>Bude to fungovat na mobilu?<span class="pm"><svg class="i"><use href="#i-plus"/></svg></span></summary>
+          <div class="ans">Ano. Aplikace běží v&nbsp;prohlížeči na počítači, tabletu i&nbsp;mobilu, nic se neinstaluje.</div>
+        </details>
+        <details>
+          <summary>Napojíte to na účetnictví, platby nebo jiný systém?<span class="pm"><svg class="i"><use href="#i-plus"/></svg></span></summary>
+          <div class="ans">Propojování služeb je moje specialita. Pokud druhá strana nabízí rozhraní (API), aplikaci na ni napojím – platební brány, účetní systémy, e-mail a&nbsp;další.</div>
+        </details>
+        <details>
+          <summary>Kdo se o aplikaci postará po spuštění?<span class="pm"><svg class="i"><use href="#i-plus"/></svg></span></summary>
+          <div class="ans">Já. Servery, aktualizace, zálohy i&nbsp;další rozvoj – nemusíte hledat dalšího dodavatele ani „toho, kdo to kdysi dělal“.</div>
+        </details>
+        <details>
+          <summary>Kdo se mi ozve po odeslání formuláře?<span class="pm"><svg class="i"><use href="#i-plus"/></svg></span></summary>
+          <div class="ans">Já osobně, do 24 hodin v&nbsp;pracovní dny. Domluvíme si krátký hovor a&nbsp;projdeme, co potřebujete.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA + FORM -->
+  <section class="sec final" id="poptavka">
+    <div class="container final-grid">
+      <div class="final-head rv">
+        <span class="kicker">Poptávka</span>
+        <h2>Co potřebujete zpřehlednit?</h2>
+        <p class="sub">Tři krátké kroky, zabere to asi minutu. Zbytek probereme spolu.</p>
+      </div>
+
+      <div class="final-aside rv">
+        <div class="me-card">
+          <div class="avatar"><img src="/design-assets/jan-cut.png" alt="Jan Šporek" width="1000" height="900" loading="lazy"></div>
+          <div><b>Napíšete přímo mně</b><span>Jan Šporek · odpovídám osobně do 24 hodin (v&nbsp;pracovní dny)</span></div>
+        </div>
+        <ul class="assure">
+          <li><span class="tick"><svg class="i"><use href="#i-check"/></svg></span>Úvodní hovor je zdarma a nezávazný</li>
+          <li><span class="tick"><svg class="i"><use href="#i-check"/></svg></span>Pevná cena předem – co odsouhlasíme, to platí</li>
+          <li><span class="tick"><svg class="i"><use href="#i-check"/></svg></span>Nic nepodepisujete</li>
+        </ul>
+        <div class="next">
+          <h3>Co bude dál</h3>
+          <ol>
+            <li><span>1</span><div><b>Ozvu se vám</b><p>Do 24 hodin v&nbsp;pracovní dny, e-mailem nebo telefonem.</p></div></li>
+            <li><span>2</span><div><b>Krátký hovor</b><p>Projdeme, co řešíte, a&nbsp;řeknu, jestli a&nbsp;jak to jde.</p></div></li>
+            <li><span>3</span><div><b>Návrh s pevnou cenou</b><p>Dostanete rozsah a&nbsp;cenu. Rozhodnutí je jen na vás.</p></div></li>
+          </ol>
+        </div>
+        <p class="final-clients"><b>Realizace mimo jiné:</b> Tepp, GP Rooms, Fitness Ural, Skripta Prokop, Hostel Loket, GP Tents a&nbsp;další.</p>
+        <p class="direct">Raději e-mailem? Pište na <a href="mailto:kontakt@webtitan.cz">kontakt@webtitan.cz</a></p>
+      </div>
+
+      <div class="form-card" id="form-card">
+        <div id="fc-top">
+          <div class="fc-meta"><span class="stepno" id="fc-stepno">Krok 1 ze 3</span><span>Zabere asi minutu</span></div>
+          <div class="fc-progress" id="fc-progress" role="progressbar" aria-label="Postup vyplnění poptávky" aria-valuemin="1" aria-valuemax="3" aria-valuenow="1"><span id="fc-bar"></span></div>
+        </div>
+        <p class="resume" id="fc-resume" hidden><span>Máte rozpracovanou poptávku.</span><button type="button" id="fc-reset">Začít znovu</button></p>
+
+        <form class="form" id="inq" novalidate>
+          <input type="hidden" name="type" id="f-type">
+
+          <div class="pane" data-step="1">
+            <h3 tabindex="-1">Co potřebujete?</h3>
+            <p class="hint">Vyberte, co je vám nejblíž. Přesný rozsah upřesníme spolu.</p>
+            <div class="f-tiles" role="group" aria-label="Typ projektu">
+              <button type="button" class="tile-btn feat" data-type="Aplikace na míru" aria-pressed="false"><span class="t-ic"><svg class="i"><use href="#i-app"/></svg></span><span><b>Aplikace na míru</b><small>od 24&nbsp;950&nbsp;Kč · evidence, rezervace, interní systém</small></span></button>
+              <button type="button" class="tile-btn" data-type="Web" aria-pressed="false"><span class="t-ic"><svg class="i"><use href="#i-monitor"/></svg></span><span><b>Web</b><small>od 9&nbsp;970&nbsp;Kč</small></span></button>
+              <button type="button" class="tile-btn" data-type="E-shop" aria-pressed="false"><span class="t-ic"><svg class="i"><use href="#i-cart"/></svg></span><span><b>E-shop</b><small>od 19&nbsp;870&nbsp;Kč</small></span></button>
+              <button type="button" class="tile-btn" data-type="Správa serveru" aria-pressed="false"><span class="t-ic"><svg class="i"><use href="#i-server"/></svg></span><span><b>Správa serveru</b><small>od 990&nbsp;Kč/měs.</small><!-- DOPLNIT: cena --></span></button>
+              <button type="button" class="tile-btn" data-type="Zatím nevím" aria-pressed="false"><span class="t-ic"><svg class="i"><use href="#i-chat"/></svg></span><span><b>Zatím nevím</b><small>poradím zdarma</small></span></button>
+            </div>
+          </div>
+
+          <div class="pane" data-step="2" hidden>
+            <h3 tabindex="-1">Upřesněte <span class="opt">(nepovinné)</span></h3>
+            <p class="hint">Pomůže mi to připravit se na hovor. Klidně přeskočte.</p>
+            <fieldset class="q" data-for="Web" data-label="Má už web" hidden>
+              <legend>Máte už web?</legend>
+              <div class="chips">
+                <label class="chip"><input type="radio" name="q_web" value="Chce nový web"><span>Nový web</span></label>
+                <label class="chip"><input type="radio" name="q_web" value="Předělat stávající"><span>Předělat stávající</span></label>
+              </div>
+            </fieldset>
+            <fieldset class="q" data-for="E-shop" data-label="Počet produktů" hidden>
+              <legend>Kolik produktů budete prodávat?</legend>
+              <div class="chips">
+                <label class="chip"><input type="radio" name="q_eshop" value="do 50"><span>do 50</span></label>
+                <label class="chip"><input type="radio" name="q_eshop" value="50–500"><span>50–500</span></label>
+                <label class="chip"><input type="radio" name="q_eshop" value="500+"><span>500+</span></label>
+              </div>
+            </fieldset>
+            <fieldset class="q" data-for="Aplikace na míru" data-label="Co dnes používá" hidden>
+              <legend>Co dnes používáte?</legend>
+              <div class="chips">
+                <label class="chip"><input type="radio" name="q_app" value="Excel"><span>Excel</span></label>
+                <label class="chip"><input type="radio" name="q_app" value="Papír"><span>Papír</span></label>
+                <label class="chip"><input type="radio" name="q_app" value="Jiný systém"><span>Jiný systém</span></label>
+                <label class="chip"><input type="radio" name="q_app" value="Nic"><span>Nic</span></label>
+              </div>
+            </fieldset>
+            <fieldset class="q" data-for="Správa serveru" data-label="Co spravovat" hidden>
+              <legend>Co mám spravovat?</legend>
+              <div class="chips">
+                <label class="chip"><input type="radio" name="q_server" value="Web"><span>Web</span></label>
+                <label class="chip"><input type="radio" name="q_server" value="E-shop"><span>E-shop</span></label>
+                <label class="chip"><input type="radio" name="q_server" value="Aplikaci"><span>Aplikaci</span></label>
+                <label class="chip"><input type="radio" name="q_server" value="Více serverů"><span>Více serverů</span></label>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>Kdy byste chtěli začít?</legend>
+              <div class="chips">
+                <label class="chip"><input type="radio" name="term" value="Co nejdřív"><span>Co nejdřív</span></label>
+                <label class="chip"><input type="radio" name="term" value="Do 1–2 měsíců"><span>Do 1–2 měsíců</span></label>
+                <label class="chip"><input type="radio" name="term" value="Nespěchá"><span>Nespěchá</span></label>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>Orientační rozpočet</legend>
+              <div class="chips">
+                <label class="chip"><input type="radio" name="budget" value="do 15 000 Kč"><span>do 15&nbsp;000&nbsp;Kč</span></label>
+                <label class="chip"><input type="radio" name="budget" value="15–40 000 Kč"><span>15–40&nbsp;000&nbsp;Kč</span></label>
+                <label class="chip"><input type="radio" name="budget" value="40–100 000 Kč"><span>40–100&nbsp;000&nbsp;Kč</span></label>
+                <label class="chip"><input type="radio" name="budget" value="100 000+ Kč"><span>100&nbsp;000+&nbsp;Kč</span></label>
+                <label class="chip"><input type="radio" name="budget" value="Zatím nevím"><span>Zatím nevím</span></label>
+              </div>
+            </fieldset>
+            <div><label class="fl" for="f-url">Adresa současného webu <span class="opt">(pokud máte)</span></label><input id="f-url" name="url" type="text" inputmode="url" autocomplete="url" placeholder="www.vase-firma.cz"></div>
+            <div><label class="fl" for="f-text">Pár slov o projektu <span class="opt">(nepovinné)</span></label><textarea id="f-text" name="text" rows="3" placeholder="Např. zakázky evidujeme v Excelu, termíny v diáři a informace se ztrácejí v e-mailech…"></textarea></div>
+            <div class="pane-nav">
+              <button type="button" class="btn-back" data-go="1"><svg class="i"><use href="#i-arrow"/></svg>Zpět</button>
+              <button type="button" class="btn-skip" data-go="3">Přeskočit</button>
+              <button type="button" class="btn btn-primary btn-lg" data-go="3">Pokračovat <svg class="i"><use href="#i-arrow"/></svg></button>
+            </div>
+          </div>
+
+          <div class="pane" data-step="3" hidden>
+            <h3 tabindex="-1">Kam vám mám odpovědět?</h3>
+            <p class="hint">Poslední krok – stačí jméno a e-mail.</p>
+            <div class="recap"><span><b>Poptávka:</b> <span id="fc-recap"></span></span><button type="button" data-go="1">Změnit</button></div>
+            <div class="row2">
+              <div><label class="fl" for="f-name">Jméno *</label><input id="f-name" name="name" type="text" required autocomplete="name" placeholder="Jan Novák" aria-describedby="f-name-err"><p class="field-err" id="f-name-err"></p></div>
+              <div><label class="fl" for="f-email">E-mail *</label><input id="f-email" name="email" type="email" required autocomplete="email" placeholder="jan@firma.cz" aria-describedby="f-email-err"><p class="field-err" id="f-email-err"></p></div>
+            </div>
+            <div><label class="fl" for="f-phone">Telefon <span class="opt">(nepovinné)</span></label><input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="+420 …" aria-describedby="f-phone-err"><p class="field-err" id="f-phone-err"></p></div>
+            <label class="check"><input type="checkbox" name="call" id="f-call"> Raději mi zavolejte</label>
+            <ul class="micro">
+              <li><svg class="i"><use href="#i-check"/></svg>Údaje použiji jen k odpovědi na vaši poptávku.</li>
+              <li><svg class="i"><use href="#i-check"/></svg>Nic nepodepisujete, nezávazné.</li>
+              <li><svg class="i"><use href="#i-check"/></svg>Odpovídám osobně do 24 hodin (v pracovní dny).</li>
+            </ul>
+            <div class="pane-nav">
+              <button type="button" class="btn-back" data-go="2"><svg class="i"><use href="#i-arrow"/></svg>Zpět</button>
+              <button class="btn btn-primary btn-lg" type="submit" id="fc-submit" data-cta="form-submit"><span class="lbl">Chci nezávaznou konzultaci</span> <svg class="i"><use href="#i-arrow"/></svg></button>
+            </div>
+            <div class="fc-fail" id="fc-fail" role="alert" hidden>
+              <p><b>Odeslání se nepovedlo – vaše poptávka ale nezmizela.</b> Pošlete ji jedním kliknutím e-mailem, text jsem vám připravil.</p>
+              <a class="btn btn-primary" id="fc-mailto" href="mailto:kontakt@webtitan.cz" data-cta="form-mail-fallback">Odeslat e-mailem <svg class="i"><use href="#i-mail"/></svg></a>
+              <p class="small">nebo napište na <a href="mailto:kontakt@webtitan.cz">kontakt@webtitan.cz</a></p>
+            </div>
+          </div>
+          <p class="status" id="fc-status" role="status" aria-live="polite"></p>
+        </form>
+
+        <div class="fc-done" id="fc-done" hidden tabindex="-1">
+          <span class="done-ic"><svg class="i"><use href="#i-check"/></svg></span>
+          <h3>Díky, <span id="fc-done-name"></span>! Poptávka dorazila.</h3>
+          <p>Ozvu se vám osobně do 24 hodin (v&nbsp;pracovní dny).</p>
+          <div class="next">
+            <h3>Co bude dál</h3>
+            <ol>
+              <li><span>1</span><div><b>Projdu, co jste poslali</b><p>Připravím se, ať hovor nezabere víc času, než je nutné.</p></div></li>
+              <li><span>2</span><div><b>Ozvu se a domluvíme krátký hovor</b><p>Online nebo osobně – jak vám to vyhovuje.</p></div></li>
+              <li><span>3</span><div><b>Pošlu návrh s pevnou cenou</b><p>Rozhodnutí je jen na vás.</p></div></li>
+            </ol>
+          </div>
+          <a href="#reference" class="btn btn-ghost" data-cta="success-references">Mezitím se podívejte na reference</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer-in">
+    <div>
+      <a href="#" class="brand"><img src="/design-assets/logo.png" alt="" width="28" height="28">WebTitan</a>
+      <p>Jan Šporek – aplikace a systémy na míru, weby, e-shopy a správa serverů pro firmy z celé ČR.</p>
+      <!-- DOPLNIT: IČO / fakturační údaje -->
+    </div>
+    <div>
+      <h4>Stránka</h4>
+      <ul><li><a href="#reseni">Řešení</a></li><li><a href="#reference">Reference</a></li><li><a href="#nabidka">Ceník</a></li><li><a href="#postup">Postup</a></li><li><a href="#faq">Časté otázky</a></li></ul>
+    </div>
+    <div>
+      <h4>Kontakt</h4>
+      <ul><li><a href="mailto:kontakt@webtitan.cz">kontakt@webtitan.cz</a></li><li><a href="https://www.linkedin.com/in/jan-%C5%A1porek-07a39168/" target="_blank" rel="noopener">LinkedIn</a></li><li><a href="https://github.com/jansporek" target="_blank" rel="noopener">GitHub</a></li><li><a href="#poptavka">Nezávazná poptávka</a></li></ul>
+    </div>
+  </div>
+  <div class="footer-bottom"><div class="container"><span>© <span id="year">2026</span> Jan Šporek · WebTitan</span><span>webtitan.cz</span></div></div>
+</footer>
+
+<div class="mobile-cta" id="mobile-cta" aria-hidden="true">
+  <small><b>Aplikace od 24&nbsp;950&nbsp;Kč</b><br>ozvu se do 24&nbsp;h</small>
+  <a href="#poptavka" class="btn btn-primary" tabindex="-1" data-cta="mobile-bar">Chci nezávaznou konzultaci</a>
+</div>
+
+<dialog class="dlg" id="exit-dlg" aria-labelledby="exit-title">
+  <button type="button" class="dlg-close" aria-label="Zavřít"><svg class="i"><use href="#i-x"/></svg></button>
+  <div class="dlg-in">
+    <div class="dlg-side">
+      <span class="kicker">Než odejdete</span>
+      <h2 id="exit-title">Pošlete mi svou tabulku – posoudím ji zdarma</h2>
+      <p>Do 2 pracovních dnů vám napíšu, jestli a&nbsp;jak se dá váš proces zjednodušit a&nbsp;kolik by to zhruba stálo.</p>
+      <ul class="band-list">
+        <li><span class="tick"><svg class="i"><use href="#i-check"/></svg></span>Zdarma a bez závazku</li>
+        <li><span class="tick"><svg class="i"><use href="#i-check"/></svg></span>Bez obchodních telefonátů</li>
+        <li><span class="tick"><svg class="i"><use href="#i-check"/></svg></span>Odpovídám osobně</li>
+      </ul>
+    </div>
+    <div class="dlg-body">
+      <form class="form lm-form" data-source="exit" novalidate>
+        <div>
+          <label class="fl" for="lmx-text">Popište proces nebo vložte odkaz na tabulku <span class="opt">(Google Sheets apod.)</span></label>
+          <textarea id="lmx-text" name="text" rows="4" required aria-describedby="lmx-text-err" placeholder="Např. objednávky přepisujeme z e-mailů do Excelu a pak ještě do fakturace…"></textarea>
+          <p class="field-err" id="lmx-text-err"></p>
+        </div>
+        <div>
+          <label class="fl" for="lmx-email">Kam vám pošlu posouzení</label>
+          <input id="lmx-email" name="email" type="email" required autocomplete="email" aria-describedby="lmx-email-err" placeholder="jan@firma.cz">
+          <p class="field-err" id="lmx-email-err"></p>
+        </div>
+        <button class="btn btn-primary btn-lg" type="submit" data-cta="leadmagnet-exit"><span class="lbl">Chci posouzení zdarma</span> <svg class="i"><use href="#i-arrow"/></svg></button>
+        <a class="lm-mail" href="mailto:kontakt@webtitan.cz?subject=Tabulka%20k%20posouzen%C3%AD" data-cta="leadmagnet-exit-mail"><svg class="i"><use href="#i-mail"/></svg>Raději pošlete soubor e-mailem</a>
+        <p class="status" role="status" aria-live="polite"></p>
+        <div class="lm-fail" role="alert" hidden>
+          <p><b>Odeslání se nepovedlo.</b> Pošlete to prosím e-mailem – text jsem vám připravil.</p>
+          <a class="btn btn-primary lm-mailto" href="mailto:kontakt@webtitan.cz">Odeslat e-mailem <svg class="i"><use href="#i-mail"/></svg></a>
+          <p class="small">nebo napište na <a href="mailto:kontakt@webtitan.cz">kontakt@webtitan.cz</a></p>
+        </div>
+        <a href="#poptavka" class="dlg-alt" data-cta="exit-full-form">Nebo vyplňte celou poptávku <svg class="i"><use href="#i-arrow"/></svg></a>
+      </form>
+      <div class="lm-done" hidden tabindex="-1">
+        <span class="done-ic"><svg class="i"><use href="#i-check"/></svg></span>
+        <h3>Díky, mám to u&nbsp;sebe.</h3>
+        <p>Do 2 pracovních dnů vám napíšu, jestli a&nbsp;jak se dá váš proces zjednodušit.</p>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  // Czech typography: non-breaking space after one-letter words
+  (function () {
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+      acceptNode: n => /^(SCRIPT|STYLE|TEXTAREA)$/.test(n.parentNode.nodeName) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT
+    });
+    const re = /(^|[\s(„–])([vVsSkKzZoOuUaAiI])\s+/g;
+    let n;
+    while ((n = walker.nextNode())) {
+      if (re.test(n.nodeValue)) n.nodeValue = n.nodeValue.replace(re, "$1$2 ");
+      re.lastIndex = 0;
+    }
+  })();
+
+  // header shadow
+  const header = document.getElementById("header");
+  const onScroll = () => header.classList.toggle("scrolled", window.scrollY > 8);
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
+
+  // mobile menu
+  const burger = document.getElementById("burger");
+  const nav = document.getElementById("nav");
+  burger.addEventListener("click", () => {
+    const open = nav.classList.toggle("open");
+    burger.setAttribute("aria-expanded", open);
+  });
+  nav.querySelectorAll("a").forEach(a => a.addEventListener("click", () => {
+    nav.classList.remove("open");
+    burger.setAttribute("aria-expanded", "false");
+  }));
+
+  // ---------- helpers ----------
+  const REDUCE = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  const MAIL_TO = "kontakt@webtitan.cz";
+
+  // analytics hooks (PostHog / GTM dataLayer – both optional)
+  function track(name, props) {
+    props = props || {};
+    try { if (window.posthog && typeof window.posthog.capture === "function") window.posthog.capture(name, props); } catch (e) {}
+    try { if (Array.isArray(window.dataLayer)) window.dataLayer.push(Object.assign({ event: name }, props)); } catch (e) {}
+  }
+  document.addEventListener("click", e => {
+    const el = e.target.closest("[data-cta]");
+    if (el) track("cta_click", { location: el.dataset.cta });
+  });
+
+  // localStorage with graceful fallback
+  function load(key) { try { return window.localStorage.getItem(key); } catch (e) { return null; } }
+  function store(key, val) { try { if (val == null) window.localStorage.removeItem(key); else window.localStorage.setItem(key, val); } catch (e) {} }
+  const converted = () => !!load("wt6-converted");
+  function markConverted() { store("wt6-converted", String(Date.now())); document.dispatchEvent(new Event("wt:converted")); }
+
+  function setErr(input, msg) {
+    const el = document.getElementById(input.id + "-err");
+    if (el) el.textContent = msg || "";
+    input.setAttribute("aria-invalid", msg ? "true" : "false");
+    return !msg;
+  }
+  function mailtoHref(subject, body) {
+    if (body.length > 1800) body = body.slice(0, 1800) + "\n…";
+    return "mailto:" + MAIL_TO + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+  }
+  async function postContact(payload) {
+    // Spam filtr v /api/contact (src/lib/sanitize.ts) odmítá zprávy s "https://www." – odkazy posíláme bez protokolu a www.
+    payload = Object.assign({}, payload, { message: String(payload.message).replace(/https?:\/\//gi, "").replace(/\bwww\./gi, "") });
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    return res;
+  }
+  function setLoading(btn, on, text) {
+    const lbl = btn.querySelector(".lbl");
+    if (on) {
+      btn.dataset.label = lbl ? lbl.textContent : "";
+      if (lbl) lbl.textContent = text;
+      btn.classList.add("loading");
+      btn.disabled = true;
+    } else {
+      if (lbl && btn.dataset.label) lbl.textContent = btn.dataset.label;
+      btn.classList.remove("loading");
+      btn.disabled = false;
+    }
+  }
+
+  // ---------- multi-step inquiry ----------
+  const inquiry = (function () {
+    const KEY = "wt6-inquiry";
+    const card = document.getElementById("form-card");
+    const form = document.getElementById("inq");
+    const typeInput = document.getElementById("f-type");
+    const panes = [...form.querySelectorAll(".pane")];
+    const tiles = [...form.querySelectorAll(".tile-btn[data-type]")];
+    const bar = document.getElementById("fc-bar");
+    const progress = document.getElementById("fc-progress");
+    const stepNo = document.getElementById("fc-stepno");
+    const status = document.getElementById("fc-status");
+    const fail = document.getElementById("fc-fail");
+    const mailto = document.getElementById("fc-mailto");
+    const done = document.getElementById("fc-done");
+    const top = document.getElementById("fc-top");
+    const resume = document.getElementById("fc-resume");
+    const submitBtn = document.getElementById("fc-submit");
+    const fName = document.getElementById("f-name");
+    const fEmail = document.getElementById("f-email");
+    const fPhone = document.getElementById("f-phone");
+    const fCall = document.getElementById("f-call");
+    let step = 1;
+    let tried = false;
+
+    function checked(name) {
+      const el = form.querySelector('input[name="' + name + '"]:checked');
+      return el ? el.value : "";
+    }
+    function contextual() {
+      const q = form.querySelector('.q[data-for="' + typeInput.value + '"]');
+      if (!q) return null;
+      const el = q.querySelector("input:checked");
+      return el ? { label: q.dataset.label, value: el.value } : null;
+    }
+
+    function save() {
+      const d = { step: step, type: typeInput.value, fields: {} };
+      form.querySelectorAll("input[name], textarea[name]").forEach(el => {
+        if (el.type === "hidden") return;
+        if (el.type === "radio") { if (el.checked) d.fields[el.name] = el.value; }
+        else if (el.type === "checkbox") d.fields[el.name] = el.checked;
+        else if (el.value) d.fields[el.name] = el.value;
+      });
+      store(KEY, JSON.stringify(d));
+    }
+
+    function setType(type) {
+      typeInput.value = type || "";
+      tiles.forEach(t => t.setAttribute("aria-pressed", String(t.dataset.type === type)));
+      form.querySelectorAll(".q[data-for]").forEach(q => { q.hidden = q.dataset.for !== type; });
+    }
+
+    function recap() {
+      const parts = [typeInput.value || "Zatím nevím"];
+      const c = contextual();
+      if (c) parts.push(c.value);
+      if (checked("term")) parts.push(checked("term"));
+      if (checked("budget") && checked("budget") !== "Zatím nevím") parts.push(checked("budget"));
+      document.getElementById("fc-recap").textContent = parts.join(" · ");
+    }
+
+    function goTo(n, opts) {
+      opts = opts || {};
+      if (n > 1 && !typeInput.value) n = 1;
+      step = n;
+      panes.forEach(p => { p.hidden = Number(p.dataset.step) !== n; });
+      bar.style.width = (n / 3 * 100).toFixed(2) + "%";
+      progress.setAttribute("aria-valuenow", String(n));
+      stepNo.textContent = "Krok " + n + " ze 3";
+      if (n === 3) recap();
+      status.textContent = "";
+      status.className = "status";
+      if (!opts.silent) {
+        save();
+        track("form_step", { step: n, type: typeInput.value || null });
+      }
+      const behavior = REDUCE ? "auto" : "smooth";
+      if (opts.scroll) card.scrollIntoView({ behavior: behavior, block: "start" });
+      else if (opts.focus && card.getBoundingClientRect().top < 0) card.scrollIntoView({ behavior: behavior, block: "start" });
+      if (opts.focus) {
+        const h = panes[n - 1].querySelector("h3");
+        if (h) h.focus({ preventScroll: true });
+      }
+    }
+
+    function start(type, source) {
+      setType(type);
+      resume.hidden = true;
+      goTo(2, { focus: true, scroll: true });
+      track("quickpick_select", { type: type, source: source || "link" });
+    }
+
+    function validate(focusFirst) {
+      const name = fName.value.trim();
+      const email = fEmail.value.trim();
+      const phone = fPhone.value.trim();
+      const okName = setErr(fName, name.length < 2 ? "Napište prosím své jméno." : "");
+      const okEmail = setErr(fEmail, !email ? "Bez e-mailu vám nemám kam odpovědět." : (!EMAIL_RE.test(email) ? "Tenhle e-mail nevypadá správně – zkontrolujte ho prosím." : ""));
+      let phoneMsg = "";
+      if (fCall.checked && !phone) phoneMsg = "Napište číslo, ať vám mám kam zavolat.";
+      else if (phone && phone.replace(/\D/g, "").length < 9) phoneMsg = "Zkontrolujte prosím telefonní číslo.";
+      const okPhone = setErr(fPhone, phoneMsg);
+      if (focusFirst) {
+        const first = [[okName, fName], [okEmail, fEmail], [okPhone, fPhone]].find(x => !x[0]);
+        if (first) first[1].focus();
+      }
+      return okName && okEmail && okPhone;
+    }
+
+    function summary() {
+      const lines = ["Typ: " + (typeInput.value || "Zatím nevím")];
+      const c = contextual();
+      if (c) lines.push(c.label + ": " + c.value);
+      lines.push("Termín: " + (checked("term") || "neuvedeno"));
+      lines.push("Rozpočet: " + (checked("budget") || "neuvedeno"));
+      const url = document.getElementById("f-url").value.trim();
+      if (url) lines.push("Současný web: " + url);
+      lines.push("Telefon: " + (fPhone.value.trim() || "neuvedeno"));
+      lines.push("Raději zavolat: " + (fCall.checked ? "ano" : "ne"));
+      const text = document.getElementById("f-text").value.trim();
+      lines.push("", "Zpráva:", text || "(bez zprávy – prosím o kontakt)");
+      return lines.join("\n");
+    }
+
+    // type tiles inside the form
+    tiles.forEach(t => t.addEventListener("click", () => {
+      setType(t.dataset.type);
+      resume.hidden = true;
+      goTo(2, { focus: true });
+    }));
+    // back / skip / continue / change
+    form.addEventListener("click", e => {
+      const b = e.target.closest("[data-go]");
+      if (!b) return;
+      goTo(Number(b.dataset.go), { focus: true });
+    });
+    // Enter advances (except in textarea / on buttons)
+    form.addEventListener("keydown", e => {
+      if (e.key !== "Enter" || step === 3) return;
+      const tag = e.target.tagName;
+      if (tag === "TEXTAREA" || tag === "BUTTON" || tag === "A") return;
+      e.preventDefault();
+      if (step === 2) goTo(3, { focus: true });
+    });
+    // persist + live re-validation
+    form.addEventListener("input", e => {
+      save();
+      if (tried && (e.target === fName || e.target === fEmail || e.target === fPhone)) validate(false);
+    });
+    form.addEventListener("change", e => {
+      save();
+      if (tried && e.target === fCall) validate(false);
+    });
+    // reset
+    document.getElementById("fc-reset").addEventListener("click", () => {
+      form.reset();
+      store(KEY, null);
+      setType("");
+      resume.hidden = true;
+      goTo(1, { focus: true });
+    });
+
+    form.addEventListener("submit", async e => {
+      e.preventDefault();
+      if (step < 3) { goTo(step + 1, { focus: true }); return; }
+      tried = true;
+      if (!validate(true)) {
+        status.className = "status err";
+        status.textContent = "Zkontrolujte prosím označená pole.";
+        return;
+      }
+      const type = typeInput.value || "Zatím nevím";
+      const name = fName.value.trim();
+      const email = fEmail.value.trim();
+      const message = summary();
+      fail.hidden = true;
+      setLoading(submitBtn, true, "Odesílám…");
+      status.className = "status";
+      status.textContent = "Odesílám poptávku…";
+      try {
+        await postContact({ name: name, email: email, message: message });
+        track("form_submit", { status: "ok", type: type });
+        store(KEY, null);
+        markConverted();
+        document.getElementById("fc-done-name").textContent = name.split(/\s+/)[0];
+        form.hidden = true;
+        top.hidden = true;
+        resume.hidden = true;
+        done.hidden = false;
+        done.focus({ preventScroll: true });
+        if (card.getBoundingClientRect().top < 0) card.scrollIntoView({ behavior: REDUCE ? "auto" : "smooth", block: "start" });
+      } catch (err) {
+        track("form_submit", { status: "error", type: type });
+        mailto.href = mailtoHref("Poptávka z webu – " + type, message + "\n\nJméno: " + name + "\nE-mail: " + email);
+        fail.hidden = false;
+        status.textContent = "";
+        fail.scrollIntoView({ behavior: REDUCE ? "auto" : "smooth", block: "nearest" });
+      } finally {
+        setLoading(submitBtn, false);
+      }
+    });
+
+    // restore a draft
+    (function restore() {
+      const raw = load(KEY);
+      if (!raw) return;
+      let d;
+      try { d = JSON.parse(raw); } catch (e) { return; }
+      if (!d || !d.type) return;
+      setType(d.type);
+      Object.keys(d.fields || {}).forEach(name => {
+        const val = d.fields[name];
+        form.querySelectorAll('[name="' + name + '"]').forEach(el => {
+          if (el.type === "radio") el.checked = el.value === val;
+          else if (el.type === "checkbox") el.checked = !!val;
+          else el.value = val;
+        });
+      });
+      goTo(Math.min(Math.max(Number(d.step) || 2, 2), 3), { silent: true });
+      resume.hidden = false;
+    })();
+
+    return { start: start };
+  })();
+
+  // quick-pick tiles, offer CTAs and other links with a preselected type
+  document.querySelectorAll("a[data-type]").forEach(a => a.addEventListener("click", e => {
+    e.preventDefault();
+    const dlg = a.closest("dialog");
+    if (dlg) dlg.close();
+    inquiry.start(a.dataset.type, a.dataset.cta);
+  }));
+
+  // ---------- lead magnet mini-forms (band + exit dialog) ----------
+  document.querySelectorAll(".lm-form").forEach(form => {
+    const source = form.dataset.source;
+    const text = form.querySelector("textarea");
+    const email = form.querySelector('input[type="email"]');
+    const btn = form.querySelector('button[type="submit"]');
+    const status = form.querySelector(".status");
+    const fail = form.querySelector(".lm-fail");
+    const failLink = form.querySelector(".lm-mailto");
+    const done = form.parentElement.querySelector(".lm-done");
+    let tried = false;
+    function validate(focusFirst) {
+      const t = text.value.trim();
+      const m = email.value.trim();
+      const okT = setErr(text, t.length < 10 ? "Napište prosím aspoň pár slov o procesu, nebo vložte odkaz na tabulku." : "");
+      const okM = setErr(email, !m ? "Bez e-mailu vám nemám kam odpovědět." : (!EMAIL_RE.test(m) ? "Tenhle e-mail nevypadá správně." : ""));
+      if (focusFirst) { if (!okT) text.focus(); else if (!okM) email.focus(); }
+      return okT && okM;
+    }
+    form.addEventListener("input", () => { if (tried) validate(false); });
+    form.addEventListener("submit", async e => {
+      e.preventDefault();
+      tried = true;
+      if (!validate(true)) return;
+      const m = email.value.trim();
+      const local = m.split("@")[0];
+      const name = local.length >= 2 ? local : "Posouzení procesu";
+      const message = "Žádost o bezplatné posouzení procesu (zdroj: " + (source === "exit" ? "okno při odchodu" : "sekce Pošlete mi tabulku") + ")\n\n" + text.value.trim();
+      fail.hidden = true;
+      setLoading(btn, true, "Odesílám…");
+      status.className = "status";
+      status.textContent = "Odesílám…";
+      try {
+        await postContact({ name: name, email: m, message: message });
+        track("leadmagnet_submit", { status: "ok", source: source });
+        markConverted();
+        status.textContent = "";
+        form.hidden = true;
+        const title = form.parentElement.querySelector(":scope > h3");
+        if (title) title.hidden = true;
+        done.hidden = false;
+        done.focus({ preventScroll: true });
+      } catch (err) {
+        track("leadmagnet_submit", { status: "error", source: source });
+        failLink.href = mailtoHref("Žádost o bezplatné posouzení procesu", message + "\n\nE-mail: " + m);
+        fail.hidden = false;
+        status.textContent = "";
+        fail.scrollIntoView({ behavior: REDUCE ? "auto" : "smooth", block: "nearest" });
+      } finally {
+        setLoading(btn, false);
+      }
+    });
+  });
+
+  // ---------- exit intent (desktop only, max. once per 7 days) ----------
+  (function () {
+    const dlg = document.getElementById("exit-dlg");
+    if (!dlg || typeof dlg.showModal !== "function") return;
+    const desktop = window.matchMedia("(hover: hover) and (pointer: fine) and (min-width: 981px)");
+    const WEEK = 7 * 24 * 60 * 60 * 1000;
+    let armed = false;
+    let formIn = false;
+    setTimeout(() => { armed = true; }, 8000);
+    new IntersectionObserver(e => { formIn = e[0].isIntersecting; }, { threshold: .05 }).observe(document.getElementById("poptavka"));
+    document.addEventListener("mouseout", e => {
+      if (!armed || e.relatedTarget || e.clientY > 0 || !desktop.matches) return;
+      if (dlg.open || formIn || converted() || document.querySelector("dialog[open]")) return;
+      if (Date.now() - Number(load("wt6-exit-ts") || 0) < WEEK) return;
+      store("wt6-exit-ts", String(Date.now()));
+      dlg.showModal();
+      track("exit_intent_shown", {});
+      document.dispatchEvent(new Event("wt:dialog"));
+    });
+    dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
+    dlg.querySelector(".dlg-close").addEventListener("click", () => dlg.close());
+    dlg.querySelector(".dlg-alt").addEventListener("click", () => dlg.close());
+    dlg.addEventListener("close", () => document.dispatchEvent(new Event("wt:dialog")));
+  })();
+
+  // ---------- mobile sticky CTA: after hero, hidden while the form or a dialog is on screen ----------
+  (function () {
+    const bar = document.getElementById("mobile-cta");
+    let heroIn = true, formIn = false;
+    const update = () => {
+      const show = !heroIn && !formIn && !document.querySelector("dialog[open]") && !converted();
+      bar.classList.toggle("show", show);
+      bar.setAttribute("aria-hidden", String(!show));
+      bar.querySelector("a").tabIndex = show ? 0 : -1;
+    };
+    new IntersectionObserver(e => { heroIn = e[0].isIntersecting; update(); }).observe(document.getElementById("hero"));
+    new IntersectionObserver(e => { formIn = e[0].isIntersecting; update(); }, { threshold: .05 }).observe(document.getElementById("poptavka"));
+    document.addEventListener("wt:dialog", update);
+    document.addEventListener("wt:converted", update);
+  })();
+
+  // reveal on scroll
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+  }, { threshold: .08 });
+  document.querySelectorAll(".rv").forEach(el => io.observe(el));
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
