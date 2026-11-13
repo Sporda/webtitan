@@ -48,8 +48,13 @@ for f in "$SITE"/*.html; do
   name="$(basename "$f")"
   [ "$name" = "index.html" ] || expect "$name" 200
 done
+for d in "$SITE"/*/; do        # podstránky ve složkách (např. /tvorba-webu/)
+  [ -f "$d/index.html" ] && expect "$(basename "$d")/" 200
+done
 expect robots.txt 200
 expect sitemap.xml 200
+expect neexistujici-stranka-test 404   # vlastní stránka 404 přes index.php
+expect assets/fonts/unbounded-latin.woff2 200
 expect api/contact.php 405   # přijímá jen POST – GET nic neodesílá
 expect api/inbound.php 405   # webhook Resendu – jen POST s podpisem
 if curl -fsS -A 'webtitan-deploy-check' "$SITE_URL/api/likes.php" | grep -q '"counts"'; then

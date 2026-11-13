@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light only">
+<title>Vývoj aplikací na míru a interní systémy | WebTitan</title>
+<meta name="description" content="Vývoj webových aplikací a interních systémů na míru od 24 950 Kč. Z Excelu do přehledné aplikace, pevná cena předem, kód i data patří vám.">
+<link rel="canonical" href="https://webtitan.cz/vyvoj-aplikaci-na-miru/">
+<meta name="theme-color" content="#ece3d4">
+<meta name="author" content="Jan Šporek">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="cs_CZ">
+<meta property="og:site_name" content="WebTitan">
+<meta property="og:url" content="https://webtitan.cz/vyvoj-aplikaci-na-miru/">
+<meta property="og:title" content="Vývoj aplikací na míru a interní systémy – WebTitan">
+<meta property="og:description" content="Vývoj webových aplikací a interních systémů na míru od 24 950 Kč. Z Excelu do přehledné aplikace, pevná cena předem, kód i data patří vám.">
+<meta property="og:image" content="https://webtitan.cz/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Vývoj aplikací na míru a interní systémy – WebTitan">
+<meta name="twitter:description" content="Vývoj webových aplikací a interních systémů na míru od 24 950 Kč. Z Excelu do přehledné aplikace, pevná cena předem, kód i data patří vám.">
+<meta name="twitter:image" content="https://webtitan.cz/assets/og.jpg">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="preload" href="/assets/fonts/unbounded-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/fonts/fonts.css">
+<style>
+  :root {
+    color-scheme: light only;
+    --bg: #ece3d4; --card: #faf6ef; --soft: #f2ebdf; --line: #e0d5c3; --line-2: #d1c4ae;
+    --navy: #1f3d34; --navy-2: #2d5447; --text: #1b342c; --muted: #4d5a52; --dim: #535f58;
+    --orange: #ff6b3d; --orange-lg: #c4400f; --orange-ink: #9c3008; --peach: #ffe0d3;
+    --glow: 0 10px 26px -8px rgba(255, 107, 61, .6);
+    --violet: #1f3d34; --violet-bg: #f1ead9; --on-grad: #ffffff; --on-loud: #10241d;
+    --grad: linear-gradient(135deg, #1f3d34 0%, #1f3d34 100%);
+    --grad-soft: linear-gradient(135deg, #f4eee3 0%, #ebe2d2 100%);
+    --ok: #0f9d6b; --ok-bg: #e3f4ec; --err: #c8283f; --err-bg: #fbecef;
+    --shadow: 0 1px 2px rgba(31, 61, 52, .05), 0 14px 34px -14px rgba(31, 61, 52, .18);
+    --shadow-lg: 0 2px 4px rgba(31, 61, 52, .05), 0 30px 60px -24px rgba(31, 61, 52, .34);
+    --display: "Unbounded", system-ui, sans-serif;
+    --sans: "Manrope", system-ui, -apple-system, sans-serif;
+    --r: 22px; --gap: 16px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+  body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 16.5px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; height: auto; display: block; }
+  ul, ol { list-style: none; }
+  ::selection { background: #ffcdb8; color: var(--text); }
+  :focus-visible { outline: 3px solid var(--orange-lg); outline-offset: 2px; border-radius: 8px; }
+  .sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+  .skip { position: absolute; left: 16px; top: -60px; z-index: 100; padding: 10px 16px; border-radius: 12px; background: var(--navy); color: #fff; font-weight: 800; }
+  .skip:focus { top: 16px; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding-left: 24px; padding-right: 24px; position: relative; }
+  .gt { color: var(--orange-lg); }
+  .kicker { display: inline-block; font-size: 13px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 12px; color: var(--navy); }
+  .kicker::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 10px 1px rgba(255, 107, 61, .75); margin-right: 10px; vertical-align: 1px; }
+  .card { position: relative; background: var(--card); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow); overflow: hidden; }
+  .card.gb { border: 2px solid var(--navy); box-shadow: var(--shadow-lg); }
+
+  /* buttons */
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 13px 24px; border-radius: 999px; font-weight: 700; font-size: 15.5px; border: 1px solid transparent; cursor: pointer; transition: transform .2s, box-shadow .25s, background .2s, border-color .2s; white-space: nowrap; }
+  .btn:hover { transform: translateY(-2px); }
+  .btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+  .btn-grad { background: var(--orange); color: var(--on-loud); box-shadow: var(--glow); }
+  .btn-grad:hover { background: #ff7f57; box-shadow: 0 14px 34px -8px rgba(255, 107, 61, .75); }
+  .btn-line { background: #fff; color: var(--navy); border-color: var(--line-2); }
+  .btn-line:hover { border-color: var(--navy); }
+  .link-cta { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-weight: 800; color: var(--navy); font-size: 15px; }
+  .link-cta .arr { transition: transform .2s; }
+  .link-cta:hover .arr { transform: translateX(3px); }
+  .dual { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .l-short { display: none; }
+
+  /* header */
+  .nav-wrap { position: fixed; top: 14px; left: 0; right: 0; z-index: 60; padding: 0 16px; }
+  .nav { max-width: 1192px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 8px 8px 8px 18px; border-radius: 999px; background: rgba(250, 246, 239, .9); border: 1px solid var(--line); box-shadow: 0 10px 30px -18px rgba(31, 61, 52, .3); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+  .brand { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-weight: 700; font-size: 15px; letter-spacing: -.01em; white-space: nowrap; min-height: 44px; }
+  .brand img { width: 26px; height: 26px; }
+  .brand small { font-family: var(--sans); font-weight: 600; font-size: 13.5px; color: var(--muted); letter-spacing: 0; }
+  .links { display: flex; gap: 2px; font-size: 15px; font-weight: 600; }
+  .links a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px; border-radius: 999px; color: var(--muted); transition: color .2s, background .2s; }
+  .links a:hover { color: var(--text); background: var(--soft); }
+  .nav .btn { min-height: 44px; padding: 10px 18px; font-size: 14.5px; }
+
+  /* hero */
+  .sp-hero { padding-top: 104px; }
+  .crumbs ol { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; font-size: 14px; font-weight: 700; color: var(--muted); margin-bottom: 14px; }
+  .crumbs a { display: inline-flex; align-items: center; min-height: 44px; color: var(--navy); text-decoration: underline; text-underline-offset: 3px; }
+  .crumbs li + li::before { content: "›"; margin-right: 8px; color: var(--dim); }
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--gap); align-items: stretch; }
+  .intro { padding: clamp(26px, 3.4vw, 44px); display: flex; flex-direction: column; gap: 18px; }
+  .svc-ic { width: 52px; height: 52px; border-radius: 15px; display: grid; place-items: center; background: var(--grad-soft); flex: none; }
+  .svc-ic svg { width: 24px; height: 24px; stroke: var(--navy); fill: none; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+  h1 { font-family: var(--display); font-weight: 700; font-size: clamp(28px, 3.6vw, 46px); line-height: 1.1; letter-spacing: -.045em; }
+  .lead { color: var(--muted); font-size: 17.5px; max-width: 60ch; }
+  .checks { display: flex; flex-direction: column; gap: 9px; }
+  .checks li { display: flex; gap: 12px; align-items: flex-start; font-weight: 600; }
+  .tick { flex: none; width: 24px; height: 24px; border-radius: 50%; background: var(--grad); display: grid; place-items: center; margin-top: 1px; }
+  .tick svg { width: 13px; height: 13px; stroke: var(--on-grad); stroke-width: 3; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  .micro { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 14px; color: var(--muted); font-weight: 600; }
+  .micro svg { width: 16px; height: 16px; stroke: var(--orange-ink); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+  .sum { padding: clamp(22px, 2.6vw, 32px); display: flex; flex-direction: column; gap: 16px; }
+  .sum-price small { display: block; font-size: 13px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .sum-price b { display: block; font-family: var(--display); font-weight: 700; font-size: clamp(28px, 3vw, 38px); letter-spacing: -.05em; line-height: 1.15; margin-top: 4px; }
+  .sum-price span { display: block; color: var(--muted); font-weight: 700; font-size: 14.5px; }
+  .facts { display: grid; gap: 10px; }
+  .fact { padding: 12px 16px; border-radius: 14px; background: var(--soft); }
+  .fact dt { font-size: 12.5px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); }
+  .fact dd { font-weight: 700; font-size: 15px; }
+  .me-row { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 18px; background: #fff; box-shadow: var(--shadow); margin-top: auto; }
+  .avatar { flex: none; width: 54px; height: 54px; border-radius: 50%; background: url("/assets/jan-cut.webp") 54% 22% / 200% auto no-repeat, var(--peach); box-shadow: 0 0 0 3px #fff, 0 10px 24px -10px rgba(31, 61, 52, .4); }
+  .me-row b { display: block; font-family: var(--display); font-weight: 700; font-size: 15px; letter-spacing: -.03em; }
+  .me-row span { display: block; color: var(--muted); font-size: 14px; font-weight: 600; line-height: 1.45; }
+
+  /* sections */
+  .sec { padding-top: 90px; position: relative; }
+  .head { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px 24px; margin-bottom: 28px; flex-wrap: wrap; }
+  .head p { color: var(--muted); max-width: 52ch; font-size: 17px; }
+  h2 { font-family: var(--display); font-weight: 700; font-size: clamp(24px, 3vw, 36px); letter-spacing: -.045em; line-height: 1.15; }
+  .ic { width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center; background: var(--err-bg); flex: none; }
+  .ic svg { width: 19px; height: 19px; stroke: var(--err); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .pains.ok .ic { background: var(--grad-soft); }
+  .pains.ok .ic svg { stroke: var(--navy); }
+  .pains { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); }
+  .pain { padding: 26px; display: flex; flex-direction: column; gap: 10px; }
+  .pain h3 { font-size: 18px; font-weight: 800; letter-spacing: -.01em; line-height: 1.3; margin-top: 6px; }
+  .pain p { color: var(--muted); font-size: 15.5px; }
+
+  .ba { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); margin-top: var(--gap); }
+  .ba-col { padding: clamp(22px, 2.8vw, 32px); }
+  .ba-label { display: inline-flex; align-items: center; font-size: 12.5px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; padding: 6px 12px; border-radius: 999px; margin-bottom: 14px; }
+  .before .ba-label { background: var(--err-bg); color: var(--err); }
+  .after .ba-label { background: var(--ok-bg); color: #0b7a53; }
+  .ba-col h3 { font-family: var(--display); font-weight: 700; font-size: clamp(19px, 2vw, 23px); letter-spacing: -.04em; margin-bottom: 16px; }
+  .ba-col ul { display: flex; flex-direction: column; gap: 12px; }
+  .ba-col li { display: flex; gap: 12px; align-items: flex-start; font-weight: 600; }
+  .before li { color: var(--muted); }
+  .mk { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; flex: none; margin-top: 1px; }
+  .mk svg { width: 12px; height: 12px; fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+  .before .mk { background: var(--err-bg); } .before .mk svg { stroke: var(--err); }
+  .after .mk { background: var(--grad); } .after .mk svg { stroke: var(--on-grad); }
+
+  .get { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); }
+  .get-item { padding: 24px; display: flex; gap: 14px; align-items: flex-start; }
+  .get-item h3 { font-size: 16.5px; font-weight: 800; line-height: 1.35; margin-bottom: 4px; }
+  .get-item p { color: var(--muted); font-size: 15px; }
+  .tech { margin-top: 14px; font-size: 13.5px; color: var(--dim); font-weight: 700; text-align: center; }
+
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap); }
+  .steps.s3 { grid-template-columns: repeat(3, 1fr); }
+  .step { padding: 26px; display: flex; flex-direction: column; gap: 10px; }
+  .step-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  .num { width: 42px; height: 42px; border-radius: 13px; background: var(--grad); color: var(--on-grad); display: grid; place-items: center; font-family: var(--display); font-weight: 700; font-size: 16px; }
+  .time { font-size: 12.5px; font-weight: 800; padding: 6px 11px; border-radius: 999px; background: var(--soft); color: var(--muted); white-space: nowrap; }
+  .step h3 { font-size: 18px; font-weight: 800; letter-spacing: -.01em; margin-top: 8px; }
+  .step p { color: var(--muted); font-size: 15.5px; }
+
+  .price-card { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: clamp(20px, 3vw, 44px); align-items: center; padding: clamp(24px, 3.4vw, 42px); }
+  .price-big small { display: block; font-size: 13px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .price-big b { display: block; font-family: var(--display); font-weight: 700; font-size: clamp(32px, 3.8vw, 48px); letter-spacing: -.05em; line-height: 1.1; margin: 6px 0 4px; }
+  .price-big span { display: block; color: var(--muted); font-weight: 700; }
+  .price-card ul { display: flex; flex-direction: column; gap: 12px; }
+  .price-card li { display: flex; gap: 12px; align-items: flex-start; font-weight: 600; }
+  .price-note { margin-top: 16px; color: var(--muted); font-size: 15px; }
+
+  .cases { display: flex; flex-direction: column; gap: var(--gap); }
+  .case { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(22px, 4vw, 52px); align-items: center; padding: clamp(18px, 2.8vw, 32px); }
+  .case:nth-child(even) .case-shot { order: 2; }
+  .browser { position: relative; background: #fff; border: 1px solid var(--line-2); border-radius: 14px; overflow: hidden; box-shadow: var(--shadow); }
+  .browser-bar { display: flex; align-items: center; gap: 6px; padding: 10px 14px; background: var(--soft); border-bottom: 1px solid var(--line); }
+  .browser-bar i { width: 10px; height: 10px; border-radius: 50%; background: #d6cbb8; }
+  .browser-bar span { margin-left: 10px; flex: 1; max-width: 280px; font-size: 12px; font-weight: 600; color: var(--muted); background: #fff; border: 1px solid var(--line); border-radius: 6px; padding: 2px 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .browser img { width: 100%; aspect-ratio: 2 / 1; object-fit: cover; object-position: top left; }
+  .case-tag { display: inline-block; font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--orange-ink); background: var(--peach); padding: 5px 11px; border-radius: 8px; margin-bottom: 12px; }
+  .case h3 { font-family: var(--display); font-weight: 700; font-size: clamp(19px, 2vw, 23px); letter-spacing: -.04em; line-height: 1.2; margin-bottom: 14px; }
+  .case dl { display: grid; gap: 12px; }
+  .case dt { font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); margin-bottom: 2px; }
+  .case dd { color: var(--muted); }
+  .case dd.win { color: var(--text); font-weight: 700; padding-left: 14px; border-left: 3px solid var(--orange); }
+  .case .tech { text-align: left; }
+  .thumbs { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); margin-top: var(--gap); }
+  .thumb { display: flex; flex-direction: column; }
+  .thumb img { width: 100%; aspect-ratio: 2 / 1; object-fit: cover; object-position: top; border-bottom: 1px solid var(--line); }
+  .thumb div { padding: 12px 16px 14px; display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+  .thumb b { font-size: 15.5px; font-weight: 800; }
+  .thumb span { font-size: 13px; color: var(--muted); font-weight: 600; text-align: right; }
+  .others { margin-top: var(--gap); padding: 18px 24px; display: flex; gap: 8px 22px; align-items: baseline; flex-wrap: wrap; }
+  .others b { font-family: var(--display); font-weight: 500; font-size: 14px; white-space: nowrap; }
+  .others p { color: var(--muted); font-size: 15px; flex: 1; min-width: 220px; }
+  .refs-more { margin-top: 18px; text-align: center; }
+
+  .faq-list { display: flex; flex-direction: column; gap: 10px; max-width: 900px; }
+  details { background: var(--card); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); }
+  details[open] { border-color: rgba(31, 61, 52, .35); }
+  summary { list-style: none; cursor: pointer; padding: 19px 22px; display: flex; justify-content: space-between; align-items: center; gap: 16px; font-weight: 800; font-size: 16.5px; border-radius: 18px; min-height: 44px; }
+  summary::-webkit-details-marker { display: none; }
+  summary .pm { flex: none; width: 30px; height: 30px; border-radius: 50%; background: var(--soft); display: grid; place-items: center; transition: transform .25s, background .25s; }
+  summary .pm svg { width: 14px; height: 14px; stroke: var(--text); stroke-width: 2.5; fill: none; stroke-linecap: round; }
+  details[open] summary .pm { transform: rotate(45deg); background: var(--orange); }
+  details .ans { padding: 0 22px 20px; color: var(--muted); max-width: 70ch; }
+
+  .xs { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap); }
+  .xs a { padding: 22px; display: flex; flex-direction: column; gap: 8px; transition: transform .25s, box-shadow .25s; }
+  .xs a:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+  .xs b { font-size: 16.5px; font-weight: 800; line-height: 1.3; }
+  .xs span { color: var(--muted); font-size: 14.5px; }
+  .xs em { font-style: normal; font-weight: 800; color: var(--orange-ink); font-size: 14px; margin-top: auto; }
+  .xs-home { margin-top: 16px; text-align: center; }
+
+  .final { padding: clamp(26px, 3.6vw, 46px); background: var(--grad-soft); border-color: transparent; display: grid; grid-template-columns: minmax(0, 1.3fr) auto; gap: 24px; align-items: center; }
+  .final p { color: var(--muted); margin-top: 10px; max-width: 60ch; }
+  .final .alt { margin-top: 12px; font-size: 14.5px; font-weight: 700; color: var(--muted); }
+  .final .alt a { color: var(--navy); text-decoration: underline; text-underline-offset: 3px; }
+
+  /* footer */
+  footer { margin-top: 90px; border-top: 1px solid var(--line); background: var(--card); }
+  .foot { display: flex; justify-content: space-between; align-items: center; gap: 16px 28px; flex-wrap: wrap; padding-top: 28px; padding-bottom: 32px; color: var(--muted); font-size: 14.5px; font-weight: 600; }
+  .foot nav { display: flex; gap: 4px 20px; flex-wrap: wrap; }
+  .foot nav a { display: inline-flex; align-items: center; min-height: 44px; }
+  .foot a:hover { color: var(--text); }
+  .foot-svc { flex: 1 1 100%; display: flex; flex-wrap: wrap; align-items: center; gap: 0 20px; padding-top: 14px; border-top: 1px solid var(--line); }
+  .foot-svc b { font-size: 12.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); margin-right: 4px; }
+  .foot-svc a { display: inline-flex; align-items: center; min-height: 44px; }
+  .foot-svc a[aria-current="page"] { color: var(--text); text-decoration: underline; text-underline-offset: 3px; }
+  .foot-bottom { flex: 1 1 100%; display: flex; justify-content: space-between; align-items: center; gap: 4px 24px; flex-wrap: wrap; padding-top: 14px; border-top: 1px solid var(--line); }
+  .foot-contact { display: flex; gap: 0 18px; flex-wrap: wrap; }
+  .foot-contact a { display: inline-flex; align-items: center; min-height: 44px; }
+  .foot-legal { flex: 1 1 100%; margin: 0; font-size: 13px; font-weight: 500; line-height: 1.6; color: var(--muted); }
+
+  /* mobile sticky CTA */
+  .mbar { position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 70; display: none; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 8px 8px 18px; border-radius: 999px; background: rgba(250, 246, 239, .96); border: 1px solid var(--line); box-shadow: 0 18px 40px -16px rgba(31, 61, 52, .4); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+  .mbar span { font-size: 13px; font-weight: 700; color: var(--muted); line-height: 1.3; }
+  .mbar span b { color: var(--text); font-weight: 800; }
+  .mbar .btn { min-height: 46px; padding: 10px 16px; font-size: 14px; }
+
+  @media (max-width: 1180px) { .brand small { display: none; } .links a { padding: 0 9px; } }
+  @media (max-width: 1080px) {
+    .hero-grid, .price-card, .final { grid-template-columns: 1fr; }
+    .get { grid-template-columns: 1fr 1fr; }
+    .steps { grid-template-columns: 1fr 1fr; }
+    .xs { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 1024px) { .links { display: none; } .nav .btn { margin-left: auto; } }
+  @media (max-width: 860px) {
+    .pains, .thumbs { grid-template-columns: 1fr 1fr; }
+    .ba, .case { grid-template-columns: 1fr; }
+    .case:nth-child(even) .case-shot { order: 0; }
+    .mbar { display: flex; }
+    footer { padding-bottom: 80px; }
+  }
+  @media (max-width: 600px) {
+    .wrap { padding-left: 16px; padding-right: 16px; }
+    .nav-wrap { padding: 0 10px; top: 10px; }
+    .nav { padding-left: 14px; }
+    .nav .btn { padding: 10px 14px; font-size: 14px; }
+    .l-long { display: none; } .l-short { display: inline; }
+    .sp-hero { padding-top: 90px; }
+    .lead { font-size: 16.5px; }
+    .dual .btn { width: 100%; }
+    .sec { padding-top: 70px; }
+    .pains, .get, .steps, .steps.s3, .xs { grid-template-columns: 1fr; }
+    .thumbs { gap: 10px; }
+    .thumb div { flex-direction: column; gap: 0; padding: 10px 12px 12px; }
+    .thumb span { text-align: left; }
+    .mbar { padding-left: 16px; }
+    footer { margin-top: 70px; }
+  }
+  @media (max-width: 374px) { .mbar span { display: none; } .mbar .btn { width: 100%; } .thumbs { grid-template-columns: 1fr; } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } html { scroll-behavior: auto; } }
+</style>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "Service",
+   "@id": "https://webtitan.cz/vyvoj-aplikaci-na-miru/#sluzba",
+   "name": "Vývoj aplikací na míru",
+   "serviceType": "Vývoj webových aplikací na míru",
+   "description": "Vývoj webových aplikací a interních systémů na míru od 24 950 Kč. Z Excelu do přehledné aplikace, pevná cena předem, kód i data patří vám.",
+   "url": "https://webtitan.cz/vyvoj-aplikaci-na-miru/",
+   "provider": {
+    "@type": "ProfessionalService",
+    "@id": "https://webtitan.cz/#webtitan",
+    "name": "WebTitan",
+    "url": "https://webtitan.cz/"
+   },
+   "areaServed": {
+    "@type": "Country",
+    "name": "Česká republika"
+   },
+   "offers": {
+    "@type": "Offer",
+    "priceCurrency": "CZK",
+    "priceSpecification": {
+     "@type": "PriceSpecification",
+     "minPrice": 24950,
+     "priceCurrency": "CZK"
+    }
+   }
+  },
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Domů",
+     "item": "https://webtitan.cz/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Vývoj aplikací na míru",
+     "item": "https://webtitan.cz/vyvoj-aplikaci-na-miru/"
+    }
+   ]
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Jak dlouho to trvá?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Firemní web obvykle 2–4 týdny, aplikace typicky 3–6 týdnů od schválení rozsahu, e-shop podle rozsahu. Přesný termín dostanete spolu s cenou. Začít můžete i menší první verzí."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Umíte převzít data z Excelu?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Ano. Převod dat ze stávajících tabulek je běžnou součástí spuštění, abyste nezačínali od nuly."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Komu patří aplikace, web a data?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Vám. Kód, data i doména jsou vaše a data si můžete kdykoli vyexportovat. Nejste na mně závislí."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Napojíte to na účetnictví, platby nebo jiný systém?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Propojování služeb je moje specialita. Pokud druhá strana nabízí rozhraní (API), napojím na ni aplikaci i web – platební brány, účetní systémy, e-mail a další."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Nemám přesné zadání. Vadí to?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nevadí – většina klientů ho nemá. Stačí popsat, co vás dnes zdržuje. Zadání dáme dohromady na úvodním hovoru a já ho pak sepíšu."
+     }
+    }
+   ]
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+</svg>
+<a class="skip" href="#obsah">Přeskočit na obsah</a>
+<div class="nav-wrap">
+  <header class="nav">
+    <a href="/" class="brand" aria-label="WebTitan – Jan Šporek, úvodní stránka"><img src="/assets/logo-52.png" alt="" width="26" height="26">WebTitan <small>· Jan Šporek</small></a>
+    <nav class="links" aria-label="Hlavní navigace">
+      <a href="/#sluzby">Služby a&nbsp;ceny</a>
+      <a href="/#reference">Reference</a>
+      <a href="/#postup">Jak pracuji</a>
+      <a href="/#o-mne">O mně</a>
+      <a href="/#faq">Otázky</a>
+    </nav>
+    <a href="/#kontakt" class="btn btn-grad"><svg aria-hidden="true"><use href="#i-phone"/></svg><span class="l-long">Domluvit 15min hovor</span><span class="l-short">Domluvit hovor</span></a>
+  </header>
+</div>
+
+<main id="obsah">
+  <section class="sp-hero">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Drobečková navigace"><ol><li><a href="/">Domů</a></li><li aria-current="page">Vývoj aplikací na míru</li></ol></nav>
+      <div class="hero-grid">
+        <div class="card intro">
+          <div><span class="kicker">Hlavní specializace</span></div>
+          <h1>Vývoj aplikací na míru – z&nbsp;Excelu do přehledné aplikace</h1>
+          <p class="lead">Zakázky, termíny, zákazníci i&nbsp;rezervace na jednom místě. Jako programátor na zakázku navrhnu a&nbsp;postavím webovou aplikaci nebo interní systém přesně podle toho, jak vaše firma pracuje – a&nbsp;postarám se, aby spolehlivě běžel.</p>
+          <ul class="checks"><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Pevná cena předem – co si odsouhlasíme, to platí</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Začnete v&nbsp;malém, rozšíříte, až to bude dávat smysl</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Aplikace, kód i&nbsp;data patří vám</li></ul>
+          <div class="dual"><a href="/#kontakt" class="btn btn-grad"><svg aria-hidden="true"><use href="#i-phone"/></svg>Domluvit 15min hovor</a><a href="/#kontakt" class="btn btn-line">Poslat poptávku</a></div>
+          <p class="micro"><svg aria-hidden="true"><use href="#i-clock"/></svg>Ozvu se do 24 hodin (v&nbsp;pracovní dny)</p>
+        </div>
+        <aside class="card sum" aria-label="Shrnutí">
+          <div class="sum-price"><small>Cena</small><b class="gt">od 24 950 Kč</b><span>jednorázově, bez licencí za uživatele</span></div>
+          <dl class="facts">
+            <div class="fact"><dt>Termín</dt><dd>typicky 3–6 týdnů od schválení rozsahu</dd></div>
+            <div class="fact"><dt>Komu patří kód a&nbsp;data</dt><dd>Vám – kód, data i&nbsp;doména</dd></div>
+            <div class="fact"><dt>S&nbsp;kým jednáte</dt><dd>Přímo s&nbsp;tím, kdo to staví</dd></div>
+            <div class="fact"><dt>DPH</dt><dd>Nejsem plátce DPH – ceny jsou konečné</dd></div>
+          </dl>
+          <div class="me-row"><span class="avatar" role="img" aria-label="Jan Šporek"></span><div><b>Jan Šporek</b><span>Weby a&nbsp;aplikace stavím od roku 2006. Pracuji sám – kdo s&nbsp;vámi mluví, ten to i&nbsp;staví.</span></div></div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="pro-koho">
+    <div class="wrap">
+      <div class="head"><div><span class="kicker">Poznáváte se?</span><h2>Kdy dává aplikace na míru smysl</h2></div><p>Pokud vám aspoň jeden bod zní povědomě, má smysl se pobavit. Většinu z&nbsp;toho jde vyřešit rychleji a&nbsp;levněji, než čekáte.</p></div>
+      <div class="pains"><article class="card pain"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></svg></span><h3>Excel, kterému rozumí jen jeden člověk</h3><p>Když je na dovolené, nikdo neví, co platí. A&nbsp;verzí té tabulky je pět.</p></article><article class="card pain"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span><h3>Termíny v&nbsp;diáři a&nbsp;v&nbsp;hlavě</h3><p>Stačí jeden zapomenutý termín a&nbsp;zákazník příště zavolá jinam.</p></article><article class="card pain"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></span><h3>Pořád dokola stejné přepisování</h3><p>Objednávky, rezervace a&nbsp;výkazy přepisujete ručně z&nbsp;jednoho místa do druhého.</p></article></div>
+      <div class="ba">
+        <div class="card ba-col before"><span class="ba-label">Dnes</span><h3>Excel, diář a&nbsp;papírky</h3><ul><li><span class="mk" aria-hidden="true"><svg><use href="#i-x"/></svg></span>Data v&nbsp;několika tabulkách a&nbsp;e-mailech</li><li><span class="mk" aria-hidden="true"><svg><use href="#i-x"/></svg></span>Aktuální stav zná jen ten, kdo zrovna zvedl telefon</li><li><span class="mk" aria-hidden="true"><svg><use href="#i-x"/></svg></span>Stejné údaje přepisujete několikrát – i&nbsp;s&nbsp;chybami</li><li><span class="mk" aria-hidden="true"><svg><use href="#i-x"/></svg></span>Přehled pro vedení znamená obvolat lidi</li><li><span class="mk" aria-hidden="true"><svg><use href="#i-x"/></svg></span>Zaučit nového kolegu trvá dlouho</li></ul></div>
+        <div class="card ba-col after gb"><span class="ba-label">S&nbsp;aplikací na míru</span><h3>Jedna přehledná aplikace</h3><ul><li><span class="mk" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Zakázky, zákazníci a&nbsp;termíny na jednom místě</li><li><span class="mk" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Každý vidí aktuální stav – v&nbsp;kanceláři i&nbsp;z&nbsp;mobilu</li><li><span class="mk" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Údaj zadáte jednou, aplikace ho použije všude</li><li><span class="mk" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Přehledy a&nbsp;exporty na jedno kliknutí</li><li><span class="mk" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Aplikace vede krok za krokem – i&nbsp;nováčka</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="co-dostanete">
+    <div class="wrap">
+      <div class="head"><div><span class="kicker">Co dostanete</span><h2>Co vaše aplikace na míru zvládne</h2></div><p>Aplikace na míru nekopíruje cizí postupy. Převezme ten váš a&nbsp;odstraní z&nbsp;něj ruční práci.</p></div>
+      <div class="get"><div class="card get-item"><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><div><h3>Evidence zakázek, zákazníků a&nbsp;termínů</h3><p>Jedno přehledné místo pro zakázky, rezervace nebo evidenci – místo Excelu, papírků a&nbsp;e-mailů.</p></div></div><div class="card get-item"><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><div><h3>Rezervace, objednávky, klientské zóny</h3><p>Zákazníci si sami zarezervují, objednají nebo najdou, co potřebují.</p></div></div><div class="card get-item"><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><div><h3>Napojení na platby, účetnictví a&nbsp;další služby</h3><p>Pokud druhá strana nabízí rozhraní (API), napojím aplikaci na platební brány, účetní systémy, e-mail a&nbsp;další.</p></div></div><div class="card get-item"><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><div><h3>Převod dat z&nbsp;Excelu</h3><p>Převod dat ze stávajících tabulek je běžnou součástí spuštění, abyste nezačínali od nuly.</p></div></div><div class="card get-item"><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><div><h3>Přehledy a&nbsp;exporty na jedno kliknutí</h3><p>Každý vidí aktuální stav – v&nbsp;kanceláři i&nbsp;z&nbsp;mobilu. Data si můžete kdykoli vyexportovat.</p></div></div><div class="card get-item"><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><div><h3>Bez licencí za uživatele</h3><p>Zaplatíte jednou a&nbsp;aplikace je vaše. Platíte jen provoz a&nbsp;správu.</p></div></div></div>
+      <p class="tech">Next.js · React · Node.js · TypeScript · MongoDB</p>
+    </div>
+  </section>
+
+  <section class="sec" id="postup">
+    <div class="wrap">
+      <div class="head"><div><span class="kicker">Jak pracuji</span><h2>Jak probíhá vývoj aplikace</h2></div><p>Víte, co se kdy děje a&nbsp;kolik to bude stát – ještě než se do čehokoli pustíme.</p></div>
+      <ol class="steps"><li class="card step"><div class="step-top"><span class="num">1</span><span class="time">do 24 h · zdarma</span></div><h3>15min hovor</h3><p>Projdeme, co vás dnes zdržuje. Řeknu vám, jestli a&nbsp;jak to jde – po telefonu nebo videohovorem.</p></li><li class="card step"><div class="step-top"><span class="num">2</span><span class="time">cca 1 týden</span></div><h3>Návrh a&nbsp;pevná cena</h3><p>Sepíšu, co bude řešení umět, ukážu náhled obrazovek a&nbsp;pošlu pevnou cenu. Teprve pak se rozhodnete.</p></li><li class="card step"><div class="step-top"><span class="num">3</span><span class="time">typicky 3–6 týdnů</span></div><h3>Vývoj s&nbsp;průběžnými ukázkami</h3><p>Průběžně vidíte pokrok a&nbsp;můžete říct, co upravit. Žádná černá skříňka.</p></li><li class="card step"><div class="step-top"><span class="num">4</span><span class="time">průběžně</span></div><h3>Spuštění a&nbsp;péče</h3><p>Převedu data z&nbsp;tabulek, zaškolím vás a&nbsp;postarám se o&nbsp;servery, zálohy i&nbsp;další rozvoj.</p></li></ol>
+    </div>
+  </section>
+
+  <section class="sec" id="cena">
+    <div class="wrap">
+      <div class="head"><div><span class="kicker">Cena</span><h2>Kolik stojí vývoj aplikace na míru</h2></div></div>
+      <div class="card price-card gb">
+        <div class="price-big"><small>Cena</small><b class="gt">od 24 950 Kč</b><span>jednorázově, bez licencí za uživatele</span></div>
+        <div><ul><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Pevnou cenu dostanete po úvodním hovoru – co si odsouhlasíme, to platí.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Začít můžete i&nbsp;menší první verzí a&nbsp;rozšiřovat, až to bude dávat smysl.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Provoz a&nbsp;správa se platí zvlášť, od 990 Kč měsíčně.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Nejsem plátce DPH, takže uvedené ceny jsou konečné.</li></ul><p class="price-note">Výsledná cena záleží na rozsahu – co má řešení umět a&nbsp;na co ho napojíme. Přesnou cenu vám řeknu po úvodním hovoru.</p><a href="/#kalkulacka" class="link-cta">Spočítejte si, kolik vás stojí ruční práce <span class="arr" aria-hidden="true">→</span></a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="reference">
+    <div class="wrap">
+      <div class="head"><div><span class="kicker">Reference</span><h2>Aplikace a&nbsp;systémy, které jsem postavil</h2></div></div>
+      <div class="cases"><article class="card case"><div class="case-shot"><div class="browser"><div class="browser-bar"><i></i><i></i><i></i><span>Tepp – plánování zakázek</span></div><img src="/assets/projects/Tepp.webp" alt="Ukázka aplikace Tepp – plánovací tabule zakázek a vozidel" width="800" height="400" loading="lazy" decoding="async"></div></div><div><span class="case-tag">Aplikace na míru</span><h3>Tepp – dispečink a&nbsp;plánování zakázek</h3><dl><div><dt>Zadání</dt><dd>Dispečink potřeboval plánovat zakázky a&nbsp;přidělovat je vozidlům a&nbsp;posádkám na jednom místě.</dd></div><div><dt>Řešení</dt><dd>Webová plánovací tabule: vozidla, zakázky, termíny a&nbsp;jejich stavy přehledně vedle sebe, změny se propisují v&nbsp;reálném čase.</dd></div><div><dt>Přínos</dt><dd class="win">Celý dispečink pracuje se stejným aktuálním plánem – bez přeposílání tabulek.</dd></div></dl><p class="tech">Next.js · MongoDB · real-time</p></div></article><article class="card case"><div class="case-shot"><div class="browser"><div class="browser-bar"><i></i><i></i><i></i><span>Skripta Prokop</span></div><img src="/assets/projects/SkriptaProkop.webp" alt="Ukázka webu Skripta Prokop – středoškolská skripta" width="800" height="400" loading="lazy" decoding="async"></div></div><div><span class="case-tag">E-learning s&nbsp;prodejem</span><h3>Skripta Prokop – prodej studijních materiálů online</h3><dl><div><dt>Zadání</dt><dd>Autor středoškolských skript chtěl své materiály nabízet a&nbsp;prodávat online.</dd></div><div><dt>Řešení</dt><dd>E-learningová platforma s&nbsp;katalogem skript, uživatelskými účty a&nbsp;online platbami.</dd></div><div><dt>Přínos</dt><dd class="win">Objednávky, platby a&nbsp;přístup k&nbsp;materiálům řeší web sám – bez ručního vyřizování.</dd></div></dl><p class="tech">Platby · uživatelské účty · e-learning</p></div></article><article class="card case"><div class="case-shot"><div class="browser"><div class="browser-bar"><i></i><i></i><i></i><span>GP Rooms – rezervace</span></div><img src="/assets/projects/Gprooms.webp" alt="Ukázka webu GP Rooms – rezervace ubytování a vstupenek na MotoGP v Brně" width="800" height="400" loading="lazy" decoding="async"></div></div><div><span class="case-tag">Rezervační systém</span><h3>GP Rooms – ubytování a&nbsp;vstupenky na MotoGP</h3><dl><div><dt>Zadání</dt><dd>Nabídnout návštěvníkům Velké ceny v&nbsp;Brně ubytování, vstupenky a&nbsp;dopravu na okruh online.</dd></div><div><dt>Řešení</dt><dd>Rezervační systém pro ubytovací zařízení s&nbsp;online platbami.</dd></div><div><dt>Přínos</dt><dd class="win">Hosté si vyberou, zarezervují a&nbsp;zaplatí sami – bez dlouhého dopisování e-mailem.</dd></div></dl><p class="tech">React · Node.js · platby</p></div></article></div>
+      <p class="refs-more"><a href="/#reference" class="link-cta">Všechny reference <span class="arr" aria-hidden="true">→</span></a></p>
+    </div>
+  </section>
+
+  <section class="sec" id="otazky">
+    <div class="wrap">
+      <div class="head"><div><span class="kicker">Časté otázky</span><h2>Časté otázky k&nbsp;vývoji aplikací</h2></div><p>Nenašli jste odpověď? Zeptejte se mě rovnou – na hovoru nebo e-mailem.</p></div>
+      <div class="faq-list"><details open><summary>Jak dlouho to trvá?<span class="pm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></summary><p class="ans">Firemní web obvykle 2–4 týdny, aplikace typicky 3–6 týdnů od schválení rozsahu, e-shop podle rozsahu. Přesný termín dostanete spolu s&nbsp;cenou. Začít můžete i&nbsp;menší první verzí.</p></details><details><summary>Umíte převzít data z&nbsp;Excelu?<span class="pm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></summary><p class="ans">Ano. Převod dat ze stávajících tabulek je běžnou součástí spuštění, abyste nezačínali od nuly.</p></details><details><summary>Komu patří aplikace, web a&nbsp;data?<span class="pm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></summary><p class="ans">Vám. Kód, data i&nbsp;doména jsou vaše a&nbsp;data si můžete kdykoli vyexportovat. Nejste na mně závislí.</p></details><details><summary>Napojíte to na účetnictví, platby nebo jiný systém?<span class="pm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></summary><p class="ans">Propojování služeb je moje specialita. Pokud druhá strana nabízí rozhraní (API), napojím na ni aplikaci i&nbsp;web – platební brány, účetní systémy, e-mail a&nbsp;další.</p></details><details><summary>Nemám přesné zadání. Vadí to?<span class="pm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></summary><p class="ans">Nevadí – většina klientů ho nemá. Stačí popsat, co vás dnes zdržuje. Zadání dáme dohromady na úvodním hovoru a&nbsp;já ho pak sepíšu.</p></details></div>
+    </div>
+  </section>
+
+  <section class="sec" id="dalsi-sluzby">
+    <div class="wrap">
+      <div class="head"><div><span class="kicker">Další služby</span><h2>Co dalšího pro vás můžu udělat</h2></div></div>
+      <nav class="xs" aria-label="Další služby"><a class="card" href="/mobilni-aplikace/"><span class="svc-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6.5" y="2" width="11" height="20" rx="2.5"/><path d="M11 18h2"/></svg></span><b>Mobilní aplikace</b><span>Pro iOS i&nbsp;Android, napojené na váš systém.</span><em>cena podle rozsahu</em></a><a class="card" href="/tvorba-webu/"><span class="svc-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></span><b>Tvorba webových stránek</b><span>Firemní web, který přivádí poptávky.</span><em>od 9 970 Kč</em></a><a class="card" href="/tvorba-e-shopu/"><span class="svc-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.7 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L22 7H6"/></svg></span><b>Tvorba e-shopu</b><span>Platby, doprava a&nbsp;přehledné objednávky.</span><em>od 19 870 Kč</em></a><a class="card" href="/sprava-serveru/"><span class="svc-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg></span><b>Správa serverů a&nbsp;webů</b><span>Aktualizace, zálohy a&nbsp;dohled.</span><em>od 990 Kč/měsíc</em></a></nav>
+      <p class="xs-home"><a href="/#sluzby" class="link-cta">Všechny služby a&nbsp;ceny na jednom místě <span class="arr" aria-hidden="true">→</span></a></p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="card final">
+        <div><h2>Pojďme to nezávazně probrat</h2><p>Vyberte si, co je vám příjemnější: krátký hovor, nebo pár vět v&nbsp;poptávce. Ozvu se do 24 hodin (v&nbsp;pracovní dny).</p><p class="alt">Radši e-mail? Pište na <a href="mailto:kontakt@webtitan.cz">kontakt@webtitan.cz</a></p></div>
+        <div class="dual"><a href="/#kontakt" class="btn btn-grad"><svg aria-hidden="true"><use href="#i-phone"/></svg>Domluvit 15min hovor</a><a href="/#kontakt" class="btn btn-line">Poslat poptávku</a></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a href="/" class="brand"><img src="/assets/logo-52.png" alt="" width="26" height="26" loading="lazy" decoding="async">WebTitan <small>· Jan Šporek</small></a>
+    <nav aria-label="Patička">
+      <a href="/#sluzby">Služby a&nbsp;ceny</a>
+      <a href="/#reference">Reference</a>
+      <a href="/#kalkulacka">Kalkulačka</a>
+      <a href="/#faq">Otázky</a>
+      <a href="/ochrana-osobnich-udaju.html">Ochrana osobních údajů</a>
+    </nav>
+    <nav class="foot-svc" aria-label="Služby"><b>Služby</b><a href="/vyvoj-aplikaci-na-miru/" aria-current="page">Vývoj aplikací na míru</a><a href="/mobilni-aplikace/">Mobilní aplikace</a><a href="/tvorba-webu/">Tvorba webových stránek</a><a href="/tvorba-e-shopu/">Tvorba e-shopu</a><a href="/sprava-serveru/">Správa serverů a&nbsp;webů</a></nav>
+    <div class="foot-bottom">
+      <span>© <span id="year">2026</span> Jan Šporek · WebTitan</span>
+      <span class="foot-contact">
+        <a href="mailto:kontakt@webtitan.cz">kontakt@webtitan.cz</a>
+        <a href="https://www.linkedin.com/in/jan-%C5%A1porek-07a39168/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/jansporek" target="_blank" rel="noopener">GitHub</a>
+      </span>
+    </div>
+    <p class="foot-legal">Jan Šporek · IČO&nbsp;74792148 · sídlo Dlouhá&nbsp;705/38, 357&nbsp;31 Horní Slavkov · fyzická osoba zapsaná v&nbsp;živnostenském rejstříku · nejsem plátce DPH</p>
+  </div>
+</footer>
+
+<div class="mbar"><span>15min hovor <b>zdarma</b><br>ozvu se do 24&nbsp;h</span><a href="/#kontakt" class="btn btn-grad"><svg aria-hidden="true"><use href="#i-phone"/></svg>Domluvit hovor</a></div>
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

@@ -17,9 +17,10 @@
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
+<link rel="preload" href="/assets/fonts/unbounded-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/unbounded-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<style>@font-face{font-family:'Manrope';font-style:normal;font-weight:400 800;font-display:swap;src:url(/assets/fonts/manrope-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}@font-face{font-family:'Manrope';font-style:normal;font-weight:400 800;font-display:swap;src:url(/assets/fonts/manrope-latin-ext.woff2) format('woff2');unicode-range:U+0100-017F}@font-face{font-family:'Unbounded';font-style:normal;font-weight:500 700;font-display:swap;src:url(/assets/fonts/unbounded-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}@font-face{font-family:'Unbounded';font-style:normal;font-weight:500 700;font-display:swap;src:url(/assets/fonts/unbounded-latin-ext.woff2) format('woff2');unicode-range:U+0100-017F}</style>
 <style>
   :root {
     color-scheme: light only;
@@ -79,6 +80,7 @@
   footer { margin-top: 70px; border-top: 1px solid var(--line); background: var(--card); }
   .foot { display: flex; justify-content: space-between; align-items: center; gap: 4px 28px; flex-wrap: wrap; padding-top: 22px; padding-bottom: 26px; color: var(--muted); font-size: 14.5px; font-weight: 600; }
   .foot nav { display: flex; gap: 0 20px; flex-wrap: wrap; }
+  .foot .foot-svc { flex: 1 1 100%; font-weight: 600; }
   .foot nav a, .foot-contact a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; }
   .foot-legal { flex: 1 1 100%; margin: 0; font-size: 13px; font-weight: 500; line-height: 1.6; color: var(--muted); }
   .foot a:hover { color: var(--text); }
@@ -98,7 +100,7 @@
 <body>
 <div class="nav-wrap">
   <header class="nav">
-    <a href="/" class="brand" aria-label="WebTitan – Jan Šporek, úvod"><img src="/assets/logo.png" alt="" width="26" height="26">WebTitan <small>· Jan Šporek</small></a>
+    <a href="/" class="brand" aria-label="WebTitan – Jan Šporek, úvod"><img src="/assets/logo-52.png" alt="" width="26" height="26">WebTitan <small>· Jan Šporek</small></a>
     <a href="/" class="back">← Zpět na web</a>
   </header>
 </div>
@@ -191,7 +193,7 @@
 
 <footer>
   <div class="wrap foot">
-    <a href="/" class="brand"><img src="/assets/logo.png" alt="" width="26" height="26" loading="lazy" decoding="async">WebTitan <small>· Jan Šporek</small></a>
+    <a href="/" class="brand"><img src="/assets/logo-52.png" alt="" width="26" height="26" loading="lazy" decoding="async">WebTitan <small>· Jan Šporek</small></a>
     <nav aria-label="Patička">
       <a href="/#sluzby">Služby a&nbsp;ceny</a>
       <a href="/#reference">Reference</a>
@@ -199,6 +201,7 @@
       <a href="/#kontakt">Kontakt</a>
       <a href="/ochrana-osobnich-udaju.html" aria-current="page">Ochrana osobních údajů</a>
     </nav>
+    <nav class="foot-svc" aria-label="Služby"><a href="/vyvoj-aplikaci-na-miru/">Vývoj aplikací na míru</a><a href="/mobilni-aplikace/">Mobilní aplikace</a><a href="/tvorba-webu/">Tvorba webových stránek</a><a href="/tvorba-e-shopu/">Tvorba e-shopu</a><a href="/sprava-serveru/">Správa serverů</a></nav>
     <div class="foot-bottom">
       <span>© <span id="year">2026</span> Jan Šporek · WebTitan</span>
       <span class="foot-contact">
