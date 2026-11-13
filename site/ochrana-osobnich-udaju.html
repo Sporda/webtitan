@@ -80,6 +80,7 @@
   .foot { display: flex; justify-content: space-between; align-items: center; gap: 4px 28px; flex-wrap: wrap; padding-top: 22px; padding-bottom: 26px; color: var(--muted); font-size: 14.5px; font-weight: 600; }
   .foot nav { display: flex; gap: 0 20px; flex-wrap: wrap; }
   .foot nav a, .foot-contact a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; }
+  .foot-legal { flex: 1 1 100%; margin: 0; font-size: 13px; font-weight: 500; line-height: 1.6; color: var(--muted); }
   .foot a:hover { color: var(--text); }
   .foot-bottom { flex: 1 1 100%; display: flex; justify-content: space-between; align-items: center; gap: 4px 24px; flex-wrap: wrap; padding-top: 12px; border-top: 1px solid var(--line); }
   .foot-contact { display: flex; gap: 0 18px; flex-wrap: wrap; }
@@ -111,8 +112,7 @@
 
     <section aria-labelledby="h-spravce">
       <h2 id="h-spravce"><span class="n">1</span>Kdo vaše údaje zpracovává</h2>
-      <!-- DOPLNIT: IČO a sídlo -->
-      <p>Správcem osobních údajů je <strong>Jan Šporek</strong>, provozovatel webu webtitan.cz (WebTitan). Ve všech otázkách ohledně osobních údajů mi pište na <a href="mailto:kontakt@webtitan.cz">kontakt@webtitan.cz</a>.</p>
+      <p>Správcem osobních údajů je <strong>Jan Šporek</strong>, IČO&nbsp;74792148, se sídlem Dlouhá&nbsp;705/38, 357&nbsp;31 Horní Slavkov, fyzická osoba zapsaná v&nbsp;živnostenském rejstříku, provozovatel webu webtitan.cz (WebTitan). Ve všech otázkách ohledně osobních údajů mi pište na <a href="mailto:kontakt@webtitan.cz">kontakt@webtitan.cz</a>.</p>
     </section>
 
     <section aria-labelledby="h-udaje">
@@ -207,6 +207,7 @@
         <a href="https://github.com/jansporek" target="_blank" rel="noopener">GitHub</a>
       </span>
     </div>
+    <p class="foot-legal">Jan Šporek · IČO&nbsp;74792148 · sídlo Dlouhá&nbsp;705/38, 357&nbsp;31 Horní Slavkov · fyzická osoba zapsaná v&nbsp;živnostenském rejstříku · nejsem plátce DPH</p>
   </div>
 </footer>
 <script>document.getElementById("year").textContent = new Date().getFullYear();</script>

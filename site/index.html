@@ -915,6 +915,7 @@
   .foot-bottom { flex: 1 1 100%; display: flex; justify-content: space-between; align-items: center; gap: 4px 24px; flex-wrap: wrap; padding-top: 14px; border-top: 1px solid var(--line); }
   .foot-contact { display: flex; gap: 0 18px; flex-wrap: wrap; }
   .foot-contact a { display: inline-flex; align-items: center; min-height: 44px; }
+  .foot-legal { flex: 1 1 100%; margin: 0; font-size: 13px; font-weight: 500; line-height: 1.6; color: var(--muted); }
   .hp { position: absolute !important; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden; }
   .consent { font-size: 12.5px; line-height: 1.5; color: var(--dim); font-weight: 600; margin-top: 12px; }
   .consent a { color: var(--text); text-decoration: underline; text-underline-offset: 2px; }
@@ -1154,6 +1155,18 @@
    "founder": {
     "@id": "https://webtitan.cz/#jan"
    },
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Dlouhá 705/38",
+    "addressLocality": "Horní Slavkov",
+    "postalCode": "357 31",
+    "addressCountry": "CZ"
+   },
+   "identifier": {
+    "@type": "PropertyValue",
+    "propertyID": "IČO",
+    "value": "74792148"
+   },
    "areaServed": {
     "@type": "Country",
     "name": "Česká republika"
@@ -1191,7 +1204,7 @@
      "name": "Kolik to bude stát?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "Aplikace na míru začínají od 24 950 Kč, firemní web od 9 970 Kč a e-shop od 19 870 Kč – vždy jednorázově, bez licencí za uživatele. Mobilní aplikaci nacením podle rozsahu. Po úvodním hovoru dostanete pevnou cenu za konkrétní rozsah. Co si odsouhlasíme, to platí. Provoz a správa se platí zvlášť, od 990 Kč měsíčně."
+      "text": "Aplikace na míru začínají od 24 950 Kč, firemní web od 9 970 Kč a e-shop od 19 870 Kč – vždy jednorázově, bez licencí za uživatele. Mobilní aplikaci nacením podle rozsahu. Po úvodním hovoru dostanete pevnou cenu za konkrétní rozsah. Co si odsouhlasíme, to platí. Provoz a správa se platí zvlášť, od 990 Kč měsíčně. Nejsem plátce DPH, takže uvedené ceny jsou konečné."
      }
     },
     {
@@ -1622,7 +1635,7 @@
           <a href="#kontakt" class="link-cta" data-open="form" data-type="Správa serveru" data-cta="svc_srv">Poptat správu <span class="arr">→</span></a>
         </article>
       </div>
-      <p class="note rv">Ceny jsou orientační. Po úvodním hovoru dostanete pevnou cenu za konkrétní rozsah – co si odsouhlasíme, to platí.</p>
+      <p class="note rv">Ceny jsou orientační a&nbsp;konečné – nejsem plátce DPH. Po úvodním hovoru dostanete pevnou cenu za konkrétní rozsah – co si odsouhlasíme, to platí.</p>
     </div>
   </section>
 
@@ -1997,7 +2010,7 @@
           </details>
           <details class="rv">
             <summary>Kolik to bude stát?<span class="pm"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></summary>
-            <p class="ans">Aplikace na míru začínají od 24&nbsp;950&nbsp;Kč, firemní web od 9&nbsp;970&nbsp;Kč a&nbsp;e-shop od 19&nbsp;870&nbsp;Kč – vždy jednorázově, bez licencí za uživatele. Mobilní aplikaci nacením podle rozsahu. Po úvodním hovoru dostanete pevnou cenu za konkrétní rozsah. Co si odsouhlasíme, to platí. Provoz a&nbsp;správa se platí zvlášť, od 990&nbsp;Kč měsíčně.</p>
+            <p class="ans">Aplikace na míru začínají od 24&nbsp;950&nbsp;Kč, firemní web od 9&nbsp;970&nbsp;Kč a&nbsp;e-shop od 19&nbsp;870&nbsp;Kč – vždy jednorázově, bez licencí za uživatele. Mobilní aplikaci nacením podle rozsahu. Po úvodním hovoru dostanete pevnou cenu za konkrétní rozsah. Co si odsouhlasíme, to platí. Provoz a&nbsp;správa se platí zvlášť, od 990&nbsp;Kč měsíčně. Nejsem plátce DPH, takže uvedené ceny jsou konečné.</p>
           </details>
           <details class="rv">
             <summary>Děláte i&nbsp;mobilní aplikace?<span class="pm"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></summary>
@@ -2371,6 +2384,7 @@
         <a href="https://github.com/jansporek" target="_blank" rel="noopener">GitHub</a>
       </span>
     </div>
+    <p class="foot-legal">Jan Šporek · IČO&nbsp;74792148 · sídlo Dlouhá&nbsp;705/38, 357&nbsp;31 Horní Slavkov · fyzická osoba zapsaná v&nbsp;živnostenském rejstříku · nejsem plátce DPH</p>
   </div>
 </footer>
 
