@@ -3,10 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light only">
 <title>Webové a mobilní aplikace, weby a e-shopy na míru | WebTitan</title>
 <meta name="description" content="Aplikace na míru od 24 950 Kč, mobilní aplikace pro iOS i Android, weby od 9 970 Kč a e-shopy od 19 870 Kč. Pevná cena předem, jednáte přímo s vývojářem.">
 <link rel="canonical" href="https://webtitan.cz/">
-<meta name="theme-color" content="#dfdbeb">
+<meta name="theme-color" content="#ece3d4">
 <meta name="author" content="Jan Šporek">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="cs_CZ">
@@ -31,38 +32,40 @@
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
 <style>
   :root {
+    color-scheme: light only;
     /* 60 % lavender · 30 % navy · 10 % orange */
-    --bg: #dfdbeb;            /* MAIN – page background */
-    --card: #f7f5fb;          /* light lavender cards */
-    --soft: #ebe8f3;          /* inputs, pills, tiles */
-    --line: #d3cee3;
-    --line-2: #c3bdd9;
-    --navy: #2d2f66;          /* SECOND */
-    --navy-2: #3d4083;
-    --text: #26285a;          /* 10:1 on --bg */
-    --muted: #565779;         /* 5.1:1 on --bg */
-    --dim: #5c5d82;           /* 4.6:1 on --bg */
-    --orange: #ff8a1c;        /* LOUD – fills only (buttons, badges, bars, glows) */
-    --orange-lg: #d35400;     /* orange TEXT ≥ 19px bold – ≥ 3:1 on every light surface */
-    --orange-ink: #a34400;    /* small orange text (≥ 4.5:1) */
-    --peach: #ffe3c8;
-    --glow: 0 10px 26px -8px rgba(255, 138, 28, .6);
-    --cyan: #ff8a1c;
-    --cyan-d: #a34400;
-    --violet: #2d2f66;
-    --violet-l: #3d4083;
-    --violet-bg: #ebe8f4;
+    --bg: #ece3d4;            /* MAIN – page background */
+    --card: #faf6ef;          /* light lavender cards */
+    --soft: #f2ebdf;          /* inputs, pills, tiles */
+    --line: #e0d5c3;
+    --line-2: #d1c4ae;
+    --navy: #1f3d34;          /* SECOND */
+    --navy-2: #2d5447;
+    --text: #1b342c;          /* 10:1 on --bg */
+    --muted: #4d5a52;         /* 5.1:1 on --bg */
+    --dim: #535f58;           /* 4.6:1 on --bg */
+    --orange: #ff6b3d;        /* LOUD – fills only (buttons, badges, bars, glows) */
+    --orange-lg: #c4400f;     /* orange TEXT ≥ 19px bold on cards (3.3:1) */
+    --orange-ink: #9c3008;    /* small orange text (≥ 4.5:1) */
+    --peach: #ffe0d3;
+    --glow: 0 10px 26px -8px rgba(255, 107, 61, .6);
+    --cyan: #ff6b3d;
+    --cyan-d: #9c3008;
+    --violet: #1f3d34;
+    --violet-l: #2d5447;
+    --violet-bg: #f1ead9;
     --on-grad: #ffffff;
-    --grad: linear-gradient(135deg, #2d2f66 0%, #2d2f66 100%);
-    --grad-text: linear-gradient(135deg, #d35400 0%, #d35400 100%);
-    --grad-soft: linear-gradient(135deg, #eeebf6 0%, #e6e2f1 100%);
+    --on-loud: #10241d;
+    --grad: linear-gradient(135deg, #1f3d34 0%, #1f3d34 100%);
+    --grad-text: linear-gradient(135deg, #c4400f 0%, #c4400f 100%);
+    --grad-soft: linear-gradient(135deg, #f4eee3 0%, #ebe2d2 100%);
     --ok: #0f9d6b;
     --ok-bg: #e3f4ec;
     --err: #c8283f;
     --err-bg: #fbecef;
     --amber: #e8a317;
-    --shadow: 0 1px 2px rgba(45, 47, 102, .05), 0 14px 34px -14px rgba(45, 47, 102, .18);
-    --shadow-lg: 0 2px 4px rgba(45, 47, 102, .05), 0 30px 60px -24px rgba(45, 47, 102, .34);
+    --shadow: 0 1px 2px rgba(31, 61, 52, .05), 0 14px 34px -14px rgba(31, 61, 52, .18);
+    --shadow-lg: 0 2px 4px rgba(31, 61, 52, .05), 0 30px 60px -24px rgba(31, 61, 52, .34);
     --display: "Unbounded", system-ui, sans-serif;
     --sans: "Manrope", system-ui, -apple-system, sans-serif;
     --r: 22px;
@@ -85,7 +88,7 @@
   img { max-width: 100%; height: auto; display: block; }
   ul, ol { list-style: none; }
   button { font: inherit; color: inherit; }
-  ::selection { background: #ffd4ad; color: var(--text); }
+  ::selection { background: #ffcdb8; color: var(--text); }
   :focus-visible { outline: 3px solid var(--orange-lg); outline-offset: 2px; border-radius: 8px; }
   .sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
   .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -94,7 +97,7 @@
   .nw { white-space: nowrap; }
   .gt { color: var(--orange-lg); }
   .kicker.gt { color: var(--navy); }
-  .kicker::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 10px 1px rgba(255, 138, 28, .75); margin-right: 10px; vertical-align: 1px; }
+  .kicker::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 10px 1px rgba(255, 107, 61, .75); margin-right: 10px; vertical-align: 1px; }
   .stat b.gt { color: var(--navy); }
 
   .card {
@@ -110,8 +113,8 @@
   .lift:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
 
   .bg-blob { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; z-index: 0; }
-  .bg-blob.b1 { width: 520px; height: 520px; background: #ffd3ab; top: -160px; left: -180px; opacity: .55; }
-  .bg-blob.b2 { width: 560px; height: 560px; background: #c9c1e4; top: 80px; right: -220px; opacity: .75; }
+  .bg-blob.b1 { width: 520px; height: 520px; background: #ffcfba; top: -160px; left: -180px; opacity: .55; }
+  .bg-blob.b2 { width: 560px; height: 560px; background: #cfdccf; top: 80px; right: -220px; opacity: .75; }
 
   /* ---------- buttons ---------- */
   .btn {
@@ -131,8 +134,8 @@
   }
   .btn:hover { transform: translateY(-2px); }
   .btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex: none; }
-  .btn-grad { background: var(--orange); color: var(--navy); box-shadow: var(--glow); }
-  .btn-grad:hover { background: #ff9733; box-shadow: 0 14px 34px -8px rgba(255, 138, 28, .75); }
+  .btn-grad { background: var(--orange); color: var(--on-loud); box-shadow: var(--glow); }
+  .btn-grad:hover { background: #ff7f57; box-shadow: 0 14px 34px -8px rgba(255, 107, 61, .75); }
   .btn-line { background: #fff; color: var(--navy); border-color: var(--line-2); }
   .btn-line:hover { border-color: var(--violet); }
   .btn .arr { transition: transform .2s; }
@@ -144,8 +147,8 @@
     width: 16px;
     height: 16px;
     border-radius: 50%;
-    border: 2px solid rgba(45, 47, 102, .25);
-    border-top-color: var(--navy);
+    border: 2px solid rgba(31, 61, 52, .25);
+    border-top-color: var(--on-loud);
     animation: spin .8s linear infinite;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
@@ -165,9 +168,9 @@
     gap: 16px;
     padding: 8px 8px 8px 18px;
     border-radius: 999px;
-    background: rgba(247, 245, 251, .88);
+    background: rgba(250, 246, 239, .88);
     border: 1px solid var(--line);
-    box-shadow: 0 10px 30px -18px rgba(45, 47, 102, .3);
+    box-shadow: 0 10px 30px -18px rgba(31, 61, 52, .3);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
   }
@@ -232,7 +235,7 @@
   .tick svg { width: 13px; height: 13px; stroke: var(--on-grad); stroke-width: 3; fill: none; stroke-linecap: round; stroke-linejoin: round; }
   .anchor { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; margin-top: 20px; padding: 12px 16px; border-radius: 16px; background: var(--grad-soft); font-size: 14.5px; font-weight: 700; color: var(--muted); }
   .anchor b { font-family: var(--display); font-weight: 700; font-size: 19px; letter-spacing: -.04em; color: var(--text); }
-  .anchor i { font-style: normal; color: #a9a3c6; }
+  .anchor i { font-style: normal; color: #a99f8c; }
   .anchor .pair { display: inline-flex; align-items: baseline; gap: 10px; white-space: nowrap; }
   .micro { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; font-size: 14px; color: var(--muted); font-weight: 600; margin-top: 14px; }
   .micro span { display: inline-flex; align-items: center; gap: 8px; }
@@ -246,14 +249,14 @@
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(circle at 64% 42%, rgba(255, 138, 28, .42), transparent 44%),
-      radial-gradient(circle at 88% 96%, rgba(45, 47, 102, .22), transparent 52%);
+      radial-gradient(circle at 64% 42%, rgba(255, 107, 61, .42), transparent 44%),
+      radial-gradient(circle at 88% 96%, rgba(31, 61, 52, .22), transparent 52%);
   }
   .photo::after {
     content: "";
     position: absolute;
     inset: 0;
-    background-image: radial-gradient(rgba(45, 47, 102, .16) 1px, transparent 1px);
+    background-image: radial-gradient(rgba(31, 61, 52, .16) 1px, transparent 1px);
     background-size: 18px 18px;
     -webkit-mask-image: linear-gradient(transparent, #000 30%, transparent 80%);
             mask-image: linear-gradient(transparent, #000 30%, transparent 80%);
@@ -271,7 +274,7 @@
     font-size: 13.5px;
     line-height: 1.45;
     font-weight: 600;
-    box-shadow: 0 14px 30px -16px rgba(45, 47, 102, .35);
+    box-shadow: 0 14px 30px -16px rgba(31, 61, 52, .35);
     transform: rotate(-2deg);
   }
   .pnote b { display: block; margin-top: 6px; font-family: var(--display); font-weight: 700; font-size: 13px; color: var(--orange-ink); }
@@ -287,7 +290,7 @@
     border: 1px solid rgba(255, 255, 255, .95);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    box-shadow: 0 16px 34px -18px rgba(45, 47, 102, .35);
+    box-shadow: 0 16px 34px -18px rgba(31, 61, 52, .35);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -313,7 +316,7 @@
   .callc { grid-column: span 5; padding: 22px; display: flex; flex-direction: column; gap: 14px; }
   .callc-head { display: flex; gap: 14px; align-items: flex-start; }
   .callc-ic { width: 44px; height: 44px; border-radius: 13px; background: var(--orange); box-shadow: var(--glow); display: grid; place-items: center; flex: none; }
-  .callc-ic svg { width: 21px; height: 21px; stroke: var(--navy); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .callc-ic svg { width: 21px; height: 21px; stroke: var(--on-loud); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
   .callc-head b { display: block; font-family: var(--display); font-weight: 700; font-size: 18px; letter-spacing: -.035em; line-height: 1.2; }
   .callc-head span { display: block; color: var(--muted); font-size: 14px; font-weight: 600; margin-top: 3px; }
   .hdays { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
@@ -332,7 +335,7 @@
   }
   .hday b { font-weight: 800; font-size: 15px; }
   .hday small { font-size: 12.5px; color: var(--muted); font-weight: 700; }
-  .hday:hover { border-color: var(--navy); transform: translateY(-2px); box-shadow: 0 12px 24px -14px rgba(45, 47, 102, .45); }
+  .hday:hover { border-color: var(--navy); transform: translateY(-2px); box-shadow: 0 12px 24px -14px rgba(31, 61, 52, .45); }
   .hday.more { background: var(--violet-bg); border-color: transparent; color: var(--violet); }
   .hday.more b { font-size: 13.5px; }
   .callc-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
@@ -415,7 +418,7 @@
   .after .mk svg { stroke: var(--on-grad); }
   .ba-arrow { display: grid; place-items: center; }
   .ba-arrow span { width: 52px; height: 52px; border-radius: 50%; background: var(--orange); display: grid; place-items: center; box-shadow: var(--glow); }
-  .ba-arrow svg { width: 22px; height: 22px; stroke: var(--navy); fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+  .ba-arrow svg { width: 22px; height: 22px; stroke: var(--on-loud); fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
 
   /* ROI calculator */
   .roi { display: grid; grid-template-columns: 1.05fr 1fr; gap: 0; }
@@ -442,7 +445,7 @@
     padding: 10px 14px;
     outline: none;
   }
-  .rate input:focus { border-color: var(--navy); background: #fff; box-shadow: 0 0 0 4px rgba(255, 138, 28, .28); }
+  .rate input:focus { border-color: var(--navy); background: #fff; box-shadow: 0 0 0 4px rgba(255, 107, 61, .28); }
   .rate span { color: var(--muted); font-weight: 700; }
   .roi-out { padding: clamp(24px, 3.4vw, 42px); background: var(--grad-soft); display: flex; flex-direction: column; gap: 18px; justify-content: center; }
   .roi-big small { display: block; font-size: 13px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
@@ -472,7 +475,7 @@
   .svc-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
   .svc-ic { width: 52px; height: 52px; border-radius: 15px; display: grid; place-items: center; background: var(--grad-soft); flex: none; }
   .svc-ic svg { width: 24px; height: 24px; stroke: var(--violet); fill: none; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
-  .tagline { font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; padding: 6px 11px; border-radius: 999px; background: var(--orange); color: var(--navy); box-shadow: 0 6px 16px -6px rgba(255, 138, 28, .7); white-space: nowrap; }
+  .tagline { font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; padding: 6px 11px; border-radius: 999px; background: var(--orange); color: var(--on-loud); box-shadow: 0 6px 16px -6px rgba(255, 107, 61, .7); white-space: nowrap; }
   .svc h3 { font-family: var(--display); font-weight: 500; font-size: 20px; letter-spacing: -.035em; line-height: 1.25; margin-top: 6px; }
   .price { font-weight: 800; font-size: 15px; }
   .price b { font-family: var(--display); font-weight: 700; font-size: 22px; letter-spacing: -.04em; }
@@ -495,7 +498,7 @@
   .case:nth-child(even) .case-shot { order: 2; }
   .browser { position: relative; background: #fff; border: 1px solid var(--line-2); border-radius: 14px; overflow: hidden; box-shadow: var(--shadow); }
   .browser-bar { display: flex; align-items: center; gap: 6px; padding: 10px 14px; background: var(--soft); border-bottom: 1px solid var(--line); }
-  .browser-bar i { width: 10px; height: 10px; border-radius: 50%; background: #cbc5de; }
+  .browser-bar i { width: 10px; height: 10px; border-radius: 50%; background: #d6cbb8; }
   .browser-bar span { margin-left: 10px; flex: 1; max-width: 280px; font-size: 12px; font-weight: 600; color: var(--muted); background: #fff; border: 1px solid var(--line); border-radius: 6px; padding: 2px 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .browser img { width: 100%; aspect-ratio: 2 / 1; object-fit: cover; object-position: top left; }
   .case-tag { display: inline-block; font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--orange-ink); background: var(--peach); padding: 5px 11px; border-radius: 8px; margin-bottom: 12px; }
@@ -505,9 +508,9 @@
   .case dd { color: var(--muted); }
   .case dd.win { color: var(--text); font-weight: 700; padding-left: 14px; border-left: 3px solid var(--orange); }
   .case .tech { margin-top: 14px; }
-  .match-tag { display: none; position: absolute; top: 14px; right: 14px; z-index: 2; font-size: 12px; font-weight: 800; padding: 5px 10px; border-radius: 999px; background: var(--orange); color: var(--navy); box-shadow: 0 6px 16px -6px rgba(255, 138, 28, .7); }
+  .match-tag { display: none; position: absolute; top: 14px; right: 14px; z-index: 2; font-size: 12px; font-weight: 800; padding: 5px 10px; border-radius: 999px; background: var(--orange); color: var(--on-loud); box-shadow: 0 6px 16px -6px rgba(255, 107, 61, .7); }
   .is-match .match-tag { display: inline-block; }
-  .case.is-match, .thumb.is-match { border: 2px solid var(--orange); box-shadow: 0 18px 40px -22px rgba(255, 138, 28, .6); }
+  .case.is-match, .thumb.is-match { border: 2px solid var(--orange); box-shadow: 0 18px 40px -22px rgba(255, 107, 61, .6); }
   .thumbs { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); margin-top: var(--gap); }
   .thumb { position: relative; display: flex; flex-direction: column; }
   .thumb img { width: 100%; aspect-ratio: 2 / 1; object-fit: cover; object-position: top; border-bottom: 1px solid var(--line); }
@@ -529,7 +532,7 @@
     background: var(--grad-soft);
     border-color: transparent;
   }
-  .lm::before { content: ""; position: absolute; width: 380px; height: 380px; right: -140px; top: -160px; border-radius: 50%; background: radial-gradient(circle, rgba(255, 138, 28, .26), transparent 65%); pointer-events: none; }
+  .lm::before { content: ""; position: absolute; width: 380px; height: 380px; right: -140px; top: -160px; border-radius: 50%; background: radial-gradient(circle, rgba(255, 107, 61, .26), transparent 65%); pointer-events: none; }
   .lm-copy { position: relative; }
   .free { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; background: #fff; font-size: 13px; font-weight: 800; color: var(--orange-ink); margin-bottom: 14px; box-shadow: var(--shadow); }
   .lm-copy h2 { margin-bottom: 14px; }
@@ -564,7 +567,7 @@
   .chd span { font-size: 13px; color: var(--muted); font-weight: 600; }
   .ccol.labels { background: transparent; border-color: transparent; box-shadow: none; }
   .ccol.labels > * { font-weight: 800; padding-left: 0; }
-  .ccol.me { border: 2px solid var(--navy); background: linear-gradient(180deg, #fff1e3, #fff 38%); box-shadow: var(--shadow-lg); }
+  .ccol.me { border: 2px solid var(--navy); background: linear-gradient(180deg, #ffece3, #fff 38%); box-shadow: var(--shadow-lg); }
   .ccol.me .chd b { font-family: var(--display); font-weight: 700; letter-spacing: -.035em; }
   .cell { display: flex; gap: 10px; align-items: flex-start; color: var(--muted); }
   .cell .lb { display: none; }
@@ -627,7 +630,7 @@
   /* about: video + letter */
   .about { display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--gap); }
   .video { grid-column: span 5; min-height: 460px; background: var(--grad-soft); display: block; border: none; padding: 0; cursor: pointer; text-align: left; }
-  .video::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 50% 42%, rgba(255, 138, 28, .32), transparent 55%); }
+  .video::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 50% 42%, rgba(255, 107, 61, .32), transparent 55%); }
   .video img { position: absolute; bottom: 0; left: 50%; width: 112%; max-width: none; transform: translateX(-48%); z-index: 1; }
   .play {
     position: absolute;
@@ -640,12 +643,12 @@
     background: rgba(255, 255, 255, .92);
     display: grid;
     place-items: center;
-    box-shadow: 0 18px 40px -14px rgba(45, 47, 102, .45), 0 0 0 10px rgba(255, 255, 255, .35);
+    box-shadow: 0 18px 40px -14px rgba(31, 61, 52, .45), 0 0 0 10px rgba(255, 255, 255, .35);
     transition: transform .25s;
   }
   .video:hover .play { transform: scale(1.06); }
   .play svg { width: 30px; height: 30px; fill: var(--orange-lg); margin-left: 4px; }
-  .vcap { position: absolute; z-index: 2; left: 14px; right: 14px; bottom: 14px; padding: 12px 16px; border-radius: 16px; background: rgba(255, 255, 255, .92); box-shadow: 0 16px 34px -18px rgba(45, 47, 102, .35); }
+  .vcap { position: absolute; z-index: 2; left: 14px; right: 14px; bottom: 14px; padding: 12px 16px; border-radius: 16px; background: rgba(255, 255, 255, .92); box-shadow: 0 16px 34px -18px rgba(31, 61, 52, .35); }
   .vcap b { display: block; font-weight: 800; font-size: 15px; }
   .vcap span { display: block; font-size: 13.5px; color: var(--muted); font-weight: 600; }
   .vtag { position: absolute; z-index: 2; top: 14px; left: 14px; font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; padding: 6px 11px; border-radius: 999px; background: #fff; color: var(--dim); border: 2px dashed var(--line-2); }
@@ -672,7 +675,7 @@
   .faq-side .btn { align-self: flex-start; }
   .faq-list { display: flex; flex-direction: column; gap: 10px; }
   details { background: var(--card); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); transition: border-color .2s; }
-  details[open] { border-color: rgba(45, 47, 102, .35); }
+  details[open] { border-color: rgba(31, 61, 52, .35); }
   summary {
     list-style: none;
     cursor: pointer;
@@ -701,7 +704,7 @@
     height: 64px;
     border-radius: 50%;
     background: url("/assets/jan-cut.webp") 54% 22% / 200% auto no-repeat, var(--peach);
-    box-shadow: 0 0 0 4px #fff, 0 10px 24px -10px rgba(45, 47, 102, .4);
+    box-shadow: 0 0 0 4px #fff, 0 10px 24px -10px rgba(31, 61, 52, .4);
   }
   .avatar.sm { width: 44px; height: 44px; box-shadow: 0 0 0 3px #fff; }
   .me-row { display: flex; align-items: center; gap: 16px; padding: 14px 16px; border-radius: 18px; background: #fff; box-shadow: var(--shadow); }
@@ -713,13 +716,13 @@
   .next .n { width: 36px; height: 36px; border-radius: 11px; background: #fff; display: grid; place-items: center; font-family: var(--display); font-weight: 700; font-size: 14px; box-shadow: var(--shadow); }
   .next b { display: block; font-weight: 800; }
   .next span { display: block; color: var(--muted); font-size: 14.5px; }
-  .sure { display: flex; flex-direction: column; gap: 8px; padding-top: 16px; border-top: 1px solid rgba(45, 47, 102, .15); }
+  .sure { display: flex; flex-direction: column; gap: 8px; padding-top: 16px; border-top: 1px solid rgba(31, 61, 52, .15); }
   .sure li { display: flex; gap: 10px; align-items: center; font-weight: 700; font-size: 15px; }
   .sure .tick { width: 22px; height: 22px; }
   .sure .tick svg { width: 12px; height: 12px; }
   .clients-mini { font-size: 14px; color: var(--muted); font-weight: 600; }
   .clients-mini b { color: var(--text); font-weight: 800; }
-  .direct { padding-top: 16px; border-top: 1px solid rgba(45, 47, 102, .15); font-size: 15px; font-weight: 600; color: var(--muted); }
+  .direct { padding-top: 16px; border-top: 1px solid rgba(31, 61, 52, .15); font-size: 15px; font-weight: 600; color: var(--muted); }
   .direct a { color: var(--violet); font-weight: 800; }
 
   .form-card { grid-column: span 7; padding: clamp(22px, 3vw, 36px); }
@@ -752,7 +755,7 @@
   .qf-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 13.5px; font-weight: 800; color: var(--muted); margin-bottom: 10px; }
   .qf-top .qf-time { font-weight: 600; color: var(--dim); }
   .qf-bar { height: 6px; border-radius: 99px; background: var(--soft); overflow: hidden; }
-  .qf-bar span { display: block; height: 100%; width: 33.33%; background: var(--orange); box-shadow: 0 0 12px rgba(255, 138, 28, .7); border-radius: inherit; transition: width .45s cubic-bezier(.2, .8, .2, 1); }
+  .qf-bar span { display: block; height: 100%; width: 33.33%; background: var(--orange); box-shadow: 0 0 12px rgba(255, 107, 61, .7); border-radius: inherit; transition: width .45s cubic-bezier(.2, .8, .2, 1); }
   .qf-resume { margin-top: 12px; font-size: 14px; color: var(--muted); font-weight: 600; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; }
   .qf-resume button { background: none; border: none; color: var(--violet); font-weight: 800; cursor: pointer; text-decoration: underline; min-height: 36px; }
   .qf-step { padding-top: 22px; }
@@ -774,7 +777,7 @@
     text-align: left;
     transition: border-color .2s, box-shadow .2s, transform .2s, background .2s;
   }
-  .qtile:hover { border-color: var(--navy); box-shadow: 0 12px 24px -14px rgba(45, 47, 102, .4); transform: translateY(-2px); }
+  .qtile:hover { border-color: var(--navy); box-shadow: 0 12px 24px -14px rgba(31, 61, 52, .4); transform: translateY(-2px); }
   .qt-ic { width: 38px; height: 38px; border-radius: 11px; background: var(--grad-soft); display: grid; place-items: center; flex: none; }
   .qt-ic svg { width: 19px; height: 19px; stroke: var(--violet); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
   .qt-tx { min-width: 0; }
@@ -783,7 +786,7 @@
   .qf-tiles { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
   .qf-tiles .qtile { grid-column: span 2; flex-direction: column; align-items: flex-start; gap: 10px; min-height: 112px; padding: 16px; }
   .qf-tiles .qtile:nth-child(n+4) { grid-column: span 2; min-height: 0; }
-  .qf-tiles .qtile[aria-pressed="true"] { border-color: var(--navy); background: var(--violet-bg); box-shadow: 0 0 0 3px rgba(255, 138, 28, .45); }
+  .qf-tiles .qtile[aria-pressed="true"] { border-color: var(--navy); background: var(--violet-bg); box-shadow: 0 0 0 3px rgba(255, 107, 61, .45); }
   .qf-tiles .qtile[aria-pressed="true"]::after {
     content: "✓";
     position: absolute;
@@ -793,7 +796,7 @@
     height: 24px;
     border-radius: 50%;
     background: var(--orange);
-    color: var(--navy);
+    color: var(--on-loud);
     font-size: 13px;
     font-weight: 800;
     display: grid;
@@ -841,8 +844,8 @@
     resize: vertical;
     transition: border-color .2s, box-shadow .2s, background .2s;
   }
-  .fld input::placeholder, .fld textarea::placeholder { color: #7f7ca0; }
-  .fld input:focus, .fld textarea:focus { border-color: var(--navy); background: #fff; box-shadow: 0 0 0 4px rgba(255, 138, 28, .28); }
+  .fld input::placeholder, .fld textarea::placeholder { color: #7d7a6c; }
+  .fld input:focus, .fld textarea:focus { border-color: var(--navy); background: #fff; box-shadow: 0 0 0 4px rgba(255, 107, 61, .28); }
   .fld input[aria-invalid="true"] { border-color: var(--err); background: #fff6f8; }
   .err-msg { color: var(--err); font-size: 13.5px; font-weight: 700; margin-top: 6px; }
   .err-msg:empty { display: none; }
@@ -867,7 +870,7 @@
   .qf-done { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; padding: 6px 0; }
   .qf-done .next { margin: 12px 0 18px; }
   .qf-done .next .n { background: var(--violet-bg); box-shadow: none; }
-  .done-ic { width: 56px; height: 56px; border-radius: 50%; background: var(--grad); display: grid; place-items: center; margin-bottom: 10px; flex: none; box-shadow: 0 12px 26px -12px rgba(45, 47, 102, .5); }
+  .done-ic { width: 56px; height: 56px; border-radius: 50%; background: var(--grad); display: grid; place-items: center; margin-bottom: 10px; flex: none; box-shadow: 0 12px 26px -12px rgba(31, 61, 52, .5); }
   .done-ic svg { width: 26px; height: 26px; stroke: var(--on-grad); stroke-width: 3; fill: none; stroke-linecap: round; stroke-linejoin: round; }
   .done-ic.sm { width: 40px; height: 40px; margin: 0; }
   .done-ic.sm svg { width: 18px; height: 18px; }
@@ -893,7 +896,7 @@
   .days span b { font-weight: 800; font-size: 15px; }
   .days span small { font-size: 12.5px; color: var(--muted); font-weight: 700; }
   .days span:hover { border-color: var(--violet); }
-  .days input:checked + span { border-color: var(--navy); background: var(--violet-bg); box-shadow: 0 0 0 3px rgba(255, 138, 28, .45); }
+  .days input:checked + span { border-color: var(--navy); background: var(--violet-bg); box-shadow: 0 0 0 3px rgba(255, 107, 61, .45); }
   .days input:checked + span b { color: var(--violet); }
   .days input:focus-visible + span { outline: 3px solid var(--orange-lg); outline-offset: 2px; }
   .times span { min-width: 76px; justify-content: center; }
@@ -932,9 +935,9 @@
     gap: 10px;
     padding: 8px 8px 8px 18px;
     border-radius: 999px;
-    background: rgba(247, 245, 251, .96);
+    background: rgba(250, 246, 239, .96);
     border: 1px solid var(--line);
-    box-shadow: 0 18px 40px -16px rgba(45, 47, 102, .4);
+    box-shadow: 0 18px 40px -16px rgba(31, 61, 52, .4);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     transform: translateY(140%);
@@ -956,11 +959,11 @@
     color: var(--text);
     overflow: visible;
   }
-  dialog.exit::backdrop { background: rgba(45, 47, 102, .45); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+  dialog.exit::backdrop { background: rgba(31, 61, 52, .45); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
   dialog.exit[open] { animation: pop .35s cubic-bezier(.2, .8, .2, 1); }
   @keyframes pop { from { opacity: 0; transform: translateY(16px) scale(.97); } }
   .exit-in { position: relative; background: #fff; border-radius: 26px; padding: 36px clamp(22px, 4vw, 38px) 30px; box-shadow: var(--shadow-lg); overflow: hidden; }
-  .exit-in::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 6px; background: var(--orange); box-shadow: 0 0 16px rgba(255, 138, 28, .8); }
+  .exit-in::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 6px; background: var(--orange); box-shadow: 0 0 16px rgba(255, 107, 61, .8); }
   .exit-x { position: absolute; top: 14px; right: 14px; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line-2); background: #fff; cursor: pointer; font-size: 17px; display: grid; place-items: center; }
   .exit-x:hover { border-color: var(--violet); }
   .exit-in h2 { font-size: clamp(22px, 2.4vw, 28px); margin: 4px 44px 10px 0; }
@@ -1017,7 +1020,7 @@
       flex-direction: column;
       padding: 10px;
       border-radius: 20px;
-      background: rgba(247, 245, 251, .98);
+      background: rgba(250, 246, 239, .98);
       border: 1px solid var(--line);
       box-shadow: var(--shadow-lg);
     }
@@ -1188,7 +1191,7 @@
      "name": "Kolik to bude stát?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "Aplikace na míru začínají od 24 950 Kč, firemní web od 9 970 Kč a e-shop od 19 870 Kč – vždy jednorázově, bez licencí za uživatele. Mobilní aplikaci nacením podle rozsahu. Po úvodním hovoru dostanete pevnou cenu za konkrétní rozsah. Co odsouhlasíme, to platí. Provoz a správa se platí zvlášť, od 990 Kč měsíčně."
+      "text": "Aplikace na míru začínají od 24 950 Kč, firemní web od 9 970 Kč a e-shop od 19 870 Kč – vždy jednorázově, bez licencí za uživatele. Mobilní aplikaci nacením podle rozsahu. Po úvodním hovoru dostanete pevnou cenu za konkrétní rozsah. Co si odsouhlasíme, to platí. Provoz a správa se platí zvlášť, od 990 Kč měsíčně."
      }
     },
     {
@@ -1233,7 +1236,7 @@
     },
     {
      "@type": "Question",
-     "name": "Budu si moct web upravovat sám?",
+     "name": "Budu si moci web upravovat sám?",
      "acceptedAnswer": {
       "@type": "Answer",
       "text": "Ano. Texty, fotky, produkty i novinky si upravíte v jednoduché administraci. Větší změny rád udělám za vás."
@@ -1324,7 +1327,7 @@
               <p class="lead" data-only="app">Zakázky, termíny, zákazníci i&nbsp;rezervace na jednom místě. Navrhnu a&nbsp;postavím systém přesně podle toho, jak vaše firma pracuje – a&nbsp;postarám se, aby spolehlivě běžel.</p>
               <p class="lead" data-only="web" hidden>Postavím vám rychlý a&nbsp;přehledný web nebo e-shop přesně podle toho, jak vaše firma funguje. Bez agentury, bez zbytečných schůzek – s&nbsp;jedním člověkem, který to celé udělá a&nbsp;zvedne telefon.</p>
               <ul class="checks" data-only="app">
-                <li><span class="tick"><svg><use href="#i-check"/></svg></span>Pevná cena předem – co odsouhlasíme, to platí</li>
+                <li><span class="tick"><svg><use href="#i-check"/></svg></span>Pevná cena předem – co si odsouhlasíme, to platí</li>
                 <li><span class="tick"><svg><use href="#i-check"/></svg></span>Začnete v&nbsp;malém, rozšíříte, až to bude dávat smysl</li>
                 <li><span class="tick"><svg><use href="#i-check"/></svg></span>Aplikace, kód i&nbsp;data patří vám</li>
               </ul>
@@ -1525,15 +1528,15 @@
         <div class="roi-out" aria-live="polite">
           <div class="roi-big">
             <small>Ruční práce vás stojí zhruba</small>
-            <b id="roi-month" class="gt">22&nbsp;730&nbsp;Kč</b>
+            <b id="roi-month" class="gt">18&nbsp;186&nbsp;Kč</b>
             <span class="roi-note">měsíčně · <span id="roi-hours-month">52</span>&nbsp;hodin práce</span>
           </div>
           <div class="roi-row">
-            <div><small>Za rok</small><b id="roi-year">272&nbsp;760&nbsp;Kč</b></div>
-            <div><small>Aplikace by ušetřila</small><b id="roi-save">11&nbsp;370&nbsp;Kč/měs.</b></div>
+            <div><small>Za rok</small><b id="roi-year">218&nbsp;232&nbsp;Kč</b></div>
+            <div><small>Aplikace by ušetřila</small><b id="roi-save">9&nbsp;093&nbsp;Kč/měs.</b></div>
           </div>
-          <p class="roi-pay" id="roi-pay">Aplikace od 24&nbsp;950&nbsp;Kč by se vrátila zhruba za <b>2,2 měsíce</b>.</p>
-          <p class="roi-note">Orientační výpočet podle vašich čísel. Od 24&nbsp;950&nbsp;Kč je nejnižší cena – skutečnou cenu vašeho řešení vám řeknu po hovoru.</p>
+          <p class="roi-pay" id="roi-pay">Aplikace od 24&nbsp;950&nbsp;Kč by se při této úspoře vrátila zhruba za <b>2,7&nbsp;měsíce</b>.</p>
+          <p class="roi-note">Orientační výpočet podle vašich čísel. 24&nbsp;950&nbsp;Kč je nejnižší cena aplikace – kolik bude stát ta vaše, vám řeknu po hovoru.</p>
           <div class="dual">
             <a href="#kontakt" class="btn btn-grad" id="roi-cta" data-cta="roi">Chci to spočítat přesně <span class="arr">→</span></a>
           </div>
@@ -1547,7 +1550,7 @@
     <div class="wrap">
       <div class="head rv">
         <div><span class="kicker gt">Služby a ceny</span><h2>Co pro vás můžu udělat</h2></div>
-        <p>Hlavní specializací jsou aplikace na míru – webové i&nbsp;mobilní. Stejně tak vám ale udělám web, e-shop nebo se postarám o&nbsp;servery, na kterých to všechno běží.</p>
+        <p>Hlavní specializací jsou aplikace na míru – webové i&nbsp;mobilní. Udělám vám ale i&nbsp;web nebo e-shop a&nbsp;postarám se o&nbsp;servery, na kterých všechno běží.</p>
       </div>
       <div class="svc-grid">
         <article class="card svc svc-app gb lift rv">
@@ -1584,7 +1587,7 @@
           <div class="svc-top"><span class="svc-ic"><svg><use href="#i-web"/></svg></span></div>
           <h3>Firemní web</h3>
           <p class="price">od <b class="gt">9&nbsp;970&nbsp;Kč</b></p>
-          <p>Web, který zákazníkům rychle řekne, co děláte, a&nbsp;přivede vám poptávky. Rychlý, srozumitelný a&nbsp;dobře vypadá na mobilu.</p>
+          <p>Web, který zákazníkům rychle řekne, co děláte, a&nbsp;přivede vám poptávky. Je rychlý, srozumitelný a&nbsp;skvěle vypadá i&nbsp;na mobilu.</p>
           <ul class="bul">
             <li>Design na míru, žádná šablona</li>
             <li>Poptávkový formulář přímo do e-mailu</li>
@@ -1619,7 +1622,7 @@
           <a href="#kontakt" class="link-cta" data-open="form" data-type="Správa serveru" data-cta="svc_srv">Poptat správu <span class="arr">→</span></a>
         </article>
       </div>
-      <p class="note rv">Ceny jsou orientační. Po úvodním hovoru dostanete pevnou cenu za konkrétní rozsah – co odsouhlasíme, to platí.</p>
+      <p class="note rv">Ceny jsou orientační. Po úvodním hovoru dostanete pevnou cenu za konkrétní rozsah – co si odsouhlasíme, to platí.</p>
     </div>
   </section>
 
@@ -1842,11 +1845,11 @@
         </div>
         <div class="ccol">
           <div class="chd"><b>Krabicový software</b><span>hotová online služba</span></div>
-          <div class="cell"><span class="lb">Cena na začátku</span><span class="st good"></span><span>Nízká, často zkušební verze</span></div>
+          <div class="cell"><span class="lb">Cena na začátku</span><span class="st good"></span><span>Nízká, často i&nbsp;zkušební verze zdarma</span></div>
           <div class="cell"><span class="lb">Dlouhodobě</span><span class="st bad"></span><span>Poplatek za každého uživatele, každý měsíc – dokud službu používáte</span></div>
           <div class="cell"><span class="lb">Přizpůsobení</span><span class="st mid"></span><span>Omezené – přizpůsobujete se vy jemu</span></div>
           <div class="cell"><span class="lb">Čas do spuštění</span><span class="st good"></span><span>Dny</span></div>
-          <div class="cell"><span class="lb">Data</span><span class="st bad"></span><span>Poskytovateli, vy si službu pronajímáte</span></div>
+          <div class="cell"><span class="lb">Data</span><span class="st bad"></span><span>Poskytovateli – službu si jen pronajímáte</span></div>
           <div class="cell"><span class="lb">S kým jednáte</span><span class="st mid"></span><span>S podporou nebo chatbotem</span></div>
         </div>
         <div class="ccol">
@@ -1870,7 +1873,7 @@
       </div>
       <p class="cmp-foot rv">Srovnání je zjednodušené. Když bude pro vás lepší hotová krabice, rád vám to řeknu.</p>
       <div class="guarantees">
-        <div class="card g rv"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5 3.4 9.3 8 11 4.6-1.7 8-6 8-11V5z"/><path d="m9 12 2 2 4-4"/></svg></span><div><b>Pevná cena předem</b><span>Co odsouhlasíme, to platí.</span></div></div>
+        <div class="card g rv"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5 3.4 9.3 8 11 4.6-1.7 8-6 8-11V5z"/><path d="m9 12 2 2 4-4"/></svg></span><div><b>Pevná cena předem</b><span>Co si odsouhlasíme, to platí.</span></div></div>
         <div class="card g rv"><span class="ic"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><div><b>Konzultace zdarma a&nbsp;nezávazně</b><span>Nic nepodepisujete.</span></div></div>
         <div class="card g rv"><span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span><div><b>Kód, data i&nbsp;doména patří vám</b><span>Nejste na mně závislí.</span></div></div>
         <div class="card g rv"><span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><div><b>Jednáte přímo se mnou</b><span>Kdo s&nbsp;vámi mluví, ten to i&nbsp;staví.</span></div></div>
@@ -1957,10 +1960,10 @@
           </div>
           <div class="letter-side">
           <div class="facts">
-            <div class="fact"><b>Od 2023</b><span>Full-stack vývoj a&nbsp;správa serverů (Šikmo s.r.o. / OSVČ)</span></div>
+            <div class="fact"><b>Od roku 2023</b><span>Full-stack vývoj a&nbsp;správa serverů (Šikmo s.r.o. / OSVČ)</span></div>
             <div class="fact"><b>2017–2023</b><span>IT specialista, programátor a&nbsp;správce sítí (VUJO s.r.o.)</span></div>
             <div class="fact"><b>2010–2015</b><span>IT a&nbsp;webové aplikace (DISTRACT s.r.o.)</span></div>
-            <div class="fact"><b>Od 2006</b><span>Webmaster a&nbsp;kódování webů</span></div>
+            <div class="fact"><b>2006–2010</b><span>Webmaster a&nbsp;kódování webů (Humdrum s.r.o.)</span></div>
           </div>
           <div class="sign">
             <div class="name"><b>Jan Šporek</b><svg viewBox="0 0 170 18" aria-hidden="true"><path d="M2 12c30-8 60-10 90-6s50 3 76-4"/></svg><small>WebTitan · Praha a&nbsp;celá ČR</small></div>
@@ -1994,7 +1997,7 @@
           </details>
           <details class="rv">
             <summary>Kolik to bude stát?<span class="pm"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></summary>
-            <p class="ans">Aplikace na míru začínají od 24&nbsp;950&nbsp;Kč, firemní web od 9&nbsp;970&nbsp;Kč a&nbsp;e-shop od 19&nbsp;870&nbsp;Kč – vždy jednorázově, bez licencí za uživatele. Mobilní aplikaci nacením podle rozsahu. Po úvodním hovoru dostanete pevnou cenu za konkrétní rozsah. Co odsouhlasíme, to platí. Provoz a&nbsp;správa se platí zvlášť, od 990&nbsp;Kč měsíčně.</p>
+            <p class="ans">Aplikace na míru začínají od 24&nbsp;950&nbsp;Kč, firemní web od 9&nbsp;970&nbsp;Kč a&nbsp;e-shop od 19&nbsp;870&nbsp;Kč – vždy jednorázově, bez licencí za uživatele. Mobilní aplikaci nacením podle rozsahu. Po úvodním hovoru dostanete pevnou cenu za konkrétní rozsah. Co si odsouhlasíme, to platí. Provoz a&nbsp;správa se platí zvlášť, od 990&nbsp;Kč měsíčně.</p>
           </details>
           <details class="rv">
             <summary>Děláte i&nbsp;mobilní aplikace?<span class="pm"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></summary>
@@ -2017,7 +2020,7 @@
             <p class="ans">Ano. Převod dat ze stávajících tabulek je běžnou součástí spuštění, abyste nezačínali od nuly.</p>
           </details>
           <details class="rv">
-            <summary>Budu si moct web upravovat sám?<span class="pm"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+            <summary>Budu si moci web upravovat sám?<span class="pm"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></summary>
             <p class="ans">Ano. Texty, fotky, produkty i&nbsp;novinky si upravíte v&nbsp;jednoduché administraci. Větší změny rád udělám za vás.</p>
           </details>
           <details class="rv">
@@ -2263,8 +2266,8 @@
                   <p class="qf-label" id="ql-bud">Rozpočet</p>
                   <div class="chips" role="radiogroup" aria-labelledby="ql-bud">
                     <label><input type="radio" name="rozpocet" value="do 15 000 Kč"><span>do 15&nbsp;000&nbsp;Kč</span></label>
-                    <label><input type="radio" name="rozpocet" value="15–40 000 Kč"><span>15–40&nbsp;000&nbsp;Kč</span></label>
-                    <label><input type="radio" name="rozpocet" value="40–100 000 Kč"><span>40–100&nbsp;000&nbsp;Kč</span></label>
+                    <label><input type="radio" name="rozpocet" value="15 000–40 000 Kč"><span>15&nbsp;000–40&nbsp;000&nbsp;Kč</span></label>
+                    <label><input type="radio" name="rozpocet" value="40 000–100 000 Kč"><span>40&nbsp;000–100&nbsp;000&nbsp;Kč</span></label>
                     <label><input type="radio" name="rozpocet" value="100 000 Kč a více"><span>100&nbsp;000&nbsp;Kč+</span></label>
                     <label><input type="radio" name="rozpocet" value="Zatím nevím"><span>Zatím nevím</span></label>
                   </div>
@@ -2311,7 +2314,7 @@
                   </div>
                 </div>
                 <ul class="assure">
-                  <li><svg><use href="#i-check"/></svg>Nic nepodepisujete, nezávazné.</li>
+                  <li><svg><use href="#i-check"/></svg>Nic nepodepisujete, vše je nezávazné.</li>
                   <li><svg><use href="#i-check"/></svg>Údaje použiji jen k&nbsp;odpovědi na vaši poptávku.</li>
                   <li><svg><use href="#i-check"/></svg>Odpovídám osobně do 24 hodin (v&nbsp;pracovní dny).</li>
                 </ul>

@@ -200,7 +200,7 @@ if (!empty($mail['attachments'])) {
 // --- přeposlání ---
 $h = static fn (string $s): string => htmlspecialchars($s, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 $note = 'Přijato na ' . $origTo . ' · od ' . $origFrom . ($skipped ? ' · nepřeposlané přílohy: ' . implode(', ', $skipped) : '');
-$banner = '<div style="font:13px Arial,sans-serif;color:#565779;background:#f7f5fb;border:1px solid #d3cee3;border-radius:8px;'
+$banner = '<div style="font:13px Arial,sans-serif;color:#4d5a52;background:#faf6ef;border:1px solid #e0d5c3;border-radius:8px;'
         . 'padding:8px 12px;margin:0 0 14px">' . $h($note) . '</div>';
 $html = (string) ($mail['html'] ?? '');
 $text = (string) ($mail['text'] ?? '');

@@ -3,10 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light only">
 <title>Zásady ochrany osobních údajů | WebTitan</title>
 <meta name="description" content="Jak WebTitan (Jan Šporek) zpracovává osobní údaje z poptávkových formulářů na webtitan.cz – jaké údaje, proč, jak dlouho a jaká máte práva.">
 <link rel="canonical" href="https://webtitan.cz/ochrana-osobnich-udaju.html">
-<meta name="theme-color" content="#dfdbeb">
+<meta name="theme-color" content="#ece3d4">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="cs_CZ">
 <meta property="og:site_name" content="WebTitan">
@@ -21,17 +22,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #dfdbeb;
-    --card: #f7f5fb;
-    --soft: #ebe8f3;
-    --line: #d3cee3;
-    --navy: #2d2f66;
-    --text: #26285a;
-    --muted: #565779;
-    --dim: #5c5d82;
-    --orange: #ff8a1c;
-    --orange-ink: #a34400;
-    --shadow: 0 1px 2px rgba(45, 47, 102, .05), 0 14px 34px -14px rgba(45, 47, 102, .18);
+    color-scheme: light only;
+    --bg: #ece3d4;
+    --card: #faf6ef;
+    --soft: #f2ebdf;
+    --line: #e0d5c3;
+    --navy: #1f3d34;
+    --text: #1b342c;
+    --muted: #4d5a52;
+    --dim: #535f58;
+    --orange: #ff6b3d;
+    --orange-ink: #9c3008;
+    --shadow: 0 1px 2px rgba(31, 61, 52, .05), 0 14px 34px -14px rgba(31, 61, 52, .18);
     --display: "Unbounded", system-ui, sans-serif;
     --sans: "Manrope", system-ui, -apple-system, sans-serif;
   }
@@ -41,21 +43,21 @@
   a { color: inherit; }
   img { max-width: 100%; height: auto; display: block; }
   ul { list-style: none; }
-  :focus-visible { outline: 3px solid #d35400; outline-offset: 2px; border-radius: 8px; }
+  :focus-visible { outline: 3px solid #c4400f; outline-offset: 2px; border-radius: 8px; }
   .wrap { max-width: 1240px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
 
   .nav-wrap { position: sticky; top: 12px; z-index: 10; padding-left: 16px; padding-right: 16px; }
-  .nav { max-width: 1192px; margin: 12px auto 0; display: flex; align-items: center; gap: 12px; padding: 8px 8px 8px 16px; border-radius: 999px; background: rgba(247, 245, 251, .9); border: 1px solid var(--line); box-shadow: 0 10px 30px -18px rgba(45, 47, 102, .3); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+  .nav { max-width: 1192px; margin: 12px auto 0; display: flex; align-items: center; gap: 12px; padding: 8px 8px 8px 16px; border-radius: 999px; background: rgba(250, 246, 239, .9); border: 1px solid var(--line); box-shadow: 0 10px 30px -18px rgba(31, 61, 52, .3); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
   .brand { display: inline-flex; align-items: center; gap: 10px; font-family: var(--display); font-weight: 700; font-size: 16px; letter-spacing: -.03em; color: var(--navy); text-decoration: none; min-height: 44px; }
   .brand img { width: 26px; height: 26px; }
   .brand small { font-family: var(--sans); font-weight: 600; font-size: 14px; color: var(--muted); letter-spacing: 0; }
-  .back { margin-left: auto; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px; border-radius: 999px; background: var(--orange); color: var(--navy); font-weight: 800; font-size: 15px; text-decoration: none; box-shadow: 0 10px 26px -8px rgba(255, 138, 28, .6); }
-  .back:hover { background: #ff9733; }
+  .back { margin-left: auto; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px; border-radius: 999px; background: var(--orange); color: #10241d; font-weight: 800; font-size: 15px; text-decoration: none; box-shadow: 0 10px 26px -8px rgba(255, 107, 61, .6); }
+  .back:hover { background: #ff7f57; }
 
   main { padding-top: 34px; }
   .doc { max-width: 860px; margin: 0 auto; background: var(--card); border: 1px solid var(--line); border-radius: 26px; box-shadow: var(--shadow); padding: clamp(26px, 5vw, 56px); }
   .kicker { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--navy); }
-  .kicker::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 10px 1px rgba(255, 138, 28, .75); }
+  .kicker::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 10px 1px rgba(255, 107, 61, .75); }
   h1 { font-family: var(--display); font-weight: 700; font-size: clamp(28px, 4.4vw, 42px); line-height: 1.08; letter-spacing: -.045em; color: var(--navy); margin: 12px 0 14px; }
   .intro { color: var(--muted); font-size: 17.5px; max-width: 62ch; }
   .updated { margin-top: 12px; font-size: 14px; font-weight: 700; color: var(--dim); }

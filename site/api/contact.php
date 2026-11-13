@@ -203,17 +203,17 @@ if ($phone !== '') {
 $rows[] = ['Odesláno', $h($when) . ' · ' . $h($page !== '' ? $page : '/')];
 $tr = '';
 foreach ($rows as [$k, $v]) {
-    $tr .= '<tr><td style="padding:6px 14px 6px 0;color:#565779;white-space:nowrap;vertical-align:top">' . $k
-         . '</td><td style="padding:6px 0;color:#26285a;font-weight:600">' . $v . '</td></tr>';
+    $tr .= '<tr><td style="padding:6px 14px 6px 0;color:#4d5a52;white-space:nowrap;vertical-align:top">' . $k
+         . '</td><td style="padding:6px 0;color:#1b342c;font-weight:600">' . $v . '</td></tr>';
 }
-$html = '<div style="font-family:Arial,Helvetica,sans-serif;max-width:640px;margin:0 auto;color:#26285a">'
-      . '<div style="height:6px;background:#ff8a1c;border-radius:6px 6px 0 0"></div>'
-      . '<div style="background:#f7f5fb;border:1px solid #d3cee3;border-top:0;border-radius:0 0 12px 12px;padding:22px 24px">'
-      . '<h2 style="margin:0 0 14px;font-size:20px;color:#2d2f66">' . $h($label) . '</h2>'
+$html = '<div style="font-family:Arial,Helvetica,sans-serif;max-width:640px;margin:0 auto;color:#1b342c">'
+      . '<div style="height:6px;background:#ff6b3d;border-radius:6px 6px 0 0"></div>'
+      . '<div style="background:#faf6ef;border:1px solid #e0d5c3;border-top:0;border-radius:0 0 12px 12px;padding:22px 24px">'
+      . '<h2 style="margin:0 0 14px;font-size:20px;color:#1f3d34">' . $h($label) . '</h2>'
       . '<table style="border-collapse:collapse;font-size:15px">' . $tr . '</table>'
-      . '<div style="margin-top:18px;padding:16px 18px;background:#ffffff;border:1px solid #d3cee3;border-radius:10px;'
+      . '<div style="margin-top:18px;padding:16px 18px;background:#ffffff;border:1px solid #e0d5c3;border-radius:10px;'
       . 'white-space:pre-wrap;font-size:15px;line-height:1.55">' . $h($message) . '</div>'
-      . '<p style="margin:16px 0 0;font-size:13px;color:#565779">Odpovězte přímo na tento e-mail – odpověď půjde zákazníkovi ('
+      . '<p style="margin:16px 0 0;font-size:13px;color:#4d5a52">Odpovězte přímo na tento e-mail – odpověď půjde zákazníkovi ('
       . $h($email) . ').</p></div></div>';
 $text = $label . "\n\nJméno: $name\nE-mail: $email\n" . ($phone !== '' ? "Telefon: $phone\n" : '')
       . "Odesláno: $when · " . ($page !== '' ? $page : '/') . "\n\n$message\n\n"
