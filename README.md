@@ -11,7 +11,7 @@ Složka `site/` se na server kopíruje 1:1 do `/var/www/webtitan/public_html`.
 
 | Soubor | Co dělá |
 |---|---|
-| `site/index.html` | hlavní stránka (vznikla z návrhu 8 – Levandule), SEO, JSON-LD, formuláře |
+| `site/index.html` | hlavní stránka (design 11 – Písek), SEO, JSON-LD, formuláře; cílení na Karlovarský a Plzeňský kraj |
 | `site/ochrana-osobnich-udaju.html` | zásady ochrany osobních údajů |
 | `site/assets/` | obrázky webu (fotka ve WebP, OG obrázek, ikony, náhledy projektů) |
 | `site/api/contact.php` | formuláře (poptávka, 15min hovor, bezplatná kontrola) → uloží do `data/leads.sqlite`, pošle mi e-mail, zákazníkovi krátké potvrzení (přes Resend) a s `CRM_TOKEN` i do CRM |
@@ -19,9 +19,11 @@ Složka `site/` se na server kopíruje 1:1 do `/var/www/webtitan/public_html`.
 | `site/api/health.php` | pro hlídání dostupnosti: `OK` / `FAIL …`; zároveň znovu zkouší doručit poptávky, které napoprvé neodešly |
 | `site/api/inbound.php` | webhook Resend Receiving: e-maily na `*@webtitan.cz` přepošle na `MAIL_TO` (ověřuje podpis, zápis do `data/inbound.sqlite`) |
 | `site/robots.txt`, `site/sitemap.xml`, `site/favicon.ico` | pro vyhledávače a prohlížeče |
-| `site/designs.html` | rozcestník návrhů s náhledy a lajkováním (`noindex`) |
-| `site/design<N>.html`, `site/design-assets/` | jednotlivé návrhy a jejich obrázky |
-| `site/api/likes.php` | lajky návrhů (jeden návštěvník = jeden lajk na návrh, `data/likes.sqlite`) |
+| `site/<služba>/index.html` | podstránky služeb (vývoj aplikací, mobilní aplikace, web, e-shop, správa serverů) |
+| `site/clanky/` | články (seznam + jednotlivé články, `BlogPosting` v JSON-LD, v sitemapě) |
+| `site/404.html`, `site/index.php` | vlastní stránka 404 (router pro neexistující adresy) |
+
+Návrhy designů 1–14 a jejich lajkování byly z webu odstraněny – zůstávají v historii gitu (před commitem s úklidem).
 
 Lokální náhled: `python3 -m http.server 8000 --directory site` (PHP endpointy lokálně neběží – formuláře pak nabídnou odeslání e-mailem).
 
@@ -31,7 +33,6 @@ Mimo web i git, ve složce `/var/www/webtitan/data` (vlastník `webtitan`, práv
 
 - `leads.sqlite` – všechny poptávky z formulářů (záloha k e-mailům)
 - `inbound.sqlite` – přijaté e-maily na `@webtitan.cz`
-- `likes.sqlite` – lajky návrhů
 - `contact.env` – konfigurace e-mailu:
 
 ```

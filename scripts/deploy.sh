@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Nasadí web webtitan.cz: zkopíruje obsah složky site/ na server do /var/www/webtitan/public_html.
 #
-# - Statický web + pár PHP endpointů (api/contact.php, api/inbound.php, api/likes.php, api/health.php), žádný build, žádný Docker.
+# - Statický web + pár PHP endpointů (api/contact.php, api/inbound.php, api/health.php), žádný build, žádný Docker.
+# - Kopíruje bez --delete (ve webrootu můžou být soubory panelu): smazaný soubor je potřeba odstranit i na serveru ručně.
 # - Na serveru se nastaví vlastník webtitan:webtitan, složky 750, soubory 640.
 # - Nic se nemaže a data (/var/www/webtitan/data – poptávky, lajky, přijaté e-maily, konfigurace) se nepřepisují.
 # - Po nasazení se ověří, že stránky a endpointy na webu odpovídají.
@@ -51,6 +52,9 @@ done
 for d in "$SITE"/*/; do        # podstránky ve složkách (např. /tvorba-webu/)
   [ -f "$d/index.html" ] && expect "$(basename "$d")/" 200
 done
+for d in "$SITE"/clanky/*/; do # jednotlivé články
+  [ -f "$d/index.html" ] && expect "clanky/$(basename "$d")/" 200
+done
 expect robots.txt 200
 expect sitemap.xml 200
 expect neexistujici-stranka-test 404   # vlastní stránka 404 přes index.php
@@ -59,10 +63,5 @@ expect api/contact.php 405   # přijímá jen POST – GET nic neodesílá
 expect api/inbound.php 405   # webhook Resendu – jen POST s podpisem
 expect api/_mail.php 404     # sdílená knihovna – zvenku se nespouští
 expect api/health.php 200    # „OK“ = konfigurace v pořádku a žádná nedoručená poptávka ani příchozí e-mail
-if curl -fsS -A 'webtitan-deploy-check' "$SITE_URL/api/likes.php" | grep -q '"counts"'; then
-  echo "  OK    /api/likes.php"
-else
-  echo "  CHYBA /api/likes.php"; fail=1
-fi
 if [ "$fail" -ne 0 ]; then echo "Nasazení proběhlo, ale něco na webu neodpovídá." >&2; exit 1; fi
 echo "Hotovo: $SITE_URL/"

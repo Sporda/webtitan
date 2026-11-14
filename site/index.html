@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light only">
-<title>Vývoj aplikací na míru, tvorba webů a e-shopů | WebTitan</title>
-<meta name="description" content="Vývoj webových a mobilních aplikací na míru od 24 950 Kč, tvorba webů od 9 970 Kč a e-shopů od 19 870 Kč. Pevná cena předem, přímo s programátorem.">
+<title>Vývoj aplikací, weby a e-shopy – Karlovy Vary, Plzeň | WebTitan</title>
+<meta name="description" content="Aplikace na míru od 24 950 Kč, weby od 9 970 Kč a e-shopy od 19 870 Kč pro firmy z Karlovarského a Plzeňského kraje. Pevná cena předem, přímo s programátorem.">
 <link rel="canonical" href="https://webtitan.cz/">
 <meta name="theme-color" content="#ece3d4">
 <meta name="author" content="Jan Šporek">
@@ -14,14 +14,14 @@
 <meta property="og:site_name" content="WebTitan">
 <meta property="og:url" content="https://webtitan.cz/">
 <meta property="og:title" content="Jan Šporek – vývoj aplikací na míru, tvorba webů a e-shopů">
-<meta property="og:description" content="Vývoj aplikací na míru, mobilní aplikace, tvorba webů a e-shopů. Pevná cena předem, nezávazný 15min hovor zdarma.">
+<meta property="og:description" content="Vývoj aplikací na míru, mobilní aplikace, tvorba webů a e-shopů pro firmy ze západních Čech. Pevná cena předem, nezávazný 15min hovor zdarma.">
 <meta property="og:image" content="https://webtitan.cz/assets/og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Jan Šporek – WebTitan: aplikace, weby a e-shopy na míru">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Jan Šporek – vývoj aplikací na míru, tvorba webů a e-shopů">
-<meta name="twitter:description" content="Vývoj aplikací na míru, mobilní aplikace, tvorba webů a e-shopů. Pevná cena předem, nezávazný 15min hovor zdarma.">
+<meta name="twitter:description" content="Vývoj aplikací na míru, mobilní aplikace, tvorba webů a e-shopů pro firmy ze západních Čech. Pevná cena předem, nezávazný 15min hovor zdarma.">
 <meta name="twitter:image" content="https://webtitan.cz/assets/og.jpg">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
@@ -972,10 +972,16 @@
   .exit-x { position: absolute; top: 14px; right: 14px; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line-2); background: #fff; cursor: pointer; font-size: 17px; display: grid; place-items: center; }
   .exit-x:hover { border-color: var(--violet); }
   .exit-in h2 { font-size: clamp(22px, 2.4vw, 28px); margin: 4px 44px 10px 0; }
-  .exit-in > p { color: var(--muted); margin-bottom: 18px; }
+  .exit-in > p, .exit-v > p { color: var(--muted); margin-bottom: 18px; }
   .exit-in .lm-fields { flex-direction: row; flex-wrap: wrap; }
   .exit-in .lm-fields .fld { flex: 1 1 200px; }
+  .exit-in .lm-fields .fld.wide { flex-basis: 100%; }
   .exit-alt { margin-top: 14px; display: flex; justify-content: center; flex-wrap: wrap; gap: 0 18px; }
+  /* on phones and tablets: a sheet from the bottom edge instead of a box in the middle */
+  dialog.exit.sheet { margin: auto 0 0; width: 100%; max-width: 100%; max-height: 92vh; }
+  dialog.exit.sheet[open] { animation: sheet-up .38s cubic-bezier(.2, .8, .2, 1); }
+  dialog.exit.sheet .exit-in { border-radius: 26px 26px 0 0; max-height: 92vh; overflow-y: auto; overscroll-behavior: contain; padding-bottom: calc(22px + env(safe-area-inset-bottom)); }
+  @keyframes sheet-up { from { transform: translateY(100%); } }
 
   /* reveal */
   .rv { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s cubic-bezier(.2, .8, .2, 1); }
@@ -1155,7 +1161,7 @@
    "logo": "https://webtitan.cz/assets/logo.png",
    "image": "https://webtitan.cz/assets/og.jpg",
    "email": "kontakt@webtitan.cz",
-   "description": "Vývoj webových a mobilních aplikací na míru od 24 950 Kč, tvorba webů od 9 970 Kč a e-shopů od 19 870 Kč. Pevná cena předem, přímo s programátorem.",
+   "description": "Aplikace na míru od 24 950 Kč, weby od 9 970 Kč a e-shopy od 19 870 Kč pro firmy z Karlovarského a Plzeňského kraje. Pevná cena předem, přímo s programátorem.",
    "founder": {
     "@id": "https://webtitan.cz/#jan"
    },
@@ -1171,10 +1177,15 @@
     "propertyID": "IČO",
     "value": "74792148"
    },
-   "areaServed": {
-    "@type": "Country",
-    "name": "Česká republika"
-   },
+   "areaServed": [
+    {"@type": "AdministrativeArea", "name": "Karlovarský kraj"},
+    {"@type": "AdministrativeArea", "name": "Plzeňský kraj"},
+    {"@type": "City", "name": "Karlovy Vary"},
+    {"@type": "City", "name": "Sokolov"},
+    {"@type": "City", "name": "Cheb"},
+    {"@type": "City", "name": "Plzeň"},
+    {"@type": "Country", "name": "Česká republika"}
+   ],
    "priceRange": "od 9 970 Kč",
    "sameAs": [
     "https://www.linkedin.com/in/jan-%C5%A1porek-07a39168/",
@@ -1201,6 +1212,14 @@
      "acceptedAnswer": {
       "@type": "Answer",
       "text": "Ve vybraný čas vám zavolám, nebo pošlu odkaz na videohovor. Zeptám se, co dnes řešíte a co by vám pomohlo. Řeknu vám upřímně, jestli a jak to dává smysl a v jakém cenovém rozmezí se pohybujeme. Nic nepodepisujete a k ničemu se nezavazujete."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Kde působíte? Můžeme se potkat osobně?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Sídlím v Horním Slavkově u Sokolova. Za firmami z Karlovarského a Plzeňského kraje rád přijedu osobně – Karlovy Vary, Sokolov, Cheb, Ostrov, Mariánské Lázně i Plzeň. S klienty z ostatních krajů pracuji na dálku po telefonu, přes videohovor a e-mail – funguje to stejně dobře."
      }
     },
     {
@@ -1365,6 +1384,7 @@
             </div>
             <p class="micro">
               <span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Ozvu se do 24 hodin (v&nbsp;pracovní dny)</span>
+              <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Karlovarský a&nbsp;Plzeňský kraj – i&nbsp;osobně</span>
               <span class="cap-badge" data-capacity hidden></span>
             </p>
           </div>
@@ -1973,18 +1993,19 @@
           <span class="kicker gt">Kdo to pro vás postaví</span>
           <h2>Dobrý den, jsem Jan.</h2>
           <p>Weby a&nbsp;aplikace stavím od roku 2006. Začínal jsem kódováním šablon, prošel jsem správou firemních sítí a&nbsp;serverů a&nbsp;dnes navrhuji a&nbsp;programuji aplikace, weby a&nbsp;e-shopy na míru – od prvního návrhu až po server, na kterém běží.</p>
+          <p>Sídlím v&nbsp;Horním Slavkově u&nbsp;Sokolova a&nbsp;západní Čechy znám i&nbsp;pracovně – šest let jsem dělal IT v&nbsp;sokolovské firmě a&nbsp;pět let v&nbsp;Plzni. <strong>S&nbsp;firmami z&nbsp;Karlovarského a&nbsp;Plzeňského kraje se rád potkám osobně</strong> – v&nbsp;Karlových Varech, Sokolově, Chebu i&nbsp;v&nbsp;Plzni. Klienty odjinud obsloužím na dálku.</p>
           <p>Jako programátor na volné noze pracuji sám, a&nbsp;to je pro vás výhoda: <strong>nikdo si vás nepřehazuje</strong> mezi obchodníkem, projektovým manažerem a&nbsp;programátorem. Člověk, se kterým mluvíte, je ten, kdo to postaví.</p>
           <p>Nemám rád, když klient nerozumí tomu, za co platí. Proto vám všechno vysvětlím lidsky, <strong>cenu řeknu předem</strong> a&nbsp;to, co postavím, bude celé vaše.</p>
           </div>
           <div class="letter-side">
           <div class="facts">
             <div class="fact"><b>Od roku 2023</b><span>Full-stack vývoj a&nbsp;správa serverů (Šikmo s.r.o. / OSVČ)</span></div>
-            <div class="fact"><b>2017–2023</b><span>IT specialista, programátor a&nbsp;správce sítí (VUJO s.r.o.)</span></div>
-            <div class="fact"><b>2010–2015</b><span>IT a&nbsp;webové aplikace (DISTRACT s.r.o.)</span></div>
+            <div class="fact"><b>2017–2023</b><span>IT specialista, programátor a&nbsp;správce sítí (VUJO s.r.o., Sokolov)</span></div>
+            <div class="fact"><b>2010–2015</b><span>IT a&nbsp;webové aplikace (DISTRACT s.r.o., Plzeň)</span></div>
             <div class="fact"><b>2006–2010</b><span>Webmaster a&nbsp;kódování webů (Humdrum s.r.o.)</span></div>
           </div>
           <div class="sign">
-            <div class="name"><b>Jan Šporek</b><svg viewBox="0 0 170 18" aria-hidden="true"><path d="M2 12c30-8 60-10 90-6s50 3 76-4"/></svg><small>WebTitan · Praha a&nbsp;celá ČR</small></div>
+            <div class="name"><b>Jan Šporek</b><svg viewBox="0 0 170 18" aria-hidden="true"><path d="M2 12c30-8 60-10 90-6s50 3 76-4"/></svg><small>WebTitan · Karlovy Vary · Sokolov · Plzeň</small></div>
             <div class="socials">
               <a class="icon-btn" href="mailto:kontakt@webtitan.cz" aria-label="E-mail"><svg viewBox="0 0 24 24"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm1 2.3V17h16V7.3l-8 5.6-8-5.6zM5.4 7l6.6 4.6L18.6 7H5.4z"/></svg></a>
               <a class="icon-btn" href="https://www.linkedin.com/in/jan-%C5%A1porek-07a39168/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a>
@@ -2012,6 +2033,10 @@
           <details class="rv" open>
             <summary>Jak probíhá 15min hovor?<span class="pm"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></summary>
             <p class="ans">Ve vybraný čas vám zavolám, nebo pošlu odkaz na videohovor. Zeptám se, co dnes řešíte a&nbsp;co by vám pomohlo. Řeknu vám upřímně, jestli a&nbsp;jak to dává smysl a&nbsp;v&nbsp;jakém cenovém rozmezí se pohybujeme. Nic nepodepisujete a&nbsp;k&nbsp;ničemu se nezavazujete.</p>
+          </details>
+          <details class="rv">
+            <summary>Kde působíte? Můžeme se potkat osobně?<span class="pm"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+            <p class="ans">Sídlím v&nbsp;Horním Slavkově u&nbsp;Sokolova. Za firmami z&nbsp;Karlovarského a&nbsp;Plzeňského kraje rád přijedu osobně – Karlovy Vary, Sokolov, Cheb, Ostrov, Mariánské Lázně i&nbsp;Plzeň. S&nbsp;klienty z&nbsp;ostatních krajů pracuji na dálku po telefonu, přes videohovor a&nbsp;e-mail – funguje to stejně dobře.</p>
           </details>
           <details class="rv">
             <summary>Kolik to bude stát?<span class="pm"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></summary>
@@ -2379,6 +2404,7 @@
       <a href="#kalkulacka">Kalkulačka</a>
       <a href="#kontrola">Posouzení zdarma</a>
       <a href="#faq">Otázky</a>
+      <a href="/clanky/">Články</a>
       <a href="/ochrana-osobnich-udaju.html">Ochrana osobních údajů</a>
     </nav>
     <nav class="foot-svc" aria-label="Služby"><a href="/vyvoj-aplikaci-na-miru/">Vývoj aplikací na míru</a><a href="/mobilni-aplikace/">Mobilní aplikace</a><a href="/tvorba-webu/">Tvorba webových stránek</a><a href="/tvorba-e-shopu/">Tvorba e-shopu</a><a href="/sprava-serveru/">Správa serverů</a></nav>
@@ -2399,10 +2425,45 @@
   <a href="#kontakt" class="btn btn-grad" tabindex="-1" data-open="call" data-cta="mobile_bar"><svg><use href="#i-phone"/></svg>Domluvit hovor</a>
 </div>
 
-<!-- exit-intent (desktop) -->
+<!-- exit-intent: desktop (mouse leaves the page) + phones (quick scroll back up, return to the tab) -->
 <dialog class="exit" id="exit-dlg" aria-labelledby="exit-t">
   <div class="exit-in">
     <button type="button" class="exit-x" data-close aria-label="Zavřít">✕</button>
+    <div class="exit-v" data-only="app">
+    <span class="kicker gt">Než odejdete</span>
+    <h2 id="exit-t-app">Vyplatí se vám aplikace? Řeknu vám to zdarma</h2>
+    <p>Popište v&nbsp;pár větách, jak dnes pracujete, nebo vložte odkaz na tabulku. Do 2 pracovních dnů vám napíšu, jestli a&nbsp;jak se to dá zjednodušit a&nbsp;kolik by to zhruba stálo.</p>
+    <form class="lm-form" data-kind="app" data-source="exit" novalidate>
+      <div class="hp" aria-hidden="true"><label for="hp-lm-exit-a">Nevyplňujte</label><input type="text" id="hp-lm-exit-a" name="website" value="" tabindex="-1" autocomplete="off" aria-hidden="true"></div>
+      <div class="lm-fields">
+        <div class="fld wide">
+          <label for="lm-text-x">Co dnes řešíte? *</label>
+          <textarea id="lm-text-x" name="text" rows="3" placeholder="Např. zakázky vedeme v&nbsp;Excelu a&nbsp;každý pátek je ručně přepisujeme do plánu…" aria-describedby="e-lm-text-x" required></textarea>
+          <p class="err-msg" id="e-lm-text-x"></p>
+        </div>
+        <div class="fld">
+          <label for="lm-email-xa">Kam vám pošlu posouzení? *</label>
+          <input id="lm-email-xa" name="email" type="email" autocomplete="email" placeholder="jan@firma.cz" aria-describedby="e-lm-email-xa" required>
+          <p class="err-msg" id="e-lm-email-xa"></p>
+        </div>
+        <button class="btn btn-grad" type="submit" data-cta="exit_lm_app"><span class="lbl">Chci posouzení zdarma</span> <span class="arr">→</span></button>
+        <p class="lm-note" style="width:100%">Zdarma, bez závazku a&nbsp;bez obchodních telefonátů.</p>
+        <p class="consent">Odesláním souhlasíte se zpracováním údajů pro vyřízení poptávky – <a href="/ochrana-osobnich-udaju.html">zásady ochrany osobních údajů</a>.</p>
+      </div>
+      <div class="lm-done" hidden tabindex="-1">
+        <span class="done-ic sm"><svg><use href="#i-check"/></svg></span>
+        <div><b>Díky, mám to u&nbsp;sebe.</b><p>Do 2 pracovních dnů vám napíšu, jestli a&nbsp;jak se dá váš proces zjednodušit.</p></div>
+      </div>
+      <div class="lm-fail" hidden>
+        <b>Odeslání se nepovedlo.</b>
+        <p class="rate-msg" hidden>Zkuste to prosím za chvíli, nebo napište e-mailem.</p>
+        <p>Pošlete mi to prosím e-mailem – text jsem vám připravil.</p>
+        <a class="btn btn-grad lm-mailto" href="mailto:kontakt@webtitan.cz">Odeslat e-mailem <span class="arr">→</span></a>
+        <small>nebo napište na <a href="mailto:kontakt@webtitan.cz">kontakt@webtitan.cz</a></small>
+      </div>
+    </form>
+    </div>
+    <div class="exit-v" data-only="web" hidden>
     <span class="kicker gt">Než odejdete</span>
     <h2 id="exit-t">Chcete zdarma zkontrolovat svůj web?</h2>
     <p>Pošlete mi odkaz a&nbsp;do 2 pracovních dnů vám zdarma pošlu 5 konkrétních věcí, které vám berou poptávky.</p>
@@ -2411,7 +2472,7 @@
       <div class="lm-fields">
         <div class="fld">
           <label for="lm-url-x">Adresa vašeho webu *</label>
-          <input id="lm-url-x" name="url" type="text" inputmode="url" autocomplete="url" placeholder="www.vasefirma.cz" aria-describedby="e-lm-url-x" required autofocus>
+          <input id="lm-url-x" name="url" type="text" inputmode="url" autocomplete="url" placeholder="www.vasefirma.cz" aria-describedby="e-lm-url-x" required>
           <p class="err-msg" id="e-lm-url-x"></p>
         </div>
         <div class="fld">
@@ -2435,6 +2496,7 @@
         <small>nebo napište na <a href="mailto:kontakt@webtitan.cz">kontakt@webtitan.cz</a></small>
       </div>
     </form>
+    </div>
     <p class="exit-alt">
       <a href="#kontakt" class="link-cta" data-close data-open="call" data-cta="exit_call">Raději si domluvit 15min hovor <span class="arr">→</span></a>
       <a href="#kontakt" class="link-cta" data-close data-open="form" data-cta="exit_form">Poslat poptávku <span class="arr">→</span></a>
@@ -3159,34 +3221,73 @@
     });
   });
 
-  // ---------- exit-intent (desktop only, max once per 7 days) ----------
+  // ---------- exit-intent ----------
+  // Desktop: the mouse leaves through the top edge (towards the tabs / address bar / close button).
+  // Phones and tablets: a quick scroll back up after reading a good part of the page, or coming back
+  // to the tab after a while away; shown as a sheet from the bottom. The offer follows the app / web switch.
+  // At most once per 7 days, never after a sent form, not while the contact section is on screen.
+  // ?exit=1 shows it right away and ignores all of that (for testing; nothing is remembered).
   (function () {
     const dlg = $("#exit-dlg");
     if (!dlg || typeof dlg.showModal !== "function") return;
+    const force = new URLSearchParams(location.search).has("exit");
     const desktop = window.matchMedia("(hover: hover) and (pointer: fine) and (min-width: 1024px)");
     const t0 = Date.now();
     let contactIn = false;
     let shown = false;
     new IntersectionObserver(([e]) => { contactIn = e.isIntersecting; }, { threshold: 0 }).observe($("#kontakt"));
-    function allowed() {
-      if (shown || submitted || dlg.open || contactIn) return false;
-      if (!desktop.matches) return false;
-      if (Date.now() - t0 < 8000) return false;
+    function allowed(minMs) {
+      if (shown || dlg.open || ui.dlgOpen) return false;
+      if (force) return true;
+      if (submitted || contactIn) return false;
+      if (Date.now() - t0 < minMs) return false;
       if (store.get("wt7-submitted")) return false;
       const last = store.get("wt7-exit");
       if (last && Date.now() - last < WEEK) return false;
       return true;
     }
-    document.addEventListener("mouseout", e => {
-      if (e.relatedTarget || e.clientY > 0) return;
-      if (!allowed()) return;
+    function show(trigger) {
       shown = true;
-      store.set("wt7-exit", Date.now());
+      if (!force) store.set("wt7-exit", Date.now());
+      const app = seg.value === "app";
+      dlg.setAttribute("aria-labelledby", app ? "exit-t-app" : "exit-t");
+      dlg.classList.toggle("sheet", !desktop.matches);
       dlg.showModal();
+      if (desktop.matches) {
+        const field = $(app ? "#lm-text-x" : "#lm-url-x");
+        if (field) field.focus();
+      }
       ui.dlgOpen = true;
       ui.updateBar();
-      track("exit_intent_shown", {});
+      track("exit_intent_shown", { trigger, segment: seg.value });
+    }
+    document.addEventListener("mouseout", e => {
+      if (e.relatedTarget || e.clientY > 8 || !desktop.matches) return;
+      if (allowed(8000)) show("mouse");
     });
+    // phones: an upward flick of more than half a screen within ~0.6 s, after reading at least a third
+    let lastY = window.scrollY;
+    let upFrom = null;
+    let deepest = 0;
+    window.addEventListener("scroll", () => {
+      if (desktop.matches) return;
+      const y = window.scrollY;
+      const now = performance.now();
+      deepest = Math.max(deepest, (y + window.innerHeight) / document.documentElement.scrollHeight);
+      if (y >= lastY) upFrom = null;
+      else if (!upFrom || now - upFrom.t > 600) upFrom = { y: lastY, t: now };
+      lastY = y;
+      if (upFrom && upFrom.y - y > window.innerHeight * 0.55 && deepest > 0.33 && y > 400 && allowed(15000)) {
+        show("scroll_up");
+      }
+    }, { passive: true });
+    // phones: back in the tab after at least 15 s somewhere else
+    let hiddenAt = 0;
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) { hiddenAt = Date.now(); return; }
+      if (!desktop.matches && hiddenAt && Date.now() - hiddenAt > 15000 && allowed(15000)) show("return");
+    });
+    if (force) setTimeout(() => { if (allowed(0)) show("test"); }, 700);
     dlg.addEventListener("close", () => { ui.dlgOpen = false; ui.updateBar(); });
     dlg.addEventListener("click", e => {
       if (e.target === dlg || (e.target.closest("[data-close]") && !e.target.closest("[data-open]"))) dlg.close();

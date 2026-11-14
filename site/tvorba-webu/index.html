@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light only">
-<title>Tvorba webových stránek na míru od 9 970 Kč | WebTitan</title>
-<meta name="description" content="Tvorba webových stránek na míru od 9 970 Kč. Design bez šablony, poptávkový formulář do e-mailu, obsah si upravíte sami. Pevná cena předem.">
+<title>Tvorba webových stránek – Karlovy Vary, Sokolov, Plzeň | WebTitan</title>
+<meta name="description" content="Tvorba webových stránek na míru od 9 970 Kč pro firmy z Karlovarského a Plzeňského kraje. Design bez šablony, poptávky do e-mailu, obsah si upravíte sami.">
 <link rel="canonical" href="https://webtitan.cz/tvorba-webu/">
 <meta name="theme-color" content="#ece3d4">
 <meta name="author" content="Jan Šporek">
@@ -14,13 +14,13 @@
 <meta property="og:site_name" content="WebTitan">
 <meta property="og:url" content="https://webtitan.cz/tvorba-webu/">
 <meta property="og:title" content="Tvorba webových stránek na míru od 9 970 Kč – WebTitan">
-<meta property="og:description" content="Tvorba webových stránek na míru od 9 970 Kč. Design bez šablony, poptávkový formulář do e-mailu, obsah si upravíte sami. Pevná cena předem.">
+<meta property="og:description" content="Tvorba webových stránek na míru od 9 970 Kč pro firmy z Karlovarského a Plzeňského kraje. Design bez šablony, poptávky do e-mailu, obsah si upravíte sami.">
 <meta property="og:image" content="https://webtitan.cz/assets/og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Tvorba webových stránek na míru od 9 970 Kč – WebTitan">
-<meta name="twitter:description" content="Tvorba webových stránek na míru od 9 970 Kč. Design bez šablony, poptávkový formulář do e-mailu, obsah si upravíte sami. Pevná cena předem.">
+<meta name="twitter:description" content="Tvorba webových stránek na míru od 9 970 Kč pro firmy z Karlovarského a Plzeňského kraje. Design bez šablony, poptávky do e-mailu, obsah si upravíte sami.">
 <meta name="twitter:image" content="https://webtitan.cz/assets/og.jpg">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
@@ -103,6 +103,8 @@
   .tick { flex: none; width: 24px; height: 24px; border-radius: 50%; background: var(--grad); display: grid; place-items: center; margin-top: 1px; }
   .tick svg { width: 13px; height: 13px; stroke: var(--on-grad); stroke-width: 3; fill: none; stroke-linecap: round; stroke-linejoin: round; }
   .micro { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 14px; color: var(--muted); font-weight: 600; }
+  .micro { gap: 8px 18px; }
+  .mi { display: inline-flex; align-items: center; gap: 8px; }
   .micro svg { width: 16px; height: 16px; stroke: var(--orange-ink); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex: none; }
   .sum { padding: clamp(22px, 2.6vw, 32px); display: flex; flex-direction: column; gap: 16px; }
   .sum-price small { display: block; font-size: 13px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
@@ -166,6 +168,7 @@
   .price-big span { display: block; color: var(--muted); font-weight: 700; }
   .price-card ul { display: flex; flex-direction: column; gap: 12px; }
   .price-card li { display: flex; gap: 12px; align-items: flex-start; font-weight: 600; }
+  .price-note a { color: var(--navy); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
   .price-note { margin-top: 16px; color: var(--muted); font-size: 15px; }
 
   .cases { display: flex; flex-direction: column; gap: var(--gap); }
@@ -282,7 +285,7 @@
    "@id": "https://webtitan.cz/tvorba-webu/#sluzba",
    "name": "Tvorba webových stránek",
    "serviceType": "Tvorba webových stránek",
-   "description": "Tvorba webových stránek na míru od 9 970 Kč. Design bez šablony, poptávkový formulář do e-mailu, obsah si upravíte sami. Pevná cena předem.",
+   "description": "Tvorba webových stránek na míru od 9 970 Kč pro firmy z Karlovarského a Plzeňského kraje. Design bez šablony, poptávky do e-mailu, obsah si upravíte sami.",
    "url": "https://webtitan.cz/tvorba-webu/",
    "provider": {
     "@type": "ProfessionalService",
@@ -290,10 +293,15 @@
     "name": "WebTitan",
     "url": "https://webtitan.cz/"
    },
-   "areaServed": {
-    "@type": "Country",
-    "name": "Česká republika"
-   },
+   "areaServed": [
+    {"@type": "AdministrativeArea", "name": "Karlovarský kraj"},
+    {"@type": "AdministrativeArea", "name": "Plzeňský kraj"},
+    {"@type": "City", "name": "Karlovy Vary"},
+    {"@type": "City", "name": "Sokolov"},
+    {"@type": "City", "name": "Cheb"},
+    {"@type": "City", "name": "Plzeň"},
+    {"@type": "Country", "name": "Česká republika"}
+   ],
    "offers": {
     "@type": "Offer",
     "priceCurrency": "CZK",
@@ -384,6 +392,7 @@
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
   <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
   <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
   <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
 </svg>
 <a class="skip" href="#obsah">Přeskočit na obsah</a>
@@ -412,7 +421,7 @@
           <p class="lead">Firemní web, který zákazníkům rychle řekne, co děláte, a&nbsp;přivede vám poptávky. Postavím vám rychlý a&nbsp;přehledný web přesně podle toho, jak vaše firma funguje – bez agentury, bez zbytečných schůzek, s&nbsp;jedním člověkem, který to celé udělá.</p>
           <ul class="checks"><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Design na míru, žádná šablona</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Poptávkový formulář přímo do e-mailu</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Obsah si upravíte sami</li></ul>
           <div class="dual"><a href="/#kontakt" class="btn btn-grad"><svg aria-hidden="true"><use href="#i-phone"/></svg>Domluvit 15min hovor</a><a href="/#kontakt" class="btn btn-line">Poslat poptávku</a></div>
-          <p class="micro"><svg aria-hidden="true"><use href="#i-clock"/></svg>Ozvu se do 24 hodin (v&nbsp;pracovní dny)</p>
+          <p class="micro"><span class="mi"><svg aria-hidden="true"><use href="#i-clock"/></svg>Ozvu se do 24 hodin (v&nbsp;pracovní dny)</span><span class="mi"><svg aria-hidden="true"><use href="#i-pin"/></svg>Karlovarský a&nbsp;Plzeňský kraj – i&nbsp;osobně</span></p>
         </div>
         <aside class="card sum" aria-label="Shrnutí">
           <div class="sum-price"><small>Cena</small><b class="gt">od 9 970 Kč</b><span>pevná cena předem</span></div>
@@ -422,7 +431,7 @@
             <div class="fact"><dt>S&nbsp;kým jednáte</dt><dd>Přímo s&nbsp;tím, kdo to staví</dd></div>
             <div class="fact"><dt>DPH</dt><dd>Nejsem plátce DPH – ceny jsou konečné</dd></div>
           </dl>
-          <div class="me-row"><span class="avatar" role="img" aria-label="Jan Šporek"></span><div><b>Jan Šporek</b><span>Weby a&nbsp;aplikace stavím od roku 2006. Pracuji sám – kdo s&nbsp;vámi mluví, ten to i&nbsp;staví.</span></div></div>
+          <div class="me-row"><span class="avatar" role="img" aria-label="Jan Šporek"></span><div><b>Jan Šporek</b><span>Weby a&nbsp;aplikace stavím od roku 2006, sídlím u&nbsp;Sokolova. Kdo s&nbsp;vámi mluví, ten to i&nbsp;staví – v&nbsp;Karlovarském a&nbsp;Plzeňském kraji klidně i&nbsp;osobně.</span></div></div>
         </aside>
       </div>
     </div>
@@ -454,7 +463,7 @@
       <div class="head"><div><span class="kicker">Cena</span><h2>Kolik stojí tvorba webových stránek</h2></div></div>
       <div class="card price-card gb">
         <div class="price-big"><small>Cena</small><b class="gt">od 9 970 Kč</b><span>pevná cena za konkrétní rozsah</span></div>
-        <div><ul><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Pevnou cenu dostanete po úvodním hovoru – co si odsouhlasíme, to platí.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Firemní web bývá hotový obvykle za 2–4 týdny.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Provoz a&nbsp;správa se platí zvlášť, od 990 Kč měsíčně.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Nejsem plátce DPH, takže uvedené ceny jsou konečné.</li></ul><p class="price-note">Výsledná cena záleží na rozsahu – co má řešení umět a&nbsp;na co ho napojíme. Přesnou cenu vám řeknu po úvodním hovoru.</p></div>
+        <div><ul><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Pevnou cenu dostanete po úvodním hovoru – co si odsouhlasíme, to platí.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Firemní web bývá hotový obvykle za 2–4 týdny.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Provoz a&nbsp;správa se platí zvlášť, od 990 Kč měsíčně.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Nejsem plátce DPH, takže uvedené ceny jsou konečné.</li></ul><p class="price-note">Výsledná cena záleží na rozsahu – co má řešení umět a&nbsp;na co ho napojíme. Přesnou cenu vám řeknu po úvodním hovoru. Podrobněji v&nbsp;článku <a href="/clanky/kolik-stoji-web-a-e-shop/">Kolik stojí firemní web a&nbsp;e-shop</a>.</p></div>
       </div>
     </div>
   </section>
@@ -502,6 +511,7 @@
       <a href="/#reference">Reference</a>
       <a href="/#kalkulacka">Kalkulačka</a>
       <a href="/#faq">Otázky</a>
+      <a href="/clanky/">Články</a>
       <a href="/ochrana-osobnich-udaju.html">Ochrana osobních údajů</a>
     </nav>
     <nav class="foot-svc" aria-label="Služby"><b>Služby</b><a href="/vyvoj-aplikaci-na-miru/">Vývoj aplikací na míru</a><a href="/mobilni-aplikace/">Mobilní aplikace</a><a href="/tvorba-webu/" aria-current="page">Tvorba webových stránek</a><a href="/tvorba-e-shopu/">Tvorba e-shopu</a><a href="/sprava-serveru/">Správa serverů a&nbsp;webů</a></nav>
