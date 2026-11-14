@@ -15,7 +15,7 @@
     // Sklik → Nástroje → Měřicí kód Seznamu (SEM) → ID, např. "123456"
     semId: "",
     // Google Ads → Cíle → Konverze: ID účtu "AW-123456789" a štítky konverzí ("AW-123456789/AbC-dEfGhI")
-    gadsId: "",
+    gadsId: "AW-966280527",
     gadsLead: "",
     gadsCheck: "", // prázdné = použije se gadsLead
     value: { lead: 1000, check: 300 } // Kč
