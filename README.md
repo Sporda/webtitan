@@ -14,7 +14,9 @@ Složka `site/` se na server kopíruje 1:1 do `/var/www/webtitan/public_html`.
 | `site/index.html` | hlavní stránka (vznikla z návrhu 8 – Levandule), SEO, JSON-LD, formuláře |
 | `site/ochrana-osobnich-udaju.html` | zásady ochrany osobních údajů |
 | `site/assets/` | obrázky webu (fotka ve WebP, OG obrázek, ikony, náhledy projektů) |
-| `site/api/contact.php` | formuláře (poptávka, 15min hovor, bezplatná kontrola) → uloží do `data/leads.sqlite` a pošle e-mailem přes Resend |
+| `site/api/contact.php` | formuláře (poptávka, 15min hovor, bezplatná kontrola) → uloží do `data/leads.sqlite`, pošle mi e-mail, zákazníkovi krátké potvrzení (přes Resend) a s `CRM_TOKEN` i do CRM |
+| `site/api/_mail.php` | sdílená knihovna: databáze poptávek, e-mail s poptávkou, potvrzení zákazníkovi (zvenku vrací 404) |
+| `site/api/health.php` | pro hlídání dostupnosti: `OK` / `FAIL …`; zároveň znovu zkouší doručit poptávky, které napoprvé neodešly |
 | `site/api/inbound.php` | webhook Resend Receiving: e-maily na `*@webtitan.cz` přepošle na `MAIL_TO` (ověřuje podpis, zápis do `data/inbound.sqlite`) |
 | `site/robots.txt`, `site/sitemap.xml`, `site/favicon.ico` | pro vyhledávače a prohlížeče |
 | `site/designs.html` | rozcestník návrhů s náhledy a lajkováním (`noindex`) |
@@ -38,6 +40,11 @@ RESEND_FULL_API_KEY=re_…       # čtení přijatých e-mailů („Full access�
 RESEND_WEBHOOK_SECRET=whsec_…  # podpisový klíč webhooku email.received → https://webtitan.cz/api/inbound.php
 MAIL_TO=adresa, kam chodí poptávky i přeposlané e-maily
 MAIL_FROM=WebTitan <kontakt@webtitan.cz>
+# volitelně:
+CONFIRM_FROM=Jan Šporek – WebTitan <kontakt@webtitan.cz>   # odesílatel potvrzení zákazníkovi
+CONFIRM=0                                                # vypne potvrzení zákazníkovi
+CRM_TOKEN=dcrm_…   # token pro zápis z crm.webtitan.cz (Můj účet → API tokeny) → poptávky jdou i do CRM (Poptávky)
+CRM_URL=https://crm.webtitan.cz/api/v1/leads             # výchozí hodnota
 ```
 
 ## E-mail
@@ -45,6 +52,23 @@ MAIL_FROM=WebTitan <kontakt@webtitan.cz>
 - Odesílání i příjem běží přes Resend, doména `webtitan.cz` (region eu-west-1).
 - DNS je ve WEDOS: DKIM `resend._domainkey`, SPF/MX pro `send`, MX `webtitan.cz → 10 receive-euw1.forge.rmta.net` (příjem).
 - Server sám poštu neposílá ani nepřijímá (Oracle Cloud blokuje port 25).
+- Potvrzení zákazníkovi záměrně neopakuje nic z formuláře (ani jméno, ani zprávu) a jedna adresa dostane nejvýš 2 za den,
+  aby formulář nešel zneužít k posílání vlastního textu na cizí adresy. Odpověď na potvrzení jde na kontakt@ → přes inbound.php ke mně.
+
+## Hlídání (UptimeRobot)
+
+`https://webtitan.cz/api/health.php` vrací `OK` (200), nebo `FAIL …` (503):
+
+- `config` – chybí klíč k Resendu nebo adresát v `contact.env`
+- `leads:N` – N poptávek za poslední 3 dny se nepodařilo doručit (zkouší se znovu při každém volání: první hodinu
+  po 4 min, pak po hodině; poptávku, kterou zákazník mezitím odeslal znovu úspěšně, už neposílá)
+- `crm:N` – N poptávek se nepodařilo poslat do CRM (zkouší se znovu při každém volání; stejné `externalId`
+  `webtitan.cz:<id>` zajistí, že v CRM nevznikne duplicita)
+- `inbound:N` – N příchozích e-mailů se ani po 30 min nepodařilo přeposlat
+- `db` – databázi nejde otevřít
+
+Monitor typu Keyword (hledá `OK`) každých 5 min na tuto adresu + druhý na `https://webtitan.cz/` → upozornění e-mailem
+nebo do aplikace v telefonu, když web spadne nebo se poptávka zasekne.
 
 ## Nasazení
 

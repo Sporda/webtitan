@@ -9,6 +9,9 @@ declare(strict_types=1);
  * 200 {"ok":true} | 400 {"error":"input","fields":{…}} | 429 {"error":"rate"} | 502/503 {"error":"mail"}
  *
  * - Každé odeslání se nejdřív uloží do SQLite (data/leads.sqlite) – i když by e-mail selhal, poptávka se neztratí.
+ * - E-mail posílá sdílená knihovna _mail.php; nedoručené poptávky znovu zkouší health.php.
+ * - Zákazník dostane krátké potvrzení (bez opakování jeho textu, nejvýš 2× za den na jednu adresu).
+ * - S CRM_TOKEN v contact.env jde poptávka i do CRM (crm.webtitan.cz → Poptávky), i když e-mail selže.
  * - Konfigurace (klíč k Resendu, adresát) je v /var/www/webtitan/data/contact.env mimo web a mimo git:
  *     RESEND_API_KEY=re_…
  *     MAIL_TO=adresa@kam.pujdou.poptavky
@@ -16,17 +19,12 @@ declare(strict_types=1);
  * - Ochrana: kontrola Origin, jen JSON, skryté pole „website“ proti robotům, limity na IP (IP se ukládá jen jako otisk).
  */
 
-const DATA_DIR = '/var/www/webtitan/data';
 const ALLOWED_ORIGINS = ['https://webtitan.cz', 'https://www.webtitan.cz'];
-const SOURCES = [
-    'poptavka' => 'Nová poptávka',
-    'hovor'    => 'Žádost o 15min hovor',
-    'kontrola' => 'Bezplatná kontrola / posouzení',
-    'exit'     => 'Bezplatná kontrola (okno při odchodu)',
-];
 const LIMIT_10MIN = 5;
 const LIMIT_DAY = 20;
 const LIMIT_GLOBAL_DAY = 300;
+
+require __DIR__ . '/_mail.php';
 
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
@@ -48,23 +46,6 @@ function clean(string $s, int $max, bool $multiline = false): string
         : preg_replace('/[\x00-\x1F\x7F]+/u', ' ', $s);
     $s = trim((string) $s);
     return mb_substr($s, 0, $max);
-}
-
-function load_config(): array
-{
-    $cfg = [];
-    $file = DATA_DIR . '/contact.env';
-    if (!is_readable($file)) {
-        return $cfg;
-    }
-    foreach (file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line) {
-        if ($line === '' || $line[0] === '#' || !str_contains($line, '=')) {
-            continue;
-        }
-        [$k, $v] = explode('=', $line, 2);
-        $cfg[trim($k)] = trim(trim($v), "\"'");
-    }
-    return $cfg;
 }
 
 if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
@@ -94,7 +75,7 @@ $page = clean((string) ($in['page'] ?? ''), 200);
 $honeypot = trim((string) ($in['website'] ?? ''));
 
 $fields = [];
-if (!array_key_exists($source, SOURCES)) {
+if (!array_key_exists($source, WT_SOURCES)) {
     $fields['source'] = 'Neznámý formulář.';
 }
 if (mb_strlen($name) < 2) {
@@ -114,11 +95,11 @@ if ($fields) {
 }
 
 // --- storage ---
-if (!is_dir(DATA_DIR) || !is_writable(DATA_DIR)) {
+if (!is_dir(WT_DATA_DIR) || !is_writable(WT_DATA_DIR)) {
     error_log('contact: data dir missing or not writable');
     out(503, ['error' => 'mail']);
 }
-$secretFile = DATA_DIR . '/secret.key';
+$secretFile = WT_DATA_DIR . '/secret.key';
 if (!is_file($secretFile)) {
     file_put_contents($secretFile, bin2hex(random_bytes(32)), LOCK_EX);
     @chmod($secretFile, 0600);
@@ -126,17 +107,7 @@ if (!is_file($secretFile)) {
 $ipHash = hash_hmac('sha256', (string) ($_SERVER['REMOTE_ADDR'] ?? ''), trim((string) file_get_contents($secretFile)));
 
 try {
-    $db = new PDO('sqlite:' . DATA_DIR . '/leads.sqlite', null, null, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
-    $db->exec('PRAGMA busy_timeout = 3000');
-    $db->exec('PRAGMA journal_mode = WAL');
-    $db->exec('CREATE TABLE IF NOT EXISTS leads (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        created INTEGER NOT NULL,
-        source TEXT NOT NULL, name TEXT NOT NULL, email TEXT NOT NULL, phone TEXT NOT NULL,
-        message TEXT NOT NULL, page TEXT NOT NULL, ip TEXT NOT NULL, ua TEXT NOT NULL,
-        spam INTEGER NOT NULL DEFAULT 0, status TEXT NOT NULL DEFAULT \'new\', info TEXT NOT NULL DEFAULT \'\'
-    )');
-    $db->exec('CREATE INDEX IF NOT EXISTS leads_ip_created ON leads (ip, created)');
+    $db = wt_leads_db();
 
     $now = time();
     $q = $db->prepare('SELECT COUNT(*) FROM leads WHERE ip = ? AND created > ?');
@@ -165,94 +136,67 @@ if ($spam) {
     out(200, ['ok' => true]);
 }
 
-// --- e-mail ---
-$cfg = load_config();
-$key = $cfg['RESEND_API_KEY'] ?? '';
-$to = $cfg['MAIL_TO'] ?? '';
-$from = $cfg['MAIL_FROM'] ?? 'WebTitan <kontakt@webtitan.cz>';
+// --- e-mail pro mě (sdílená knihovna _mail.php – stejný kód používá health.php pro opakované doručení) ---
+$cfg = wt_config();
+$lead = [
+    'id' => $leadId, 'created' => $now, 'source' => $source, 'name' => $name, 'email' => $email,
+    'phone' => $phone, 'message' => $message, 'page' => $page,
+];
+[$ok, $info] = wt_send_lead($lead, $cfg);
+$crm = wt_crm_enabled($cfg);
+try {
+    // crm = pending: kdyby se odeslání do CRM níž nestihlo, health.php ho dokončí.
+    $db->prepare('UPDATE leads SET status = ?, info = ?, attempts = 1, last_try = ?, crm = ? WHERE id = ?')
+       ->execute([$ok ? 'sent' : 'failed', mb_substr($info, 0, 500), $now, $crm ? 'pending' : '', $leadId]);
+} catch (Throwable $e) {
+    error_log('contact mark: ' . $e->getMessage());
+}
+if (!$ok) {
+    // Zákazník uvidí chybu s odkazem na e-mail; poptávka zůstává v DB (a v CRM) a health.php zkusí e-mail znovu.
+    error_log('contact mail failed: ' . $info);
+}
 
-function mark(PDO $db, int $id, string $status, string $info): void
-{
+// Potvrzení zákazníkovi jen když poptávka opravdu odešla (jinak formulář ukazuje chybu).
+$confirm = false;
+if ($ok) {
     try {
-        $db->prepare('UPDATE leads SET status = ?, info = ? WHERE id = ?')->execute([$status, mb_substr($info, 0, 500), $id]);
+        $confirm = wt_confirm_allowed($db, $cfg, $email, $now);
     } catch (Throwable $e) {
-        error_log('contact mark: ' . $e->getMessage());
+        error_log('contact confirm check: ' . $e->getMessage());
     }
 }
 
-if ($key === '' || !filter_var($to, FILTER_VALIDATE_EMAIL)) {
-    mark($db, $leadId, 'failed', 'not configured');
-    error_log('contact: mail not configured');
-    out(503, ['error' => 'mail']);
+// --- odpověď prohlížeči; potvrzení a CRM až potom, aby formulář nečekal ---
+http_response_code($ok ? 200 : 502);
+echo json_encode($ok ? ['ok' => true] : ['error' => 'mail']);
+if (!$confirm && !$crm) {
+    exit;
+}
+if (function_exists('fastcgi_finish_request')) {
+    fastcgi_finish_request();
 }
 
-$label = SOURCES[$source];
-$type = preg_match('/^Typ:\s*(.+)$/mu', $message, $m) ? clean($m[1], 60) : '';
-$subject = $label . ($type !== '' ? ' – ' . $type : '') . ' – ' . $name;
-$when = (new DateTimeImmutable('now', new DateTimeZone('Europe/Prague')))->format('j. n. Y H:i');
-
-$h = static fn (string $s): string => htmlspecialchars($s, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
-$rows = [
-    ['Formulář', $h($label)],
-    ['Jméno', $h($name)],
-    ['E-mail', '<a href="mailto:' . $h($email) . '">' . $h($email) . '</a>'],
-];
-if ($phone !== '') {
-    $rows[] = ['Telefon', '<a href="tel:' . $h(preg_replace('/[^0-9+]/', '', $phone)) . '">' . $h($phone) . '</a>'];
-}
-$rows[] = ['Odesláno', $h($when) . ' · ' . $h($page !== '' ? $page : '/')];
-$tr = '';
-foreach ($rows as [$k, $v]) {
-    $tr .= '<tr><td style="padding:6px 14px 6px 0;color:#4d5a52;white-space:nowrap;vertical-align:top">' . $k
-         . '</td><td style="padding:6px 0;color:#1b342c;font-weight:600">' . $v . '</td></tr>';
-}
-$html = '<div style="font-family:Arial,Helvetica,sans-serif;max-width:640px;margin:0 auto;color:#1b342c">'
-      . '<div style="height:6px;background:#ff6b3d;border-radius:6px 6px 0 0"></div>'
-      . '<div style="background:#faf6ef;border:1px solid #e0d5c3;border-top:0;border-radius:0 0 12px 12px;padding:22px 24px">'
-      . '<h2 style="margin:0 0 14px;font-size:20px;color:#1f3d34">' . $h($label) . '</h2>'
-      . '<table style="border-collapse:collapse;font-size:15px">' . $tr . '</table>'
-      . '<div style="margin-top:18px;padding:16px 18px;background:#ffffff;border:1px solid #e0d5c3;border-radius:10px;'
-      . 'white-space:pre-wrap;font-size:15px;line-height:1.55">' . $h($message) . '</div>'
-      . '<p style="margin:16px 0 0;font-size:13px;color:#4d5a52">Odpovězte přímo na tento e-mail – odpověď půjde zákazníkovi ('
-      . $h($email) . ').</p></div></div>';
-$text = $label . "\n\nJméno: $name\nE-mail: $email\n" . ($phone !== '' ? "Telefon: $phone\n" : '')
-      . "Odesláno: $when · " . ($page !== '' ? $page : '/') . "\n\n$message\n\n"
-      . "Odpovězte přímo na tento e-mail – odpověď půjde zákazníkovi.\n";
-
-$payload = json_encode([
-    'from'     => $from,
-    'to'       => [$to],
-    'reply_to' => $email,
-    'subject'  => $subject,
-    'html'     => $html,
-    'text'     => $text,
-], JSON_UNESCAPED_UNICODE);
-
-$ch = curl_init('https://api.resend.com/emails');
-curl_setopt_array($ch, [
-    CURLOPT_POST           => true,
-    CURLOPT_POSTFIELDS     => $payload,
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_CONNECTTIMEOUT => 6,
-    CURLOPT_TIMEOUT        => 15,
-    CURLOPT_HTTPHEADER     => [
-        'Authorization: Bearer ' . $key,
-        'Content-Type: application/json',
-        'User-Agent: webtitan-contact/1.0',
-    ],
-]);
-$resp = curl_exec($ch);
-$code = (int) curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
-$err = curl_error($ch);
-curl_close($ch);
-
-if ($resp !== false && $code >= 200 && $code < 300) {
-    $id = (string) (json_decode((string) $resp, true)['id'] ?? '');
-    mark($db, $leadId, 'sent', $id);
-    out(200, ['ok' => true]);
+if ($confirm) {
+    [$cok, $cinfo] = wt_send_confirmation($lead, $cfg);
+    try {
+        $db->prepare('UPDATE leads SET confirm = ? WHERE id = ?')->execute([$cok ? 'sent' : 'failed', $leadId]);
+    } catch (Throwable $e) {
+        error_log('contact confirm mark: ' . $e->getMessage());
+    }
+    if (!$cok) {
+        error_log('contact confirm failed: ' . $cinfo);
+    }
 }
 
-$info = $err !== '' ? 'curl: ' . $err : 'resend ' . $code . ': ' . mb_substr((string) $resp, 0, 300);
-mark($db, $leadId, 'failed', $info);
-error_log('contact mail failed: ' . $info);
-out(502, ['error' => 'mail']);
+// --- do CRM (crm.webtitan.cz → Poptávky); při chybě to health.php zkusí znovu ---
+if ($crm) {
+    [$pok, $pinfo] = wt_push_crm($lead, $cfg);
+    try {
+        $db->prepare('UPDATE leads SET crm = ? WHERE id = ?')->execute([$pok ? 'sent' : 'failed', $leadId]);
+    } catch (Throwable $e) {
+        error_log('contact crm mark: ' . $e->getMessage());
+    }
+    if (!$pok) {
+        error_log('contact crm failed: ' . $pinfo);
+    }
+}

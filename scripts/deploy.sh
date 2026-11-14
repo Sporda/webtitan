@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Nasadí web webtitan.cz: zkopíruje obsah složky site/ na server do /var/www/webtitan/public_html.
 #
-# - Statický web + pár PHP endpointů (api/contact.php, api/inbound.php, api/likes.php), žádný build, žádný Docker.
+# - Statický web + pár PHP endpointů (api/contact.php, api/inbound.php, api/likes.php, api/health.php), žádný build, žádný Docker.
 # - Na serveru se nastaví vlastník webtitan:webtitan, složky 750, soubory 640.
 # - Nic se nemaže a data (/var/www/webtitan/data – poptávky, lajky, přijaté e-maily, konfigurace) se nepřepisují.
 # - Po nasazení se ověří, že stránky a endpointy na webu odpovídají.
@@ -57,6 +57,8 @@ expect neexistujici-stranka-test 404   # vlastní stránka 404 přes index.php
 expect assets/fonts/unbounded-latin.woff2 200
 expect api/contact.php 405   # přijímá jen POST – GET nic neodesílá
 expect api/inbound.php 405   # webhook Resendu – jen POST s podpisem
+expect api/_mail.php 404     # sdílená knihovna – zvenku se nespouští
+expect api/health.php 200    # „OK“ = konfigurace v pořádku a žádná nedoručená poptávka ani příchozí e-mail
 if curl -fsS -A 'webtitan-deploy-check' "$SITE_URL/api/likes.php" | grep -q '"counts"'; then
   echo "  OK    /api/likes.php"
 else
