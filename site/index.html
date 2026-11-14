@@ -1308,6 +1308,7 @@
 }
 </script>
 <script src="/assets/analytics.js?v=2" defer></script>
+<script src="/assets/lead.js?v=1" defer></script>
 </head>
 <body>
 
@@ -2545,7 +2546,9 @@
       phone: String(p.phone || ""),
       message: String(p.message || ""),
       website: hp ? hp.value : "",
-      page: location.pathname
+      page: location.pathname,
+      // odkud návštěvník přišel (/assets/lead.js) – v e-mailu a v CRM pak vidím, co poptávku přineslo
+      src: typeof window.wtSrc === "function" ? window.wtSrc() : null
     };
     let res;
     try {

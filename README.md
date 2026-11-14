@@ -14,11 +14,13 @@ Složka `site/` se na server kopíruje 1:1 do `/var/www/webtitan/public_html`.
 | `site/index.html` | hlavní stránka (design 11 – Písek), SEO, JSON-LD, formuláře; cílení na Karlovarský a Plzeňský kraj |
 | `site/ochrana-osobnich-udaju.html` | zásady ochrany osobních údajů |
 | `site/assets/` | obrázky webu (fotka ve WebP, OG obrázek, ikony, náhledy projektů) |
-| `site/api/contact.php` | formuláře (poptávka, 15min hovor, bezplatná kontrola) → uloží do `data/leads.sqlite`, pošle mi e-mail, zákazníkovi krátké potvrzení (přes Resend) a s `CRM_TOKEN` i do CRM |
+| `site/assets/lead.js`, `lead.css` | podstránky a články: formulář „Zavolejte mi / Napsat poptávku“ přímo na stránce (`#poptat`), okno při odchodu (`data-offer="app\|web"` na `<script>`), a na všech stránkách včetně hlavní: odkud návštěvník přišel (`window.wtSrc()`) |
+| `site/api/contact.php` | formuláře (poptávka, 15min hovor, zavolání, bezplatná kontrola) → uloží do `data/leads.sqlite`, pošle mi e-mail, zákazníkovi krátké potvrzení (přes Resend) a s `CRM_TOKEN` i do CRM |
 | `site/api/_mail.php` | sdílená knihovna: databáze poptávek, e-mail s poptávkou, potvrzení zákazníkovi (zvenku vrací 404) |
 | `site/api/health.php` | pro hlídání dostupnosti: `OK` / `FAIL …`; zároveň znovu zkouší doručit poptávky, které napoprvé neodešly |
 | `site/api/inbound.php` | webhook Resend Receiving: e-maily na `*@webtitan.cz` přepošle na `MAIL_TO` (ověřuje podpis, zápis do `data/inbound.sqlite`) |
 | `site/robots.txt`, `site/sitemap.xml`, `site/favicon.ico` | pro vyhledávače a prohlížeče |
+| `site/seznam-wmt-….txt` | ověření webu v Seznam Webmaster – nemazat, jinak ověření propadne |
 | `site/<služba>/index.html` | podstránky služeb (vývoj aplikací, mobilní aplikace, web, e-shop, správa serverů) |
 | `site/clanky/` | články (seznam + jednotlivé články, `BlogPosting` v JSON-LD, v sitemapě) |
 | `site/404.html`, `site/index.php` | vlastní stránka 404 (router pro neexistující adresy) |
@@ -26,6 +28,13 @@ Složka `site/` se na server kopíruje 1:1 do `/var/www/webtitan/public_html`.
 Návrhy designů 1–14 a jejich lajkování byly z webu odstraněny – zůstávají v historii gitu (před commitem s úklidem).
 
 Lokální náhled: `python3 -m http.server 8000 --directory site` (PHP endpointy lokálně neběží – formuláře pak nabídnou odeslání e-mailem).
+S PHP: `env WT_DATA_DIR=/tmp/wtdata php -S 127.0.0.1:8000 -t site` – `WT_DATA_DIR` přesměruje databázi a `contact.env` mimo `/var/www` (na serveru se nenastavuje). Bez `RESEND_API_KEY` v `contact.env` se nic neodešle, poptávka se jen uloží.
+
+### Poptávky z podstránek a odkud přišly
+
+- Podstránky služeb a články mají vlastní formulář (`#poptat`): **Zavolejte mi** (jméno + telefon, zdroj `zavolat`, e-mail nepovinný) nebo **Napsat poptávku** (jméno, e-mail, text, zdroj `poptavka`). Všechna tlačítka na stránce na něj skáčou, na hlavní stránku se odtud nikdo posílat nemusí.
+- `lead.js` si po dobu návštěvy (sessionStorage `wt7-src`) pamatuje, odkud návštěvník přišel: `utm_*`, reklamní kliknutí (`gclid` → Google Ads, `sznclid` → Sklik, `msclkid`, `fbclid`), doménu odkazu, první stránku a počet prošlých stránek. Formulář to posílá jako `src`; `_mail.php` z toho udělá srozumitelný kanál (`Sklik`, `Google (vyhledávání)`, `Odkaz z …`, `Přímo (bez odkazu)`…). Kanál je v e-mailu s poptávkou (řádek „Odkud“) a v CRM (pole `channel` + podrobnosti `attribution`).
+- Odkazy, které chci v CRM rozlišit, označit: profil na Googlu `https://webtitan.cz/?utm_source=gbp&utm_medium=organic` (→ „Google profil firmy“), Firmy.cz `?utm_source=firmy.cz`, leták / QR kód `?utm_source=letak&utm_medium=qr` (→ „Kampaň: letak / qr“). Sklik a Google Ads se poznají samy podle automatického značkování.
 
 ## Data a konfigurace na serveru
 

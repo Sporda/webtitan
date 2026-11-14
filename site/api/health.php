@@ -43,7 +43,8 @@ if (is_file(WT_DATA_DIR . '/leads.sqlite')) {
         $since = $now - RETRY_DAYS * 86400;
 
         // Zákazník po chybě poslal formulář znovu a to už prošlo → starou poptávku neposílat dvakrát.
-        $db->prepare('UPDATE leads SET status = \'superseded\' WHERE status = \'failed\' AND spam = 0 AND EXISTS (
+        // (Jen podle e-mailu – „Zavolejte mi“ ho mít nemusí a prázdné adresy spolu nesouvisí.)
+        $db->prepare('UPDATE leads SET status = \'superseded\' WHERE status = \'failed\' AND spam = 0 AND leads.email <> \'\' AND EXISTS (
                           SELECT 1 FROM leads AS l2 WHERE lower(l2.email) = lower(leads.email)
                           AND l2.id > leads.id AND l2.status = \'sent\')')
            ->execute();

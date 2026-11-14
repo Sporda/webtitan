@@ -5,7 +5,10 @@ declare(strict_types=1);
  * Formuláře webtitan.cz (poptávka, 15min hovor, bezplatná kontrola, okno při odchodu) → e-mail přes Resend.
  *
  * POST /api/contact.php  (Content-Type: application/json)
- *   {"source":"poptavka|hovor|kontrola|exit","name":"…","email":"…","phone":"…","message":"…","website":"","page":"/"}
+ *   {"source":"poptavka|hovor|zavolat|kontrola|exit","name":"…","email":"…","phone":"…","message":"…","website":"","page":"/",
+ *    "src":{"source":"…","medium":"…","campaign":"…","click":"sklik","ref":"www.google.com","land":"/…","pages":3}}
+ *   „zavolat“ (Zavolejte mi) potřebuje telefon a e-mail je u něj nepovinný; ostatní formuláře potřebují e-mail.
+ *   „src“ = odkud návštěvník přišel (nepovinné, z /assets/lead.js) → kanál v e-mailu a v CRM.
  * 200 {"ok":true} | 400 {"error":"input","fields":{…}} | 429 {"error":"rate"} | 502/503 {"error":"mail"}
  *
  * - Každé odeslání se nejdřív uloží do SQLite (data/leads.sqlite) – i když by e-mail selhal, poptávka se neztratí.
@@ -81,10 +84,17 @@ if (!array_key_exists($source, WT_SOURCES)) {
 if (mb_strlen($name) < 2) {
     $fields['name'] = 'Vyplňte prosím jméno.';
 }
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+if ($source === 'zavolat') {
+    if ($email !== '' && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $fields['email'] = 'Zkontrolujte prosím e-mail.';
+    }
+    if ($phone === '') {
+        $fields['phone'] = 'Vyplňte prosím telefon, ať vám můžu zavolat.';
+    }
+} elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $fields['email'] = 'Zkontrolujte prosím e-mail.';
 }
-if ($phone !== '' && !preg_match('/^[0-9+()\/.\- ]{6,40}$/', $phone)) {
+if ($phone !== '' && (!preg_match('/^[0-9+()\/.\- ]{6,40}$/', $phone) || preg_match_all('/\d/', $phone) < 9)) {
     $fields['phone'] = 'Zkontrolujte prosím telefon.';
 }
 if (mb_strlen($message) < 10) {
@@ -121,10 +131,13 @@ try {
     }
 
     $spam = $honeypot !== '' ? 1 : 0;
-    $db->prepare('INSERT INTO leads (created, source, name, email, phone, message, page, ip, ua, spam, status)
-                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
+    $attr = wt_attribution($in['src'] ?? null);
+    $channel = $attr ? wt_channel($attr) : '';
+    $attrJson = $attr ? (string) json_encode($attr, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) : '';
+    $db->prepare('INSERT INTO leads (created, source, name, email, phone, message, page, ip, ua, spam, status, channel, attribution)
+                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
        ->execute([$now, $source, $name, $email, $phone, $message, $page, $ipHash,
-                  clean((string) ($_SERVER['HTTP_USER_AGENT'] ?? ''), 300), $spam, $spam ? 'spam' : 'new']);
+                  clean((string) ($_SERVER['HTTP_USER_AGENT'] ?? ''), 300), $spam, $spam ? 'spam' : 'new', $channel, $attrJson]);
     $leadId = (int) $db->lastInsertId();
 } catch (Throwable $e) {
     error_log('contact db: ' . $e->getMessage());
@@ -140,7 +153,7 @@ if ($spam) {
 $cfg = wt_config();
 $lead = [
     'id' => $leadId, 'created' => $now, 'source' => $source, 'name' => $name, 'email' => $email,
-    'phone' => $phone, 'message' => $message, 'page' => $page,
+    'phone' => $phone, 'message' => $message, 'page' => $page, 'channel' => $channel, 'attribution' => $attrJson,
 ];
 [$ok, $info] = wt_send_lead($lead, $cfg);
 $crm = wt_crm_enabled($cfg);

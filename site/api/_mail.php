@@ -12,10 +12,13 @@ if (basename((string) ($_SERVER['SCRIPT_FILENAME'] ?? '')) === '_mail.php') {
     exit;
 }
 
-const WT_DATA_DIR = '/var/www/webtitan/data';
+// Na serveru vždy /var/www/webtitan/data. Proměnná prostředí WT_DATA_DIR je jen pro místní zkoušky (php -S).
+define('WT_DATA_DIR', (string) (getenv('WT_DATA_DIR') ?: '/var/www/webtitan/data'));
 const WT_SOURCES = [
     'poptavka' => 'Nová poptávka',
     'hovor'    => 'Žádost o 15min hovor',
+    // „Zavolejte mi“ na podstránkách a v článcích – stačí jméno a telefon, e-mail nepovinný
+    'zavolat'  => 'Žádost o zavolání',
     'kontrola' => 'Bezplatná kontrola / posouzení',
     'exit'     => 'Bezplatná kontrola (okno při odchodu)',
 ];
@@ -67,6 +70,9 @@ function wt_leads_db(): PDO
         'confirm'  => 'TEXT NOT NULL DEFAULT \'\'',
         // '' = CRM není nastavené, pending = čeká na odeslání, sent / failed
         'crm'      => 'TEXT NOT NULL DEFAULT \'\'',
+        // odkud návštěvník přišel: srozumitelný kanál („Google (vyhledávání)“) a podrobnosti jako JSON
+        'channel'     => 'TEXT NOT NULL DEFAULT \'\'',
+        'attribution' => 'TEXT NOT NULL DEFAULT \'\'',
     ];
     foreach ($add as $col => $def) {
         if (!in_array($col, $have, true)) {
@@ -108,8 +114,141 @@ function wt_h(string $s): string
 }
 
 /**
+ * Odkud návštěvník přišel – posílá ho formulář (window.wtSrc z /assets/lead.js). Bere jen známé klíče:
+ * source/medium/campaign/term/content (= utm_*), click (reklamní kliknutí: google|sklik|bing|facebook),
+ * ref (doména, ze které přišel), land (první stránka návštěvy), pages (kolik stránek prošel).
+ */
+function wt_attribution(mixed $raw): array
+{
+    if (!is_array($raw)) {
+        return [];
+    }
+    $out = [];
+    foreach (['source', 'medium', 'campaign', 'term', 'content'] as $k) {
+        if (is_string($raw[$k] ?? null)) {
+            $v = trim((string) preg_replace('/[\x00-\x1F\x7F]+/u', ' ', $raw[$k]));
+            if ($v !== '') {
+                $out[$k] = mb_substr($v, 0, 100);
+            }
+        }
+    }
+    if (in_array($raw['click'] ?? null, ['google', 'sklik', 'bing', 'facebook'], true)) {
+        $out['click'] = $raw['click'];
+    }
+    $ref = is_string($raw['ref'] ?? null) ? strtolower(trim($raw['ref'])) : '';
+    if ($ref !== '' && preg_match('/^[a-z0-9.-]{1,100}$/', $ref)) {
+        $out['ref'] = $ref;
+    }
+    $land = is_string($raw['land'] ?? null) ? $raw['land'] : '';
+    if (preg_match('~^/[A-Za-z0-9_\-./%]{0,199}$~', $land)) {
+        $out['land'] = $land;
+    }
+    $pages = $raw['pages'] ?? null;
+    if ((is_int($pages) || (is_string($pages) && ctype_digit($pages))) && (int) $pages >= 1 && (int) $pages <= 999) {
+        $out['pages'] = (int) $pages;
+    }
+    return $out;
+}
+
+/** Srozumitelný kanál pro e-mail a CRM: „Sklik“, „Google (vyhledávání)“, „Odkaz z firma.cz“, „Přímo (bez odkazu)“… */
+function wt_channel(array $a): string
+{
+    $src = strtolower((string) ($a['source'] ?? ''));
+    $med = strtolower((string) ($a['medium'] ?? ''));
+    $camp = strtolower((string) ($a['campaign'] ?? ''));
+    $ref = (string) ($a['ref'] ?? '');
+    $click = (string) ($a['click'] ?? '');
+    $paid = preg_match('/^(cpc|ppc|paid|cpm|display|banner|retargeting)/', $med) === 1;
+    $from = static fn (string $re): bool => $ref !== '' && preg_match($re, $ref) === 1;
+
+    if ($click === 'sklik' || str_starts_with($src, 'sklik') || ($paid && str_contains($src, 'seznam'))) {
+        return 'Sklik';
+    }
+    if ($click === 'google' || ($paid && str_contains($src, 'google'))) {
+        return 'Google Ads';
+    }
+    if ($click === 'bing') {
+        return 'Microsoft Ads';
+    }
+    if (in_array($src, ['gbp', 'gmb', 'google-business', 'google_business'], true) || str_contains($camp, 'gbp')) {
+        return 'Google profil firmy';
+    }
+    if ($src === 'firmy' || $src === 'firmy.cz' || $from('/(^|\.)firmy\.cz$/')) {
+        return 'Firmy.cz';
+    }
+    if ($click === 'facebook' || preg_match('/^(facebook|fb|instagram|ig|meta)$/', $src) === 1
+        || $from('/(^|\.)(facebook|instagram)\.com$/')) {
+        return $paid ? 'Facebook / Instagram (reklama)' : 'Facebook / Instagram';
+    }
+    if ($src === 'linkedin' || $from('/(^|\.)linkedin\.com$|^lnkd\.in$/')) {
+        return 'LinkedIn';
+    }
+    if (in_array($med, ['email', 'e-mail', 'newsletter'], true)) {
+        return 'E-mail';
+    }
+    if ($src !== '') {
+        return 'Kampaň: ' . mb_substr((string) $a['source'], 0, 40) . ($med !== '' ? ' / ' . mb_substr((string) $a['medium'], 0, 30) : '');
+    }
+    if ($from('/(^|\.)(chatgpt\.com|openai\.com|perplexity\.ai|claude\.ai|gemini\.google\.com|copilot\.microsoft\.com)$/')) {
+        return 'AI asistent (ChatGPT apod.)';
+    }
+    if ($from('/(^|\.)google\.[a-z.]+$|googlequicksearchbox/')) {
+        return 'Google (vyhledávání)';
+    }
+    if ($from('/(^|\.)mapy\.(cz|com)$/')) {
+        return 'Mapy.com';
+    }
+    if ($from('/(^|\.)seznam\.cz$/')) {
+        return 'Seznam (vyhledávání)';
+    }
+    if ($from('/(^|\.)(bing\.com|duckduckgo\.com|yahoo\.com|ecosia\.org|search\.brave\.com|startpage\.com)$|(^|\.)yandex\./')) {
+        return 'Jiný vyhledávač';
+    }
+    if ($ref !== '') {
+        return 'Odkaz z ' . $ref;
+    }
+    return 'Přímo (bez odkazu)';
+}
+
+/** Podrobnosti o původu uložené u poptávky (JSON v DB, nebo už pole). */
+function wt_attr_of(array $lead): array
+{
+    $a = $lead['attribution'] ?? '';
+    if (is_string($a)) {
+        $a = $a !== '' ? json_decode($a, true) : [];
+    }
+    return is_array($a) ? $a : [];
+}
+
+/** Jeden řádek pro e-mail: „Google (vyhledávání) · kampaň … · vstup /clanky/… · 3 stránky“. */
+function wt_origin_line(array $lead): string
+{
+    $channel = (string) ($lead['channel'] ?? '');
+    if ($channel === '') {
+        return '';
+    }
+    $a = wt_attr_of($lead);
+    $parts = [$channel];
+    if (($a['campaign'] ?? '') !== '') {
+        $parts[] = 'kampaň ' . $a['campaign'];
+    }
+    if (($a['term'] ?? '') !== '') {
+        $parts[] = 'klíčové slovo „' . $a['term'] . '“';
+    }
+    if (($a['land'] ?? '') !== '') {
+        $parts[] = 'vstup ' . $a['land'];
+    }
+    if (isset($a['pages'])) {
+        $n = (int) $a['pages'];
+        $parts[] = $n . ' ' . ($n === 1 ? 'stránka' : ($n < 5 ? 'stránky' : 'stránek'));
+    }
+    return implode(' · ', $parts);
+}
+
+/**
  * E-mail s poptávkou pro mě. Odpověď na něj jde rovnou zákazníkovi (reply_to).
- * $lead: id, created, source, name, email, phone, message, page. $retry = opakované doručení (značka v předmětu).
+ * $lead: id, created, source, name, email (u „zavolat“ může chybět), phone, message, page, channel, attribution.
+ * $retry = opakované doručení (značka v předmětu).
  */
 function wt_send_lead(array $lead, array $cfg, bool $retry = false): array
 {
@@ -128,21 +267,29 @@ function wt_send_lead(array $lead, array $cfg, bool $retry = false): array
     $page = (string) ($lead['page'] ?? '');
     $label = WT_SOURCES[$source] ?? 'Poptávka z webu';
 
+    $hasEmail = filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
     $type = preg_match('/^Typ:\s*(.+)$/mu', $message, $m) ? mb_substr(trim($m[1]), 0, 60) : '';
-    $subject = ($retry ? '[opakované doručení] ' : '') . $label . ($type !== '' ? ' – ' . $type : '') . ' – ' . $name;
+    // bez e-mailu je telefon rovnou v předmětu – v upozornění na mobilu stačí ťuknout a volat
+    $subject = ($retry ? '[opakované doručení] ' : '') . $label . ($type !== '' ? ' – ' . $type : '') . ' – ' . $name
+             . (!$hasEmail && $phone !== '' ? ' – ' . $phone : '');
     $subject = mb_substr(str_replace(["\r", "\n"], ' ', $subject), 0, 250);
     $when = (new DateTimeImmutable('@' . (int) ($lead['created'] ?? time())))
         ->setTimezone(new DateTimeZone('Europe/Prague'))->format('j. n. Y H:i');
 
+    $tel = (string) preg_replace('/[^0-9+]/', '', $phone);
+    $origin = wt_origin_line($lead);
     $rows = [
         ['Formulář', wt_h($label)],
         ['Jméno', wt_h($name)],
-        ['E-mail', '<a href="mailto:' . wt_h($email) . '">' . wt_h($email) . '</a>'],
+        ['E-mail', $hasEmail ? '<a href="mailto:' . wt_h($email) . '">' . wt_h($email) . '</a>' : '— (nechal jen telefon)'],
     ];
     if ($phone !== '') {
-        $rows[] = ['Telefon', '<a href="tel:' . wt_h((string) preg_replace('/[^0-9+]/', '', $phone)) . '">' . wt_h($phone) . '</a>'];
+        $rows[] = ['Telefon', '<a href="tel:' . wt_h($tel) . '">' . wt_h($phone) . '</a>'];
     }
     $rows[] = ['Odesláno', wt_h($when) . ' · ' . wt_h($page !== '' ? $page : '/')];
+    if ($origin !== '') {
+        $rows[] = ['Odkud', wt_h($origin)];
+    }
     $tr = '';
     foreach ($rows as [$k, $v]) {
         $tr .= '<tr><td style="padding:6px 14px 6px 0;color:#4d5a52;white-space:nowrap;vertical-align:top">' . $k
@@ -160,15 +307,20 @@ function wt_send_lead(array $lead, array $cfg, bool $retry = false): array
           . '<table style="border-collapse:collapse;font-size:15px">' . $tr . '</table>'
           . '<div style="margin-top:18px;padding:16px 18px;background:#ffffff;border:1px solid #e0d5c3;border-radius:10px;'
           . 'white-space:pre-wrap;font-size:15px;line-height:1.55">' . wt_h($message) . '</div>'
-          . '<p style="margin:16px 0 0;font-size:13px;color:#4d5a52">Odpovězte přímo na tento e-mail – odpověď půjde zákazníkovi ('
-          . wt_h($email) . ').</p></div></div>';
+          . '<p style="margin:16px 0 0;font-size:13px;color:#4d5a52">'
+          . ($hasEmail
+              ? 'Odpovězte přímo na tento e-mail – odpověď půjde zákazníkovi (' . wt_h($email) . ').'
+              : 'Zákazník nechal jen telefon – zavolejte mu na <a href="tel:' . wt_h($tel) . '">' . wt_h($phone) . '</a>.')
+          . '</p></div></div>';
     $text = ($retry ? "[Opakované doručení – napoprvé se nepodařilo odeslat]\n\n" : '')
-          . $label . "\n\nJméno: $name\nE-mail: $email\n" . ($phone !== '' ? "Telefon: $phone\n" : '')
-          . "Odesláno: $when · " . ($page !== '' ? $page : '/') . "\n\n$message\n\n"
-          . "Odpovězte přímo na tento e-mail – odpověď půjde zákazníkovi.\n";
+          . $label . "\n\nJméno: $name\nE-mail: " . ($hasEmail ? $email : '— (nechal jen telefon)') . "\n"
+          . ($phone !== '' ? "Telefon: $phone\n" : '')
+          . "Odesláno: $when · " . ($page !== '' ? $page : '/') . "\n"
+          . ($origin !== '' ? "Odkud: $origin\n" : '') . "\n$message\n\n"
+          . ($hasEmail ? "Odpovězte přímo na tento e-mail – odpověď půjde zákazníkovi.\n" : "Zákazník nechal jen telefon – zavolejte mu.\n");
 
     $body = ['from' => $from, 'to' => [$to], 'subject' => $subject, 'html' => $html, 'text' => $text];
-    if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    if ($hasEmail) {
         $body['reply_to'] = $email;
     }
     return wt_resend($body, $key);
@@ -190,6 +342,15 @@ function wt_push_crm(array $lead, array $cfg): array
         return [false, 'not configured'];
     }
     $page = (string) ($lead['page'] ?? '');
+    // klíče podrobností v CRM: utm_*, click, referrer, landing, pages
+    $keys = ['source' => 'utm_source', 'medium' => 'utm_medium', 'campaign' => 'utm_campaign', 'term' => 'utm_term',
+             'content' => 'utm_content', 'click' => 'click', 'ref' => 'referrer', 'land' => 'landing', 'pages' => 'pages'];
+    $attr = [];
+    foreach (wt_attr_of($lead) as $k => $v) {
+        if (isset($keys[$k]) && (string) $v !== '') {
+            $attr[$keys[$k]] = (string) $v;
+        }
+    }
     $body = [
         'name'       => (string) ($lead['name'] ?? ''),
         'email'      => ($lead['email'] ?? '') !== '' ? (string) $lead['email'] : null,
@@ -199,6 +360,8 @@ function wt_push_crm(array $lead, array $cfg): array
         'page'       => 'https://webtitan.cz' . (str_starts_with($page, '/') ? $page : '/'),
         'externalId' => 'webtitan.cz:' . (int) ($lead['id'] ?? 0),
         'receivedAt' => gmdate('Y-m-d\TH:i:s\Z', (int) ($lead['created'] ?? time())),
+        'channel'    => ($lead['channel'] ?? '') !== '' ? (string) $lead['channel'] : null,
+        'attribution' => $attr ?: null,
     ];
     $ch = curl_init((string) ($cfg['CRM_URL'] ?? 'https://crm.webtitan.cz/api/v1/leads'));
     curl_setopt_array($ch, [
@@ -255,11 +418,27 @@ function wt_send_confirmation(array $lead, array $cfg): array
                 'Termín vám potvrdím e-mailem do 24 hodin (v pracovní dny). Kdyby vám vybraný čas přestal vyhovovat, stačí odpovědět na tento e-mail a domluvíme jiný.',
             ],
         ],
-        'kontrola', 'exit' => [
-            'Děkuji – tipy pro váš web pošlu do 2 pracovních dnů',
+        // posouzení procesu (aplikace) vs. kontrola webu – obojí chodí jako kontrola / exit
+        'kontrola', 'exit' => str_starts_with((string) ($lead['message'] ?? ''), 'Žádost o bezplatné posouzení')
+            ? [
+                'Děkuji – posouzení pošlu do 2 pracovních dnů',
+                [
+                    'děkuji, žádost o bezplatné posouzení mi dorazila v pořádku.',
+                    'Do 2 pracovních dnů vám napíšu, jestli a jak se dá váš proces zjednodušit a kolik by to zhruba stálo. Je to zdarma a bez závazku, žádné obchodní telefonáty nečekejte.',
+                ],
+            ]
+            : [
+                'Děkuji – tipy pro váš web pošlu do 2 pracovních dnů',
+                [
+                    'děkuji, žádost o bezplatnou kontrolu mi dorazila v pořádku.',
+                    'Do 2 pracovních dnů vám pošlu konkrétní tipy, co na webu zlepšit. Je to zdarma a bez závazku, žádné obchodní telefonáty nečekejte.',
+                ],
+            ],
+        'zavolat' => [
+            'Děkuji – zavolám vám do 24 hodin',
             [
-                'děkuji, žádost o bezplatnou kontrolu mi dorazila v pořádku.',
-                'Do 2 pracovních dnů vám pošlu konkrétní tipy, co na webu zlepšit. Je to zdarma a bez závazku, žádné obchodní telefonáty nečekejte.',
+                'děkuji, žádost o zavolání mi dorazila v pořádku.',
+                'Zavolám vám do 24 hodin (v pracovní dny). Kdybyste chtěli něco poslat předem, stačí odpovědět na tento e-mail.',
             ],
         ],
         default => [

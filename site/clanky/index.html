@@ -27,6 +27,7 @@
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="preload" href="/assets/fonts/unbounded-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/fonts/fonts.css">
+<link rel="stylesheet" href="/assets/lead.css?v=1">
 <style>
   :root {
     color-scheme: light only;
@@ -400,6 +401,7 @@
 }
 </script>
 <script src="/assets/analytics.js?v=2" defer></script>
+<script src="/assets/lead.js?v=1" data-offer="app" defer></script>
 </head>
 <body>
 <svg class="sprite" aria-hidden="true" focusable="false">
@@ -420,7 +422,7 @@
       <a href="/#o-mne">O mně</a>
       <a href="/#faq">Otázky</a>
     </nav>
-    <a href="/#kontakt" class="btn btn-grad"><svg aria-hidden="true"><use href="#i-phone"/></svg><span class="l-long">Domluvit 15min hovor</span><span class="l-short">Domluvit hovor</span></a>
+    <a href="#poptat" class="btn btn-grad" data-mode="call" data-cta="post_nav"><svg aria-hidden="true"><use href="#i-phone"/></svg><span class="l-long">Domluvit 15min hovor</span><span class="l-short">Domluvit hovor</span></a>
   </header>
 </div>
 <main id="obsah">
@@ -436,11 +438,57 @@
     </div>
   </section>
 
-  <section class="sec">
+  <section class="sec" id="poptat">
     <div class="wrap">
-      <div class="card final">
-        <div><h2>Pojďme to nezávazně probrat</h2><p>Vyberte si, co je vám příjemnější: krátký hovor, nebo pár vět v&nbsp;poptávce. Ozvu se do 24 hodin (v&nbsp;pracovní dny).</p><p class="alt">Radši e-mail? Pište na <a href="mailto:kontakt@webtitan.cz">kontakt@webtitan.cz</a></p></div>
-        <div class="dual"><a href="/#kontakt" class="btn btn-grad"><svg aria-hidden="true"><use href="#i-phone"/></svg>Domluvit 15min hovor</a><a href="/#kontakt" class="btn btn-line">Poslat poptávku</a></div>
+      <div class="head"><div><span class="kicker">Nezávazně a&nbsp;zdarma</span><h2>Chcete to probrat na vaší situaci?</h2></div><p>Nechte mi číslo a&nbsp;zavolám vám, nebo napište pár vět. Ozvu se do 24 hodin (v&nbsp;pracovní dny).</p></div>
+      <div class="lb">
+        <div class="card gb lb-card">
+          <div class="lb-tabs" role="tablist" aria-label="Způsob kontaktu">
+            <button type="button" role="tab" id="lb-tab-call" aria-controls="lb-form" aria-selected="true" data-mode="call"><svg aria-hidden="true"><use href="#i-phone"/></svg>Zavolejte mi</button>
+            <button type="button" role="tab" id="lb-tab-form" aria-controls="lb-form" aria-selected="false" tabindex="-1" data-mode="form"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7z"/></svg>Napsat poptávku</button>
+          </div>
+          <form class="lb-form" id="lb-form" role="tabpanel" aria-labelledby="lb-tab-call" data-topic="Zatím nevím" data-mode="call" novalidate>
+            <p class="lb-sub" data-for="call">Stačí jméno a&nbsp;telefon. Zavolám vám do 24 hodin (v&nbsp;pracovní dny), hovor zabere asi 15 minut.</p>
+            <p class="lb-sub" data-for="form" hidden>Stačí pár vět – co dnes řešíte a&nbsp;co by mělo fungovat jinak. Odpovím do 24 hodin (v&nbsp;pracovní dny).</p>
+            <div class="hp" aria-hidden="true"><label for="hp-lb">Nevyplňujte</label><input type="text" id="hp-lb" name="website" value="" tabindex="-1" autocomplete="off" aria-hidden="true"></div>
+            <div class="lb-grid">
+              <div class="fld"><label for="lb-name">Jméno *</label><input id="lb-name" name="name" type="text" autocomplete="name" placeholder="Jan Novák" aria-describedby="e-lb-name"><p class="err-msg" id="e-lb-name"></p></div>
+              <div class="fld" data-for="form" hidden><label for="lb-email">E-mail *</label><input id="lb-email" name="email" type="email" autocomplete="email" placeholder="jan@firma.cz" aria-describedby="e-lb-email"><p class="err-msg" id="e-lb-email"></p></div>
+              <div class="fld"><label for="lb-phone">Telefon <em data-for="call">*</em><em data-for="form" hidden>(nepovinné)</em></label><input id="lb-phone" name="phone" type="tel" autocomplete="tel" placeholder="+420 …" aria-describedby="e-lb-phone"><p class="err-msg" id="e-lb-phone"></p></div>
+              <div class="fld full" data-for="call"><p class="lb-label" id="lb-when-l">Kdy se vám hodí?</p><div class="chips" role="radiogroup" aria-labelledby="lb-when-l"><label><input type="radio" name="when" value="Kdykoli" checked><span>Kdykoli</span></label><label><input type="radio" name="when" value="Dopoledne"><span>Dopoledne</span></label><label><input type="radio" name="when" value="Odpoledne"><span>Odpoledne</span></label></div></div>
+              <div class="fld full"><label for="lb-msg"><span data-for="call">O&nbsp;čem si promluvíme? <em>(nepovinné)</em></span><span data-for="form" hidden>Co potřebujete? *</span></label><textarea id="lb-msg" name="message" rows="3" placeholder="Např. zakázky vedeme v Excelu a hledáme, jak to zjednodušit." aria-describedby="e-lb-msg"></textarea><p class="err-msg" id="e-lb-msg"></p></div>
+            </div>
+            <div class="lb-foot"><button type="submit" class="btn btn-grad" data-cta="post_lead_submit"><span class="lbl">Zavolejte mi</span> <span class="arr">→</span></button><small>Zdarma a&nbsp;nezávazně, nic neprodávám na sílu.</small></div>
+            <p class="consent">Odesláním souhlasíte se zpracováním údajů pro vyřízení poptávky – <a href="/ochrana-osobnich-udaju.html">zásady ochrany osobních údajů</a>.</p>
+            <div class="lb-fail" hidden>
+              <b>Odeslání se nepovedlo – poptávka se ale neztratí.</b>
+              <p class="rate-msg" hidden>Zkuste to prosím za chvíli, nebo napište e-mailem.</p>
+              <p>Klikněte na tlačítko a&nbsp;pošlete ji e-mailem, všechno je předvyplněné.</p>
+              <a class="btn btn-grad lb-mailto" href="mailto:kontakt@webtitan.cz">Odeslat e-mailem <span class="arr">→</span></a>
+              <small>nebo napište přímo na <a href="mailto:kontakt@webtitan.cz">kontakt@webtitan.cz</a></small>
+            </div>
+          </form>
+          <div class="lb-done" hidden>
+            <span class="lb-ok"><svg aria-hidden="true"><use href="#i-check"/></svg></span>
+            <h3 data-done="title" tabindex="-1">Díky! Poptávka dorazila.</h3>
+            <p data-done="text"></p>
+            <a href="/#reference" class="btn btn-line">Mezitím se podívejte na reference</a>
+          </div>
+        </div>
+        <aside class="card lb-info" aria-label="Co bude dál">
+          <div class="me-row"><span class="avatar" role="img" aria-label="Jan Šporek"></span><div><b>Jan Šporek</b><span>Odpovídám osobně. Kdo s&nbsp;vámi mluví, ten to i&nbsp;staví.</span></div></div>
+          <ol class="lb-steps">
+            <li><span class="n">1</span><div><b>Ozvu se do 24 hodin</b><span>Zavolám, nebo odpovím e-mailem.</span></div></li>
+            <li><span class="n">2</span><div><b>Krátký hovor zdarma</b><span>Probereme, co potřebujete a&nbsp;jak to vyřešit.</span></div></li>
+            <li><span class="n">3</span><div><b>Návrh s&nbsp;pevnou cenou</b><span>Rozsah, termín a&nbsp;cenu dostanete písemně. Rozhodnete se v&nbsp;klidu.</span></div></li>
+          </ol>
+          <ul class="lb-sure">
+            <li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Nic nepodepisujete, vše je nezávazné</li>
+            <li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Kód, data i&nbsp;doména patří vám</li>
+            <li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Karlovarský a&nbsp;Plzeňský kraj – i&nbsp;osobně</li>
+          </ul>
+          <p class="lb-alt">Radši e-mail? Pište na <a href="mailto:kontakt@webtitan.cz">kontakt@webtitan.cz</a></p>
+        </aside>
       </div>
     </div>
   </section>
@@ -470,7 +518,7 @@
   </div>
 </footer>
 
-<div class="mbar"><span>15min hovor <b>zdarma</b><br>ozvu se do 24&nbsp;h</span><a href="/#kontakt" class="btn btn-grad"><svg aria-hidden="true"><use href="#i-phone"/></svg>Domluvit hovor</a></div>
+<div class="mbar"><span>15min hovor <b>zdarma</b><br>ozvu se do 24&nbsp;h</span><a href="#poptat" class="btn btn-grad" data-mode="call" data-cta="post_mbar"><svg aria-hidden="true"><use href="#i-phone"/></svg>Domluvit hovor</a></div>
 <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
 </body>
 </html>
