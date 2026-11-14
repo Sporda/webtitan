@@ -6,7 +6,7 @@
  * 2. Formulář „Zavolejte mi / Napsat poptávku“ přímo na stránce (#poptat). Odkazy href="#poptat" s data-mode
  *    (call | form) na něj skočí a přepnou ho.
  * 3. Okno při odchodu, když má <script> atribut data-offer="app|web" – stejná pravidla jako na úvodní stránce:
- *    nejvýš jednou za 7 dní, nikdy po odeslaném formuláři, ?exit=1 ho ukáže hned (na vyzkoušení).
+ *    nejvýš jednou za 7 dní, ne 30 dní po odeslaném formuláři, ?exit=1 ho ukáže hned (na vyzkoušení).
  */
 (() => {
   "use strict";
@@ -200,6 +200,7 @@
         await sendLead(mode === "call" ? "zavolat" : "poptavka", form, { name, email: mode === "call" ? "" : email, phone, message });
         track(event, { status: "ok", form: "page", topic });
         markSubmitted();
+        window.wtConversion?.("lead"); // Sklik / Google Ads – jen se souhlasem (assets/consent.js)
         $("[data-done=title]", done).textContent = mode === "call" ? "Díky! Zavolám vám." : "Díky! Poptávka dorazila.";
         $("[data-done=text]", done).textContent = mode === "call"
           ? "Ozvu se do 24 hodin (v pracovní dny)" + (when !== "Kdykoli" ? ", nejlépe " + when.toLowerCase() : "") + ". Kdybych se nedovolal, zkusím to znovu."
@@ -247,16 +248,43 @@
     lead.open(a.dataset.mode || "call");
   });
 
-  // mobilní lišta s tlačítkem: schovat, když je formulář na obrazovce nebo je otevřené okno
+  // mobilní lišta s tlačítkem: vysune se až pod úvodem stránky (tam jsou vlastní tlačítka) a schová se,
+  // když je na obrazovce formulář nebo je otevřené okno
   const bar = $(".mbar");
+  const heroCard = $(".sp-hero .intro");
+  let heroIn = !!heroCard;
   let leadIn = false;
   let dlgOpen = false;
   function updateBar() {
-    if (bar) bar.classList.toggle("off", leadIn || dlgOpen || submitted);
+    if (bar) bar.classList.toggle("on", !(heroIn || leadIn || dlgOpen || submitted));
+  }
+  if (heroCard) {
+    new IntersectionObserver(([e]) => { heroIn = e.isIntersecting; updateBar(); }, { rootMargin: "0px 0px -35% 0px" }).observe(heroCard);
   }
   if (lead && lead.el) {
     new IntersectionObserver(([e]) => { leadIn = e.isIntersecting; updateBar(); }, { threshold: 0 }).observe(lead.el);
   }
+  updateBar();
+
+  // ---------- jemné objevení karet pod prvním zobrazením ----------
+  // Jen to, co při načtení není vidět (nic neblikne a nic nezdrží vykreslení), text článků zůstává v klidu.
+  (function reveal() {
+    // úvodní stránka (bez #lb-form) si objevování řeší sama
+    if (!lead || reduce || location.hash || typeof IntersectionObserver !== "function") return;
+    const vh = window.innerHeight;
+    const els = $$("main .sec .card, main .sec details, main .sec .head").filter(el => el.getBoundingClientRect().top > vh);
+    if (!els.length) return;
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+    }, { threshold: .08 });
+    els.forEach(el => {
+      const sibs = Array.from(el.parentElement.children).filter(c => els.includes(c));
+      const i = sibs.indexOf(el);
+      if (i > 0) el.style.setProperty("--d", Math.min(i, 4) * 70 + "ms");
+      el.classList.add("rv");
+      io.observe(el);
+    });
+  })();
 
   // ---------- 3. okno při odchodu ----------
   const offer = script && script.dataset.offer;
@@ -298,7 +326,7 @@
         <small>nebo napište na <a href="mailto:kontakt@webtitan.cz">kontakt@webtitan.cz</a></small>
       </div>
     </form>
-    ${lead ? `<p class="wtx-alt"><a href="#poptat" data-mode="call" data-cta="exit_call">Raději mi zavolejte <span class="arr" aria-hidden="true">→</span></a></p>` : ""}
+    <p class="wtx-alt">${lead ? `<a href="#poptat" data-mode="call" data-cta="exit_call">Raději mi zavolejte <span class="arr" aria-hidden="true">→</span></a>` : ""}<a href="tel:+420723793510" data-cta="exit_tel">nebo volejte 723&nbsp;793&nbsp;510</a></p>
   </div>`;
   document.body.appendChild(dlg);
 
@@ -332,6 +360,7 @@
         await sendLead("exit", form, { name: app ? "Posouzení procesu" : "Kontrola webu", email: mail, phone: "", message });
         track("leadmagnet_submit", { status: "ok", source: "exit", kind: app ? "app" : "web", page: location.pathname });
         markSubmitted();
+        window.wtConversion?.("check");
         fields.hidden = true;
         ok.hidden = false;
         ok.focus({ preventScroll: true });
@@ -356,7 +385,9 @@
     if (force) return true;
     if (submitted || leadIn) return false;
     if (Date.now() - t0 < minMs) return false;
-    if (store.get("wt7-submitted")) return false;
+    // po odeslaném formuláři 30 dní nic nenabízet – pak se může vrátit s novou zakázkou
+    const sent = store.get("wt7-submitted");
+    if (sent && Date.now() - sent < 30 * 864e5) return false;
     const last = store.get("wt7-exit");
     if (last && Date.now() - last < WEEK) return false;
     return true;

@@ -20,7 +20,7 @@
 <link rel="preload" href="/assets/fonts/unbounded-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/unbounded-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
-<style>@font-face{font-family:'Manrope';font-style:normal;font-weight:400 800;font-display:swap;src:url(/assets/fonts/manrope-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}@font-face{font-family:'Manrope';font-style:normal;font-weight:400 800;font-display:swap;src:url(/assets/fonts/manrope-latin-ext.woff2) format('woff2');unicode-range:U+0100-017F}@font-face{font-family:'Unbounded';font-style:normal;font-weight:500 700;font-display:swap;src:url(/assets/fonts/unbounded-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}@font-face{font-family:'Unbounded';font-style:normal;font-weight:500 700;font-display:swap;src:url(/assets/fonts/unbounded-latin-ext.woff2) format('woff2');unicode-range:U+0100-017F}</style>
+<style>@font-face{font-family:'Manrope';font-style:normal;font-weight:400 800;font-display:swap;src:url(/assets/fonts/manrope-latin.woff2) format('woff2');unicode-range:U+0020-007E, U+00A0, U+00A7, U+00A9, U+00AB, U+00B0, U+00B7, U+00BB, U+00C1, U+00C4, U+00C9, U+00CD, U+00D3-00D4, U+00D6-00D7, U+00DA, U+00DC-00DD, U+00E1, U+00E4, U+00E9, U+00ED, U+00F3-00F4, U+00F6, U+00FA, U+00FC-00FD, U+2013-2014, U+2018-201A, U+201C-201E, U+2022, U+2026, U+2039-203A, U+20AC, U+2122, U+2191, U+2193, U+2212}@font-face{font-family:'Manrope';font-style:normal;font-weight:400 800;font-display:swap;src:url(/assets/fonts/manrope-latin-ext.woff2) format('woff2');unicode-range:U+010C-010F, U+011A-011B, U+0139-013A, U+013D-013E, U+0147-0148, U+0154-0155, U+0158-0159, U+0160-0161, U+0164-0165, U+016E-016F, U+017D-017E}@font-face{font-family:'Unbounded';font-style:normal;font-weight:500 700;font-display:swap;src:url(/assets/fonts/unbounded-latin.woff2) format('woff2');unicode-range:U+0020-007E, U+00A0, U+00A7, U+00A9, U+00AB, U+00B0, U+00B7, U+00BB, U+00C1, U+00C4, U+00C9, U+00CD, U+00D3-00D4, U+00D6-00D7, U+00DA, U+00DC-00DD, U+00E1, U+00E4, U+00E9, U+00ED, U+00F3-00F4, U+00F6, U+00FA, U+00FC-00FD, U+2013-2014, U+2018-201A, U+201C-201E, U+2022, U+2026, U+2039-203A, U+20AC, U+2122, U+2191, U+2193, U+2212}@font-face{font-family:'Unbounded';font-style:normal;font-weight:500 700;font-display:swap;src:url(/assets/fonts/unbounded-latin-ext.woff2) format('woff2');unicode-range:U+010C-010F, U+011A-011B, U+0139-013A, U+013D-013E, U+0147-0148, U+0154-0155, U+0158-0159, U+0160-0161, U+0164-0165, U+016E-016F, U+017D-017E}@font-face{font-family:'Unbounded Fallback';font-weight:100 600;src:local('Arial'),local('ArialMT'),local('Helvetica'),local('Roboto');size-adjust:133.9%}@font-face{font-family:'Unbounded Fallback';font-weight:700 900;src:local('Arial Bold'),local('Arial-BoldMT'),local('Helvetica Bold'),local('Roboto Bold');size-adjust:129.3%}@font-face{font-family:'Manrope Fallback';font-weight:100 600;src:local('Arial'),local('ArialMT'),local('Helvetica'),local('Roboto');size-adjust:100%}@font-face{font-family:'Manrope Fallback';font-weight:700 900;src:local('Arial Bold'),local('Arial-BoldMT'),local('Helvetica Bold'),local('Roboto Bold');size-adjust:99.4%}@view-transition{navigation:auto}.nav-wrap{view-transition-name:site-nav}::view-transition-old(root),::view-transition-new(root){animation-duration:.22s}@media (prefers-reduced-motion:reduce){@view-transition{navigation:none}}</style>
 <style>
   :root {
     color-scheme: light only;
@@ -35,8 +35,8 @@
     --orange: #ff6b3d;
     --orange-ink: #9c3008;
     --shadow: 0 1px 2px rgba(31, 61, 52, .05), 0 14px 34px -14px rgba(31, 61, 52, .18);
-    --display: "Unbounded", system-ui, sans-serif;
-    --sans: "Manrope", system-ui, -apple-system, sans-serif;
+    --display: "Unbounded", "Unbounded Fallback", system-ui, sans-serif;
+    --sans: "Manrope", "Manrope Fallback", system-ui, -apple-system, sans-serif;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { -webkit-text-size-adjust: 100%; }
@@ -97,6 +97,7 @@
   }
 </style>
 <script src="/assets/analytics.js?v=2" defer></script>
+<script src="/assets/consent.js?v=1" defer></script>
 </head>
 <body>
 <div class="nav-wrap">
@@ -153,14 +154,15 @@
         <li><span><strong>poskytovatel serveru (hostingu)</strong>, na kterém web běží – Oracle Cloud (datacentrum ve Frankfurtu, EU),</span></li>
         <li><span><strong>Resend</strong> (Plus Five Five, Inc., USA) – služba, která zprávu z&nbsp;formuláře doručí do mé e-mailové schránky. Předání do USA probíhá na základě standardních smluvních doložek EU,</span></li>
         <li><span><strong>Google</strong> (Gmail) – poskytovatel mé e-mailové schránky,</span></li>
-        <li><span><strong>PostHog</strong> (PostHog Inc., data uložená v&nbsp;EU) – nástroj na anonymní měření návštěvnosti webu (viz bod&nbsp;7).</span></li>
+        <li><span><strong>PostHog</strong> (PostHog Inc., data uložená v&nbsp;EU) – nástroj na anonymní měření návštěvnosti webu (viz bod&nbsp;7),</span></li>
+        <li><span><strong>Seznam.cz</strong> (Sklik) a&nbsp;<strong>Google</strong> (Google Ads) – jen pokud dáte souhlas s&nbsp;cookies pro měření reklamy (viz bod&nbsp;7).</span></li>
       </ul>
       <p>Všichni zpracovávají údaje jen pro tyto účely. Nikomu dalšímu údaje nepředávám ani neprodávám.</p>
     </section>
 
     <section aria-labelledby="h-prohlizec">
       <h2 id="h-prohlizec"><span class="n">6</span>Co se ukládá jen ve vašem prohlížeči</h2>
-      <p>Aby se rozpracovaná poptávka neztratila, ukládá si ji formulář <strong>jen ve vašem prohlížeči</strong> (tzv. localStorage). Na server se nic nedostane, dokud formulář sami neodešlete. Prohlížeč si také pamatuje vaši volbu „aplikace / web“ a&nbsp;to, zda jste už viděli nabídku bezplatné kontroly.</p>
+      <p>Aby se rozpracovaná poptávka neztratila, ukládá si ji formulář <strong>jen ve vašem prohlížeči</strong> (tzv. localStorage). Na server se nic nedostane, dokud formulář sami neodešlete. Prohlížeč si také pamatuje vaši volbu „aplikace / web“, to, zda jste už viděli nabídku bezplatné kontroly, a&nbsp;vaši volbu v&nbsp;liště cookies.</p>
       <p>Po dobu jedné návštěvy si prohlížeč (tzv. sessionStorage) pamatuje také to, odkud jste na web přišli a&nbsp;na které stránce jste začali. Po zavření panelu se to samo smaže a&nbsp;na server se to dostane jen spolu s&nbsp;formulářem, který sami odešlete.</p>
       <p class="box">Rozpracovanou poptávku smažete tlačítkem <strong>„Začít znovu“</strong> ve formuláři, nebo vymazáním dat webu v&nbsp;nastavení prohlížeče. Po odeslání se smaže sama.</p>
     </section>
@@ -168,7 +170,8 @@
     <section aria-labelledby="h-cookies">
       <h2 id="h-cookies"><span class="n">7</span>Cookies a&nbsp;měření návštěvnosti</h2>
       <p>Abych věděl, jestli web lidem pomáhá, měřím <strong>anonymně</strong> návštěvnost nástrojem PostHog (data v&nbsp;EU): které stránky se zobrazují, odkud návštěvníci přicházejí a&nbsp;na co klikají – například na tlačítka nebo odeslání formuláře. Obsah formulářů se do měření neposílá a&nbsp;nahrávání obrazovky je vypnuté.</p>
-      <p>Měření <strong>nepoužívá cookies</strong> ani jiné ukládání do vašeho prohlížeče, každé zobrazení stránky je samostatné a&nbsp;nespojuji ho s&nbsp;vaší osobou. PostHog přitom zpracuje technické údaje o&nbsp;připojení (např. IP adresu a&nbsp;typ prohlížeče). Pokud máte v&nbsp;prohlížeči zapnuté „Do Not Track“, neměří se nic. Web nepoužívá marketingové cookies, proto se vás neptám na souhlas s&nbsp;cookies. Právní základ: můj oprávněný zájem na zlepšování webu – čl. 6 odst. 1 písm. f) GDPR.</p>
+      <p>Měření <strong>nepoužívá cookies</strong> ani jiné ukládání do vašeho prohlížeče, každé zobrazení stránky je samostatné a&nbsp;nespojuji ho s&nbsp;vaší osobou. PostHog přitom zpracuje technické údaje o&nbsp;připojení (např. IP adresu a&nbsp;typ prohlížeče). Pokud máte v&nbsp;prohlížeči zapnuté „Do Not Track“, neměří se nic. Právní základ: můj oprávněný zájem na zlepšování webu – čl. 6 odst. 1 písm. f) GDPR.</p>
+      <p><strong>Měření reklamy (Sklik a&nbsp;Google Ads) jen se souhlasem.</strong> Pokud na webu poběží reklama, zeptám se vás v&nbsp;liště „Cookies pro měření reklamy“, jestli smím použít cookies Seznamu (Sklik) a&nbsp;Googlu (Google Ads). Slouží k&nbsp;tomu, abych věděl, které reklamy přivádějí poptávky: po odeslání formuláře se jim pošle jen informace, že poptávka vznikla, ne její obsah ani vaše údaje. Bez souhlasu se jejich kódy vůbec nenačtou. Volbu si prohlížeč pamatuje rok a&nbsp;změnit ji můžete kdykoli odkazem „Nastavení cookies“ v&nbsp;patičce. Právní základ: váš souhlas – čl. 6 odst. 1 písm. a) GDPR.</p>
     </section>
 
     <section aria-labelledby="h-prava">
@@ -212,6 +215,7 @@
     <div class="foot-bottom">
       <span>© <span id="year">2026</span> Jan Šporek · WebTitan</span>
       <span class="foot-contact">
+        <a href="tel:+420723793510">+420&nbsp;723&nbsp;793&nbsp;510</a>
         <a href="mailto:kontakt@webtitan.cz">kontakt@webtitan.cz</a>
         <a href="https://www.linkedin.com/in/jan-%C5%A1porek-07a39168/" target="_blank" rel="noopener">LinkedIn</a>
         <a href="https://github.com/jansporek" target="_blank" rel="noopener">GitHub</a>

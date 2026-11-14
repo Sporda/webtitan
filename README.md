@@ -36,6 +36,36 @@ S PHP: `env WT_DATA_DIR=/tmp/wtdata php -S 127.0.0.1:8000 -t site` – `WT_DATA_
 - `lead.js` si po dobu návštěvy (sessionStorage `wt7-src`) pamatuje, odkud návštěvník přišel: `utm_*`, reklamní kliknutí (`gclid` → Google Ads, `sznclid` → Sklik, `msclkid`, `fbclid`), doménu odkazu, první stránku a počet prošlých stránek. Formulář to posílá jako `src`; `_mail.php` z toho udělá srozumitelný kanál (`Sklik`, `Google (vyhledávání)`, `Odkaz z …`, `Přímo (bez odkazu)`…). Kanál je v e-mailu s poptávkou (řádek „Odkud“) a v CRM (pole `channel` + podrobnosti `attribution`).
 - Odkazy, které chci v CRM rozlišit, označit: profil na Googlu `https://webtitan.cz/?utm_source=gbp&utm_medium=organic` (→ „Google profil firmy“), Firmy.cz `?utm_source=firmy.cz`, leták / QR kód `?utm_source=letak&utm_medium=qr` (→ „Kampaň: letak / qr“). Sklik a Google Ads se poznají samy podle automatického značkování.
 
+### Měření konverzí a souhlas s cookies (`assets/consent.js`)
+
+- Nahoře v souboru je `CONFIG`: `semId` (Sklik → Nástroje → Měřicí kód Seznamu), `gadsId` (`AW-…`) a štítky
+  konverzí `gadsLead` / `gadsCheck` (`AW-…/…`), odhadované hodnoty poptávek v Kč. **Dokud jsou ID prázdná, soubor nedělá
+  nic** – žádná lišta, nic se nenačítá.
+- S vyplněným ID se ukáže lišta „Povolit / Jen nezbytné“ (stejně výrazná tlačítka). Měřicí kód Seznamu (`sul.js`) ani
+  Google tag se **bez souhlasu nenačtou vůbec**. Volba platí rok, v patičce přibude „Nastavení cookies“.
+- Formuláře po úspěšném odeslání volají `window.wtConversion("lead" | "check")` → Sklik `SEM('track', 'Lead', {currency: 'CZK', value})`
+  a Google Ads `conversion`. Posílá se jen to, že poptávka vznikla, nikdy obsah ani kontakt.
+- Po změně `consent.js` zvednout `?v=` v odkazech na stránkách (soubory se v prohlížeči drží 30 dní).
+
+### Animace
+
+- Jen `opacity` / `transform` (bez přepočtu rozvržení), s `prefers-reduced-motion: reduce` se nic nehýbe a nic není schované.
+- Úvod (hlavní stránka `.hero .bento > .card`, podstránky `.sp-hero .card`) je vidět od prvního vykreslení a jen se
+  jemně usadí – nikdy ho neschovávat průhledností (zdrželo by to LCP).
+- Objevení při posouvání: hlavní stránka třída `.rv` (skrývá se jen s `html.js`), podstránky a články ji `lead.js`
+  dává jen kartám pod prvním zobrazením; text článků se nehýbe. Sourozenci postupně (`--d`, nejvýš 280 ms).
+- Čísla 20+ a 23 v úvodu naběhnou, otázky se rozbalují plynule (`::details-content`, kde to prohlížeč umí),
+  fajfka po odeslání se dokreslí, mezi stránkami krátké prolnutí (`@view-transition`, hlavička zůstává na místě).
+- Lišta s tlačítkem na mobilu na podstránkách vyjede až pod úvodem (`.mbar.on`).
+
+### Telefon a písma
+
+- Telefon 723 793 510 je v hlavičce (na úzkých podstránkách jen v liště dole), v úvodu stránek, v liště na mobilu, u formuláře,
+  v patičce, v JSON-LD (`telephone`) a v podpisu potvrzovacího e-mailu. Kliknutí se měří jako `cta_click` s `*_tel`.
+- Písma v `assets/fonts` jsou zmenšená jen na znaky češtiny a slovenštiny (Unbounded 71 → 40 kB, Manrope 34 → 22 kB);
+  `unicode-range` v `fonts.css` i ve vložených `@font-face` (hlavní stránka, 404, zásady) odpovídá obsahu souborů.
+  Náhradní písma `Unbounded Fallback` / `Manrope Fallback` (Arial zvětšený na stejnou šířku) brání poskakování stránky.
+
 ## Data a konfigurace na serveru
 
 Mimo web i git, ve složce `/var/www/webtitan/data` (vlastník `webtitan`, práva 700). Nasazení ji nikdy nepřepisuje.

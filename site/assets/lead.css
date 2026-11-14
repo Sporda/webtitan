@@ -69,8 +69,52 @@
 .btn.is-loading .arr { display: none; }
 .btn.is-loading::after { content: ""; width: 16px; height: 16px; border-radius: 50%; border: 2px solid rgba(31, 61, 52, .25); border-top-color: var(--on-loud); animation: lb-spin .8s linear infinite; }
 @keyframes lb-spin { to { transform: rotate(360deg); } }
-.mbar { transition: transform .3s, opacity .3s; }
-.mbar.off { transform: translateY(140%); opacity: 0; pointer-events: none; }
+/* lišta s tlačítkem na mobilu: vysune se až pod úvodem stránky (třídu .on přepíná lead.js) */
+.mbar { transform: translateY(140%); opacity: 0; pointer-events: none; transition: transform .35s cubic-bezier(.2, .8, .2, 1), opacity .25s; }
+.mbar.on { transform: none; opacity: 1; pointer-events: auto; }
+
+/* ---------- pohyb: decentní, jen opacity / transform; kdo má v systému omezený pohyb, nevidí nic ---------- */
+/* úvod stránky je vidět od prvního vykreslení, karty se jen jemně usadí */
+.sp-hero .card { animation: settle .7s cubic-bezier(.2, .8, .2, 1) backwards; }
+.sp-hero .card + .card { animation-delay: .06s; }
+@keyframes settle { from { transform: translateY(12px); } }
+/* karty pod prvním zobrazením se objeví při posouvání (třídu .rv dává lead.js jen jim) */
+.rv { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s cubic-bezier(.2, .8, .2, 1); transition-delay: var(--d, 0s); }
+.rv.in { opacity: 1; transform: none; }
+/* odeslaný formulář: kroužek naskočí a fajfka se dokreslí */
+.lb-ok { animation: pop-in .45s cubic-bezier(.2, .8, .2, 1.2) backwards; }
+.lb-ok svg { stroke-dasharray: 24; animation: draw .45s .2s ease-out backwards; }
+@keyframes pop-in { from { transform: scale(.5); opacity: 0; } }
+@keyframes draw { from { stroke-dashoffset: 24; } }
+/* otázky se rozbalí plynule (kde to prohlížeč neumí, prostě se otevřou) */
+@supports (interpolate-size: allow-keywords) {
+  :root { interpolate-size: allow-keywords; }
+  details::details-content { height: 0; overflow: clip; transition: height .32s cubic-bezier(.2, .8, .2, 1), content-visibility .32s allow-discrete; }
+  details[open]::details-content { height: auto; }
+}
+/* přechod mezi stránkami webu: krátké prolnutí, hlavička zůstává na místě */
+@view-transition { navigation: auto; }
+.nav-wrap { view-transition-name: site-nav; }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: .22s; }
+@media (prefers-reduced-motion: reduce) {
+  .rv { opacity: 1; transform: none; }
+  details::details-content { transition: none !important; }
+  @view-transition { navigation: none; }
+}
+
+/* telefon: v hlavičce číslo (kde je místo) nebo kulatá ikona, v liště na mobilu, v úvodu stránky */
+.nav-tel { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; min-width: 44px; padding: 0 14px; border-radius: 999px; font-weight: 800; font-size: 15px; color: var(--navy); white-space: nowrap; transition: background .2s; }
+.nav-tel:hover { background: var(--soft); }
+.nav-tel svg { width: 17px; height: 17px; stroke: var(--orange-lg); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.mc-tel { display: flex; flex-direction: column; line-height: 1.25; font-size: 12.5px; font-weight: 700; color: var(--muted); white-space: nowrap; }
+.mc-tel b { color: var(--text); font-weight: 800; font-size: 15px; }
+.micro a { color: var(--navy); font-weight: 800; text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 1180px) and (min-width: 1025px) { .nav-tel span { display: none; } .nav-tel { padding: 0; border: 1px solid var(--line-2); background: #fff; } }
+@media (max-width: 1024px) { .nav .nav-tel { margin-left: auto; } .nav .nav-tel + .btn { margin-left: 0; } }
+@media (max-width: 600px) { .nav-tel span { display: none; } .nav-tel { padding: 0; border: 1px solid var(--line-2); background: #fff; } }
+/* úzký telefon: v hlavičce by ikona narážela na logo – číslo je v liště dole a v úvodu stránky */
+@media (max-width: 440px) { .nav .nav-tel { display: none; } }
+@media (max-width: 374px) { .mc-tel { display: none; } }
 
 /* okno při odchodu */
 dialog.wtx { border: 0; padding: 0; margin: auto; width: calc(100% - 32px); max-width: 580px; background: transparent; color: var(--text); overflow: visible; }

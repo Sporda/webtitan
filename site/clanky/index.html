@@ -26,8 +26,8 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="preload" href="/assets/fonts/unbounded-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/fonts/fonts.css">
-<link rel="stylesheet" href="/assets/lead.css?v=1">
+<link rel="stylesheet" href="/assets/fonts/fonts.css?v=2">
+<link rel="stylesheet" href="/assets/lead.css?v=2">
 <style>
   :root {
     color-scheme: light only;
@@ -41,8 +41,8 @@
     --ok: #0f9d6b; --ok-bg: #e3f4ec; --err: #c8283f; --err-bg: #fbecef;
     --shadow: 0 1px 2px rgba(31, 61, 52, .05), 0 14px 34px -14px rgba(31, 61, 52, .18);
     --shadow-lg: 0 2px 4px rgba(31, 61, 52, .05), 0 30px 60px -24px rgba(31, 61, 52, .34);
-    --display: "Unbounded", system-ui, sans-serif;
-    --sans: "Manrope", system-ui, -apple-system, sans-serif;
+    --display: "Unbounded", "Unbounded Fallback", system-ui, sans-serif;
+    --sans: "Manrope", "Manrope Fallback", system-ui, -apple-system, sans-serif;
     --r: 22px; --gap: 16px;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -116,7 +116,7 @@
   .fact dt { font-size: 12.5px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); }
   .fact dd { font-weight: 700; font-size: 15px; }
   .me-row { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 18px; background: #fff; box-shadow: var(--shadow); margin-top: auto; }
-  .avatar { flex: none; width: 54px; height: 54px; border-radius: 50%; background: url("/assets/jan-cut.webp") 54% 22% / 200% auto no-repeat, var(--peach); box-shadow: 0 0 0 3px #fff, 0 10px 24px -10px rgba(31, 61, 52, .4); }
+  .avatar { flex: none; width: 54px; height: 54px; border-radius: 50%; background: url("/assets/jan-cut-400.webp") 54% 22% / 200% auto no-repeat, var(--peach); box-shadow: 0 0 0 3px #fff, 0 10px 24px -10px rgba(31, 61, 52, .4); }
   .me-row b { display: block; font-family: var(--display); font-weight: 700; font-size: 15px; letter-spacing: -.03em; }
   .me-row span { display: block; color: var(--muted); font-size: 14px; font-weight: 600; line-height: 1.45; }
 
@@ -332,6 +332,42 @@
    "blogPost": [
     {
      "@type": "BlogPosting",
+     "headline": "Online rezervace pro penzion a malý hotel: vlastní systém, nebo jen Booking?",
+     "url": "https://webtitan.cz/clanky/online-rezervace-pro-penzion/",
+     "datePublished": "2026-11-14",
+     "author": {
+      "@type": "Person",
+      "@id": "https://webtitan.cz/#jan",
+      "name": "Jan Šporek",
+      "url": "https://webtitan.cz/#o-mne"
+     }
+    },
+    {
+     "@type": "BlogPosting",
+     "headline": "Web pro řemeslníky a místní firmy: 8 věcí, díky kterým zazvoní telefon",
+     "url": "https://webtitan.cz/clanky/web-pro-remeslniky-a-mistni-firmy/",
+     "datePublished": "2026-11-14",
+     "author": {
+      "@type": "Person",
+      "@id": "https://webtitan.cz/#jan",
+      "name": "Jan Šporek",
+      "url": "https://webtitan.cz/#o-mne"
+     }
+    },
+    {
+     "@type": "BlogPosting",
+     "headline": "Jak vybrat dodavatele webu nebo aplikace: 9 otázek, které položit před podpisem",
+     "url": "https://webtitan.cz/clanky/jak-vybrat-dodavatele-webu/",
+     "datePublished": "2026-11-14",
+     "author": {
+      "@type": "Person",
+      "@id": "https://webtitan.cz/#jan",
+      "name": "Jan Šporek",
+      "url": "https://webtitan.cz/#o-mne"
+     }
+    },
+    {
+     "@type": "BlogPosting",
      "headline": "Kolik stojí aplikace na míru a co cenu ovlivňuje",
      "url": "https://webtitan.cz/clanky/kolik-stoji-aplikace-na-miru/",
      "datePublished": "2026-11-14",
@@ -401,7 +437,8 @@
 }
 </script>
 <script src="/assets/analytics.js?v=2" defer></script>
-<script src="/assets/lead.js?v=1" data-offer="app" defer></script>
+<script src="/assets/consent.js?v=1" defer></script>
+<script src="/assets/lead.js?v=2" data-offer="app" defer></script>
 </head>
 <body>
 <svg class="sprite" aria-hidden="true" focusable="false">
@@ -422,7 +459,7 @@
       <a href="/#o-mne">O mně</a>
       <a href="/#faq">Otázky</a>
     </nav>
-    <a href="#poptat" class="btn btn-grad" data-mode="call" data-cta="post_nav"><svg aria-hidden="true"><use href="#i-phone"/></svg><span class="l-long">Domluvit 15min hovor</span><span class="l-short">Domluvit hovor</span></a>
+    <a href="tel:+420723793510" class="nav-tel" data-cta="post_nav_tel" aria-label="Zavolat 723 793 510"><svg aria-hidden="true"><use href="#i-phone"/></svg><span>723&nbsp;793&nbsp;510</span></a><a href="#poptat" class="btn btn-grad" data-mode="call" data-cta="post_nav"><svg aria-hidden="true"><use href="#i-phone"/></svg><span class="l-long">Domluvit 15min hovor</span><span class="l-short">Domluvit hovor</span></a>
   </header>
 </div>
 <main id="obsah">
@@ -434,7 +471,7 @@
         <h1>Články o&nbsp;webech, e-shopech a&nbsp;aplikacích</h1>
         <p class="lead">Praktické rady bez zbytečné hantýrky. Píšu je pro majitele firem, ne pro programátory – hlavně pro ty z&nbsp;Karlovarského a&nbsp;Plzeňského kraje.</p>
       </header>
-      <div class="arts"><a class="card" href="/clanky/kolik-stoji-aplikace-na-miru/"><small>Ceny a rozpočet</small><b>Kolik stojí aplikace na míru a&nbsp;co cenu ovlivňuje</b><span>Kolik stojí webová aplikace na míru, co cenu nejvíc ovlivňuje a&nbsp;jak začít menší první verzí. Orientační rozsahy a&nbsp;na co se ptát dodavatele.</span><em>3 min čtení →</em></a><a class="card" href="/clanky/excel-nebo-aplikace/"><small>Excel vs. aplikace</small><b>Excel, nebo vlastní aplikace? 7 signálů, že tabulky už nestačí</b><span>Kdy Excel firmě přestává stačit a&nbsp;kdy se vyplatí vlastní aplikace. Sedm varovných signálů, co aplikace přinese a&nbsp;jak probíhá převod dat z&nbsp;tabulek.</span><em>3 min čtení →</em></a><a class="card" href="/clanky/kolik-stoji-web-a-e-shop/"><small>Weby a e-shopy</small><b>Kolik stojí firemní web a&nbsp;e-shop a&nbsp;jakou cestu zvolit</b><span>Kolik stojí firemní web a&nbsp;e-shop: stavebnice, pronajatý e-shop, nebo web na míru. Co ovlivňuje cenu, s&nbsp;čím počítat u&nbsp;provozu a&nbsp;co by měl web umět.</span><em>3 min čtení →</em></a><a class="card" href="/clanky/weby-a-aplikace-karlovy-vary-plzen/"><small>Západní Čechy</small><b>Weby a&nbsp;aplikace pro firmy v&nbsp;Karlovarském a&nbsp;Plzeňském kraji</b><span>Tvorba webů, e-shopů a&nbsp;aplikací pro firmy z&nbsp;Karlovarského a&nbsp;Plzeňského kraje. Osobní schůzka, rezervace pro ubytování, lokální vyhledávání a&nbsp;péče o&nbsp;web.</span><em>3 min čtení →</em></a></div>
+      <div class="arts"><a class="card" href="/clanky/online-rezervace-pro-penzion/"><small>Ubytování</small><b>Online rezervace pro penzion a&nbsp;malý hotel: vlastní systém, nebo jen Booking?</b><span>Jak získat víc přímých rezervací bez provize: co má umět rezervace na webu penzionu, jak ji propojit s&nbsp;Bookingem a&nbsp;Airbnb a&nbsp;kdy stačí hotová služba.</span><em>2 min čtení →</em></a><a class="card" href="/clanky/web-pro-remeslniky-a-mistni-firmy/"><small>Místní firmy</small><b>Web pro řemeslníky a&nbsp;místní firmy: 8 věcí, díky kterým zazvoní telefon</b><span>Co musí mít web truhláře, instalatéra, autoservisu nebo jiné místní firmy, aby z&nbsp;něj chodily zakázky: telefon, oblast, fotky prací, recenze a&nbsp;rychlost na mobilu.</span><em>2 min čtení →</em></a><a class="card" href="/clanky/jak-vybrat-dodavatele-webu/"><small>Výběr dodavatele</small><b>Jak vybrat dodavatele webu nebo aplikace: 9 otázek, které položit před podpisem</b><span>Na co se zeptat programátora nebo agentury, než si objednáte web, e-shop nebo aplikaci: vlastnictví kódu a&nbsp;domény, pevná cena, provoz, termíny a&nbsp;péče po spuštění.</span><em>2 min čtení →</em></a><a class="card" href="/clanky/kolik-stoji-aplikace-na-miru/"><small>Ceny a rozpočet</small><b>Kolik stojí aplikace na míru a&nbsp;co cenu ovlivňuje</b><span>Kolik stojí webová aplikace na míru, co cenu nejvíc ovlivňuje a&nbsp;jak začít menší první verzí. Orientační rozsahy a&nbsp;na co se ptát dodavatele.</span><em>3 min čtení →</em></a><a class="card" href="/clanky/excel-nebo-aplikace/"><small>Excel vs. aplikace</small><b>Excel, nebo vlastní aplikace? 7 signálů, že tabulky už nestačí</b><span>Kdy Excel firmě přestává stačit a&nbsp;kdy se vyplatí vlastní aplikace. Sedm varovných signálů, co aplikace přinese a&nbsp;jak probíhá převod dat z&nbsp;tabulek.</span><em>3 min čtení →</em></a><a class="card" href="/clanky/kolik-stoji-web-a-e-shop/"><small>Weby a e-shopy</small><b>Kolik stojí firemní web a&nbsp;e-shop a&nbsp;jakou cestu zvolit</b><span>Kolik stojí firemní web a&nbsp;e-shop: stavebnice, pronajatý e-shop, nebo web na míru. Co ovlivňuje cenu, s&nbsp;čím počítat u&nbsp;provozu a&nbsp;co by měl web umět.</span><em>3 min čtení →</em></a><a class="card" href="/clanky/weby-a-aplikace-karlovy-vary-plzen/"><small>Západní Čechy</small><b>Weby a&nbsp;aplikace pro firmy v&nbsp;Karlovarském a&nbsp;Plzeňském kraji</b><span>Tvorba webů, e-shopů a&nbsp;aplikací pro firmy z&nbsp;Karlovarského a&nbsp;Plzeňského kraje. Osobní schůzka, rezervace pro ubytování, lokální vyhledávání a&nbsp;péče o&nbsp;web.</span><em>3 min čtení →</em></a></div>
     </div>
   </section>
 
@@ -487,7 +524,7 @@
             <li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Kód, data i&nbsp;doména patří vám</li>
             <li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Karlovarský a&nbsp;Plzeňský kraj – i&nbsp;osobně</li>
           </ul>
-          <p class="lb-alt">Radši e-mail? Pište na <a href="mailto:kontakt@webtitan.cz">kontakt@webtitan.cz</a></p>
+          <p class="lb-alt">Radši rovnou zavolat? <a href="tel:+420723793510" data-cta="post_lead_tel">723&nbsp;793&nbsp;510</a><br>Nebo pište na <a href="mailto:kontakt@webtitan.cz">kontakt@webtitan.cz</a></p>
         </aside>
       </div>
     </div>
@@ -509,6 +546,7 @@
     <div class="foot-bottom">
       <span>© <span id="year">2026</span> Jan Šporek · WebTitan</span>
       <span class="foot-contact">
+        <a href="tel:+420723793510" data-cta="post_foot_tel">+420&nbsp;723&nbsp;793&nbsp;510</a>
         <a href="mailto:kontakt@webtitan.cz">kontakt@webtitan.cz</a>
         <a href="https://www.linkedin.com/in/jan-%C5%A1porek-07a39168/" target="_blank" rel="noopener">LinkedIn</a>
         <a href="https://github.com/jansporek" target="_blank" rel="noopener">GitHub</a>
@@ -518,7 +556,7 @@
   </div>
 </footer>
 
-<div class="mbar"><span>15min hovor <b>zdarma</b><br>ozvu se do 24&nbsp;h</span><a href="#poptat" class="btn btn-grad" data-mode="call" data-cta="post_mbar"><svg aria-hidden="true"><use href="#i-phone"/></svg>Domluvit hovor</a></div>
+<div class="mbar"><a href="tel:+420723793510" class="mc-tel" data-cta="post_mbar_tel">Volejte rovnou<b>723&nbsp;793&nbsp;510</b></a><a href="#poptat" class="btn btn-grad" data-mode="call" data-cta="post_mbar"><svg aria-hidden="true"><use href="#i-phone"/></svg>Domluvit hovor</a></div>
 <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
 </body>
 </html>

@@ -28,8 +28,8 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="preload" href="/assets/fonts/unbounded-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/fonts/fonts.css">
-<link rel="stylesheet" href="/assets/lead.css?v=1">
+<link rel="stylesheet" href="/assets/fonts/fonts.css?v=2">
+<link rel="stylesheet" href="/assets/lead.css?v=2">
 <style>
   :root {
     color-scheme: light only;
@@ -43,8 +43,8 @@
     --ok: #0f9d6b; --ok-bg: #e3f4ec; --err: #c8283f; --err-bg: #fbecef;
     --shadow: 0 1px 2px rgba(31, 61, 52, .05), 0 14px 34px -14px rgba(31, 61, 52, .18);
     --shadow-lg: 0 2px 4px rgba(31, 61, 52, .05), 0 30px 60px -24px rgba(31, 61, 52, .34);
-    --display: "Unbounded", system-ui, sans-serif;
-    --sans: "Manrope", system-ui, -apple-system, sans-serif;
+    --display: "Unbounded", "Unbounded Fallback", system-ui, sans-serif;
+    --sans: "Manrope", "Manrope Fallback", system-ui, -apple-system, sans-serif;
     --r: 22px; --gap: 16px;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -118,7 +118,7 @@
   .fact dt { font-size: 12.5px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); }
   .fact dd { font-weight: 700; font-size: 15px; }
   .me-row { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 18px; background: #fff; box-shadow: var(--shadow); margin-top: auto; }
-  .avatar { flex: none; width: 54px; height: 54px; border-radius: 50%; background: url("/assets/jan-cut.webp") 54% 22% / 200% auto no-repeat, var(--peach); box-shadow: 0 0 0 3px #fff, 0 10px 24px -10px rgba(31, 61, 52, .4); }
+  .avatar { flex: none; width: 54px; height: 54px; border-radius: 50%; background: url("/assets/jan-cut-400.webp") 54% 22% / 200% auto no-repeat, var(--peach); box-shadow: 0 0 0 3px #fff, 0 10px 24px -10px rgba(31, 61, 52, .4); }
   .me-row b { display: block; font-family: var(--display); font-weight: 700; font-size: 15px; letter-spacing: -.03em; }
   .me-row span { display: block; color: var(--muted); font-size: 14px; font-weight: 600; line-height: 1.45; }
 
@@ -372,7 +372,8 @@
 }
 </script>
 <script src="/assets/analytics.js?v=2" defer></script>
-<script src="/assets/lead.js?v=1" data-offer="app" defer></script>
+<script src="/assets/consent.js?v=1" defer></script>
+<script src="/assets/lead.js?v=2" data-offer="app" defer></script>
 </head>
 <body>
 <svg class="sprite" aria-hidden="true" focusable="false">
@@ -393,7 +394,7 @@
       <a href="/#o-mne">O mně</a>
       <a href="/#faq">Otázky</a>
     </nav>
-    <a href="#poptat" class="btn btn-grad" data-mode="call" data-cta="post_nav"><svg aria-hidden="true"><use href="#i-phone"/></svg><span class="l-long">Domluvit 15min hovor</span><span class="l-short">Domluvit hovor</span></a>
+    <a href="tel:+420723793510" class="nav-tel" data-cta="post_nav_tel" aria-label="Zavolat 723 793 510"><svg aria-hidden="true"><use href="#i-phone"/></svg><span>723&nbsp;793&nbsp;510</span></a><a href="#poptat" class="btn btn-grad" data-mode="call" data-cta="post_nav"><svg aria-hidden="true"><use href="#i-phone"/></svg><span class="l-long">Domluvit 15min hovor</span><span class="l-short">Domluvit hovor</span></a>
   </header>
 </div>
 <main id="obsah">
@@ -417,7 +418,7 @@
 <li><strong>Web v&nbsp;němčině a&nbsp;angličtině</strong> – v&nbsp;regionu je hodně zahraničních hostů, hlavně z&nbsp;Německa.</li>
 <li><strong>Rychlý web na mobilu</strong> – hosté často hledají ubytování až na cestě.</li>
 </ul>
-<p>Weby s&nbsp;rezervacemi jsem postavil třeba pro <strong>Hostel Loket</strong>, <strong>Penzion Loket</strong> nebo <strong>Sokolov Ubytování</strong>. Ukázky najdete v&nbsp;<a href="/#reference">referencích</a>.</p>
+<p>Weby s&nbsp;rezervacemi jsem postavil třeba pro <strong>Hostel Loket</strong>, <strong>Penzion Loket</strong> nebo <strong>Sokolov Ubytování</strong>. Ukázky najdete v&nbsp;<a href="/#reference">referencích</a>. Co má rezervace na webu umět a&nbsp;kdy stačí hotová služba, rozebírám v&nbsp;článku <a href="/clanky/online-rezervace-pro-penzion/">Online rezervace pro penzion a&nbsp;malý hotel</a>.</p>
 <h2>Výroba, služby a&nbsp;řemesla</h2>
 <p>Kolem Plzně, Sokolova i&nbsp;Chebu je mnoho menších firem, které dodnes řídí zakázky v&nbsp;tabulkách a&nbsp;e-mailech. Tady pomáhá:</p>
 <ul class="list">
@@ -425,7 +426,7 @@
 <li><strong>Poptávkový formulář a&nbsp;reference na webu</strong> – u&nbsp;řemesel a&nbsp;služeb rozhodují fotky realizací a&nbsp;rychlý kontakt.</li>
 <li><strong>Napojení na účetnictví</strong> – méně přepisování faktur a&nbsp;objednávek.</li>
 </ul>
-<p>Podrobněji v&nbsp;článku <a href="/clanky/excel-nebo-aplikace/">Excel, nebo vlastní aplikace?</a></p>
+<p>Podrobněji v&nbsp;článcích <a href="/clanky/excel-nebo-aplikace/">Excel, nebo vlastní aplikace?</a> a&nbsp;<a href="/clanky/web-pro-remeslniky-a-mistni-firmy/">Web pro řemeslníky a&nbsp;místní firmy</a>.</p>
 <h2>Aby vás našli zákazníci z&nbsp;okolí</h2>
 <p>Když někdo hledá „autoservis Sokolov“ nebo „ubytování Loket“, rozhoduje lokální vyhledávání. Pomůže:</p>
 <ol class="list">
@@ -505,7 +506,7 @@
             <li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Kód, data i&nbsp;doména patří vám</li>
             <li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Karlovarský a&nbsp;Plzeňský kraj – i&nbsp;osobně</li>
           </ul>
-          <p class="lb-alt">Radši e-mail? Pište na <a href="mailto:kontakt@webtitan.cz">kontakt@webtitan.cz</a></p>
+          <p class="lb-alt">Radši rovnou zavolat? <a href="tel:+420723793510" data-cta="post_lead_tel">723&nbsp;793&nbsp;510</a><br>Nebo pište na <a href="mailto:kontakt@webtitan.cz">kontakt@webtitan.cz</a></p>
         </aside>
       </div>
     </div>
@@ -527,6 +528,7 @@
     <div class="foot-bottom">
       <span>© <span id="year">2026</span> Jan Šporek · WebTitan</span>
       <span class="foot-contact">
+        <a href="tel:+420723793510" data-cta="post_foot_tel">+420&nbsp;723&nbsp;793&nbsp;510</a>
         <a href="mailto:kontakt@webtitan.cz">kontakt@webtitan.cz</a>
         <a href="https://www.linkedin.com/in/jan-%C5%A1porek-07a39168/" target="_blank" rel="noopener">LinkedIn</a>
         <a href="https://github.com/jansporek" target="_blank" rel="noopener">GitHub</a>
@@ -536,7 +538,7 @@
   </div>
 </footer>
 
-<div class="mbar"><span>15min hovor <b>zdarma</b><br>ozvu se do 24&nbsp;h</span><a href="#poptat" class="btn btn-grad" data-mode="call" data-cta="post_mbar"><svg aria-hidden="true"><use href="#i-phone"/></svg>Domluvit hovor</a></div>
+<div class="mbar"><a href="tel:+420723793510" class="mc-tel" data-cta="post_mbar_tel">Volejte rovnou<b>723&nbsp;793&nbsp;510</b></a><a href="#poptat" class="btn btn-grad" data-mode="call" data-cta="post_mbar"><svg aria-hidden="true"><use href="#i-phone"/></svg>Domluvit hovor</a></div>
 <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
 </body>
 </html>

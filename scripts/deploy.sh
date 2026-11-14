@@ -61,6 +61,7 @@ expect neexistujici-stranka-test 404   # vlastní stránka 404 přes index.php
 expect assets/fonts/unbounded-latin.woff2 200
 expect assets/lead.js 200    # formulář na podstránkách, okno při odchodu, odkud návštěvník přišel
 expect assets/lead.css 200
+expect assets/consent.js 200 # lišta souhlasu + konverze Sklik / Google Ads (bez ID v CONFIG nedělá nic)
 expect api/contact.php 405   # přijímá jen POST – GET nic neodesílá
 expect api/inbound.php 405   # webhook Resendu – jen POST s podpisem
 expect api/_mail.php 404     # sdílená knihovna – zvenku se nespouští

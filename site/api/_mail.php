@@ -461,13 +461,14 @@ function wt_send_confirmation(array $lead, array $cfg): array
           . $ps
           . '<p style="margin:18px 0 0;font-size:16px;line-height:1.6;color:#1b342c">S pozdravem<br><strong style="color:#1f3d34">Jan Šporek</strong><br>'
           . '<a href="https://webtitan.cz" style="color:#1f3d34">WebTitan</a> · vývoj aplikací, weby a e-shopy<br>'
-          . '<a href="mailto:kontakt@webtitan.cz" style="color:#1f3d34">kontakt@webtitan.cz</a></p>'
+          . '<a href="mailto:kontakt@webtitan.cz" style="color:#1f3d34">kontakt@webtitan.cz</a> · '
+          . '<a href="tel:+420723793510" style="color:#1f3d34">723 793 510</a></p>'
           . '</div>'
           . '<p style="margin:14px 4px 0;font-size:12px;line-height:1.5;color:#4d5a52">Tento e-mail přišel, protože někdo s&nbsp;vaší adresou '
           . 'vyplnil formulář na webtitan.cz. Pokud jste to nebyli vy, e-mail prosím ignorujte – nic dalšího vám posílat nebudu.</p>'
           . '</div>';
     $text = "Dobrý den,\n\n" . implode("\n\n", $lines)
-          . "\n\nS pozdravem\nJan Šporek\nWebTitan · https://webtitan.cz\nkontakt@webtitan.cz\n\n--\n"
+          . "\n\nS pozdravem\nJan Šporek\nWebTitan · https://webtitan.cz\nkontakt@webtitan.cz · 723 793 510\n\n--\n"
           . "Tento e-mail přišel, protože někdo s vaší adresou vyplnil formulář na webtitan.cz. "
           . "Pokud jste to nebyli vy, e-mail prosím ignorujte.\n";
 

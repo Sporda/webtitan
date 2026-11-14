@@ -26,8 +26,8 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="preload" href="/assets/fonts/unbounded-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/fonts/fonts.css">
-<link rel="stylesheet" href="/assets/lead.css?v=1">
+<link rel="stylesheet" href="/assets/fonts/fonts.css?v=2">
+<link rel="stylesheet" href="/assets/lead.css?v=2">
 <style>
   :root {
     color-scheme: light only;
@@ -41,8 +41,8 @@
     --ok: #0f9d6b; --ok-bg: #e3f4ec; --err: #c8283f; --err-bg: #fbecef;
     --shadow: 0 1px 2px rgba(31, 61, 52, .05), 0 14px 34px -14px rgba(31, 61, 52, .18);
     --shadow-lg: 0 2px 4px rgba(31, 61, 52, .05), 0 30px 60px -24px rgba(31, 61, 52, .34);
-    --display: "Unbounded", system-ui, sans-serif;
-    --sans: "Manrope", system-ui, -apple-system, sans-serif;
+    --display: "Unbounded", "Unbounded Fallback", system-ui, sans-serif;
+    --sans: "Manrope", "Manrope Fallback", system-ui, -apple-system, sans-serif;
     --r: 22px; --gap: 16px;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -116,7 +116,7 @@
   .fact dt { font-size: 12.5px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); }
   .fact dd { font-weight: 700; font-size: 15px; }
   .me-row { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 18px; background: #fff; box-shadow: var(--shadow); margin-top: auto; }
-  .avatar { flex: none; width: 54px; height: 54px; border-radius: 50%; background: url("/assets/jan-cut.webp") 54% 22% / 200% auto no-repeat, var(--peach); box-shadow: 0 0 0 3px #fff, 0 10px 24px -10px rgba(31, 61, 52, .4); }
+  .avatar { flex: none; width: 54px; height: 54px; border-radius: 50%; background: url("/assets/jan-cut-400.webp") 54% 22% / 200% auto no-repeat, var(--peach); box-shadow: 0 0 0 3px #fff, 0 10px 24px -10px rgba(31, 61, 52, .4); }
   .me-row b { display: block; font-family: var(--display); font-weight: 700; font-size: 15px; letter-spacing: -.03em; }
   .me-row span { display: block; color: var(--muted); font-size: 14px; font-weight: 600; line-height: 1.45; }
 
@@ -387,7 +387,8 @@
 }
 </script>
 <script src="/assets/analytics.js?v=2" defer></script>
-<script src="/assets/lead.js?v=1" data-offer="web" defer></script>
+<script src="/assets/consent.js?v=1" defer></script>
+<script src="/assets/lead.js?v=2" data-offer="web" defer></script>
 </head>
 <body>
 <svg class="sprite" aria-hidden="true" focusable="false">
@@ -408,7 +409,7 @@
       <a href="/#o-mne">O mně</a>
       <a href="/#faq">Otázky</a>
     </nav>
-    <a href="#poptat" class="btn btn-grad" data-mode="call" data-cta="sp_nav"><svg aria-hidden="true"><use href="#i-phone"/></svg><span class="l-long">Domluvit 15min hovor</span><span class="l-short">Domluvit hovor</span></a>
+    <a href="tel:+420723793510" class="nav-tel" data-cta="sp_nav_tel" aria-label="Zavolat 723 793 510"><svg aria-hidden="true"><use href="#i-phone"/></svg><span>723&nbsp;793&nbsp;510</span></a><a href="#poptat" class="btn btn-grad" data-mode="call" data-cta="sp_nav"><svg aria-hidden="true"><use href="#i-phone"/></svg><span class="l-long">Domluvit 15min hovor</span><span class="l-short">Domluvit hovor</span></a>
   </header>
 </div>
 
@@ -423,7 +424,7 @@
           <p class="lead">Firemní web, který zákazníkům rychle řekne, co děláte, a&nbsp;přivede vám poptávky. Postavím vám rychlý a&nbsp;přehledný web přesně podle toho, jak vaše firma funguje – bez agentury, bez zbytečných schůzek, s&nbsp;jedním člověkem, který to celé udělá.</p>
           <ul class="checks"><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Design na míru, žádná šablona</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Poptávkový formulář přímo do e-mailu</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Obsah si upravíte sami</li></ul>
           <div class="dual"><a href="#poptat" class="btn btn-grad" data-mode="call" data-cta="sp_hero_call"><svg aria-hidden="true"><use href="#i-phone"/></svg>Domluvit 15min hovor</a><a href="#poptat" class="btn btn-line" data-mode="form" data-cta="sp_hero_form">Poslat poptávku</a></div>
-          <p class="micro"><span class="mi"><svg aria-hidden="true"><use href="#i-clock"/></svg>Ozvu se do 24 hodin (v&nbsp;pracovní dny)</span><span class="mi"><svg aria-hidden="true"><use href="#i-pin"/></svg>Karlovarský a&nbsp;Plzeňský kraj – i&nbsp;osobně</span></p>
+          <p class="micro"><span class="mi"><svg aria-hidden="true"><use href="#i-clock"/></svg>Ozvu se do 24 hodin (v&nbsp;pracovní dny)</span><span class="mi"><svg aria-hidden="true"><use href="#i-pin"/></svg>Karlovarský a&nbsp;Plzeňský kraj – i&nbsp;osobně</span><span class="mi"><svg aria-hidden="true"><use href="#i-phone"/></svg>Volejte rovnou: <a href="tel:+420723793510" data-cta="sp_hero_tel">723&nbsp;793&nbsp;510</a></span></p>
         </div>
         <aside class="card sum" aria-label="Shrnutí">
           <div class="sum-price"><small>Cena</small><b class="gt">od 9 970 Kč</b><span>pevná cena předem</span></div>
@@ -465,7 +466,7 @@
       <div class="head"><div><span class="kicker">Cena</span><h2>Kolik stojí tvorba webových stránek</h2></div></div>
       <div class="card price-card gb">
         <div class="price-big"><small>Cena</small><b class="gt">od 9 970 Kč</b><span>pevná cena za konkrétní rozsah</span></div>
-        <div><ul><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Pevnou cenu dostanete po úvodním hovoru – co si odsouhlasíme, to platí.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Firemní web bývá hotový obvykle za 2–4 týdny.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Provoz a&nbsp;správa se platí zvlášť, od 990 Kč měsíčně.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Nejsem plátce DPH, takže uvedené ceny jsou konečné.</li></ul><p class="price-note">Výsledná cena záleží na rozsahu – co má řešení umět a&nbsp;na co ho napojíme. Přesnou cenu vám řeknu po úvodním hovoru. Podrobněji v&nbsp;článku <a href="/clanky/kolik-stoji-web-a-e-shop/">Kolik stojí firemní web a&nbsp;e-shop</a>.</p></div>
+        <div><ul><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Pevnou cenu dostanete po úvodním hovoru – co si odsouhlasíme, to platí.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Firemní web bývá hotový obvykle za 2–4 týdny.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Provoz a&nbsp;správa se platí zvlášť, od 990 Kč měsíčně.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Nejsem plátce DPH, takže uvedené ceny jsou konečné.</li></ul><p class="price-note">Výsledná cena záleží na rozsahu – co má řešení umět a&nbsp;na co ho napojíme. Přesnou cenu vám řeknu po úvodním hovoru. Podrobněji v&nbsp;článku <a href="/clanky/kolik-stoji-web-a-e-shop/">Kolik stojí firemní web a&nbsp;e-shop</a>, co by měl umět web místní firmy, najdete v&nbsp;článku <a href="/clanky/web-pro-remeslniky-a-mistni-firmy/">Web pro řemeslníky a&nbsp;místní firmy</a>.</p></div>
       </div>
     </div>
   </section>
@@ -544,7 +545,7 @@
             <li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Kód, data i&nbsp;doména patří vám</li>
             <li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Karlovarský a&nbsp;Plzeňský kraj – i&nbsp;osobně</li>
           </ul>
-          <p class="lb-alt">Radši e-mail? Pište na <a href="mailto:kontakt@webtitan.cz">kontakt@webtitan.cz</a></p>
+          <p class="lb-alt">Radši rovnou zavolat? <a href="tel:+420723793510" data-cta="sp_lead_tel">723&nbsp;793&nbsp;510</a><br>Nebo pište na <a href="mailto:kontakt@webtitan.cz">kontakt@webtitan.cz</a></p>
         </aside>
       </div>
     </div>
@@ -566,6 +567,7 @@
     <div class="foot-bottom">
       <span>© <span id="year">2026</span> Jan Šporek · WebTitan</span>
       <span class="foot-contact">
+        <a href="tel:+420723793510" data-cta="sp_foot_tel">+420&nbsp;723&nbsp;793&nbsp;510</a>
         <a href="mailto:kontakt@webtitan.cz">kontakt@webtitan.cz</a>
         <a href="https://www.linkedin.com/in/jan-%C5%A1porek-07a39168/" target="_blank" rel="noopener">LinkedIn</a>
         <a href="https://github.com/jansporek" target="_blank" rel="noopener">GitHub</a>
@@ -575,7 +577,7 @@
   </div>
 </footer>
 
-<div class="mbar"><span>15min hovor <b>zdarma</b><br>ozvu se do 24&nbsp;h</span><a href="#poptat" class="btn btn-grad" data-mode="call" data-cta="sp_mbar"><svg aria-hidden="true"><use href="#i-phone"/></svg>Domluvit hovor</a></div>
+<div class="mbar"><a href="tel:+420723793510" class="mc-tel" data-cta="sp_mbar_tel">Volejte rovnou<b>723&nbsp;793&nbsp;510</b></a><a href="#poptat" class="btn btn-grad" data-mode="call" data-cta="sp_mbar"><svg aria-hidden="true"><use href="#i-phone"/></svg>Domluvit hovor</a></div>
 <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
 </body>
 </html>
