@@ -1,8 +1,10 @@
-/* webtitan.cz – souhlas s cookies a měření konverzí pro Sklik (měřicí kód Seznamu, SEM) a Google Ads.
+/* webtitan.cz – souhlas s cookies: nahrávání návštěv v PostHogu a měření konverzí pro Sklik (měřicí kód Seznamu, SEM)
+ * a Google Ads.
  *
- * Dokud v CONFIG není žádné ID, nedělá nic: žádná lišta, nic se nenačítá (web bez reklam souhlas nepotřebuje).
- * S vyplněným ID se ukáže lišta „Povolit / Jen nezbytné“ a kódy Seznamu a Googlu se načtou AŽ po souhlasu –
- * bez něj neodchází nic. Volba platí rok, změnit jde přes „Nastavení cookies“ v patičce.
+ * Dokud v CONFIG není nic zapnuté (replay ani žádné ID), nedělá nic: žádná lišta, nic se nenačítá.
+ * Jinak se ukáže lišta „Povolit / Jen nezbytné“ a kódy Seznamu a Googlu se načtou AŽ po souhlasu – bez něj neodchází
+ * nic. Nahrávání návštěv zapíná assets/analytics.js podle window.wtConsent a události „wt:consent“.
+ * Volba platí rok, změnit jde přes „Nastavení cookies“ v patičce.
  *
  * Formuláře po úspěšném odeslání volají window.wtConversion("lead" | "check"):
  *   lead  = poptávka, žádost o hovor / zavolání,  check = bezplatná kontrola webu / posouzení procesu.
@@ -12,6 +14,8 @@
   "use strict";
 
   const CONFIG = {
+    // PostHog session replay – nahrávání průchodu webem (assets/analytics.js), jen se souhlasem
+    replay: true,
     // Sklik → Nástroje → Měřicí kód Seznamu (SEM) → ID, např. "123456"
     semId: "",
     // Google Ads → Cíle → Konverze: ID účtu "AW-123456789" a štítky konverzí ("AW-123456789/AbC-dEfGhI")
@@ -22,8 +26,10 @@
   };
 
   const KEY = "wt7-consent";
+  // 2 = souhlas zahrnuje i nahrávání návštěv. Starší uložená volba (jen reklama) neplatí a lišta se zeptá znovu.
+  const VERSION = 2;
   const YEAR = 365 * 864e5;
-  const enabled = !!(CONFIG.semId || CONFIG.gadsId);
+  const enabled = !!(CONFIG.replay || CONFIG.semId || CONFIG.gadsId);
   const store = {
     get() { try { return JSON.parse(localStorage.getItem(KEY)); } catch (e) { return null; } },
     set(v) { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) { /* storage unavailable */ } }
@@ -42,10 +48,14 @@
     });
   }
 
-  // Až po souhlasu: kód Seznamu (SEM) a Google tag
+  // Až po souhlasu: nahrávání v PostHogu, kód Seznamu (SEM) a Google tag
   function startTracking() {
     if (granted) return;
     granted = true;
+    if (CONFIG.replay) {
+      window.wtConsent = true;
+      window.dispatchEvent(new CustomEvent("wt:consent"));
+    }
     const all = { ad_storage: "granted", ad_user_data: "granted", ad_personalization: "granted", functionality_storage: "granted", analytics_storage: "granted" };
     if (CONFIG.semId) {
       semReady = loadScript("https://l.seznam.cz/sul.js?id=" + encodeURIComponent(CONFIG.semId)).then(() => {
@@ -100,16 +110,18 @@
   box.setAttribute("role", "dialog");
   box.setAttribute("aria-labelledby", "ck-t");
   box.hidden = true;
-  box.innerHTML = '<b id="ck-t">Cookies pro měření reklamy</b>'
-    + '<p>Web funguje i&nbsp;bez nich. Se souhlasem použiji cookies Seznamu (Sklik) a&nbsp;Googlu (Ads), abych věděl, které reklamy '
-    + 'přivádějí poptávky. <a href="/ochrana-osobnich-udaju.html#h-cookies">Podrobnosti</a></p>'
+  box.innerHTML = '<b id="ck-t">Cookies pro měření webu a reklamy</b>'
+    + '<p>Web funguje i&nbsp;bez nich. Se souhlasem nahraji, jak web procházíte (bez toho, co píšete do formulářů), abych viděl, '
+    + 'kde se lidé zasekávají, a&nbsp;použiji cookies Seznamu (Sklik) a&nbsp;Googlu (Ads), abych věděl, které reklamy přivádějí '
+    + 'poptávky. <a href="/ochrana-osobnich-udaju.html#h-cookies">Podrobnosti</a></p>'
     + '<div class="ck-btns"><button type="button" class="ck-no">Jen nezbytné</button><button type="button" class="ck-yes">Povolit</button></div>';
 
-  function decide(ads) {
-    store.set({ ads, ts: Date.now() });
+  function decide(ok) {
+    store.set({ ok, v: VERSION, ts: Date.now() });
     box.hidden = true;
-    if (ads) startTracking();
+    if (ok) startTracking();
     // odvolání souhlasu: už načtené kódy z paměti nevyhodíme – stačí nové načtení stránky
+    // (analytics.js pak poběží bez souhlasu a smaže, co si PostHog uložil)
     else if (granted) location.reload();
   }
   box.querySelector(".ck-yes").addEventListener("click", () => decide(true));
@@ -128,8 +140,8 @@
       foot.appendChild(b);
     }
     const saved = store.get();
-    if (saved && Date.now() - saved.ts < YEAR) {
-      if (saved.ads) startTracking();
+    if (saved && saved.v === VERSION && Date.now() - saved.ts < YEAR) {
+      if (saved.ok) startTracking();
     } else {
       box.hidden = false;
     }
