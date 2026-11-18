@@ -454,7 +454,8 @@
     .svc-swap:not(.svc-main) .svc-peek { display: inline-flex; }
   }
   /* Animace prohození (View Transitions): karta se přesune a zvětší, obsah se nedeformuje, jen ořízne. */
-  ::view-transition-group(*.svc) { animation-duration: .5s; animation-timing-function: cubic-bezier(.2, .8, .2, 1); }
+  /* 0,8 s s plynulým rozjezdem i dojezdem: karty putují klidně, nepřeskočí většinu cesty hned na začátku */
+  ::view-transition-group(*.svc) { animation-duration: .8s; animation-timing-function: cubic-bezier(.45, 0, .2, 1); }
   ::view-transition-image-pair(*.svc) { overflow: hidden; border-radius: var(--r); }
   ::view-transition-old(*.svc), ::view-transition-new(*.svc) { inline-size: auto; block-size: auto; }
   .srv-body { display: flex; flex-direction: column; gap: 8px; }

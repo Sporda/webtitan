@@ -210,8 +210,24 @@
     const SLOTS = ["svc-main", "svc-wide", "svc-small", "svc-small"];
     let running = null; // právě běžící animace prohození
 
-    // Obrázky ostatních služeb načíst dopředu, ať se po kliknutí neobjeví se zpožděním.
-    const preload = () => $$(".svc-shot img", grid).forEach(img => { img.loading = "eager"; });
+    // Obrázky ostatních služeb (schované, jinak by se načetly až po kliknutí) stáhnout a rozbalit dopředu, jakmile se
+    // sekce blíží k obrazovce – první prohození pak nečeká na síť a obrázek nenaskočí pozdě. Jen na desktopu:
+    // na užším displeji se karty nepřehazují, data se šetří.
+    let preloaded = false;
+    const preload = () => {
+      if (preloaded || !desktop.matches) return;
+      preloaded = true;
+      $$(".svc-shot img", grid).forEach(img => {
+        img.loading = "eager";
+        img.decode?.().catch(() => {});
+      });
+    };
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver(es => {
+        if (es.some(e => e.isIntersecting)) { preload(); io.disconnect(); }
+      }, { rootMargin: "900px 0px" });
+      io.observe(grid);
+    }
     grid.addEventListener("pointerenter", preload, { once: true });
     grid.addEventListener("focusin", preload, { once: true });
 
