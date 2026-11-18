@@ -115,9 +115,9 @@ RESEND_API_KEY=re_…            # odesílání (stačí „Sending access“)
 RESEND_FULL_API_KEY=re_…       # čtení přijatých e-mailů („Full access“) – pro inbound.php
 RESEND_WEBHOOK_SECRET=whsec_…  # podpisový klíč webhooku email.received → https://webtitan.cz/api/inbound.php
 MAIL_TO=adresa, kam chodí poptávky i přeposlané e-maily
-MAIL_FROM=WebTitan <kontakt@webtitan.cz>
+MAIL_FROM=WebTitan <jan@webtitan.cz>
 # volitelně:
-CONFIRM_FROM=Jan Šporek – WebTitan <kontakt@webtitan.cz>   # odesílatel potvrzení zákazníkovi
+CONFIRM_FROM=Jan Šporek – WebTitan <jan@webtitan.cz>   # odesílatel potvrzení zákazníkovi
 CONFIRM=0                                                # vypne potvrzení zákazníkovi
 CRM_TOKEN=dcrm_…   # token pro zápis z crm.webtitan.cz (Můj účet → API tokeny) → poptávky jdou i do CRM (Poptávky)
 CRM_URL=https://crm.webtitan.cz/api/v1/leads             # výchozí hodnota
@@ -125,11 +125,13 @@ CRM_URL=https://crm.webtitan.cz/api/v1/leads             # výchozí hodnota
 
 ## E-mail
 
-- Odesílání i příjem běží přes Resend, doména `webtitan.cz` (region eu-west-1).
-- DNS je ve WEDOS: DKIM `resend._domainkey`, SPF/MX pro `send`, MX `webtitan.cz → 10 receive-euw1.forge.rmta.net` (příjem).
+- **Příjem** od 18. 11. 2026 přes Google Workspace: schránka `jan@webtitan.cz`, aliasy `kontakt@`, `admin@` a další.
+  MX `webtitan.cz → 1 smtp.google.com`, SPF `v=spf1 include:_spf.google.com ~all`.
+- **Odesílání** z webu dál přes Resend, doména `webtitan.cz` (region eu-west-1). DNS je ve WEDOS: DKIM `resend._domainkey`, SPF/MX pro `send`.
+- `inbound.php` (příjem přes Resend Receiving a přeposílání do `MAIL_TO`) je po přechodu na Google zbytečný. Po vypnutí Receiving v Resendu ho odstranit.
 - Server sám poštu neposílá ani nepřijímá (Oracle Cloud blokuje port 25).
 - Potvrzení zákazníkovi záměrně neopakuje nic z formuláře (ani jméno, ani zprávu) a jedna adresa dostane nejvýš 2 za den,
-  aby formulář nešel zneužít k posílání vlastního textu na cizí adresy. Odpověď na potvrzení jde na kontakt@ → přes inbound.php ke mně.
+  aby formulář nešel zneužít k posílání vlastního textu na cizí adresy. Odpověď na potvrzení jde na jan@ rovnou do schránky.
 
 ## Hlídání (UptimeRobot)
 

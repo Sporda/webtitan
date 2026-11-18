@@ -7,7 +7,7 @@ export const PERSON = {
  "name": "Jan Šporek",
  "jobTitle": "Full-stack vývojář webových a mobilních aplikací",
  "url": "https://webtitan.cz/",
- "email": "mailto:kontakt@webtitan.cz",
+ "email": "mailto:jan@webtitan.cz",
  "telephone": "+420 723 793 510",
  "image": "https://webtitan.cz/assets/jan-cut.webp",
  "sameAs": [
@@ -39,7 +39,7 @@ export const BUSINESS = {
  "url": "https://webtitan.cz/",
  "logo": "https://webtitan.cz/assets/logo-webtitan.png",
  "image": "https://webtitan.cz/assets/og.jpg",
- "email": "kontakt@webtitan.cz",
+ "email": "jan@webtitan.cz",
  "telephone": "+420 723 793 510",
  "description": "Aplikace na míru od 24 950 Kč, weby od 9 970 Kč a e-shopy od 19 870 Kč pro firmy z Karlovarského a Plzeňského kraje. Pevná cena předem, přímo s programátorem.",
  "founder": {

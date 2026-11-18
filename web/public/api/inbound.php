@@ -96,7 +96,7 @@ $secret = $cfg['RESEND_WEBHOOK_SECRET'] ?? '';
 $readKey = $cfg['RESEND_FULL_API_KEY'] ?? '';
 $sendKey = $cfg['RESEND_API_KEY'] ?? $readKey;
 $to = $cfg['MAIL_TO'] ?? '';
-$from = $cfg['MAIL_FROM'] ?? 'WebTitan <kontakt@webtitan.cz>';
+$from = $cfg['MAIL_FROM'] ?? 'WebTitan <jan@webtitan.cz>';
 if ($secret === '') {
     out(503, ['error' => 'not configured']);
 }

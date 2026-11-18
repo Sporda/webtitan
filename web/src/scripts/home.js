@@ -74,7 +74,7 @@
     }
     return { rate, field };
   }
-  const mailto = (subject, body) => "mailto:kontakt@webtitan.cz?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body.length > 1800 ? body.slice(0, 1800) + "\n…" : body);
+  const mailto = (subject, body) => "mailto:jan@webtitan.cz?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body.length > 1800 ? body.slice(0, 1800) + "\n…" : body);
   const kc = n => Math.round(n).toLocaleString("cs-CZ") + " Kč";
 
   function setErr(input, msg) {

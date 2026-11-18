@@ -254,7 +254,7 @@ function wt_send_lead(array $lead, array $cfg, bool $retry = false): array
 {
     $key = (string) ($cfg['RESEND_API_KEY'] ?? '');
     $to = (string) ($cfg['MAIL_TO'] ?? '');
-    $from = (string) ($cfg['MAIL_FROM'] ?? 'WebTitan <kontakt@webtitan.cz>');
+    $from = (string) ($cfg['MAIL_FROM'] ?? 'WebTitan <jan@webtitan.cz>');
     if ($key === '' || !filter_var($to, FILTER_VALIDATE_EMAIL)) {
         return [false, 'not configured'];
     }
@@ -399,13 +399,13 @@ function wt_confirm_allowed(PDO $db, array $cfg, string $email, int $now): bool
 /**
  * Potvrzení pro zákazníka, že poptávka dorazila. Záměrně neopakuje nic z toho, co do formuláře napsal
  * (ani jméno, ani zprávu) – kdyby někdo vyplnil cizí adresu, nedá se formulář použít k rozesílání vlastního textu.
- * Odpověď na potvrzení jde na kontakt@webtitan.cz (od koho je e-mail) → přes inbound.php ke mně.
+ * Odpověď na potvrzení jde na jan@webtitan.cz (od koho je e-mail) → rovnou do schránky v Google Workspace.
  */
 function wt_send_confirmation(array $lead, array $cfg): array
 {
     $key = (string) ($cfg['RESEND_API_KEY'] ?? '');
     $email = (string) ($lead['email'] ?? '');
-    $from = (string) ($cfg['CONFIRM_FROM'] ?? 'Jan Šporek – WebTitan <kontakt@webtitan.cz>');
+    $from = (string) ($cfg['CONFIRM_FROM'] ?? 'Jan Šporek – WebTitan <jan@webtitan.cz>');
     if ($key === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
         return [false, 'not configured'];
     }
@@ -461,14 +461,14 @@ function wt_send_confirmation(array $lead, array $cfg): array
           . $ps
           . '<p style="margin:18px 0 0;font-size:16px;line-height:1.6;color:#1b342c">S pozdravem<br><strong style="color:#1f3d34">Jan Šporek</strong><br>'
           . '<a href="https://webtitan.cz" style="color:#1f3d34">WebTitan</a> · vývoj aplikací, weby a e-shopy<br>'
-          . '<a href="mailto:kontakt@webtitan.cz" style="color:#1f3d34">kontakt@webtitan.cz</a> · '
+          . '<a href="mailto:jan@webtitan.cz" style="color:#1f3d34">jan@webtitan.cz</a> · '
           . '<a href="tel:+420723793510" style="color:#1f3d34">723 793 510</a></p>'
           . '</div>'
           . '<p style="margin:14px 4px 0;font-size:12px;line-height:1.5;color:#4d5a52">Tento e-mail přišel, protože někdo s&nbsp;vaší adresou '
           . 'vyplnil formulář na webtitan.cz. Pokud jste to nebyli vy, e-mail prosím ignorujte – nic dalšího vám posílat nebudu.</p>'
           . '</div>';
     $text = "Dobrý den,\n\n" . implode("\n\n", $lines)
-          . "\n\nS pozdravem\nJan Šporek\nWebTitan · https://webtitan.cz\nkontakt@webtitan.cz · 723 793 510\n\n--\n"
+          . "\n\nS pozdravem\nJan Šporek\nWebTitan · https://webtitan.cz\njan@webtitan.cz · 723 793 510\n\n--\n"
           . "Tento e-mail přišel, protože někdo s vaší adresou vyplnil formulář na webtitan.cz. "
           . "Pokud jste to nebyli vy, e-mail prosím ignorujte.\n";
 

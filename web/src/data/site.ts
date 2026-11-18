@@ -17,7 +17,7 @@ export const PHONE = "+420723793510";
 /** Telefon do textu (HTML, nezlomitelné mezery). */
 export const PHONE_SHORT = "723&nbsp;793&nbsp;510";
 export const PHONE_LONG = "+420&nbsp;723&nbsp;793&nbsp;510";
-export const EMAIL = "kontakt@webtitan.cz";
+export const EMAIL = "jan@webtitan.cz";
 export const LINKEDIN = "https://www.linkedin.com/in/jan-%C5%A1porek-07a39168/";
 export const GITHUB = "https://github.com/jansporek";
 export const LEGAL =

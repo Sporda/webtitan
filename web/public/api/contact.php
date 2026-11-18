@@ -18,7 +18,7 @@ declare(strict_types=1);
  * - Konfigurace (klíč k Resendu, adresát) je v /var/www/webtitan/data/contact.env mimo web a mimo git:
  *     RESEND_API_KEY=re_…
  *     MAIL_TO=adresa@kam.pujdou.poptavky
- *     MAIL_FROM=WebTitan <kontakt@webtitan.cz>
+ *     MAIL_FROM=WebTitan <jan@webtitan.cz>
  * - Ochrana: kontrola Origin, jen JSON, skryté pole „website“ proti robotům, limity na IP (IP se ukládá jen jako otisk).
  */
 

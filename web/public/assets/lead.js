@@ -111,7 +111,7 @@
       });
     }
   }
-  const mailto = (subject, body) => "mailto:kontakt@webtitan.cz?subject=" + encodeURIComponent(subject)
+  const mailto = (subject, body) => "mailto:jan@webtitan.cz?subject=" + encodeURIComponent(subject)
     + "&body=" + encodeURIComponent(body.length > 1800 ? body.slice(0, 1800) + "\n…" : body);
   function busy(btn, on, text) {
     const lbl = $(".lbl", btn);
@@ -323,8 +323,8 @@
         <b>Odeslání se nepovedlo.</b>
         <p class="rate-msg" hidden>Zkuste to prosím za chvíli, nebo napište e-mailem.</p>
         <p>Pošlete mi to prosím e-mailem – text jsem vám připravil.</p>
-        <a class="btn btn-grad lb-mailto" href="mailto:kontakt@webtitan.cz">Odeslat e-mailem <span class="arr">→</span></a>
-        <small>nebo napište na <a href="mailto:kontakt@webtitan.cz">kontakt@webtitan.cz</a></small>
+        <a class="btn btn-grad lb-mailto" href="mailto:jan@webtitan.cz">Odeslat e-mailem <span class="arr">→</span></a>
+        <small>nebo napište na <a href="mailto:jan@webtitan.cz">jan@webtitan.cz</a></small>
       </div>
     </form>
     <p class="wtx-alt">${lead ? `<a href="#poptat" data-mode="call" data-cta="exit_call">Raději mi zavolejte <span class="arr" aria-hidden="true">→</span></a>` : ""}<a href="tel:+420723793510" data-cta="exit_tel">nebo volejte 723&nbsp;793&nbsp;510</a></p>
