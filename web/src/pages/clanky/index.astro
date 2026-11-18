@@ -1,0 +1,37 @@
+---
+import Sub from "../../layouts/Sub.astro";
+import ArticleCard from "../../components/ArticleCard.astro";
+import { CLANKY } from "../../data/clanky";
+import { graph, blogLd, crumbsLd } from "../../lib/ld";
+import { plain } from "../../lib/text";
+
+const path = "/clanky/";
+const description = "Praktické články o tom, kolik stojí web, e-shop a aplikace na míru, kdy přejít z Excelu a jak získat zákazníky z regionu. Píše Jan Šporek.";
+const jsonLd = graph(
+  blogLd(description, CLANKY.map((c) => ({ path: `/clanky/${c.slug}/`, headline: plain(c.titulek), published: c.datum }))),
+  crumbsLd([["Domů", "/"], ["Články", path]]),
+);
+---
+<Sub
+  title="Články o webech, e-shopech a aplikacích | WebTitan"
+  description={description}
+  path={path}
+  og={{ title: "Články o webech, e-shopech a aplikacích" }}
+  jsonLd={jsonLd}
+  offer="app"
+  cta="post"
+  lead={{"heading": "Chcete to probrat na vaší situaci?", "topic": "Zatím nevím", "placeholder": "Např. zakázky vedeme v Excelu a hledáme, jak to zjednodušit."}}
+  articles
+>
+  <section class="sp-hero">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Drobečková navigace"><ol><li><a href="/">Domů</a></li><li aria-current="page">Články</li></ol></nav>
+      <header class="card intro">
+        <div><span class="kicker">Články</span></div>
+        <h1>Články o&nbsp;webech, e-shopech a&nbsp;aplikacích</h1>
+        <p class="lead">Praktické rady bez zbytečné hantýrky. Píšu je pro majitele firem, ne pro programátory – hlavně pro ty z&nbsp;Karlovarského a&nbsp;Plzeňského kraje.</p>
+      </header>
+      <div class="arts">{CLANKY.map((a) => <ArticleCard a={a} />)}</div>
+    </div>
+  </section>
+</Sub>

@@ -1,0 +1,10 @@
+---
+// Malý náhled reference z data/reference.ts. home = úvodní stránka (zvednutí, zvýraznění „Pro vás“).
+import { reference } from "../data/reference";
+interface Props { id: string; home?: boolean }
+const r = reference(Astro.props.id);
+const n = r.nahled;
+if (!n) throw new Error(`Reference ${r.id} nemá náhled`);
+const home = Astro.props.home ?? false;
+---
+<div class={home ? "card thumb lift rv" : "card thumb"} data-rel={home ? r.rel : undefined}>{home && <span class="match-tag">Pro vás</span>}<img src={`/assets/projects/${r.obrazek}`} alt={n.alt} width="800" height="400" loading="lazy" decoding="async"><div><b set:html={n.nazev}></b><span set:html={n.popis}></span></div></div>

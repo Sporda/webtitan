@@ -1,0 +1,116 @@
+---
+import Base from "../layouts/Base.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import simpleCss from "../styles/simple.css?raw";
+---
+<Base
+  kind="simple"
+  title="Zásady ochrany osobních údajů | WebTitan"
+  description="Jak WebTitan (Jan Šporek) zpracovává osobní údaje z poptávkových formulářů na webtitan.cz – jaké údaje, proč, jak dlouho a jaká máte práva."
+  path="/ochrana-osobnich-udaju.html"
+  css={simpleCss}
+>
+<Nav variant="simple" />
+
+<main class="wrap">
+  <article class="doc">
+    <span class="kicker">Ochrana osobních údajů</span>
+    <h1>Zásady ochrany osobních údajů</h1>
+    <p class="intro">Když mi přes web pošlete poptávku, žádost o&nbsp;hovor nebo o&nbsp;bezplatné posouzení, svěřujete mi své údaje. Tady srozumitelně popisuji, co s&nbsp;nimi dělám – a&nbsp;co ne.</p>
+    <p class="updated">Platné od 17. 11. 2026</p>
+
+    <section aria-labelledby="h-spravce">
+      <h2 id="h-spravce"><span class="n">1</span>Kdo vaše údaje zpracovává</h2>
+      <p>Správcem osobních údajů je <strong>Jan Šporek</strong>, IČO&nbsp;74792148, se sídlem Dlouhá&nbsp;705/38, 357&nbsp;31 Horní Slavkov, fyzická osoba zapsaná v&nbsp;živnostenském rejstříku, provozovatel webu webtitan.cz (WebTitan). Ve všech otázkách ohledně osobních údajů mi pište na <a href="mailto:kontakt@webtitan.cz">kontakt@webtitan.cz</a>.</p>
+    </section>
+
+    <section aria-labelledby="h-udaje">
+      <h2 id="h-udaje"><span class="n">2</span>Jaké údaje zpracovávám</h2>
+      <p>Jen to, co mi sami vyplníte ve formulářích na webu:</p>
+      <ul class="list">
+        <li><span><strong>jméno a&nbsp;e-mail nebo telefon</strong> – abych vám mohl odpovědět nebo zavolat,</span></li>
+        <li><span><strong>telefon</strong> – jen pokud ho vyplníte (u&nbsp;žádosti „Zavolejte mi“ a&nbsp;telefonického hovoru potřebný, jinak nepovinný),</span></li>
+        <li><span><strong>obsah zprávy</strong> – co potřebujete, typ projektu, termín, rozpočet, zvolený termín hovoru,</span></li>
+        <li><span><strong>odkaz na váš web</strong> nebo tabulku – pokud ho pošlete k&nbsp;posouzení.</span></li>
+      </ul>
+      <p>Pro ochranu formulářů před zneužitím a&nbsp;spamem se při odeslání zpracuje také technický údaj o&nbsp;vašem připojení: IP adresa (ukládá se jen jako nevratný otisk, ze kterého IP adresu nejde zpětně zjistit) a&nbsp;typ prohlížeče.</p>
+      <p>S&nbsp;formulářem se odešle i&nbsp;informace, <strong>odkud jste na web přišli</strong> – například z&nbsp;vyhledávače, z&nbsp;reklamy nebo z&nbsp;odkazu na jiném webu (jen jeho název, ne konkrétní adresa stránky), na které stránce webtitan.cz jste začali a&nbsp;kolik stránek jste prošli. Podle toho poznám, které články a&nbsp;reklamy lidem pomáhají. Nic dalšího o&nbsp;vašem prohlížení webu neukládám, pokud mi nedáte souhlas s&nbsp;nahráváním návštěvy (viz bod&nbsp;7).</p>
+    </section>
+
+    <section aria-labelledby="h-proc">
+      <h2 id="h-proc"><span class="n">3</span>Proč a&nbsp;na jakém základě</h2>
+      <ul class="list">
+        <li><span><strong>Odpověď na poptávku, domluva hovoru a&nbsp;příprava nabídky.</strong> Jde o&nbsp;kroky před uzavřením smlouvy, které děláte na vlastní žádost – čl. 6 odst. 1 písm. b) GDPR.</span></li>
+        <li><span><strong>Vyhodnocení, odkud poptávky chodí</strong> (vyhledávač, reklama, odkaz). Jde o&nbsp;můj oprávněný zájem vědět, co z&nbsp;webu a&nbsp;propagace funguje – čl. 6 odst. 1 písm. f) GDPR.</span></li>
+        <li><span><strong>Základní ochrana formulářů proti spamu a&nbsp;zneužití.</strong> Jde o&nbsp;můj oprávněný zájem na bezpečném provozu webu – čl. 6 odst. 1 písm. f) GDPR.</span></li>
+      </ul>
+      <p>Údaje nepoužívám k&nbsp;rozesílání reklamy a&nbsp;nikomu je neprodávám.</p>
+    </section>
+
+    <section aria-labelledby="h-doba">
+      <h2 id="h-doba"><span class="n">4</span>Jak dlouho údaje uchovávám</h2>
+      <p>Po dobu nutnou k&nbsp;vyřízení vaší poptávky, <strong>nejdéle 2 roky</strong>, pokud mezi námi nevznikne smluvní vztah. Pokud spolupráce vznikne, uchovávám údaje po dobu jejího trvání a&nbsp;dále jen v&nbsp;rozsahu a&nbsp;po dobu, kterou ukládají právní předpisy (například účetní a&nbsp;daňové).</p>
+    </section>
+
+    <section aria-labelledby="h-komu">
+      <h2 id="h-komu"><span class="n">5</span>Kdo k&nbsp;údajům má přístup</h2>
+      <p>Vaše zprávy čtu jen já. Odeslaná poptávka se uloží jako záloha na serveru webu (aby se neztratila, kdyby selhalo doručení e-mailu), zároveň se mi pošle e-mailem a&nbsp;uloží do mého systému pro vyřizování poptávek (CRM na adrese crm.webtitan.cz), který běží na stejném serveru. Technicky se na zpracování podílejí pouze:</p>
+      <ul class="list">
+        <li><span><strong>poskytovatel serveru (hostingu)</strong>, na kterém web běží – Oracle Cloud (datacentrum ve Frankfurtu, EU),</span></li>
+        <li><span><strong>Resend</strong> (Plus Five Five, Inc., USA) – služba, která zprávu z&nbsp;formuláře doručí do mé e-mailové schránky. Předání do USA probíhá na základě standardních smluvních doložek EU,</span></li>
+        <li><span><strong>Google</strong> (Gmail) – poskytovatel mé e-mailové schránky,</span></li>
+        <li><span><strong>PostHog</strong> (PostHog Inc., data uložená v&nbsp;EU) – nástroj na měření návštěvnosti webu a&nbsp;– jen s&nbsp;vaším souhlasem – nahrávání návštěv (viz bod&nbsp;7),</span></li>
+        <li><span><strong>Seznam.cz</strong> (Sklik) a&nbsp;<strong>Google</strong> (Google Ads) – jen pokud dáte souhlas s&nbsp;cookies pro měření reklamy (viz bod&nbsp;7).</span></li>
+      </ul>
+      <p>Všichni zpracovávají údaje jen pro tyto účely. Nikomu dalšímu údaje nepředávám ani neprodávám.</p>
+    </section>
+
+    <section aria-labelledby="h-prohlizec">
+      <h2 id="h-prohlizec"><span class="n">6</span>Co se ukládá jen ve vašem prohlížeči</h2>
+      <p>Aby se rozpracovaná poptávka neztratila, ukládá si ji formulář <strong>jen ve vašem prohlížeči</strong> (tzv. localStorage). Na server se nic nedostane, dokud formulář sami neodešlete. Prohlížeč si také pamatuje vaši volbu „aplikace / web“, to, zda jste už viděli nabídku bezplatné kontroly, a&nbsp;vaši volbu v&nbsp;liště cookies.</p>
+      <p>Po dobu jedné návštěvy si prohlížeč (tzv. sessionStorage) pamatuje také to, odkud jste na web přišli a&nbsp;na které stránce jste začali. Po zavření panelu se to samo smaže a&nbsp;na server se to dostane jen spolu s&nbsp;formulářem, který sami odešlete.</p>
+      <p class="box">Rozpracovanou poptávku smažete tlačítkem <strong>„Začít znovu“</strong> ve formuláři, nebo vymazáním dat webu v&nbsp;nastavení prohlížeče. Po odeslání se smaže sama.</p>
+    </section>
+
+    <section aria-labelledby="h-cookies">
+      <h2 id="h-cookies"><span class="n">7</span>Cookies a&nbsp;měření návštěvnosti</h2>
+      <p>Abych věděl, jestli web lidem pomáhá, měřím <strong>anonymně</strong> návštěvnost nástrojem PostHog (data v&nbsp;EU): které stránky se zobrazují, odkud návštěvníci přicházejí a&nbsp;na co klikají – například na tlačítka nebo odeslání formuláře. Obsah formulářů se do měření neposílá.</p>
+      <p>Bez vašeho souhlasu měření <strong>nepoužívá cookies</strong> ani jiné ukládání do vašeho prohlížeče, každé zobrazení stránky je samostatné a&nbsp;nespojuji ho s&nbsp;vaší osobou. PostHog přitom zpracuje technické údaje o&nbsp;připojení (např. IP adresu a&nbsp;typ prohlížeče). Pokud máte v&nbsp;prohlížeči zapnuté „Do Not Track“, neměří se nic – ani se souhlasem. Právní základ: můj oprávněný zájem na zlepšování webu – čl. 6 odst. 1 písm. f) GDPR.</p>
+      <p><strong>Nahrávání návštěv a&nbsp;měření reklamy jen se souhlasem.</strong> V&nbsp;liště „Cookies pro měření webu a&nbsp;reklamy“ se vás zeptám, jestli smím:</p>
+      <ul class="list">
+        <li><span><strong>nahrávat, jak web procházíte</strong> (PostHog) – přechody mezi stránkami, posouvání a&nbsp;kliknutí, abych viděl, kde se lidé ztrácejí nebo zasekávají. Co píšete do formulářových polí, se nenahrává (pole jsou v&nbsp;záznamu zakrytá). Aby průchod více stránkami tvořil jeden záznam, uloží si PostHog do prohlížeče náhodný identifikátor návštěvy (cookie a&nbsp;localStorage). Záznamy vidím jen já a&nbsp;PostHog je automaticky maže po 30 dnech,</span></li>
+        <li><span><strong>použít cookies Seznamu (Sklik) a&nbsp;Googlu (Google Ads)</strong>, pokud na webu poběží reklama – abych věděl, které reklamy přivádějí poptávky. Po odeslání formuláře se jim pošle jen informace, že poptávka vznikla, ne její obsah ani vaše údaje.</span></li>
+      </ul>
+      <p>Bez souhlasu se nic z&nbsp;toho nespustí a&nbsp;kódy Seznamu a&nbsp;Googlu se vůbec nenačtou. Volbu si prohlížeč pamatuje rok a&nbsp;změnit ji můžete kdykoli odkazem „Nastavení cookies“ v&nbsp;patičce – po odvolání souhlasu se nahrávání vypne a&nbsp;identifikátor PostHogu se z&nbsp;prohlížeče smaže. Právní základ: váš souhlas – čl. 6 odst. 1 písm. a) GDPR.</p>
+    </section>
+
+    <section aria-labelledby="h-prava">
+      <h2 id="h-prava"><span class="n">8</span>Vaše práva</h2>
+      <p>Kdykoli mi můžete napsat na <a href="mailto:kontakt@webtitan.cz">kontakt@webtitan.cz</a> a&nbsp;požádat o:</p>
+      <ul class="list">
+        <li><span><strong>přístup</strong> k&nbsp;údajům, které o&nbsp;vás mám,</span></li>
+        <li><span><strong>opravu</strong> nepřesných údajů,</span></li>
+        <li><span><strong>výmaz</strong> údajů,</span></li>
+        <li><span><strong>omezení</strong> zpracování,</span></li>
+        <li><span><strong>přenositelnost</strong> údajů,</span></li>
+        <li><span>a&nbsp;můžete vznést <strong>námitku</strong> proti zpracování na základě oprávněného zájmu.</span></li>
+      </ul>
+      <p>Odpovím vám bez zbytečného odkladu, nejpozději do jednoho měsíce.</p>
+    </section>
+
+    <section aria-labelledby="h-stiznost">
+      <h2 id="h-stiznost"><span class="n">9</span>Stížnost u&nbsp;dozorového úřadu</h2>
+      <p>Pokud si myslíte, že s&nbsp;vašimi údaji nezacházím správně, můžete podat stížnost u&nbsp;Úřadu pro ochranu osobních údajů, Pplk. Sochora 27, 170&nbsp;00 Praha&nbsp;7, <a href="https://www.uoou.cz" target="_blank" rel="noopener">www.uoou.cz</a>. Budu ale rád, když se nejdřív ozvete mně – většinu věcí vyřešíme rychle.</p>
+    </section>
+
+    <div class="contact-cta">
+      <p>Máte dotaz k&nbsp;ochraně údajů?</p>
+      <a class="btn" href="mailto:kontakt@webtitan.cz">Napište na kontakt@webtitan.cz</a>
+    </div>
+  </article>
+</main>
+
+<Footer variant="simple" current="/ochrana-osobnich-udaju.html" />
+<script is:inline>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</Base>

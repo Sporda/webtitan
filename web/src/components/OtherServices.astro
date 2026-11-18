@@ -1,0 +1,15 @@
+---
+// „Další služby“ na podstránkách služeb: karty z data/sluzby.ts (ikona, název, věta, cena).
+import { sluzba, type SluzbaId } from "../data/sluzby";
+interface Props { ids: SluzbaId[] }
+const items = Astro.props.ids.map(sluzba);
+---
+<section class="sec" id="dalsi-sluzby">
+  <div class="wrap">
+    <div class="head"><div><span class="kicker">Další služby</span><h2>Co dalšího pro vás můžu udělat</h2></div></div>
+    <nav class="xs" aria-label="Další služby">{items.map((s) => (
+      <a class="card" href={s.url}><span class="svc-ic" aria-hidden="true"><svg viewBox="0 0 24 24" set:html={s.ikona}></svg></span><b set:html={s.nazev}></b><span set:html={s.kratce}></span><em set:html={s.cena}></em></a>
+    ))}</nav>
+    <p class="xs-home"><a href="/#sluzby" class="link-cta">Všechny služby a&nbsp;ceny na jednom místě <span class="arr" aria-hidden="true">→</span></a></p>
+  </div>
+</section>

@@ -1,0 +1,41 @@
+---
+import Base from "../layouts/Base.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import simpleCss from "../styles/simple.css?raw";
+import notfoundCss from "../styles/notfound.css?raw";
+---
+<Base
+  kind="simple"
+  title="Stránka nenalezena (404) | WebTitan"
+  description="Tahle stránka na webtitan.cz neexistuje. Pokračujte na úvod nebo na služby."
+  robots="noindex, follow"
+  css={simpleCss.trimEnd() + notfoundCss}
+>
+<Nav variant="simple" />
+
+<main class="wrap">
+  <article class="doc nf">
+    <span class="kicker">Chyba 404</span>
+    <h1>Tuhle stránku jsem nenašel</h1>
+    <p class="intro">Odkaz je možná starý nebo v&nbsp;adrese chybí písmeno. Web jsem nedávno přestavěl, takže některé staré adresy už neexistují.</p>
+    <div class="nf-actions">
+      <a href="/" class="back nf-btn">Na úvodní stránku</a>
+      <a href="/#kontakt" class="nf-link">Napsat mi nebo domluvit hovor →</a>
+    </div>
+    <h2>Možná hledáte</h2>
+    <ul class="list nf-list">
+      <li><span><a href="/vyvoj-aplikaci-na-miru/">Vývoj aplikací na míru</a> – z&nbsp;Excelu do přehledné aplikace, od 24&nbsp;950&nbsp;Kč</span></li>
+      <li><span><a href="/mobilni-aplikace/">Mobilní aplikace</a> pro iOS i&nbsp;Android</span></li>
+      <li><span><a href="/tvorba-webu/">Tvorba webových stránek</a> od 9&nbsp;970&nbsp;Kč</span></li>
+      <li><span><a href="/tvorba-e-shopu/">Tvorba e-shopu</a> od 19&nbsp;870&nbsp;Kč</span></li>
+      <li><span><a href="/sprava-serveru/">Správa serverů a&nbsp;webů</a> od 990&nbsp;Kč/měsíc</span></li>
+      <li><span><a href="/sprava-it-a-siti/">Správa IT a&nbsp;sítí</a> od 1&nbsp;490&nbsp;Kč/měsíc</span></li>
+      <li><span><a href="/#reference">Reference</a> a&nbsp;<a href="/#faq">časté otázky</a></span></li>
+    </ul>
+  </article>
+</main>
+
+<Footer variant="simple" />
+<script is:inline>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</Base>

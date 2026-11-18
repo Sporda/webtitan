@@ -1,0 +1,15 @@
+---
+// Časté otázky na podstránkách služeb (#otazky). Stejné položky jdou i do strukturovaných dat (lib/ld.ts faqLd).
+interface Props { heading: string; items: { q: string; a: string }[] }
+const { heading, items } = Astro.props;
+---
+<section class="sec" id="otazky">
+  <div class="wrap">
+    <div class="head"><div><span class="kicker">Časté otázky</span><h2 set:html={heading}></h2></div><p>Nenašli jste odpověď? Zeptejte se mě rovnou – na hovoru nebo e-mailem.</p></div>
+    <div class="faq-list">
+      {items.map((f, i) => (
+        <details open={i === 0}><summary><Fragment set:html={f.q} /><span class="pm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></summary><p class="ans" set:html={f.a}></p></details>
+      ))}
+    </div>
+  </div>
+</section>

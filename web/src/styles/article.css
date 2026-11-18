@@ -1,0 +1,40 @@
+
+
+  /* articles */
+  .narrow { max-width: 920px; margin: 0 auto; }
+  .post-meta { display: flex; flex-wrap: wrap; gap: 6px 18px; color: var(--muted); font-size: 14.5px; font-weight: 700; }
+  .post { padding: clamp(24px, 4vw, 56px); margin-top: var(--gap); }
+  .post > * + * { margin-top: 14px; }
+  .post h2 { font-size: clamp(21px, 2.3vw, 27px); margin-top: 40px; }
+  .post h2:first-child { margin-top: 0; }
+  .post h3 { font-size: 18px; font-weight: 800; letter-spacing: -.01em; line-height: 1.35; margin-top: 26px; }
+  .post p, .post li { font-size: 17px; line-height: 1.7; }
+  .post .list { padding-left: 24px; display: flex; flex-direction: column; gap: 8px; }
+  .post ul.list { list-style: disc; }
+  .post ol.list { list-style: decimal; }
+  .post li::marker { color: var(--orange-lg); font-weight: 800; }
+  .post a:not(.btn) { color: var(--navy); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+  .post strong { font-weight: 800; }
+  .callout { padding: 18px 22px; border-radius: 16px; background: var(--soft); border-left: 4px solid var(--orange); }
+  .callout p { font-size: 16px; }
+  .tbl-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 16px; background: #fff; }
+  .post table { width: 100%; border-collapse: collapse; font-size: 15.5px; min-width: 540px; }
+  .post th, .post td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--line); vertical-align: top; line-height: 1.5; }
+  .post tr:last-child td { border-bottom: 0; }
+  .post th { font-size: 12.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--dim); background: var(--soft); }
+  .post td b { white-space: nowrap; }
+  .post-cta { margin-top: 34px !important; padding: clamp(20px, 3vw, 30px); border-radius: 18px; background: var(--grad-soft); display: flex; flex-direction: column; gap: 14px; }
+  .post-cta b { font-family: var(--display); font-weight: 700; font-size: clamp(18px, 2vw, 22px); letter-spacing: -.03em; line-height: 1.25; }
+  .post-cta p { font-size: 16px; color: var(--muted); }
+  .author { display: flex; gap: 14px; align-items: center; margin-top: 34px !important; padding-top: 22px; border-top: 1px solid var(--line); }
+  .author p { font-size: 15px; color: var(--muted); line-height: 1.55; }
+  .author b { color: var(--text); }
+  .arts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gap); margin-top: var(--gap); }
+  .arts a { padding: clamp(22px, 2.6vw, 30px); display: flex; flex-direction: column; gap: 10px; transition: transform .25s, box-shadow .25s; }
+  .arts a:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+  .arts small { font-size: 12.5px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--orange-ink); }
+  .arts b { font-family: var(--display); font-weight: 700; font-size: clamp(18px, 1.9vw, 21px); letter-spacing: -.035em; line-height: 1.25; }
+  .arts span { color: var(--muted); font-size: 15.5px; }
+  .arts em { font-style: normal; font-weight: 800; color: var(--navy); font-size: 14.5px; margin-top: auto; }
+  @media (max-width: 860px) { .arts { grid-template-columns: 1fr; } }
+  @media (max-width: 600px) { .post p, .post li { font-size: 16.5px; } .author { align-items: flex-start; } }

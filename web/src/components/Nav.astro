@@ -1,0 +1,48 @@
+---
+// Horní lišta s menu. home = úvodní stránka (kotvy na sekce, mobilní menu), sub = podstránky a články,
+// simple = ochrana údajů a 404 (jen odkaz zpět). cta = předpona měření kliknutí (sp, it, post…).
+import { PHONE, PHONE_SHORT } from "../data/site";
+
+interface Props { variant: "home" | "sub" | "simple"; cta?: string }
+const { variant, cta = "sp" } = Astro.props;
+const tel = `Zavolat ${PHONE_SHORT.replaceAll("&nbsp;", " ")}`;
+---
+<div class="nav-wrap">
+  <header class="nav">
+    {variant === "home" && (
+      <Fragment>
+        <a href="#" class="brand" aria-label="WebTitan – Jan Šporek, úvod"><img src="/assets/logo-52.png" alt="" width="26" height="26">WebTitan <small>· Jan Šporek</small></a>
+        <nav class="links" id="links" aria-label="Hlavní navigace">
+          <a href="#reseni">Řešení</a>
+          <a href="#sluzby">Ceny</a>
+          <a href="#reference">Reference</a>
+          <a href="#postup">Jak pracuji</a>
+          <a href="#o-mne">O mně</a>
+          <a href="#faq">Otázky</a>
+        </nav>
+        <a href={`tel:${PHONE}`} class="nav-tel" data-cta="nav_tel" aria-label={tel}><svg><use href="#i-phone"/></svg><span set:html={PHONE_SHORT}></span></a>
+        <a href="#kontakt" class="btn btn-grad" data-open="call" data-cta="nav"><svg><use href="#i-phone"/></svg>Domluvit 15min hovor</a>
+        <button class="menu" id="menu" aria-label="Otevřít menu" aria-expanded="false" aria-controls="links">☰</button>
+      </Fragment>
+    )}
+    {variant === "sub" && (
+      <Fragment>
+        <a href="/" class="brand" aria-label="WebTitan – Jan Šporek, úvodní stránka"><img src="/assets/logo-52.png" alt="" width="26" height="26">WebTitan <small>· Jan Šporek</small></a>
+        <nav class="links" aria-label="Hlavní navigace">
+          <a href="/#sluzby">Služby a&nbsp;ceny</a>
+          <a href="/#reference">Reference</a>
+          <a href="/#postup">Jak pracuji</a>
+          <a href="/#o-mne">O mně</a>
+          <a href="/#faq">Otázky</a>
+        </nav>
+        <a href={`tel:${PHONE}`} class="nav-tel" data-cta={`${cta}_nav_tel`} aria-label={tel}><svg aria-hidden="true"><use href="#i-phone"/></svg><span set:html={PHONE_SHORT}></span></a><a href="#poptat" class="btn btn-grad" data-mode="call" data-cta={`${cta}_nav`}><svg aria-hidden="true"><use href="#i-phone"/></svg><span class="l-long">Domluvit 15min hovor</span><span class="l-short">Domluvit hovor</span></a>
+      </Fragment>
+    )}
+    {variant === "simple" && (
+      <Fragment>
+        <a href="/" class="brand" aria-label="WebTitan – Jan Šporek, úvod"><img src="/assets/logo-52.png" alt="" width="26" height="26">WebTitan <small>· Jan Šporek</small></a>
+        <a href="/" class="back">← Zpět na web</a>
+      </Fragment>
+    )}
+  </header>
+</div>

@@ -1,0 +1,46 @@
+---
+// Článek: drobečková navigace, hlavička (kategorie, nadpis, perex, autor, datum, doba čtení), text článku (slot),
+// medailonek autora, „Mohlo by vás zajímat“ a kontaktní sekce. Údaje článku jsou v data/clanky.ts.
+import Sub from "./Sub.astro";
+import Related from "../components/Related.astro";
+import { clanek } from "../data/clanky";
+import { graph, articleLd, crumbsLd } from "../lib/ld";
+import { plain, datumCesky } from "../lib/text";
+
+interface Props { slug: string }
+const a = clanek(Astro.props.slug);
+const path = `/clanky/${a.slug}/`;
+const description = plain(a.popis);
+const jsonLd = graph(
+  articleLd({ path, headline: plain(a.titulek), description, published: a.datum }),
+  crumbsLd([["Domů", "/"], ["Články", "/clanky/"], [plain(a.nazev), path]]),
+);
+---
+<Sub
+  title={a.title}
+  description={description}
+  path={path}
+  og={{ type: "article", title: a.ogTitulek, published: a.datum }}
+  jsonLd={jsonLd}
+  offer={a.nabidka}
+  cta="post"
+  lead={a.poptavka}
+  articles
+>
+  <section class="sp-hero">
+    <div class="wrap narrow">
+      <nav class="crumbs" aria-label="Drobečková navigace"><ol><li><a href="/">Domů</a></li><li><a href="/clanky/">Články</a></li><li aria-current="page" set:html={a.nazev}></li></ol></nav>
+      <header class="card intro">
+        <div><span class="kicker" set:html={a.kategorie}></span></div>
+        <h1 set:html={a.titulek}></h1>
+        <p class="lead" set:html={a.perex}></p>
+        <p class="post-meta"><span>Jan Šporek</span><span><time datetime={a.datum}>{datumCesky(a.datum)}</time></span><span>{a.cteni} min čtení</span></p>
+      </header>
+      <article class="card post">
+        <slot />
+        <div class="author"><span class="avatar" role="img" aria-label="Jan Šporek"></span><p><b>Jan Šporek</b> – <Fragment set:html={a.autorUvod ?? "weby a&nbsp;aplikace stavím od roku 2006."} /> Sídlím u&nbsp;Sokolova a&nbsp;pracuji hlavně pro firmy z&nbsp;Karlovarského a&nbsp;Plzeňského kraje. <a href="/#o-mne">Víc o&nbsp;mně</a></p></div>
+      </article>
+    </div>
+  </section>
+  <Related clanky={a.souvisejici} sluzby={a.sluzby} />
+</Sub>

@@ -1,0 +1,36 @@
+---
+// Podstránka (služby, rozcestník článků, články): menu, obsah stránky (slot), kontaktní sekce, patička, mobilní lišta.
+import Base, { type Props as BaseProps } from "./Base.astro";
+import Sprite from "../components/Sprite.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import MobileBar from "../components/MobileBar.astro";
+import LeadSection from "../components/LeadSection.astro";
+import subCss from "../styles/sub.css?raw";
+import articleCss from "../styles/article.css?raw";
+
+interface Props extends Omit<BaseProps, "kind" | "css"> {
+  /** Předpona měření kliknutí: sp (služby), it (správa IT), post (články). */
+  cta: string;
+  /** Kontaktní sekce na konci stránky (misto = kde působím osobně, výchozí je Karlovarský a Plzeňský kraj). */
+  lead: { heading: string; topic: string; placeholder: string; misto?: string };
+  /** Styly článků (rozcestník a články). */
+  articles?: boolean;
+}
+const { cta, lead, articles = false, ...base } = Astro.props;
+const css = articles ? subCss.trimEnd() + articleCss : subCss;
+---
+<Base kind="sub" css={css} {...base}>
+<Sprite variant="sub" />
+<a class="skip" href="#obsah">Přeskočit na obsah</a>
+<Nav variant="sub" cta={cta} />
+
+<main id="obsah">
+  <slot />
+  <LeadSection {...lead} cta={cta} />
+</main>
+
+<Footer variant="sub" current={base.path} cta={cta} />
+<MobileBar cta={cta} />
+<script is:inline>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</Base>

@@ -1,0 +1,101 @@
+---
+import RefCase from "../../components/RefCase.astro";
+import RefThumb from "../../components/RefThumb.astro";
+import Sub from "../../layouts/Sub.astro";
+import Faq from "../../components/Faq.astro";
+import OtherServices from "../../components/OtherServices.astro";
+import { graph, serviceLd, crumbsLd, faqLd } from "../../lib/ld";
+import { otazky } from "../../data/otazky";
+
+const path = "/vyvoj-aplikaci-na-miru/";
+const description = "Vývoj webových aplikací a interních systémů na míru od 24 950 Kč pro firmy ze západních Čech. Z Excelu do přehledné aplikace, pevná cena, kód i data patří vám.";
+/** Časté otázky (data/otazky.ts) – zobrazí se na stránce a zároveň jdou do strukturovaných dat. */
+const faq = otazky(["jak-dlouho-trva", "umite-prevzit-data-excelu", "komu-patri-aplikace-web", "napojite-ucetnictvi-platby-nebo", "nemam-presne-zadani-vadi"]);
+const jsonLd = graph(
+  serviceLd({ path, name: "Vývoj aplikací na míru", serviceType: "Vývoj webových aplikací na míru", description, minPrice: 24950 }),
+  crumbsLd([["Domů", "/"], ["Vývoj aplikací na míru", path]]),
+  faqLd(faq),
+);
+---
+<Sub
+  title="Vývoj aplikací na míru – Karlovy Vary, Plzeň | WebTitan"
+  description={description}
+  path={path}
+  og={{ title: "Vývoj aplikací na míru a interní systémy – WebTitan" }}
+  jsonLd={jsonLd}
+  offer="app"
+  cta="sp"
+  lead={{"heading": "Pojďme probrat vaši aplikaci", "topic": "Aplikace na míru", "placeholder": "Např. zakázky vedeme v Excelu a chceme je mít přehledně na jednom místě."}}
+>
+  <section class="sp-hero">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Drobečková navigace"><ol><li><a href="/">Domů</a></li><li aria-current="page">Vývoj aplikací na míru</li></ol></nav>
+      <div class="hero-grid">
+        <div class="card intro">
+          <div><span class="kicker">Hlavní specializace</span></div>
+          <h1>Vývoj aplikací na míru – z&nbsp;Excelu do přehledné aplikace</h1>
+          <p class="lead">Zakázky, termíny, zákazníci i&nbsp;rezervace na jednom místě. Jako programátor na zakázku navrhnu a&nbsp;postavím webovou aplikaci nebo interní systém přesně podle toho, jak vaše firma pracuje – a&nbsp;postarám se, aby spolehlivě běžel.</p>
+          <ul class="checks"><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Pevná cena předem – co si odsouhlasíme, to platí</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Začnete v&nbsp;malém, rozšíříte, až to bude dávat smysl</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Aplikace, kód i&nbsp;data patří vám</li></ul>
+          <div class="dual"><a href="#poptat" class="btn btn-grad" data-mode="call" data-cta="sp_hero_call"><svg aria-hidden="true"><use href="#i-phone"/></svg>Domluvit 15min hovor</a><a href="#poptat" class="btn btn-line" data-mode="form" data-cta="sp_hero_form">Poslat poptávku</a></div>
+          <p class="micro"><span class="mi"><svg aria-hidden="true"><use href="#i-clock"/></svg>Ozvu se do 24 hodin (v&nbsp;pracovní dny)</span><span class="mi"><svg aria-hidden="true"><use href="#i-pin"/></svg>Karlovarský a&nbsp;Plzeňský kraj – i&nbsp;osobně</span><span class="mi"><svg aria-hidden="true"><use href="#i-phone"/></svg>Volejte rovnou: <a href="tel:+420723793510" data-cta="sp_hero_tel">723&nbsp;793&nbsp;510</a></span></p>
+        </div>
+        <aside class="card sum" aria-label="Shrnutí">
+          <div class="sum-price"><small>Cena</small><b class="gt">od 24 950 Kč</b><span>jednorázově, bez licencí za uživatele</span></div>
+          <dl class="facts">
+            <div class="fact"><dt>Termín</dt><dd>typicky 3–6 týdnů od schválení rozsahu</dd></div>
+            <div class="fact"><dt>Komu patří kód a&nbsp;data</dt><dd>Vám – kód, data i&nbsp;doména</dd></div>
+            <div class="fact"><dt>S&nbsp;kým jednáte</dt><dd>Přímo s&nbsp;tím, kdo to staví</dd></div>
+            <div class="fact"><dt>DPH</dt><dd>Nejsem plátce DPH – ceny jsou konečné</dd></div>
+          </dl>
+          <div class="me-row"><span class="avatar" role="img" aria-label="Jan Šporek"></span><div><b>Jan Šporek</b><span>Weby a&nbsp;aplikace stavím od roku 2006, sídlím u&nbsp;Sokolova. Kdo s&nbsp;vámi mluví, ten to i&nbsp;staví – v&nbsp;Karlovarském a&nbsp;Plzeňském kraji klidně i&nbsp;osobně.</span></div></div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="pro-koho">
+    <div class="wrap">
+      <div class="head"><div><span class="kicker">Poznáváte se?</span><h2>Kdy dává aplikace na míru smysl</h2></div><p>Pokud vám aspoň jeden bod zní povědomě, má smysl se pobavit. Většinu z&nbsp;toho jde vyřešit rychleji a&nbsp;levněji, než čekáte.</p></div>
+      <div class="pains"><article class="card pain"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></svg></span><h3>Excel, kterému rozumí jen jeden člověk</h3><p>Když je na dovolené, nikdo neví, co platí. A&nbsp;verzí té tabulky je pět.</p></article><article class="card pain"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span><h3>Termíny v&nbsp;diáři a&nbsp;v&nbsp;hlavě</h3><p>Stačí jeden zapomenutý termín a&nbsp;zákazník příště zavolá jinam.</p></article><article class="card pain"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></span><h3>Pořád dokola stejné přepisování</h3><p>Objednávky, rezervace a&nbsp;výkazy přepisujete ručně z&nbsp;jednoho místa do druhého.</p></article></div>
+      <div class="ba">
+        <div class="card ba-col before"><span class="ba-label">Dnes</span><h3>Excel, diář a&nbsp;papírky</h3><ul><li><span class="mk" aria-hidden="true"><svg><use href="#i-x"/></svg></span>Data v&nbsp;několika tabulkách a&nbsp;e-mailech</li><li><span class="mk" aria-hidden="true"><svg><use href="#i-x"/></svg></span>Aktuální stav zná jen ten, kdo zrovna zvedl telefon</li><li><span class="mk" aria-hidden="true"><svg><use href="#i-x"/></svg></span>Stejné údaje přepisujete několikrát – i&nbsp;s&nbsp;chybami</li><li><span class="mk" aria-hidden="true"><svg><use href="#i-x"/></svg></span>Přehled pro vedení znamená obvolat lidi</li><li><span class="mk" aria-hidden="true"><svg><use href="#i-x"/></svg></span>Zaučit nového kolegu trvá dlouho</li></ul></div>
+        <div class="card ba-col after gb"><span class="ba-label">S&nbsp;aplikací na míru</span><h3>Jedna přehledná aplikace</h3><ul><li><span class="mk" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Zakázky, zákazníci a&nbsp;termíny na jednom místě</li><li><span class="mk" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Každý vidí aktuální stav – v&nbsp;kanceláři i&nbsp;z&nbsp;mobilu</li><li><span class="mk" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Údaj zadáte jednou, aplikace ho použije všude</li><li><span class="mk" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Přehledy a&nbsp;exporty na jedno kliknutí</li><li><span class="mk" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Aplikace vede krok za krokem – i&nbsp;nováčka</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="co-dostanete">
+    <div class="wrap">
+      <div class="head"><div><span class="kicker">Co dostanete</span><h2>Co vaše aplikace na míru zvládne</h2></div><p>Aplikace na míru nekopíruje cizí postupy. Převezme ten váš a&nbsp;odstraní z&nbsp;něj ruční práci.</p></div>
+      <div class="get"><div class="card get-item"><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><div><h3>Evidence zakázek, zákazníků a&nbsp;termínů</h3><p>Jedno přehledné místo pro zakázky, rezervace nebo evidenci – místo Excelu, papírků a&nbsp;e-mailů.</p></div></div><div class="card get-item"><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><div><h3>Rezervace, objednávky, klientské zóny</h3><p>Zákazníci si sami zarezervují, objednají nebo najdou, co potřebují.</p></div></div><div class="card get-item"><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><div><h3>Napojení na platby, účetnictví a&nbsp;další služby</h3><p>Pokud druhá strana nabízí rozhraní (API), napojím aplikaci na platební brány, účetní systémy, e-mail a&nbsp;další.</p></div></div><div class="card get-item"><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><div><h3>Převod dat z&nbsp;Excelu</h3><p>Převod dat ze stávajících tabulek je běžnou součástí spuštění, abyste nezačínali od nuly.</p></div></div><div class="card get-item"><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><div><h3>Přehledy a&nbsp;exporty na jedno kliknutí</h3><p>Každý vidí aktuální stav – v&nbsp;kanceláři i&nbsp;z&nbsp;mobilu. Data si můžete kdykoli vyexportovat.</p></div></div><div class="card get-item"><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><div><h3>Bez licencí za uživatele</h3><p>Zaplatíte jednou a&nbsp;aplikace je vaše. Platíte jen provoz a&nbsp;správu.</p></div></div></div>
+      <p class="tech">Next.js · React · Node.js · TypeScript · MongoDB</p>
+    </div>
+  </section>
+
+  <section class="sec" id="postup">
+    <div class="wrap">
+      <div class="head"><div><span class="kicker">Jak pracuji</span><h2>Jak probíhá vývoj aplikace</h2></div><p>Víte, co se kdy děje a&nbsp;kolik to bude stát – ještě než se do čehokoli pustíme.</p></div>
+      <ol class="steps"><li class="card step"><div class="step-top"><span class="num">1</span><span class="time">do 24 h · zdarma</span></div><h3>15min hovor</h3><p>Projdeme, co vás dnes zdržuje. Řeknu vám, jestli a&nbsp;jak to jde – po telefonu nebo videohovorem.</p></li><li class="card step"><div class="step-top"><span class="num">2</span><span class="time">cca 1 týden</span></div><h3>Návrh a&nbsp;pevná cena</h3><p>Sepíšu, co bude řešení umět, ukážu náhled obrazovek a&nbsp;pošlu pevnou cenu. Teprve pak se rozhodnete.</p></li><li class="card step"><div class="step-top"><span class="num">3</span><span class="time">typicky 3–6 týdnů</span></div><h3>Vývoj s&nbsp;průběžnými ukázkami</h3><p>Průběžně vidíte pokrok a&nbsp;můžete říct, co upravit. Žádná černá skříňka.</p></li><li class="card step"><div class="step-top"><span class="num">4</span><span class="time">průběžně</span></div><h3>Spuštění a&nbsp;péče</h3><p>Převedu data z&nbsp;tabulek, zaškolím vás a&nbsp;postarám se o&nbsp;servery, zálohy i&nbsp;další rozvoj.</p></li></ol>
+    </div>
+  </section>
+
+  <section class="sec" id="cena">
+    <div class="wrap">
+      <div class="head"><div><span class="kicker">Cena</span><h2>Kolik stojí vývoj aplikace na míru</h2></div></div>
+      <div class="card price-card gb">
+        <div class="price-big"><small>Cena</small><b class="gt">od 24 950 Kč</b><span>jednorázově, bez licencí za uživatele</span></div>
+        <div><ul><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Pevnou cenu dostanete po úvodním hovoru – co si odsouhlasíme, to platí.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Začít můžete i&nbsp;menší první verzí a&nbsp;rozšiřovat, až to bude dávat smysl.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Provoz a&nbsp;správa se platí zvlášť, od 990 Kč měsíčně.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Nejsem plátce DPH, takže uvedené ceny jsou konečné.</li></ul><p class="price-note">Výsledná cena záleží na rozsahu – co má řešení umět a&nbsp;na co ho napojíme. Přesnou cenu vám řeknu po úvodním hovoru. Podrobněji v&nbsp;článku <a href="/clanky/kolik-stoji-aplikace-na-miru/">Kolik stojí aplikace na míru a&nbsp;co cenu ovlivňuje</a>.</p><a href="/#kalkulacka" class="link-cta">Spočítejte si, kolik vás stojí ruční práce <span class="arr" aria-hidden="true">→</span></a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="reference">
+    <div class="wrap">
+      <div class="head"><div><span class="kicker">Reference</span><h2>Aplikace a&nbsp;systémy, které jsem postavil</h2></div></div>
+      <div class="cases"><RefCase id="dev-c-r-m" /><RefCase id="bmp-konfigurator" /><RefCase id="moje-bojovka" /><RefCase id="e-podnikam" /><RefCase id="skripta-prokop" /><RefCase id="gprooms" /></div>
+      <p class="refs-more"><a href="/#reference" class="link-cta">Všechny reference <span class="arr" aria-hidden="true">→</span></a></p>
+    </div>
+  </section>
+  <Faq heading="Časté otázky k&nbsp;vývoji aplikací" items={faq} />
+  <OtherServices ids={["mob", "web", "shop", "srv"]} />
+</Sub>

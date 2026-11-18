@@ -1,0 +1,7 @@
+---
+// Spodní lišta na mobilu (podstránky a články): telefon a tlačítko na formulář. cta = předpona měření.
+import { PHONE, PHONE_SHORT } from "../data/site";
+interface Props { cta?: string }
+const { cta = "sp" } = Astro.props;
+---
+<div class="mbar"><a href={`tel:${PHONE}`} class="mc-tel" data-cta={`${cta}_mbar_tel`}>Volejte rovnou<b set:html={PHONE_SHORT}></b></a><a href="#poptat" class="btn btn-grad" data-mode="call" data-cta={`${cta}_mbar`}><svg aria-hidden="true"><use href="#i-phone"/></svg>Domluvit hovor</a></div>

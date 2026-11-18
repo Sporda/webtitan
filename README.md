@@ -2,33 +2,67 @@
 
 Web Jana Šporka (WebTitan) – webové a mobilní aplikace, weby a e-shopy na míru.
 
-Lehký statický web: HTML + CSS + JS bez buildu a několik malých PHP endpointů. Žádný Node.js, framework ani Docker.
-Běží na hostingu v panelu (panel.webtitan.cz, nginx + PHP 8.3) na serveru `158.180.50.98`.
+Lehký statický web skládaný v [Astru](https://astro.build) (`web/`) a několik malých PHP endpointů. Výstup je čisté HTML
+jako dřív – žádný framework ani JavaScript navíc v prohlížeči, CSS i skripty stránek zůstávají vložené přímo ve stránce.
+Astro slouží jen k tomu, aby se společné části (menu, patička, formulář, reference, služby, ceny, otázky) měnily
+na jednom místě. Běží na hostingu v panelu (panel.webtitan.cz, nginx + PHP 8.3) na serveru `158.180.50.98`.
 
 ## Struktura
 
-Složka `site/` se na server kopíruje 1:1 do `/var/www/webtitan/public_html`.
+`web/` je projekt Astro; `npm run build` z něj vyrobí `web/dist/`, který se na server kopíruje do
+`/var/www/webtitan/public_html`. Adresy stránek jsou stejné jako dřív (`/tvorba-webu/`, `/clanky/…/`,
+`/ochrana-osobnich-udaju.html`, `/404.html`).
+
+**Kde co upravit:**
+
+| Co | Kde |
+|---|---|
+| Ceny, názvy a popisy služeb (patička, karty „Další služby“ a „Mohlo by vás zajímat“) | `web/src/data/sluzby.ts` |
+| Reference (velké karty Zadání / Řešení / Přínos a malé náhledy) | `web/src/data/reference.ts`; na stránce `<RefCase id="…" />`, `<RefThumb id="…" />` |
+| Časté otázky (jedna sada pro celý web; na stránce i v JSON-LD) | `web/src/data/otazky.ts`; stránka si je vybírá `otazky([...])` |
+| Články: kategorie, nadpis, popis, datum, doba čtení, související | `web/src/data/clanky.ts`; text článku v `web/src/pages/clanky/<slug>/index.astro` |
+| Telefon, e-mail, odkazy, IČO, **verze souborů `?v=`** (po změně `analytics.js`, `lead.js`, `motion.css`…) | `web/src/data/site.ts` |
+| Údaje o mně a firmě pro vyhledávače (Person, ProfessionalService) | `web/src/data/schema.ts` |
+| Hlavička stránky (SEO, sdílení, ikony, písma, skripty) | `web/src/layouts/Base.astro` |
+| Menu, patička, kontaktní sekce podstránek, mobilní lišta | `web/src/components/Nav.astro`, `Footer.astro`, `LeadSection.astro`, `MobileBar.astro` |
+| Obsah stránek | `web/src/pages/` (`index.astro` = úvodní stránka, `<služba>/index.astro`, `clanky/`) |
+| Styly (vkládají se do stránky) | `web/src/styles/` – `home.css` úvod, `sub.css` podstránky a články, `article.css` doplněk článků, `simple.css` ochrana údajů a 404 |
+| Hlavní skript úvodní stránky (rezervace, formuláře, kalkulačka) | `web/src/scripts/home.js` |
+| Soubory, které se jen kopírují (obrázky, `lead.js`, `consent.js`, `analytics.js`, `motion.*`, písma, PHP, robots, sitemap) | `web/public/` |
 
 | Soubor | Co dělá |
 |---|---|
-| `site/index.html` | hlavní stránka (design 11 – Písek), SEO, JSON-LD, formuláře; cílení na Karlovarský a Plzeňský kraj |
-| `site/ochrana-osobnich-udaju.html` | zásady ochrany osobních údajů |
-| `site/assets/` | obrázky webu (fotka ve WebP, OG obrázek, ikony, náhledy projektů) |
-| `site/assets/lead.js`, `lead.css` | podstránky a články: formulář „Zavolejte mi / Napsat poptávku“ přímo na stránce (`#poptat`), okno při odchodu (`data-offer="app\|web"` na `<script>`), a na všech stránkách včetně hlavní: odkud návštěvník přišel (`window.wtSrc()`) |
-| `site/api/contact.php` | formuláře (poptávka, 15min hovor, zavolání, bezplatná kontrola) → uloží do `data/leads.sqlite`, pošle mi e-mail, zákazníkovi krátké potvrzení (přes Resend) a s `CRM_TOKEN` i do CRM |
-| `site/api/_mail.php` | sdílená knihovna: databáze poptávek, e-mail s poptávkou, potvrzení zákazníkovi (zvenku vrací 404) |
-| `site/api/health.php` | pro hlídání dostupnosti: `OK` / `FAIL …`; zároveň znovu zkouší doručit poptávky, které napoprvé neodešly |
-| `site/api/inbound.php` | webhook Resend Receiving: e-maily na `*@webtitan.cz` přepošle na `MAIL_TO` (ověřuje podpis, zápis do `data/inbound.sqlite`) |
-| `site/robots.txt`, `site/sitemap.xml`, `site/favicon.ico` | pro vyhledávače a prohlížeče |
-| `site/seznam-wmt-….txt` | ověření webu v Seznam Webmaster – nemazat, jinak ověření propadne |
-| `site/<služba>/index.html` | podstránky služeb (vývoj aplikací, mobilní aplikace, web, e-shop, správa serverů) |
-| `site/clanky/` | články (seznam + jednotlivé články, `BlogPosting` v JSON-LD, v sitemapě) |
-| `site/404.html`, `site/index.php` | vlastní stránka 404 (router pro neexistující adresy) |
+| `web/public/assets/lead.js`, `lead.css` | podstránky a články: formulář „Zavolejte mi / Napsat poptávku“ přímo na stránce (`#poptat`), okno při odchodu (`data-offer="app\|web"` na `<script>`), a na všech stránkách včetně hlavní: odkud návštěvník přišel (`window.wtSrc()`) |
+| `web/public/api/contact.php` | formuláře (poptávka, 15min hovor, zavolání, bezplatná kontrola) → uloží do `data/leads.sqlite`, pošle mi e-mail, zákazníkovi krátké potvrzení (přes Resend) a s `CRM_TOKEN` i do CRM |
+| `web/public/api/_mail.php` | sdílená knihovna: databáze poptávek, e-mail s poptávkou, potvrzení zákazníkovi (zvenku vrací 404) |
+| `web/public/api/health.php` | pro hlídání dostupnosti: `OK` / `FAIL …`; zároveň znovu zkouší doručit poptávky, které napoprvé neodešly |
+| `web/public/api/inbound.php` | webhook Resend Receiving: e-maily na `*@webtitan.cz` přepošle na `MAIL_TO` (ověřuje podpis, zápis do `data/inbound.sqlite`) |
+| `web/public/robots.txt`, `sitemap.xml`, `favicon.ico` | pro vyhledávače a prohlížeče (sitemapu po přidání stránky nebo článku doplnit ručně) |
+| `web/public/seznam-wmt-….txt` | ověření webu v Seznam Webmaster – nemazat, jinak ověření propadne |
+| `web/public/index.php` | router pro nginx: `/` → `index.html`, neexistující adresy → `404.html` se stavem 404 |
 
 Návrhy designů 1–14 a jejich lajkování byly z webu odstraněny – zůstávají v historii gitu (před commitem s úklidem).
+Původní ručně psané HTML (před Astrem) je v historii gitu ve složce `site/`.
 
-Lokální náhled: `python3 -m http.server 8000 --directory site` (PHP endpointy lokálně neběží – formuláře pak nabídnou odeslání e-mailem).
-S PHP: `env WT_DATA_DIR=/tmp/wtdata php -S 127.0.0.1:8000 -t site` – `WT_DATA_DIR` přesměruje databázi a `contact.env` mimo `/var/www` (na serveru se nenastavuje). Bez `RESEND_API_KEY` v `contact.env` se nic neodešle, poptávka se jen uloží.
+### Práce na webu
+
+Potřebuje Node 22.23+ (`web/.nvmrc`: 24).
+
+```bash
+cd web
+npm install
+npm run dev       # náhled se změnami naživo: http://localhost:4321
+npm run build     # sestaví web/dist/
+npm run preview   # náhled sestaveného webu
+```
+
+PHP endpointy v náhledu Astra neběží (formuláře pak nabídnou odeslání e-mailem). S PHP nad sestaveným webem:
+`env WT_DATA_DIR=/tmp/wtdata php -S 127.0.0.1:8000 -t web/dist` – `WT_DATA_DIR` přesměruje databázi a `contact.env`
+mimo `/var/www` (na serveru se nenastavuje). Bez `RESEND_API_KEY` v `contact.env` se nic neodešle, poptávka se jen uloží.
+
+**Nový článek:** přidat záznam do `web/src/data/clanky.ts` (nahoru, nejnovější první) a stránku
+`web/src/pages/clanky/<slug>/index.astro` s textem uvnitř `<Article slug="…">…</Article>` – karta v rozcestníku,
+JSON-LD a „Mohlo by vás zajímat“ se doplní samy. Pak adresu přidat do `web/public/sitemap.xml`.
 
 ### Poptávky z podstránek a odkud přišly
 
@@ -45,13 +79,15 @@ S PHP: `env WT_DATA_DIR=/tmp/wtdata php -S 127.0.0.1:8000 -t site` – `WT_DATA_
   Google tag se **bez souhlasu nenačtou vůbec**. Volba platí rok, v patičce přibude „Nastavení cookies“.
 - Formuláře po úspěšném odeslání volají `window.wtConversion("lead" | "check")` → Sklik `SEM('track', 'Lead', {currency: 'CZK', value})`
   a Google Ads `conversion`. Posílá se jen to, že poptávka vznikla, nikdy obsah ani kontakt.
-- Po změně `consent.js` zvednout `?v=` v odkazech na stránkách (soubory se v prohlížeči drží 30 dní).
+- Po změně `consent.js` zvednout jeho verzi v `web/src/data/site.ts` (`V.consent`; soubory se v prohlížeči drží 30 dní).
 
 ### Animace
 
 - Jen `opacity` / `transform` (bez přepočtu rozvržení), s `prefers-reduced-motion: reduce` se nic nehýbe a nic není schované.
 - Úvod (hlavní stránka `.hero .bento > .card`, podstránky `.sp-hero .card`) je vidět od prvního vykreslení a jen se
   jemně usadí – nikdy ho neschovávat průhledností (zdrželo by to LCP).
+- Mikrointerakce (stisk tlačítek, přejíždějící přepínače, zvýraznění formuláře po kliknutí) jsou ve sdílené vrstvě
+  `assets/motion.css` a `motion.js` na všech stránkách.
 - Objevení při posouvání: hlavní stránka třída `.rv` (skrývá se jen s `html.js`), podstránky a články ji `lead.js`
   dává jen kartám pod prvním zobrazením; text článků se nehýbe. Sourozenci postupně (`--d`, nejvýš 280 ms).
 - Čísla 20+ a 23 v úvodu naběhnou, otázky se rozbalují plynule (`::details-content`, kde to prohlížeč umí),
@@ -112,15 +148,19 @@ nebo do aplikace v telefonu, když web spadne nebo se poptávka zasekne.
 
 ## Nasazení
 
-Po pushi do `main`, který mění `site/`, `scripts/deploy.sh` nebo workflow, se web nasadí automaticky přes GitHub Actions
-(`.github/workflows/deploy.yml`): zkopíruje `site/` na server, nastaví vlastníka a práva a ověří, že stránky
-i endpointy odpovídají. Ručně jde workflow spustit v záložce Actions („Run workflow“).
+Po pushi do `main`, který mění `web/`, `scripts/deploy.sh` nebo workflow, se web nasadí automaticky přes GitHub Actions
+(`.github/workflows/deploy.yml`): sestaví web (`npm ci && npm run build` ve `web/`; když build selže, nenasadí se nic),
+zkopíruje `web/dist/` na server, nastaví vlastníka a práva a ověří, že stránky i endpointy odpovídají. Ručně jde
+workflow spustit v záložce Actions („Run workflow“).
 
-Ruční nasazení z počítače:
+Ruční nasazení z počítače (web musí být sestavený):
 
 ```bash
+(cd web && npm ci && npm run build)
 env DEPLOY_HOST=158.180.50.98 DEPLOY_USER=ubuntu bash scripts/deploy.sh
 ```
+
+Nasazení kopíruje bez mazání: soubor smazaný z webu je potřeba odstranit i na serveru ručně.
 
 GitHub secrets, které nasazení používá: `SERVER_HOST`, `SERVER_USERNAME`, `SERVER_PORT`, `SSH_PRIVATE_KEY`.
 

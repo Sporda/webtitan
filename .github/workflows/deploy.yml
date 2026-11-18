@@ -1,13 +1,14 @@
 name: Deploy webu na webtitan.cz
 
-# Web je statický (složka site/) + pár PHP endpointů. Běží na hostingu v panelu (panel.webtitan.cz),
-# žádný build ani Docker – nasazení jen zkopíruje site/ na server a ověří, že web odpovídá.
+# Web je statický (Astro ve složce web/ → čisté HTML ve web/dist/) + pár PHP endpointů (web/public/api).
+# Běží na hostingu v panelu (panel.webtitan.cz), žádný Docker – workflow web sestaví, zkopíruje web/dist/ na server
+# a ověří, že web odpovídá. Když build selže, nenasadí se nic.
 on:
   push:
     branches:
       - main
     paths:
-      - "site/**"
+      - "web/**"
       - "scripts/deploy.sh"
       - ".github/workflows/deploy.yml"
   workflow_dispatch:
@@ -25,6 +26,18 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: web/.nvmrc
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      - name: Sestavit web (Astro)
+        working-directory: web
+        run: |
+          npm ci
+          npm run build
 
       - name: Připravit SSH klíč a otisk serveru
         env:

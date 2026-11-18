@@ -1,0 +1,95 @@
+---
+// Kostra každé stránky: <head> (SEO, sdílení, ikony, písma, vložené CSS, strukturovaná data, skripty) a <body>.
+// Tři druhy stránek se liší jen načítáním písma a skripty:
+//   home   – úvodní stránka: písmo vložené přímo + předem načtená fotka (slot "head"), lead.js bez nabídky
+//   sub    – podstránky služeb, články: písmo souborem fonts.css, lead.css, lead.js s nabídkou (data-offer)
+//   simple – ochrana údajů, 404: písmo vložené přímo + přechody mezi stránkami, bez formuláře
+// CSS i skripty zůstávají vložené ve stránce (is:inline), stejně jako před převodem na Astro.
+import { SITE_URL, V, OG_IMAGE } from "../data/site";
+import fontsInline from "../styles/fonts-inline.css?raw";
+import viewTransition from "../styles/view-transition.css?raw";
+
+export interface Props {
+  kind: "home" | "sub" | "simple";
+  title: string;
+  description: string;
+  /** Adresa stránky od kořene ("/tvorba-webu/"); bez ní není canonical ani sdílení (404). */
+  path?: string;
+  robots?: string;
+  og?: { type?: "website" | "article"; title?: string; description?: string; imageAlt?: string; published?: string };
+  /** Hlavní CSS stránky (vkládá se do <style>). */
+  css: string;
+  /** Strukturovaná data (schema.org) – objekt, vypíše se jako JSON-LD. */
+  jsonLd?: unknown;
+  /** Podstránky: nabídka pro lead.js (data-offer), např. "web", "app". */
+  offer?: string;
+}
+
+const { kind, title, description, path, robots, og = {}, css, jsonLd, offer } = Astro.props;
+const url = path ? SITE_URL + path : undefined;
+const ogTitle = og.title ?? title;
+const ogDescription = og.description ?? description;
+const fonts = kind === "simple" ? fontsInline + viewTransition : fontsInline;
+---
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light only">
+<title>{title}</title>
+<meta name="description" content={description}>
+{robots && <meta name="robots" content={robots}>}
+{url && <link rel="canonical" href={url}>}
+<meta name="theme-color" content="#ece3d4">
+{url && (
+  <Fragment>
+    <meta name="author" content="Jan Šporek">
+    <meta property="og:type" content={og.type ?? "website"}>
+    <meta property="og:locale" content="cs_CZ">
+    <meta property="og:site_name" content="WebTitan">
+    <meta property="og:url" content={url}>
+    <meta property="og:title" content={ogTitle}>
+    <meta property="og:description" content={ogDescription}>
+    <meta property="og:image" content={OG_IMAGE}>
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    {og.imageAlt && <meta property="og:image:alt" content={og.imageAlt}>}
+    {og.published && <meta property="article:published_time" content={og.published}>}
+    {og.published && <meta property="article:author" content="Jan Šporek">}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content={ogTitle}>
+    <meta name="twitter:description" content={ogDescription}>
+    <meta name="twitter:image" content={OG_IMAGE}>
+  </Fragment>
+)}
+<link rel="icon" href={`/favicon.ico?v=${V.icons}`} sizes="32x32">
+<link rel="icon" type="image/png" sizes="32x32" href={`/assets/favicon-32.png?v=${V.icons}`}>
+<link rel="apple-touch-icon" href={`/assets/apple-touch-icon.png?v=${V.icons}`}>
+<slot name="head" />
+{kind === "sub" ? (
+  <Fragment>
+    <link rel="preload" href="/assets/fonts/unbounded-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href={`/assets/fonts/fonts.css?v=${V.fontsCss}`}>
+    <link rel="stylesheet" href={`/assets/lead.css?v=${V.leadCss}`}>
+  </Fragment>
+) : (
+  <Fragment>
+    <link rel="preload" href="/assets/fonts/unbounded-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/assets/fonts/unbounded-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+    {kind === "home" && <script is:inline>document.documentElement.classList.add("js")</script>}
+    <style is:inline set:html={fonts}></style>
+  </Fragment>
+)}
+<style is:inline set:html={css}></style>
+{jsonLd && <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd, null, 1)}></script>}
+<script is:inline src={`/assets/analytics.js?v=${V.analytics}`} defer></script>
+<script is:inline src={`/assets/consent.js?v=${V.consent}`} defer></script>
+{kind !== "simple" && <script is:inline src={`/assets/lead.js?v=${V.lead}`} data-offer={offer} defer></script>}
+<link rel="stylesheet" href={`/assets/motion.css?v=${V.motion}`}>
+<script is:inline src={`/assets/motion.js?v=${V.motion}`} defer></script>
+</head>
+<body>
+<slot />
+</body>
+</html>

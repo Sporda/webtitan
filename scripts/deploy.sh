@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
-# Nasadí web webtitan.cz: zkopíruje obsah složky site/ na server do /var/www/webtitan/public_html.
+# Nasadí web webtitan.cz: zkopíruje sestavený web (web/dist/) na server do /var/www/webtitan/public_html.
+# Web se sestavuje předem (GitHub Actions; ručně: cd web && npm ci && npm run build).
 #
-# - Statický web + pár PHP endpointů (api/contact.php, api/inbound.php, api/health.php), žádný build, žádný Docker.
+# - Statický web z Astra + pár PHP endpointů (api/contact.php, api/inbound.php, api/health.php), žádný Docker.
 # - Kopíruje bez --delete (ve webrootu můžou být soubory panelu): smazaný soubor je potřeba odstranit i na serveru ručně.
 # - Na serveru se nastaví vlastník webtitan:webtitan, složky 750, soubory 640.
 # - Nic se nemaže a data (/var/www/webtitan/data – poptávky, lajky, přijaté e-maily, konfigurace) se nepřepisují.
@@ -19,16 +20,16 @@ PORT="${DEPLOY_PORT:-22}"
 SITE_URL="${SITE_URL:-https://webtitan.cz}"
 WEBROOT="/var/www/webtitan/public_html"
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-SITE="$ROOT/site"
+SITE="$ROOT/web/dist"
 
 SSH_OPTS=(-p "$PORT" -o BatchMode=yes -o ConnectTimeout=20)
 if [ -n "${DEPLOY_KEY:-}" ]; then SSH_OPTS+=(-i "$DEPLOY_KEY" -o IdentitiesOnly=yes); fi
 if [ -n "${DEPLOY_KNOWN_HOSTS:-}" ]; then SSH_OPTS+=(-o "UserKnownHostsFile=$DEPLOY_KNOWN_HOSTS" -o StrictHostKeyChecking=yes); fi
 
 for f in index.html api/contact.php; do
-  [ -f "$SITE/$f" ] || { echo "Chybí site/$f – není co nasadit." >&2; exit 1; }
+  [ -f "$SITE/$f" ] || { echo "Chybí web/dist/$f – je web sestavený (cd web && npm run build)?" >&2; exit 1; }
 done
-echo "Nasazuji $(find "$SITE" -type f ! -name .DS_Store | wc -l | tr -d ' ') souborů ze site/"
+echo "Nasazuji $(find "$SITE" -type f ! -name .DS_Store | wc -l | tr -d ' ') souborů z web/dist/"
 
 # 1) Nahrát do dočasné složky na serveru, 2) odtud nainstalovat se správným vlastníkem a právy
 REMOTE_TMP="$(ssh "${SSH_OPTS[@]}" "$LOGIN@$HOST" 'mktemp -d /tmp/webtitan-deploy.XXXXXX')"

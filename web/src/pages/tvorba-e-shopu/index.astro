@@ -1,0 +1,97 @@
+---
+import RefCase from "../../components/RefCase.astro";
+import RefThumb from "../../components/RefThumb.astro";
+import Sub from "../../layouts/Sub.astro";
+import Faq from "../../components/Faq.astro";
+import OtherServices from "../../components/OtherServices.astro";
+import { graph, serviceLd, crumbsLd, faqLd } from "../../lib/ld";
+import { otazky } from "../../data/otazky";
+
+const path = "/tvorba-e-shopu/";
+const description = "Tvorba e-shopu na míru od 19 870 Kč pro firmy z Karlovarského a Plzeňského kraje. Platby kartou, doprava a přehledná správa objednávek. Pevná cena předem.";
+/** Časté otázky (data/otazky.ts) – zobrazí se na stránce a zároveň jdou do strukturovaných dat. */
+const faq = otazky(["kolik-bude-stat", "jak-dlouho-trva", "budu-si-moci-web", "napojite-ucetnictvi-platby-nebo", "komu-patri-aplikace-web", "postarate-hosting-provoz"]);
+const jsonLd = graph(
+  serviceLd({ path, name: "Tvorba e-shopu", serviceType: "Tvorba e-shopu", description, minPrice: 19870 }),
+  crumbsLd([["Domů", "/"], ["Tvorba e-shopu", path]]),
+  faqLd(faq),
+);
+---
+<Sub
+  title="Tvorba e-shopu na míru – Karlovy Vary, Plzeň | WebTitan"
+  description={description}
+  path={path}
+  og={{ title: "Tvorba e-shopu na míru od 19 870 Kč – WebTitan" }}
+  jsonLd={jsonLd}
+  offer="web"
+  cta="sp"
+  lead={{"heading": "Pojďme probrat váš e-shop", "topic": "E-shop", "placeholder": "Např. prodáváme asi 200 produktů a chceme platby kartou a napojení na dopravce."}}
+>
+  <section class="sp-hero">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Drobečková navigace"><ol><li><a href="/">Domů</a></li><li aria-current="page">Tvorba e-shopu</li></ol></nav>
+      <div class="hero-grid">
+        <div class="card intro">
+          <div><span class="kicker">E-shop na míru</span></div>
+          <h1>Tvorba e-shopu na míru</h1>
+          <p class="lead">Prodávejte online a&nbsp;mějte objednávky pod kontrolou. Postavím vám e-shop s&nbsp;platbami kartou, dopravou a&nbsp;přehlednou správou objednávek a&nbsp;napojím ho na platební bránu i&nbsp;další služby, které používáte.</p>
+          <ul class="checks"><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Platby kartou a&nbsp;doprava</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Přehledná správa objednávek</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Produkty si upravíte sami</li></ul>
+          <div class="dual"><a href="#poptat" class="btn btn-grad" data-mode="call" data-cta="sp_hero_call"><svg aria-hidden="true"><use href="#i-phone"/></svg>Domluvit 15min hovor</a><a href="#poptat" class="btn btn-line" data-mode="form" data-cta="sp_hero_form">Poslat poptávku</a></div>
+          <p class="micro"><span class="mi"><svg aria-hidden="true"><use href="#i-clock"/></svg>Ozvu se do 24 hodin (v&nbsp;pracovní dny)</span><span class="mi"><svg aria-hidden="true"><use href="#i-pin"/></svg>Karlovarský a&nbsp;Plzeňský kraj – i&nbsp;osobně</span><span class="mi"><svg aria-hidden="true"><use href="#i-phone"/></svg>Volejte rovnou: <a href="tel:+420723793510" data-cta="sp_hero_tel">723&nbsp;793&nbsp;510</a></span></p>
+        </div>
+        <aside class="card sum" aria-label="Shrnutí">
+          <div class="sum-price"><small>Cena</small><b class="gt">od 19 870 Kč</b><span>pevná cena předem</span></div>
+          <dl class="facts">
+            <div class="fact"><dt>Termín</dt><dd>podle rozsahu – přesný termín dostanete spolu s&nbsp;cenou</dd></div>
+            <div class="fact"><dt>Komu patří kód a&nbsp;data</dt><dd>Vám – kód, data i&nbsp;doména</dd></div>
+            <div class="fact"><dt>S&nbsp;kým jednáte</dt><dd>Přímo s&nbsp;tím, kdo to staví</dd></div>
+            <div class="fact"><dt>DPH</dt><dd>Nejsem plátce DPH – ceny jsou konečné</dd></div>
+          </dl>
+          <div class="me-row"><span class="avatar" role="img" aria-label="Jan Šporek"></span><div><b>Jan Šporek</b><span>Weby a&nbsp;aplikace stavím od roku 2006, sídlím u&nbsp;Sokolova. Kdo s&nbsp;vámi mluví, ten to i&nbsp;staví – v&nbsp;Karlovarském a&nbsp;Plzeňském kraji klidně i&nbsp;osobně.</span></div></div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="pro-koho">
+    <div class="wrap">
+      <div class="head"><div><span class="kicker">Poznáváte se?</span><h2>Kdy dává smysl e-shop na míru</h2></div><p>Pokud vám aspoň jeden bod zní povědomě, má smysl se pobavit.</p></div>
+      <div class="pains"><article class="card pain"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></span><h3>Pořád dokola stejné přepisování</h3><p>Objednávky, rezervace a&nbsp;výkazy přepisujete ručně z&nbsp;jednoho místa do druhého.</p></article><article class="card pain"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4M3 3l18 18"/></svg></span><h3>Za starý web se stydíte</h3><p>Na mobilu se rozpadá, načítá se věčnost a&nbsp;zákazníkům ho radši neposíláte.</p></article><article class="card pain"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4z"/></svg></span><h3>Agentura chce statisíce a&nbsp;půl roku</h3><p>Na velký projekt nemáte rozpočet ani čas. Potřebujete začít menším krokem.</p></article></div>
+    </div>
+  </section>
+
+  <section class="sec" id="co-dostanete">
+    <div class="wrap">
+      <div class="head"><div><span class="kicker">Co dostanete</span><h2>Co váš e-shop zvládne</h2></div><p>Objednávky, platby a&nbsp;přehled o&nbsp;nich na jednom místě – bez ručního vyřizování.</p></div>
+      <div class="get"><div class="card get-item"><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><div><h3>Platby kartou a&nbsp;doprava</h3><p>Zákazník si vybere, zaplatí a&nbsp;zvolí dopravu sám.</p></div></div><div class="card get-item"><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><div><h3>Přehledná správa objednávek</h3><p>Všechny objednávky vidíte na jednom místě.</p></div></div><div class="card get-item"><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><div><h3>Produkty si upravíte sami</h3><p>Texty, fotky, produkty i&nbsp;novinky si upravíte v&nbsp;jednoduché administraci. Větší změny rád udělám za vás.</p></div></div><div class="card get-item"><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><div><h3>Napojení na platební bránu a&nbsp;účetnictví</h3><p>Pokud druhá strana nabízí rozhraní (API), napojím e-shop na platební brány, účetní systémy, e-mail a&nbsp;další.</p></div></div><div class="card get-item"><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><div><h3>Design na míru</h3><p>E-shop navrhnu podle vaší firmy, ne podle hotové šablony.</p></div></div><div class="card get-item"><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><div><h3>Kód, data i&nbsp;doména patří vám</h3><p>Data si můžete kdykoli vyexportovat. Nejste na mně závislí.</p></div></div></div>
+    </div>
+  </section>
+
+  <section class="sec" id="postup">
+    <div class="wrap">
+      <div class="head"><div><span class="kicker">Jak pracuji</span><h2>Jak probíhá tvorba e-shopu</h2></div><p>Víte, co se kdy děje a&nbsp;kolik to bude stát – ještě než se do čehokoli pustíme.</p></div>
+      <ol class="steps"><li class="card step"><div class="step-top"><span class="num">1</span><span class="time">do 24 h · zdarma</span></div><h3>15min hovor</h3><p>Projdeme, co vás dnes zdržuje. Řeknu vám, jestli a&nbsp;jak to jde – po telefonu nebo videohovorem.</p></li><li class="card step"><div class="step-top"><span class="num">2</span><span class="time">cca 1 týden</span></div><h3>Návrh a&nbsp;pevná cena</h3><p>Sepíšu, co bude řešení umět, ukážu náhled obrazovek a&nbsp;pošlu pevnou cenu. Teprve pak se rozhodnete.</p></li><li class="card step"><div class="step-top"><span class="num">3</span><span class="time">podle rozsahu</span></div><h3>Vývoj s&nbsp;průběžnými ukázkami</h3><p>Průběžně vidíte pokrok a&nbsp;můžete říct, co upravit. Žádná černá skříňka.</p></li><li class="card step"><div class="step-top"><span class="num">4</span><span class="time">průběžně</span></div><h3>Spuštění a&nbsp;péče</h3><p>Spustím e-shop, zaškolím vás a&nbsp;postarám se o&nbsp;servery, zálohy i&nbsp;další rozvoj.</p></li></ol>
+    </div>
+  </section>
+
+  <section class="sec" id="cena">
+    <div class="wrap">
+      <div class="head"><div><span class="kicker">Cena</span><h2>Kolik stojí tvorba e-shopu</h2></div></div>
+      <div class="card price-card gb">
+        <div class="price-big"><small>Cena</small><b class="gt">od 19 870 Kč</b><span>pevná cena za konkrétní rozsah</span></div>
+        <div><ul><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Pevnou cenu dostanete po úvodním hovoru – co si odsouhlasíme, to platí.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Začít můžete i&nbsp;menší první verzí.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Provoz a&nbsp;správa se platí zvlášť, od 990 Kč měsíčně.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Nejsem plátce DPH, takže uvedené ceny jsou konečné.</li></ul><p class="price-note">Výsledná cena záleží na rozsahu – co má řešení umět a&nbsp;na co ho napojíme. Přesnou cenu vám řeknu po úvodním hovoru. Podrobněji v&nbsp;článku <a href="/clanky/kolik-stoji-web-a-e-shop/">Kolik stojí firemní web a&nbsp;e-shop</a>.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="reference">
+    <div class="wrap">
+      <div class="head"><div><span class="kicker">Reference</span><h2>E-shopy a&nbsp;online prodej, které jsem postavil</h2></div></div>
+      <div class="cases"><RefCase id="skripta-prokop" /><RefCase id="moje-bojovka" /><RefCase id="vb-porcelan" /></div>
+      <div class="thumbs"><RefThumb id="g-ptents" /><RefThumb id="vyroba-sperku" /><RefThumb id="firemni-balicek" /></div>
+      <p class="refs-more"><a href="/#reference" class="link-cta">Všechny reference <span class="arr" aria-hidden="true">→</span></a></p>
+    </div>
+  </section>
+  <Faq heading="Časté otázky k&nbsp;tvorbě e-shopu" items={faq} />
+  <OtherServices ids={["app", "mob", "web", "srv"]} />
+</Sub>

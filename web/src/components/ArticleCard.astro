@@ -1,0 +1,7 @@
+---
+// Karta článku (rozcestník /clanky/ a „Mohlo by vás zajímat“) – vše z data/clanky.ts.
+import type { Clanek } from "../data/clanky";
+interface Props { a: Clanek }
+const { a } = Astro.props;
+---
+<a class="card" href={`/clanky/${a.slug}/`}><small set:html={a.stitek ?? a.kategorie}></small><b set:html={a.titulek}></b><span set:html={a.popis}></span><em>{a.cteni} min čtení →</em></a>

@@ -1,0 +1,18 @@
+---
+// „Mohlo by vás zajímat“ pod článkem (#dalsi): karty souvisejících článků a služeb.
+import ArticleCard from "./ArticleCard.astro";
+import { clanek } from "../data/clanky";
+import { sluzba, type SluzbaId } from "../data/sluzby";
+interface Props { clanky: string[]; sluzby: SluzbaId[] }
+const arts = Astro.props.clanky.map(clanek);
+const svcs = Astro.props.sluzby.map(sluzba);
+---
+<section class="sec" id="dalsi">
+  <div class="wrap">
+    <div class="head"><div><span class="kicker">Čtěte dál</span><h2>Mohlo by vás zajímat</h2></div></div>
+    <nav class="xs" aria-label="Související články a služby">{arts.map((a) => <ArticleCard a={a} />)}{svcs.map((s) => (
+      <a class="card" href={s.url}><b set:html={s.nazev}></b><span set:html={s.kratce}></span><em set:html={s.cena}></em></a>
+    ))}</nav>
+    <p class="xs-home"><a href="/clanky/" class="link-cta">Všechny články <span class="arr" aria-hidden="true">→</span></a></p>
+  </div>
+</section>

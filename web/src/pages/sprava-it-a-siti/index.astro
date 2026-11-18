@@ -1,0 +1,93 @@
+---
+import Sub from "../../layouts/Sub.astro";
+import Faq from "../../components/Faq.astro";
+import OtherServices from "../../components/OtherServices.astro";
+import { graph, serviceLd, crumbsLd, faqLd } from "../../lib/ld";
+import { otazky } from "../../data/otazky";
+
+const path = "/sprava-it-a-siti/";
+const description = "Správa sítě, Wi-Fi a počítačů pro malé firmy, hotely a penziony v Karlovarském kraji: zálohy, aktualizace, Microsoft 365 a dohled za pevnou měsíční cenu. Jednáte přímo se mnou.";
+/** Časté otázky (data/otazky.ts) – zobrazí se na stránce a zároveň jdou do strukturovaných dat. */
+const faq = otazky(["prijedete-osobne", "kolik-stoji-sprava-it", "co-kdyz-budete-nemocny", "tyka-nas-novy-zakon", "komu-patri-hesla-pristupy", "jak-probiha-15min-hovor"]);
+const jsonLd = graph(
+  serviceLd({ path, name: "Správa IT a sítí pro malé firmy", serviceType: "Správa počítačových sítí a IT", description, minPrice: 1490, monthly: true, areaServed: [
+    { "@type": "AdministrativeArea", name: "Karlovarský kraj" },
+    { "@type": "City", name: "Karlovy Vary" },
+    { "@type": "City", name: "Sokolov" },
+    { "@type": "City", name: "Cheb" },
+    { "@type": "City", name: "Mariánské Lázně" },
+    { "@type": "City", name: "Ostrov" },
+    { "@type": "City", name: "Františkovy Lázně" },
+  ] }),
+  crumbsLd([["Domů", "/"], ["Správa IT a sítí", path]]),
+  faqLd(faq),
+);
+---
+<Sub
+  title="Správa IT a sítí pro malé firmy – Karlovy Vary, Sokolov, Cheb | WebTitan"
+  description={description}
+  path={path}
+  og={{ title: "Správa IT a sítí pro malé firmy od 1 490 Kč/měsíc – WebTitan" }}
+  jsonLd={jsonLd}
+  cta="it"
+  lead={{"heading": "Pojďme probrat IT ve vaší firmě", "topic": "Správa IT a sítí", "placeholder": "Např. máme 8 počítačů, Wi-Fi v patře vypadává a nevíme, jestli fungují zálohy.", "misto": "Karlovarský kraj – osobně na místě"}}
+>
+  <section class="sp-hero">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Drobečková navigace"><ol><li><a href="/">Domů</a></li><li aria-current="page">Správa IT a sítí</li></ol></nav>
+      <div class="hero-grid">
+        <div class="card intro">
+          <div><span class="kicker">IT pro malé firmy</span></div>
+          <h1>Správa IT a&nbsp;sítí pro malé firmy</h1>
+          <p class="lead">Jeden člověk na celé IT vaší firmy – síť a&nbsp;Wi-Fi, počítače, e-maily, zálohy, web i&nbsp;aplikace. Za pevnou měsíční cenu, bez překvapení na faktuře a&nbsp;s&nbsp;dokumentací, která zůstane vám.</p>
+          <ul class="checks"><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Síť, Wi-Fi a&nbsp;počítače pod dohledem</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Zálohy, které opravdu jdou obnovit</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Pevná měsíční cena, jednáte se mnou</li></ul>
+          <div class="dual"><a href="#poptat" class="btn btn-grad" data-mode="call" data-cta="it_hero_call"><svg aria-hidden="true"><use href="#i-phone"/></svg>Domluvit 15min hovor</a><a href="#poptat" class="btn btn-line" data-mode="form" data-cta="it_hero_form">Poslat poptávku</a></div>
+          <p class="micro"><span class="mi"><svg aria-hidden="true"><use href="#i-clock"/></svg>Ozvu se do 24 hodin (v&nbsp;pracovní dny)</span><span class="mi"><svg aria-hidden="true"><use href="#i-pin"/></svg>Karlovarský kraj – osobně na místě</span><span class="mi"><svg aria-hidden="true"><use href="#i-phone"/></svg>Volejte rovnou: <a href="tel:+420723793510" data-cta="it_hero_tel">723&nbsp;793&nbsp;510</a></span></p>
+        </div>
+        <aside class="card sum" aria-label="Shrnutí">
+          <div class="sum-price"><small>Cena</small><b class="gt">od 1&nbsp;490 Kč</b><span>měsíčně</span></div>
+          <dl class="facts">
+            <div class="fact"><dt>Pro koho</dt><dd>Firmy do cca 30 lidí, hotely a&nbsp;penziony</dd></div>
+            <div class="fact"><dt>Hesla a&nbsp;dokumentace</dt><dd>Patří vám – nejste na mně závislí</dd></div>
+            <div class="fact"><dt>S&nbsp;kým jednáte</dt><dd>Přímo se mnou, i&nbsp;osobně</dd></div>
+            <div class="fact"><dt>DPH</dt><dd>Nejsem plátce DPH – ceny jsou konečné</dd></div>
+          </dl>
+          <div class="me-row"><span class="avatar" role="img" aria-label="Jan Šporek"></span><div><b>Jan Šporek</b><span>Weby, aplikace a&nbsp;servery stavím od roku 2006, sídlím u&nbsp;Sokolova. Kdo s&nbsp;vámi mluví, ten to i&nbsp;nastavuje – v&nbsp;Karlovarském kraji přijedu osobně.</span></div></div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="pro-koho">
+    <div class="wrap">
+      <div class="head"><div><span class="kicker">Pro koho to je</span><h2>Pro koho je správa IT a&nbsp;sítě</h2></div><p>Pro malé firmy, které nepotřebují vlastního správce na plný úvazek, ale potřebují, aby všechno spolehlivě běželo.</p></div>
+      <div class="pains ok"><article class="card pain"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><h3>Nemáte vlastního ajťáka</h3><p>IT řeší „ten, kdo tomu nejvíc rozumí“, nebo synovec o&nbsp;víkendu. Když něco vypadne, nikdo neví, kde začít.</p></article><article class="card pain"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0M2 9a15 15 0 0 1 20 0"/><path d="M12 19.5h.01"/></svg></span><h3>Hotel, penzion nebo lázeňský dům</h3><p>Wi-Fi pro hosty oddělená od recepce a&nbsp;pokladny, signál ve všech pokojích, kamery a&nbsp;rezervační systém, který prostě běží.</p></article><article class="card pain"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg></span><h3>Odběratel chce vědět, jak chráníte data</h3><p>Nový zákon o&nbsp;kybernetické bezpečnosti a&nbsp;velcí zákazníci začínají chtít zálohy, správu přístupů a&nbsp;aktualizace. Dám to do pořádku.</p></article></div>
+    </div>
+  </section>
+
+  <section class="sec" id="co-dostanete">
+    <div class="wrap">
+      <div class="head"><div><span class="kicker">Co dostanete</span><h2>Co za vás pohlídám</h2></div><p>Od routeru přes počítače a&nbsp;zálohy až po web – všechno na jednom místě.</p></div>
+      <div class="get"><div class="card get-item"><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><div><h3>Síť a&nbsp;Wi-Fi</h3><p>Návrh, nastavení a&nbsp;dohled. Oddělená síť pro hosty a&nbsp;pro provoz, pokrytí celé budovy a&nbsp;bezpečný přístup z&nbsp;domu (VPN).</p></div></div><div class="card get-item"><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><div><h3>Počítače a&nbsp;účty</h3><p>Aktualizace, antivir, Microsoft 365 nebo Google Workspace. Nový zaměstnanec má účet hned, odcházející ztratí přístup ještě ten den.</p></div></div><div class="card get-item"><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><div><h3>Zálohy, které jdou obnovit</h3><p>Pravidlo 3-2-1: tři kopie, dvě různá úložiště, jedna mimo firmu. Obnovu pravidelně zkouším – záloha, kterou nikdo nezkusil, není záloha.</p></div></div><div class="card get-item"><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><div><h3>Dohled a&nbsp;měsíční přehled</h3><p>Hlídám dostupnost, disky, aktualizace a&nbsp;zálohy. Jednou za měsíc dostanete krátký přehled, co se dělo a&nbsp;co doporučuji.</p></div></div><div class="card get-item"><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><div><h3>Dokumentace a&nbsp;hesla vám</h3><p>Popis sítě, seznam zařízení a&nbsp;přístupy máte u&nbsp;sebe. Nejste na mně závislí.</p></div></div><div class="card get-item"><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><div><h3>Web, server i&nbsp;aplikace</h3><p>Kromě sítě se postarám i&nbsp;o&nbsp;web, e-shop, server nebo aplikaci. Jeden člověk na celé IT – nemusíte koordinovat tři dodavatele.</p></div></div></div>
+    </div>
+  </section>
+
+  <section class="sec" id="postup">
+    <div class="wrap">
+      <div class="head"><div><span class="kicker">Jak pracuji</span><h2>Jak správa začíná</h2></div><p>Víte, co se kdy děje a&nbsp;kolik to bude stát – ještě než se do čehokoli pustíme.</p></div>
+      <ol class="steps s3"><li class="card step"><div class="step-top"><span class="num">1</span><span class="time">do 24 h · zdarma</span></div><h3>15min hovor</h3><p>Projdeme, co vás dnes trápí – vypadávající Wi-Fi, zálohy, nový zaměstnanec, požadavek odběratele.</p></li><li class="card step"><div class="step-top"><span class="num">2</span><span class="time">na místě · cca půl dne</span></div><h3>Prohlídka sítě</h3><p>Přijedu, projdu síť, počítače a&nbsp;zálohy. Dostanete seznam rizik seřazený podle důležitosti a&nbsp;návrh, co s&nbsp;nimi.</p></li><li class="card step"><div class="step-top"><span class="num">3</span><span class="time">průběžně</span></div><h3>Pevná cena a&nbsp;péče</h3><p>Pošlu pevnou měsíční cenu. Když souhlasíte, opravím největší rizika a&nbsp;dál se o&nbsp;všechno starám.</p></li></ol>
+    </div>
+  </section>
+
+  <section class="sec" id="cena">
+    <div class="wrap">
+      <div class="head"><div><span class="kicker">Cena</span><h2>Kolik stojí správa IT a&nbsp;sítě</h2></div></div>
+      <div class="card price-card gb">
+        <div class="price-big"><small>Cena</small><b class="gt">od 1&nbsp;490 Kč</b><span>měsíčně</span></div>
+        <div><ul><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Cena podle počtu počítačů a&nbsp;zařízení – pevná, co si odsouhlasíme, to platí.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Výjezdy a&nbsp;větší práce mimo běžnou péči vždy předem odsouhlasíte.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Zařízení doporučím a&nbsp;nastavím – nemusíte kupovat nic, co nepotřebujete.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Nejsem plátce DPH, takže uvedené ceny jsou konečné.</li></ul><p class="price-note">Přesnou cenu vám řeknu po prohlídce sítě.</p></div>
+      </div>
+    </div>
+  </section>
+  <Faq heading="Časté otázky ke správě IT" items={faq} />
+  <OtherServices ids={["app", "mob", "web", "srv"]} />
+</Sub>

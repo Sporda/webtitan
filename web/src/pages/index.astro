@@ -1,0 +1,1102 @@
+---
+// Úvodní stránka. Obsah sekcí je tady; menu, patička, ikony a hlavička z komponent, otázky z data/otazky.ts,
+// údaje o firmě pro vyhledávače z data/schema.ts, hlavní skript (rezervace, formuláře, kalkulačka…) ze src/scripts/home.js.
+import RefCase from "../components/RefCase.astro";
+import RefThumb from "../components/RefThumb.astro";
+import Base from "../layouts/Base.astro";
+import Sprite from "../components/Sprite.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import homeCss from "../styles/home.css?raw";
+import homeJs from "../scripts/home.js?raw";
+import { otazky } from "../data/otazky";
+import { PERSON, BUSINESS, WEBSITE } from "../data/schema";
+import { graph, faqLd } from "../lib/ld";
+
+const faq = otazky(["jak-probiha-15min-hovor", "kde-pusobite-muzeme-potkat", "kolik-bude-stat", "delate-mobilni-aplikace", "nemam-presne-zadani-vadi", "jak-dlouho-trva", "komu-patri-aplikace-web", "umite-prevzit-data-excelu", "budu-si-moci-web", "napojite-ucetnictvi-platby-nebo", "postarate-hosting-provoz", "co-stane-po-odeslani"]);
+const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#faq", ...faqLd(faq) });
+---
+<Base
+  kind="home"
+  title="Vývoj aplikací, weby a e-shopy – Karlovy Vary, Plzeň | WebTitan"
+  description="Aplikace na míru od 24 950 Kč, weby od 9 970 Kč a e-shopy od 19 870 Kč pro firmy z Karlovarského a Plzeňského kraje. Pevná cena předem, přímo s programátorem."
+  path="/"
+  og={{ title: "Jan Šporek – vývoj aplikací na míru, tvorba webů a e-shopů", description: "Vývoj aplikací na míru, mobilní aplikace, tvorba webů a e-shopů pro firmy ze západních Čech. Pevná cena předem, nezávazný 15min hovor zdarma.", imageAlt: "Jan Šporek – WebTitan: aplikace, weby a e-shopy na míru" }}
+  css={homeCss}
+  jsonLd={jsonLd}
+>
+<link slot="head" rel="preload" as="image" href="/assets/jan-cut.webp" imagesrcset="/assets/jan-cut-400.webp 400w, /assets/jan-cut.webp 800w" imagesizes="(max-width: 1040px) 90vw, 400px" type="image/webp" fetchpriority="high">
+<Sprite variant="home" />
+
+<Nav variant="home" />
+
+<main>
+  <!-- ================= HERO ================= -->
+  <section class="hero" id="hero">
+    <div class="bg-blob b1" aria-hidden="true"></div>
+    <div class="bg-blob b2" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="bento">
+        <div class="card intro">
+          <div>
+            <div class="seg" role="tablist" aria-label="Co potřebujete">
+              <button type="button" role="tab" id="seg-app" data-seg-btn="app" aria-selected="true" aria-controls="hero-copy" tabindex="0"><svg><use href="#i-app"/></svg><span class="l-long">Potřebuji aplikaci / systém</span><span class="l-short">Aplikace / systém</span></button>
+              <button type="button" role="tab" id="seg-web" data-seg-btn="web" aria-selected="false" aria-controls="hero-copy" tabindex="-1"><svg><use href="#i-web"/></svg><span class="l-long">Potřebuji web / e-shop</span><span class="l-short">Web / e-shop</span></button>
+            </div>
+            <div id="hero-copy" role="tabpanel" aria-labelledby="seg-app" aria-live="polite">
+              <h1>
+                <span data-only="app">Z&nbsp;Excelu, e-mailů a&nbsp;papírků do <span class="gt">jedné přehledné aplikace</span>.</span>
+                <span data-only="web" hidden>Web nebo <span class="nw">e-shop</span>, který vám <span class="gt">přivede zákazníky</span>.</span>
+              </h1>
+              <p class="lead" data-only="app">Zakázky, termíny, zákazníci i&nbsp;rezervace na jednom místě. Navrhnu a&nbsp;postavím systém přesně podle toho, jak vaše firma pracuje – a&nbsp;postarám se, aby spolehlivě běžel.</p>
+              <p class="lead" data-only="web" hidden>Postavím vám rychlý a&nbsp;přehledný web nebo e-shop přesně podle toho, jak vaše firma funguje. Bez agentury, bez zbytečných schůzek – s&nbsp;jedním člověkem, který to celé udělá a&nbsp;zvedne telefon.</p>
+              <ul class="checks" data-only="app">
+                <li><span class="tick"><svg><use href="#i-check"/></svg></span>Pevná cena předem – co si odsouhlasíme, to platí</li>
+                <li><span class="tick"><svg><use href="#i-check"/></svg></span>Začnete v&nbsp;malém, rozšíříte, až to bude dávat smysl</li>
+                <li><span class="tick"><svg><use href="#i-check"/></svg></span>Aplikace, kód i&nbsp;data patří vám</li>
+              </ul>
+              <ul class="checks" data-only="web" hidden>
+                <li><span class="tick"><svg><use href="#i-check"/></svg></span>Pevná cena předem – co si odsouhlasíme, to platí</li>
+                <li><span class="tick"><svg><use href="#i-check"/></svg></span>Konzultace a&nbsp;návrh řešení zdarma a&nbsp;nezávazně</li>
+                <li><span class="tick"><svg><use href="#i-check"/></svg></span>Jednáte přímo se mnou – od prvního hovoru po spuštění</li>
+              </ul>
+              <p class="anchor" data-only="app"><span>Aplikace na míru</span><b>od 24&nbsp;950&nbsp;Kč</b><span>jednorázově, bez licencí za uživatele</span></p>
+              <p class="anchor" data-only="web" hidden><span class="pair"><span>Web</span><b>od 9&nbsp;970&nbsp;Kč</b></span><i>·</i><span class="pair"><span>E-shop</span><b>od 19&nbsp;870&nbsp;Kč</b></span></p>
+            </div>
+          </div>
+          <div>
+            <div class="dual">
+              <a href="#kontakt" class="btn btn-grad" data-open="call" data-cta="hero_call"><svg><use href="#i-phone"/></svg>Domluvit 15min hovor</a>
+              <a href="#kontakt" class="btn btn-line" data-open="form" data-cta="hero_form">Poslat poptávku <span class="arr">→</span></a>
+            </div>
+            <p class="micro">
+              <span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Ozvu se do 24 hodin (v&nbsp;pracovní dny)</span>
+              <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Karlovarský a&nbsp;Plzeňský kraj – i&nbsp;osobně</span>
+              <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Volejte rovnou: <a href="tel:+420723793510" data-cta="hero_tel">723&nbsp;793&nbsp;510</a></span>
+              <span class="cap-badge" data-capacity hidden></span>
+            </p>
+          </div>
+        </div>
+
+        <div class="card photo">
+          <img src="/assets/jan-cut.webp" srcset="/assets/jan-cut-400.webp 400w, /assets/jan-cut.webp 800w" sizes="(max-width: 1040px) 90vw, 400px" alt="Jan Šporek" width="800" height="720" fetchpriority="high">
+          <p class="pnote">„Napište mi pár vět o&nbsp;tom, co potřebujete. Ozvu se vám osobně – žádné call centrum ani chatbot.“<b>— Jan</b></p>
+          <div class="who">
+            <div><b>Jan Šporek</b><span>20+ let praxe · 23 realizovaných projektů</span></div>
+            <a class="icon-btn" href="https://www.linkedin.com/in/jan-%C5%A1porek-07a39168/" target="_blank" rel="noopener" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="card callc gb" aria-labelledby="callc-t">
+          <div class="callc-head">
+            <span class="callc-ic"><svg><use href="#i-phone"/></svg></span>
+            <div><b id="callc-t">Domluvte si 15min hovor</b><span>Zdarma a&nbsp;nezávazně. Vyberte den, čas doladíme.</span></div>
+          </div>
+          <div class="hdays" id="hero-days" role="group" aria-label="Nejbližší volné dny pro hovor">
+            <!-- vyplní JS: nejbližší 3 pracovní dny -->
+            <a href="#kontakt" class="hday more" data-open="call" data-cta="hero_days_more"><b>Vybrat termín</b><small>další dny →</small></a>
+          </div>
+          <ol class="callc-steps">
+            <li><span>1</span>Vyberete den a&nbsp;čas</li>
+            <li><span>2</span>Termín potvrdím e-mailem</li>
+            <li><span>3</span>15 minut – řeknu, jestli a&nbsp;jak to jde</li>
+          </ol>
+          <p class="callc-foot"><span><svg><use href="#i-check"/></svg>Zdarma, nic nepodepisujete</span><span>Raději píšete? <a href="#kontakt" data-open="form" data-cta="hero_card_form">Poslat poptávku</a></span></p>
+        </div>
+
+        <div class="card stat lift">
+          <div class="stat-top"><b class="gt">20+</b><span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span></div>
+          <span>let praxe – weby stavím od roku 2006</span>
+        </div>
+        <div class="card stat lift">
+          <div class="stat-top"><b class="gt">23</b><span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 21h8"/></svg></span></div>
+          <span>realizovaných aplikací, webů a&nbsp;e-shopů</span>
+        </div>
+        <div class="card stat lift">
+          <div class="stat-top"><b class="gt">24&nbsp;h</b><span class="ic"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span></div>
+          <span>do odpovědi na poptávku (v&nbsp;pracovní dny)</span>
+        </div>
+        <div class="card stat lift">
+          <div class="stat-top"><b class="gt">1</b><span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span></div>
+          <span>člověk od návrhu přes vývoj po provoz</span>
+        </div>
+
+        <div class="card clients">
+          <span class="lbl">Realizace pro</span>
+          <div class="marquee" aria-label="Vybraní klienti">
+            <div class="marquee-track">
+              <span>Šikmo</span><span>Fitness Ural</span><span>GP Rooms</span><span>Hostel Loket</span><span>Penzion Loket</span><span>Skripta Prokop</span><span>Markop Okna</span><span>Rybar Transport</span><span>Geowestmaster</span><span>GP Tents</span><span>Sunpoint</span><span>2MSKV</span><span>Recysmach</span><span>Sokolov Ubytování</span>
+              <span aria-hidden="true">Šikmo</span><span aria-hidden="true">Fitness Ural</span><span aria-hidden="true">GP Rooms</span><span aria-hidden="true">Hostel Loket</span><span aria-hidden="true">Penzion Loket</span><span aria-hidden="true">Skripta Prokop</span><span aria-hidden="true">Markop Okna</span><span aria-hidden="true">Rybar Transport</span><span aria-hidden="true">Geowestmaster</span><span aria-hidden="true">GP Tents</span><span aria-hidden="true">Sunpoint</span><span aria-hidden="true">2MSKV</span><span aria-hidden="true">Recysmach</span><span aria-hidden="true">Sokolov Ubytování</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PAINS ================= -->
+  <section class="sec" id="problemy">
+    <div class="wrap">
+      <div class="head rv">
+        <div><span class="kicker gt">Poznáváte se?</span><h2>Tohle slýchám od podnikatelů nejčastěji</h2></div>
+        <p>Pokud vám aspoň jeden bod zní povědomě, má smysl se pobavit. Většinu z&nbsp;toho jde vyřešit rychleji a&nbsp;levněji, než čekáte.</p>
+      </div>
+      <div class="pains">
+        <article class="card pain lift rv">
+          <span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></svg></span>
+          <h3>Excel, kterému rozumí jen jeden člověk</h3>
+          <p>Když je na dovolené, nikdo neví, co platí. A&nbsp;verzí té tabulky je pět.</p>
+        </article>
+        <article class="card pain lift rv">
+          <span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>
+          <h3>Termíny v&nbsp;diáři a&nbsp;v&nbsp;hlavě</h3>
+          <p>Stačí jeden zapomenutý termín a&nbsp;zákazník příště zavolá jinam.</p>
+        </article>
+        <article class="card pain lift rv">
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></span>
+          <h3>Pořád dokola stejné přepisování</h3>
+          <p>Objednávky, rezervace a&nbsp;výkazy přepisujete ručně z&nbsp;jednoho místa do druhého.</p>
+        </article>
+        <article class="card pain lift rv">
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg></span>
+          <h3>Web nepřivádí poptávky</h3>
+          <p>Existuje, ale telefon nezvoní a&nbsp;formulář mlčí. A&nbsp;nikdo vám neřekne proč.</p>
+        </article>
+        <article class="card pain lift rv">
+          <span class="ic"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4M3 3l18 18"/></svg></span>
+          <h3>Za starý web se stydíte</h3>
+          <p>Na mobilu se rozpadá, načítá se věčnost a&nbsp;zákazníkům ho radši neposíláte.</p>
+        </article>
+        <article class="card pain lift rv">
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4z"/></svg></span>
+          <h3>Agentura chce statisíce a&nbsp;půl roku</h3>
+          <p>Na velký projekt nemáte rozpočet ani čas. Potřebujete začít menším krokem.</p>
+        </article>
+      </div>
+      <div class="card bridge rv">
+        <div>
+          <h3>Dobrá zpráva: nic z&nbsp;toho nemusíte dál snášet.</h3>
+          <p>Řeknete mi, co vás trápí, a&nbsp;já navrhnu nejjednodušší řešení, které dává smysl. Někdy je to nový web, jindy malá aplikace místo Excelu – a&nbsp;někdy stačí opravit to, co už máte.</p>
+        </div>
+        <div class="dual">
+          <a href="#kontakt" class="btn btn-grad" data-open="call" data-cta="pains_call"><svg><use href="#i-phone"/></svg>Domluvit 15min hovor</a>
+          <a href="#kontakt" class="btn btn-line" data-open="form" data-cta="pains_form">Poslat poptávku</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= BEFORE / AFTER ================= -->
+  <section class="sec" id="reseni">
+    <div class="wrap">
+      <div class="head center rv">
+        <span class="kicker gt">Řešení</span>
+        <h2>Jedno místo, kde všechno sedí</h2>
+        <p>Aplikace na míru nekopíruje cizí postupy. Převezme ten váš a&nbsp;odstraní z&nbsp;něj ruční práci.</p>
+      </div>
+      <div class="ba">
+        <div class="card ba-col before rv">
+          <span class="ba-label"><svg style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:3;stroke-linecap:round"><use href="#i-x"/></svg>Dnes</span>
+          <h3>Excel, diář a&nbsp;papírky</h3>
+          <ul>
+            <li><span class="mk"><svg><use href="#i-x"/></svg></span>Data v&nbsp;několika tabulkách a&nbsp;e-mailech</li>
+            <li><span class="mk"><svg><use href="#i-x"/></svg></span>Aktuální stav zná jen ten, kdo zrovna zvedl telefon</li>
+            <li><span class="mk"><svg><use href="#i-x"/></svg></span>Stejné údaje přepisujete několikrát – i&nbsp;s&nbsp;chybami</li>
+            <li><span class="mk"><svg><use href="#i-x"/></svg></span>Přehled pro vedení znamená obvolat lidi</li>
+            <li><span class="mk"><svg><use href="#i-x"/></svg></span>Zaučit nového kolegu trvá dlouho</li>
+          </ul>
+        </div>
+        <div class="ba-arrow" aria-hidden="true"><span><svg><use href="#i-arrow"/></svg></span></div>
+        <div class="card ba-col after gb rv">
+          <span class="ba-label"><svg style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:3;stroke-linecap:round"><use href="#i-check"/></svg>S&nbsp;aplikací na míru</span>
+          <h3>Jedna přehledná aplikace</h3>
+          <ul>
+            <li><span class="mk"><svg><use href="#i-check"/></svg></span>Zakázky, zákazníci a&nbsp;termíny na jednom místě</li>
+            <li><span class="mk"><svg><use href="#i-check"/></svg></span>Každý vidí aktuální stav – v&nbsp;kanceláři i&nbsp;z&nbsp;mobilu</li>
+            <li><span class="mk"><svg><use href="#i-check"/></svg></span>Údaj zadáte jednou, aplikace ho použije všude</li>
+            <li><span class="mk"><svg><use href="#i-check"/></svg></span>Přehledy a&nbsp;exporty na jedno kliknutí</li>
+            <li><span class="mk"><svg><use href="#i-check"/></svg></span>Aplikace vede krok za krokem – i&nbsp;nováčka</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ROI CALCULATOR ================= -->
+  <section class="sec" id="kalkulacka">
+    <div class="wrap">
+      <div class="card roi rv">
+        <div class="roi-in">
+          <div>
+            <span class="kicker gt">Spočítejte si to</span>
+            <h2>Kolik vás stojí ruční práce?</h2>
+          </div>
+          <p>Posuňte jezdce podle toho, jak to máte ve firmě. Výpočet běží jen ve vašem prohlížeči – nikam se neodesílá.</p>
+          <div class="rng">
+            <div class="rng-top"><label for="roi-people">Kolik lidí to dělá</label><output id="roi-people-o" for="roi-people">3 lidé</output></div>
+            <input type="range" id="roi-people" min="1" max="30" step="1" value="3">
+          </div>
+          <div class="rng">
+            <div class="rng-top"><label for="roi-hours">Hodin týdně na člověka <em>přepisování, hledání, evidence</em></label><output id="roi-hours-o" for="roi-hours">4 h</output></div>
+            <input type="range" id="roi-hours" min="0.5" max="20" step="0.5" value="4">
+          </div>
+          <div class="rng">
+            <div class="rng-top"><label for="roi-share">Kolik z&nbsp;toho by aplikace ušetřila <em>odhad</em></label><output id="roi-share-o" for="roi-share">50 %</output></div>
+            <input type="range" id="roi-share" min="10" max="90" step="5" value="50">
+          </div>
+          <div class="rng">
+            <div class="rng-top"><label for="roi-rate">Náklady na hodinu práce <em>upravte podle sebe</em></label></div>
+            <div class="rate"><input type="number" id="roi-rate" min="100" max="5000" step="10" value="350" inputmode="numeric"><span>Kč / hod.</span></div>
+          </div>
+        </div>
+        <div class="roi-out" aria-live="polite">
+          <div class="roi-big">
+            <small>Ruční práce vás stojí zhruba</small>
+            <b id="roi-month" class="gt">18&nbsp;186&nbsp;Kč</b>
+            <span class="roi-note">měsíčně · <span id="roi-hours-month">52</span>&nbsp;hodin práce</span>
+          </div>
+          <div class="roi-row">
+            <div><small>Za rok</small><b id="roi-year">218&nbsp;232&nbsp;Kč</b></div>
+            <div><small>Aplikace by ušetřila</small><b id="roi-save">9&nbsp;093&nbsp;Kč/měs.</b></div>
+          </div>
+          <p class="roi-pay" id="roi-pay">Aplikace od 24&nbsp;950&nbsp;Kč by se při této úspoře vrátila zhruba za <b>2,7&nbsp;měsíce</b>.</p>
+          <p class="roi-note">Orientační výpočet podle vašich čísel. 24&nbsp;950&nbsp;Kč je nejnižší cena aplikace – kolik bude stát ta vaše, vám řeknu po hovoru.</p>
+          <div class="dual">
+            <a href="#kontakt" class="btn btn-grad" id="roi-cta" data-cta="roi">Chci to spočítat přesně <span class="arr">→</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SERVICES ================= -->
+  <section class="sec" id="sluzby">
+    <div class="wrap">
+      <div class="head rv">
+        <div><span class="kicker gt">Služby a ceny</span><h2>Co pro vás můžu udělat</h2></div>
+        <p>Hlavní specializací je vývoj aplikací na míru – webových i&nbsp;mobilních. Zajistím vám ale i&nbsp;tvorbu webových stránek nebo e-shopu a&nbsp;postarám se o&nbsp;servery, síť i&nbsp;počítače, na kterých všechno běží.</p>
+      </div>
+      <div class="svc-grid">
+        <article class="card svc svc-swap svc-main gb lift rv" data-svc="app">
+          <div class="svc-top">
+            <span class="svc-ic"><svg><use href="#i-app"/></svg></span>
+            <span class="tagline">Hlavní specializace</span>
+            <button type="button" class="svc-peek" aria-label="Ukázka – vývoj webových aplikací">Ukázka <span aria-hidden="true">↖</span></button>
+          </div>
+          <h3><a href="/vyvoj-aplikaci-na-miru/">Vývoj webových aplikací a&nbsp;interních systémů</a></h3>
+          <p class="price">od <b class="gt">24&nbsp;950&nbsp;Kč</b><small>jednorázově, bez licencí za uživatele</small></p>
+          <p>Jedno přehledné místo pro zakázky, rezervace nebo evidenci – místo Excelu, papírků a&nbsp;e-mailů. Postavené přesně podle toho, jak pracujete.</p>
+          <ul class="bul">
+            <li>Evidence zakázek, zákazníků a&nbsp;termínů</li>
+            <li>Rezervace, objednávky, klientské zóny</li>
+            <li>Napojení na platby, účetnictví a&nbsp;další služby</li>
+          </ul>
+          <div class="svc-shot"><img src="/assets/projects/DevCRM.webp" alt="Ukázka aplikace DevCRM (crm.webtitan.cz) – přehled poptávek z webu (ukázková data)" loading="lazy" width="800" height="400" decoding="async"></div>
+          <p class="tech">Next.js · React · Node.js · TypeScript · MongoDB</p>
+          <a href="#kontakt" class="link-cta" data-open="form" data-type="Aplikace na míru" data-cta="svc_app">Poptat aplikaci <span class="arr">→</span></a>
+        </article>
+        <article class="card svc svc-swap svc-wide lift rv" data-svc="mob">
+          <div class="svc-top"><span class="svc-ic"><svg><use href="#i-mobile"/></svg></span><button type="button" class="svc-peek" aria-label="Ukázka – vývoj mobilních aplikací">Ukázka <span aria-hidden="true">↖</span></button></div>
+          <h3><a href="/mobilni-aplikace/">Vývoj mobilních aplikací</a></h3>
+          <p class="price">cena <b class="gt">podle rozsahu</b><small>nacením po úvodním hovoru</small></p>
+          <p>Aplikace pro iOS i&nbsp;Android – pro vaše zákazníky nebo zaměstnance v&nbsp;terénu. Napojená na váš systém, web nebo e-shop.</p>
+          <ul class="bul">
+            <li>iOS i&nbsp;Android z&nbsp;jednoho kódu</li>
+            <li>Napojení na váš systém a&nbsp;data</li>
+            <li>Pomoc s&nbsp;vydáním v&nbsp;App Store a&nbsp;Google Play</li>
+          </ul>
+          <div class="svc-shot svc-shot-c"><img src="/assets/projects/SluzbaMobil.webp" alt="Mobilní zobrazení aplikace DevCRM a e-shopu Bílé zlato" loading="lazy" width="1400" height="1200" decoding="async"></div>
+          <p class="tech">React Native · iOS · Android</p>
+          <a href="#kontakt" class="link-cta" data-open="form" data-type="Mobilní aplikace" data-cta="svc_mobile">Poptat mobilní aplikaci <span class="arr">→</span></a>
+        </article>
+        <article class="card svc svc-swap svc-small lift rv" data-svc="web">
+          <div class="svc-top"><span class="svc-ic"><svg><use href="#i-web"/></svg></span><button type="button" class="svc-peek" aria-label="Ukázka – tvorba firemního webu">Ukázka <span aria-hidden="true">↖</span></button></div>
+          <h3><a href="/tvorba-webu/">Tvorba firemního webu</a></h3>
+          <p class="price">od <b class="gt">9&nbsp;970&nbsp;Kč</b></p>
+          <p>Web, který zákazníkům rychle řekne, co děláte, a&nbsp;přivede vám poptávky. Je rychlý, srozumitelný a&nbsp;skvěle vypadá i&nbsp;na mobilu.</p>
+          <ul class="bul">
+            <li>Design na míru, žádná šablona</li>
+            <li>Poptávkový formulář přímo do e-mailu</li>
+            <li>Obsah si upravíte sami</li>
+          </ul>
+          <div class="svc-shot svc-shot-c"><img src="/assets/projects/SluzbaWeb.webp" alt="Ukázka webu Fitness URAL v Sokolově" loading="lazy" width="1000" height="1250" decoding="async"></div>
+          <a href="#kontakt" class="link-cta" data-open="form" data-type="Web" data-cta="svc_web">Poptat web <span class="arr">→</span></a>
+        </article>
+        <article class="card svc svc-swap svc-small lift rv" data-svc="shop">
+          <div class="svc-top"><span class="svc-ic"><svg><use href="#i-shop"/></svg></span><button type="button" class="svc-peek" aria-label="Ukázka – tvorba e-shopu">Ukázka <span aria-hidden="true">↖</span></button></div>
+          <h3><a href="/tvorba-e-shopu/">Tvorba e-shopu na míru</a></h3>
+          <p class="price">od <b class="gt">19&nbsp;870&nbsp;Kč</b></p>
+          <p>Prodávejte online a&nbsp;mějte objednávky pod kontrolou.</p>
+          <ul class="bul">
+            <li>Platby kartou a&nbsp;doprava</li>
+            <li>Přehledná správa objednávek</li>
+          </ul>
+          <div class="svc-shot"><img src="/assets/projects/SluzbaEshop.webp" alt="Ukázka e-shopu Bílé zlato s porcelánem Villeroy &amp; Boch" loading="lazy" width="1000" height="1250" decoding="async"></div>
+          <a href="#kontakt" class="link-cta" data-open="form" data-type="E-shop" data-cta="svc_shop">Poptat e-shop <span class="arr">→</span></a>
+        </article>
+        <article class="card svc svc-srv lift rv">
+          <div class="svc-top"><span class="svc-ic"><svg><use href="#i-srv"/></svg></span></div>
+          <div class="srv-main">
+            <h3><a href="/sprava-serveru/">Správa serverů a&nbsp;webů</a></h3>
+            <p class="price">od <b class="gt">990&nbsp;Kč</b>/měsíc</p>
+          </div>
+          <div class="srv-body">
+            <p>Aby všechno běželo a&nbsp;vy jste to nemuseli řešit.</p>
+            <ul class="bul">
+              <li>Aktualizace a&nbsp;pravidelné zálohy</li>
+              <li>Hlídání dostupnosti a&nbsp;bezpečnosti</li>
+            </ul>
+          </div>
+          <a href="#kontakt" class="link-cta" data-open="form" data-type="Správa serveru" data-cta="svc_srv">Poptat správu <span class="arr">→</span></a>
+        </article>
+        <article class="card svc svc-srv lift rv">
+          <div class="svc-top"><span class="svc-ic"><svg><use href="#i-net"/></svg></span></div>
+          <div class="srv-main">
+            <h3><a href="/sprava-it-a-siti/">Správa IT a&nbsp;sítí</a></h3>
+            <p class="price">od <b class="gt">1&nbsp;490&nbsp;Kč</b>/měsíc</p>
+          </div>
+          <div class="srv-body">
+            <p>Síť, Wi-Fi, počítače a&nbsp;zálohy pod dohledem. V&nbsp;Karlovarském kraji i&nbsp;osobně na místě.</p>
+            <ul class="bul">
+              <li>Oddělená Wi-Fi pro hosty a&nbsp;provoz</li>
+              <li>Zálohy, které jdou obnovit</li>
+            </ul>
+          </div>
+          <a href="/sprava-it-a-siti/#poptat" class="link-cta" data-cta="svc_net">Poptat správu IT <span class="arr">→</span></a>
+        </article>
+      </div>
+      <p class="note rv">Ceny jsou orientační a&nbsp;konečné – nejsem plátce DPH. Po úvodním hovoru dostanete pevnou cenu za konkrétní rozsah – co si odsouhlasíme, to platí.</p>
+    </div>
+  </section>
+
+  <!-- ================= REFERENCES ================= -->
+  <section class="sec" id="reference">
+    <div class="wrap">
+      <div class="head rv">
+        <div><span class="kicker gt">Reference</span><h2>Reference – jak to vypadá v&nbsp;praxi</h2></div>
+        <p class="seg-hint" aria-live="polite">Zvýrazňuji ukázky pro: <b id="seg-hint-label">aplikace a&nbsp;systémy</b></p>
+      </div>
+      <div class="cases">
+        <RefCase id="dev-c-r-m" home />
+        <RefCase id="fitness-ural" home />
+        <RefCase id="bmp-konfigurator" home />
+        <RefCase id="moje-bojovka" home />
+        <RefCase id="e-podnikam" home />
+        <RefCase id="gprooms" home />
+        <RefCase id="vb-porcelan" home />
+      </div>
+
+      <div class="thumbs">
+        <RefThumb id="dev-duck" home />
+        <RefThumb id="penzion-loket" home />
+        <RefThumb id="kotelna55" home />
+        <RefThumb id="g-ptents" home />
+        <RefThumb id="rybar-transport" home />
+        <RefThumb id="firemni-balicek" home />
+        <RefThumb id="skripta-prokop" home />
+        <RefThumb id="hostel-loket" home />
+      </div>
+      <div class="card others rv">
+        <b>+ 11 dalších</b>
+        <p>2MSKV, Astos, František Slovák, Geowestmaster, Kanya Kage, Markop Okna, Plenkový servis, Recysmach, Sokolov Ubytování, Sunpoint, Výroba šperků</p>
+      </div>
+      <div class="cta-row rv">
+        <a href="#kontakt" class="btn btn-grad" data-open="call" data-cta="refs_call"><svg><use href="#i-phone"/></svg>Domluvit 15min hovor</a>
+        <a href="#kontakt" class="btn btn-line" data-open="form" data-cta="refs_form">Poslat poptávku</a>
+        <small>Ukážu vám i&nbsp;další projekty podobné tomu vašemu.</small>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= LEAD MAGNET (segment-aware) ================= -->
+  <section class="sec" id="kontrola">
+    <div class="wrap">
+      <div class="card lm rv" data-only="web" hidden>
+        <div class="lm-copy">
+          <span class="free">Zdarma · bez závazků</span>
+          <span class="kicker gt" style="display:block">Ještě se nechcete rozhodovat?</span>
+          <h2>Bezplatná kontrola vašeho webu</h2>
+          <p class="lead">Pošlete mi odkaz na svůj web a&nbsp;do 2 pracovních dnů vám zdarma pošlu 5 konkrétních věcí, které vám berou poptávky.</p>
+          <ul class="lm-list">
+            <li><span class="tick"><svg><use href="#i-check"/></svg></span>Rychlost a&nbsp;zobrazení na mobilu</li>
+            <li><span class="tick"><svg><use href="#i-check"/></svg></span>Srozumitelnost nabídky a&nbsp;cen</li>
+            <li><span class="tick"><svg><use href="#i-check"/></svg></span>Cesta k&nbsp;poptávce – kontakty, formuláře, výzvy</li>
+          </ul>
+        </div>
+        <div class="lm-box">
+          <h3>Pošlete mi odkaz</h3>
+          <p>Výsledek dostanete e-mailem, srozumitelně a&nbsp;bez technického žargonu.</p>
+          <form class="lm-form" data-kind="web" data-source="section" novalidate>
+            <div class="hp" aria-hidden="true"><label for="hp-lm-web">Nevyplňujte</label><input type="text" id="hp-lm-web" name="website" value="" tabindex="-1" autocomplete="off" aria-hidden="true"></div>
+            <div class="lm-fields">
+              <div class="fld">
+                <label for="lm-url-s">Adresa vašeho webu *</label>
+                <input id="lm-url-s" name="url" type="text" inputmode="url" autocomplete="url" placeholder="www.vasefirma.cz" aria-describedby="e-lm-url-s" required>
+                <p class="err-msg" id="e-lm-url-s"></p>
+              </div>
+              <div class="fld">
+                <label for="lm-email-s">Kam vám pošlu výsledek? *</label>
+                <input id="lm-email-s" name="email" type="email" autocomplete="email" placeholder="jan@firma.cz" aria-describedby="e-lm-email-s" required>
+                <p class="err-msg" id="e-lm-email-s"></p>
+              </div>
+              <button class="btn btn-grad" type="submit" data-cta="lm_web"><span class="lbl">Chci kontrolu zdarma</span> <span class="arr">→</span></button>
+              <p class="lm-note">E-mail použiji jen k&nbsp;zaslání výsledku.</p>
+              <p class="consent">Odesláním souhlasíte se zpracováním údajů pro vyřízení poptávky – <a href="/ochrana-osobnich-udaju.html">zásady ochrany osobních údajů</a>.</p>
+            </div>
+            <div class="lm-done" hidden tabindex="-1">
+              <span class="done-ic sm"><svg><use href="#i-check"/></svg></span>
+              <div><b>Děkuji, mám to!</b><p>Do 2 pracovních dnů vám pošlu 5 tipů pro <span class="lm-site"></span>.</p></div>
+            </div>
+            <div class="lm-fail" hidden>
+              <b>Odeslání se nepovedlo.</b>
+              <p class="rate-msg" hidden>Zkuste to prosím za chvíli, nebo napište e-mailem.</p>
+              <p>Pošlete mi žádost e-mailem – všechno je předvyplněné.</p>
+              <a class="btn btn-grad lm-mailto" href="mailto:kontakt@webtitan.cz">Odeslat e-mailem <span class="arr">→</span></a>
+              <small>nebo napište na <a href="mailto:kontakt@webtitan.cz">kontakt@webtitan.cz</a></small>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="card lm rv" data-only="app">
+        <div class="lm-copy">
+          <span class="free">Zdarma · bez závazků</span>
+          <span class="kicker gt" style="display:block">Ještě se nechcete rozhodovat?</span>
+          <h2>Pošlete mi svou tabulku nebo popis procesu</h2>
+          <p class="lead">Zdarma vám řeknu, jestli a&nbsp;jak se dá převést do aplikace a&nbsp;kolik by to zhruba stálo. Stačí pár vět nebo odkaz na tabulku.</p>
+          <ul class="lm-list">
+            <li><span class="tick"><svg><use href="#i-check"/></svg></span>Odpověď do 2 pracovních dnů</li>
+            <li><span class="tick"><svg><use href="#i-check"/></svg></span>Zdarma, bez závazku a&nbsp;bez obchodních telefonátů</li>
+            <li><span class="tick"><svg><use href="#i-check"/></svg></span>Fotku tabulky z&nbsp;mobilu můžete poslat e-mailem</li>
+          </ul>
+        </div>
+        <div class="lm-box">
+          <h3>Bezplatné posouzení procesu</h3>
+          <p>Do 2 pracovních dnů vám napíšu, jestli a&nbsp;jak se to dá zjednodušit.</p>
+          <form class="lm-form" data-kind="app" data-source="section" novalidate>
+            <div class="hp" aria-hidden="true"><label for="hp-lm-app">Nevyplňujte</label><input type="text" id="hp-lm-app" name="website" value="" tabindex="-1" autocomplete="off" aria-hidden="true"></div>
+            <div class="lm-fields">
+              <div class="fld">
+                <label for="lm-text-s">Popište proces nebo vložte odkaz na tabulku *</label>
+                <textarea id="lm-text-s" name="text" rows="4" placeholder="Např. zakázky vedeme v Excelu, termíny v diáři a každý pátek všechno ručně přepisujeme do plánu…" aria-describedby="e-lm-text-s" required></textarea>
+                <p class="err-msg" id="e-lm-text-s"></p>
+              </div>
+              <div class="fld">
+                <label for="lm-email-a">Kam vám pošlu posouzení? *</label>
+                <input id="lm-email-a" name="email" type="email" autocomplete="email" placeholder="jan@firma.cz" aria-describedby="e-lm-email-a" required>
+                <p class="err-msg" id="e-lm-email-a"></p>
+              </div>
+              <button class="btn btn-grad" type="submit" data-cta="lm_app"><span class="lbl">Chci posouzení zdarma</span> <span class="arr">→</span></button>
+              <p class="lm-note"><a href="mailto:kontakt@webtitan.cz?subject=Tabulka%20k%20posouzen%C3%AD" data-cta="lm_app_mail">Raději pošlete soubor e-mailem</a></p>
+              <p class="consent">Odesláním souhlasíte se zpracováním údajů pro vyřízení poptávky – <a href="/ochrana-osobnich-udaju.html">zásady ochrany osobních údajů</a>.</p>
+            </div>
+            <div class="lm-done" hidden tabindex="-1">
+              <span class="done-ic sm"><svg><use href="#i-check"/></svg></span>
+              <div><b>Díky, mám to u&nbsp;sebe.</b><p>Do 2 pracovních dnů vám napíšu, jestli a&nbsp;jak se dá váš proces zjednodušit.</p></div>
+            </div>
+            <div class="lm-fail" hidden>
+              <b>Odeslání se nepovedlo.</b>
+              <p class="rate-msg" hidden>Zkuste to prosím za chvíli, nebo napište e-mailem.</p>
+              <p>Pošlete to prosím e-mailem – text jsem vám připravil.</p>
+              <a class="btn btn-grad lm-mailto" href="mailto:kontakt@webtitan.cz">Odeslat e-mailem <span class="arr">→</span></a>
+              <small>nebo napište na <a href="mailto:kontakt@webtitan.cz">kontakt@webtitan.cz</a></small>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= COMPARISON ================= -->
+  <section class="sec" id="srovnani">
+    <div class="wrap">
+      <div class="head center rv">
+        <span class="kicker gt">Srovnání</span>
+        <h2>Excel, krabice, agentura – nebo řešení na míru?</h2>
+        <p>Každá cesta má své místo. Tady je poctivé srovnání, ať se rozhodnete správně.</p>
+      </div>
+      <div class="card cmp-anchor rv">
+        <p><b>Aplikace na míru od 24&nbsp;950&nbsp;Kč jednorázově.</b> Žádné měsíční licence za každého uživatele – zaplatíte jednou a&nbsp;aplikace je vaše. Platíte jen provoz a&nbsp;správu.</p>
+        <a href="#kontakt" class="btn btn-grad" data-open="call" data-cta="compare_call"><svg><use href="#i-phone"/></svg>Probrat to na hovoru</a>
+      </div>
+      <div class="ctab rv" role="group" aria-label="Srovnání alternativ">
+        <div class="ccol labels">
+          <div class="chd"></div>
+          <div>Cena na začátku</div>
+          <div>Co platíte dlouhodobě</div>
+          <div>Přizpůsobení vašemu procesu</div>
+          <div>Čas do spuštění</div>
+          <div>Komu patří data a&nbsp;aplikace</div>
+          <div>S&nbsp;kým jednáte</div>
+        </div>
+        <div class="ccol">
+          <div class="chd"><b>Excel a&nbsp;tabulky</b><span>„nějak to jde“</span></div>
+          <div class="cell"><span class="lb">Cena na začátku</span><span class="st good"></span><span>Zdarma</span></div>
+          <div class="cell"><span class="lb">Dlouhodobě</span><span class="st bad"></span><span>Čas lidí na ruční přepisování a&nbsp;dohledávání</span></div>
+          <div class="cell"><span class="lb">Přizpůsobení</span><span class="st bad"></span><span>Ručně – a&nbsp;každý si to dělá po svém</span></div>
+          <div class="cell"><span class="lb">Čas do spuštění</span><span class="st good"></span><span>Hned</span></div>
+          <div class="cell"><span class="lb">Data</span><span class="st mid"></span><span>Vám, ale rozházená v&nbsp;souborech</span></div>
+          <div class="cell"><span class="lb">S kým jednáte</span><span class="st bad"></span><span>Sami se sebou</span></div>
+        </div>
+        <div class="ccol">
+          <div class="chd"><b>Krabicový software</b><span>hotová online služba</span></div>
+          <div class="cell"><span class="lb">Cena na začátku</span><span class="st good"></span><span>Nízká, často i&nbsp;zkušební verze zdarma</span></div>
+          <div class="cell"><span class="lb">Dlouhodobě</span><span class="st bad"></span><span>Poplatek za každého uživatele, každý měsíc – dokud službu používáte</span></div>
+          <div class="cell"><span class="lb">Přizpůsobení</span><span class="st mid"></span><span>Omezené – přizpůsobujete se vy jemu</span></div>
+          <div class="cell"><span class="lb">Čas do spuštění</span><span class="st good"></span><span>Dny</span></div>
+          <div class="cell"><span class="lb">Data</span><span class="st bad"></span><span>Poskytovateli – službu si jen pronajímáte</span></div>
+          <div class="cell"><span class="lb">S kým jednáte</span><span class="st mid"></span><span>S podporou nebo chatbotem</span></div>
+        </div>
+        <div class="ccol">
+          <div class="chd"><b>Velká agentura</b><span>tým a&nbsp;projektový manažer</span></div>
+          <div class="cell"><span class="lb">Cena na začátku</span><span class="st bad"></span><span>Často stovky tisíc Kč</span></div>
+          <div class="cell"><span class="lb">Dlouhodobě</span><span class="st mid"></span><span>Každá úprava podle ceníku agentury</span></div>
+          <div class="cell"><span class="lb">Přizpůsobení</span><span class="st good"></span><span>Ano</span></div>
+          <div class="cell"><span class="lb">Čas do spuštění</span><span class="st bad"></span><span>Měsíce</span></div>
+          <div class="cell"><span class="lb">Data</span><span class="st mid"></span><span>Podle smlouvy</span></div>
+          <div class="cell"><span class="lb">S kým jednáte</span><span class="st mid"></span><span>S obchodníkem a&nbsp;projektovým manažerem</span></div>
+        </div>
+        <div class="ccol me">
+          <div class="chd"><b>Se mnou</b><span>na míru, bez prostředníků</span></div>
+          <div class="cell"><span class="lb">Cena na začátku</span><span class="st good"></span><span>Aplikace od 24&nbsp;950&nbsp;Kč, web od 9&nbsp;970&nbsp;Kč</span></div>
+          <div class="cell"><span class="lb">Dlouhodobě</span><span class="st good"></span><span>Bez licencí za uživatele – jen provoz a&nbsp;správa od 990&nbsp;Kč/měsíc</span></div>
+          <div class="cell"><span class="lb">Přizpůsobení</span><span class="st good"></span><span>Přesně podle toho, jak pracujete</span></div>
+          <div class="cell"><span class="lb">Čas do spuštění</span><span class="st good"></span><span>Typicky 3–6 týdnů</span></div>
+          <div class="cell"><span class="lb">Data</span><span class="st good"></span><span>Vám – kód, data i&nbsp;doména</span></div>
+          <div class="cell"><span class="lb">S kým jednáte</span><span class="st good"></span><span>Přímo s&nbsp;tím, kdo to staví</span></div>
+        </div>
+      </div>
+      <p class="cmp-foot rv">Srovnání je zjednodušené. Když bude pro vás lepší hotová krabice, rád vám to řeknu.</p>
+      <div class="guarantees">
+        <div class="card g rv"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5 3.4 9.3 8 11 4.6-1.7 8-6 8-11V5z"/><path d="m9 12 2 2 4-4"/></svg></span><div><b>Pevná cena předem</b><span>Co si odsouhlasíme, to platí.</span></div></div>
+        <div class="card g rv"><span class="ic"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><div><b>Konzultace zdarma a&nbsp;nezávazně</b><span>Nic nepodepisujete.</span></div></div>
+        <div class="card g rv"><span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span><div><b>Kód, data i&nbsp;doména patří vám</b><span>Nejste na mně závislí.</span></div></div>
+        <div class="card g rv"><span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><div><b>Jednáte přímo se mnou</b><span>Kdo s&nbsp;vámi mluví, ten to i&nbsp;staví.</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FIT / HONEST LIMITS ================= -->
+  <section class="sec" id="pro-koho">
+    <div class="wrap">
+      <div class="head rv">
+        <div><span class="kicker gt">Pro koho to je</span><h2>Neberu všechno. Řeknu to rovnou.</h2></div>
+        <p>Raději vám hned řeknu, kdy vám pomůžu a&nbsp;kdy ne. Ušetříme si čas oba.</p>
+      </div>
+      <div class="fit">
+        <div class="card fit-col yes rv">
+          <h3><span class="mk"><svg><use href="#i-check"/></svg></span>Dává to smysl, když…</h3>
+          <ul>
+            <li>máte opakující se proces, který dnes řešíte v&nbsp;tabulkách, e-mailech nebo na papíře,</li>
+            <li>potřebujete web nebo e-shop, který opravdu přivádí poptávky,</li>
+            <li>chcete jednat přímo s&nbsp;tím, kdo to staví,</li>
+            <li>chcete řešení vlastnit, ne si ho pronajímat.</li>
+          </ul>
+        </div>
+        <div class="card fit-col no rv">
+          <h3><span class="mk"><svg><use href="#i-x"/></svg></span>Radši vás pošlu jinam, když…</h3>
+          <ul>
+            <li>vám stačí hotová krabicová aplikace – poradím vám, kterou,</li>
+            <li>potřebujete velký vývojový tým na roky dopředu,</li>
+            <li>hledáte za každou cenu nejlevnější řešení,</li>
+            <li>potřebujete mít hotovo do zítřka.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="cta-row rv">
+        <a href="#kontakt" class="btn btn-grad" data-open="call" data-cta="fit_call"><svg><use href="#i-phone"/></svg>Nevím, kam patřím – proberme to</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PROCESS ================= -->
+  <section class="sec" id="postup">
+    <div class="wrap">
+      <div class="head rv">
+        <div><span class="kicker gt">Jak pracuji</span><h2>Od 15minutového hovoru ke spuštění</h2></div>
+        <p>Víte, co se kdy děje a&nbsp;kolik to bude stát – ještě než se do čehokoli pustíme.</p>
+      </div>
+      <ol class="steps">
+        <li class="card step lift rv">
+          <div class="step-top"><span class="num">1</span><span class="time">do 24 h · zdarma</span></div>
+          <h3>15min hovor</h3>
+          <p>Projdeme, co vás dnes zdržuje. Řeknu vám, jestli a&nbsp;jak to jde – po telefonu nebo videohovorem.</p>
+        </li>
+        <li class="card step lift rv">
+          <div class="step-top"><span class="num">2</span><span class="time">cca 1 týden</span></div>
+          <h3>Návrh a&nbsp;pevná cena</h3>
+          <p>Sepíšu, co bude řešení umět, ukážu náhled obrazovek a&nbsp;pošlu pevnou cenu. Teprve pak se rozhodnete.</p>
+        </li>
+        <li class="card step lift rv">
+          <div class="step-top"><span class="num">3</span><span class="time">typicky 3–6 týdnů</span></div>
+          <h3>Vývoj s&nbsp;průběžnými ukázkami</h3>
+          <p>Průběžně vidíte pokrok a&nbsp;můžete říct, co upravit. Žádná černá skříňka.</p>
+        </li>
+        <li class="card step lift rv">
+          <div class="step-top"><span class="num">4</span><span class="time">průběžně</span></div>
+          <h3>Spuštění a&nbsp;péče</h3>
+          <p>Převedu data z&nbsp;tabulek, zaškolím vás a&nbsp;postarám se o&nbsp;servery, zálohy i&nbsp;další rozvoj.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ================= ABOUT: LETTER ================= -->
+  <section class="sec" id="o-mne">
+    <div class="wrap">
+      <div class="about">
+        <article class="card letter rv">
+          <div class="letter-main">
+          <span class="kicker gt">Kdo to pro vás postaví</span>
+          <h2>Dobrý den, jsem Jan.</h2>
+          <p>Weby a&nbsp;aplikace stavím od roku 2006. Začínal jsem kódováním šablon, prošel jsem správou firemních sítí a&nbsp;serverů a&nbsp;dnes navrhuji a&nbsp;programuji aplikace, weby a&nbsp;e-shopy na míru – od prvního návrhu až po server, na kterém běží.</p>
+          <p>Sídlím v&nbsp;Horním Slavkově u&nbsp;Sokolova a&nbsp;západní Čechy znám i&nbsp;pracovně – šest let jsem dělal IT v&nbsp;sokolovské firmě a&nbsp;pět let v&nbsp;Plzni. <strong>S&nbsp;firmami z&nbsp;Karlovarského a&nbsp;Plzeňského kraje se rád potkám osobně</strong> – v&nbsp;Karlových Varech, Sokolově, Chebu i&nbsp;v&nbsp;Plzni. Klienty odjinud obsloužím na dálku.</p>
+          <p>Jako programátor na volné noze pracuji sám, a&nbsp;to je pro vás výhoda: <strong>nikdo si vás nepřehazuje</strong> mezi obchodníkem, projektovým manažerem a&nbsp;programátorem. Člověk, se kterým mluvíte, je ten, kdo to postaví.</p>
+          <p>Nemám rád, když klient nerozumí tomu, za co platí. Proto vám všechno vysvětlím lidsky, <strong>cenu řeknu předem</strong> a&nbsp;to, co postavím, bude celé vaše.</p>
+          </div>
+          <div class="letter-side">
+          <div class="facts">
+            <div class="fact"><b>Od roku 2023</b><span>Full-stack vývoj a&nbsp;správa serverů (Šikmo s.r.o. / OSVČ)</span></div>
+            <div class="fact"><b>2017–2023</b><span>IT specialista, programátor a&nbsp;správce sítí (VUJO s.r.o., Sokolov)</span></div>
+            <div class="fact"><b>2010–2015</b><span>IT a&nbsp;webové aplikace (DISTRACT s.r.o., Plzeň)</span></div>
+            <div class="fact"><b>2006–2010</b><span>Webmaster a&nbsp;kódování webů (Humdrum s.r.o.)</span></div>
+          </div>
+          <div class="sign">
+            <div class="name"><b>Jan Šporek</b><svg viewBox="0 0 170 18" aria-hidden="true"><path d="M2 12c30-8 60-10 90-6s50 3 76-4"/></svg><small>WebTitan · Karlovy Vary · Sokolov · Plzeň</small></div>
+            <div class="socials">
+              <a class="icon-btn" href="mailto:kontakt@webtitan.cz" aria-label="E-mail"><svg viewBox="0 0 24 24"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm1 2.3V17h16V7.3l-8 5.6-8-5.6zM5.4 7l6.6 4.6L18.6 7H5.4z"/></svg></a>
+              <a class="icon-btn" href="https://www.linkedin.com/in/jan-%C5%A1porek-07a39168/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a>
+              <a class="icon-btn" href="https://github.com/jansporek" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.18 1.84 1.18 3.1 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.68.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg></a>
+            </div>
+          </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FAQ ================= -->
+  <section class="sec" id="faq">
+    <div class="wrap">
+      <div class="faq">
+        <div class="card faq-side rv">
+          <span class="kicker gt">Časté otázky</span>
+          <h2>Co vás může zajímat</h2>
+          <p>Nenašli jste odpověď? Zeptejte se mě rovnou – na hovoru nebo e-mailem.</p>
+          <a href="#kontakt" class="btn btn-grad" data-open="call" data-cta="faq_call"><svg><use href="#i-phone"/></svg>Domluvit 15min hovor</a>
+          <a href="#kontakt" class="link-cta" data-open="form" data-cta="faq_form">nebo poslat poptávku <span class="arr">→</span></a>
+        </div>
+        <div class="faq-list">
+          {faq.map((f, i) => (
+          <details class="rv" open={i === 0}>
+            <summary><Fragment set:html={f.q} /><span class="pm"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+            <p class="ans" set:html={f.a}></p>
+          </details>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT (call booking + inquiry) ================= -->
+  <section class="sec" id="kontakt">
+    <div class="wrap">
+      <div class="contact">
+        <aside class="card contact-info rv" aria-label="Co bude po odeslání">
+          <div>
+            <span class="kicker gt">Kontakt</span>
+            <h2>Pojďme to nezávazně probrat</h2>
+          </div>
+          <p class="lead">Vyberte si, co je vám příjemnější: krátký hovor, nebo pár vět v&nbsp;poptávce. Ozvu se do 24 hodin (v&nbsp;pracovní dny).</p>
+          <p><span class="cap-badge" data-capacity hidden></span></p>
+          <div class="me-row">
+            <span class="avatar" role="img" aria-label="Jan Šporek"></span>
+            <div><b>Napíšete přímo mně</b><span>Jan Šporek · odpovídám osobně do 24 hodin (v&nbsp;pracovní dny)</span></div>
+          </div>
+          <div>
+            <p class="mini-h">Co bude dál</p>
+            <ol class="next">
+              <li><span class="n">1</span><div><b>Potvrdím termín nebo se ozvu</b><span>Do 24 hodin, e-mailem nebo telefonem.</span></div></li>
+              <li><span class="n">2</span><div><b>Krátký hovor zdarma</b><span>Probereme, co potřebujete a&nbsp;jak to vyřešit.</span></div></li>
+              <li><span class="n">3</span><div><b>Návrh s&nbsp;pevnou cenou</b><span>Pošlu rozsah, termín a&nbsp;cenu. Rozhodnete se v&nbsp;klidu.</span></div></li>
+            </ol>
+          </div>
+          <ul class="sure">
+            <li><span class="tick"><svg><use href="#i-check"/></svg></span>Pevná cena předem</li>
+            <li><span class="tick"><svg><use href="#i-check"/></svg></span>Konzultace zdarma a&nbsp;nezávazně</li>
+            <li><span class="tick"><svg><use href="#i-check"/></svg></span>Kód, data i&nbsp;doména patří vám</li>
+          </ul>
+          <p class="clients-mini"><b>Realizace pro:</b> Šikmo, Fitness Ural, GP Rooms, Hostel Loket, Skripta Prokop, GP Tents a&nbsp;další</p>
+          <p class="direct">Radši rovnou zavolat? <a href="tel:+420723793510" data-cta="contact_tel">723&nbsp;793&nbsp;510</a><br>Nebo pište na <a href="mailto:kontakt@webtitan.cz">kontakt@webtitan.cz</a></p>
+        </aside>
+
+        <div class="card form-card gb rv" id="contact-card">
+          <div class="qf-who">
+            <span class="avatar sm" aria-hidden="true"></span>
+            <p><b>Napíšete přímo mně</b> – odpovídám osobně do 24&nbsp;hodin.</p>
+          </div>
+          <div class="tabs" role="tablist" aria-label="Způsob kontaktu">
+            <button type="button" role="tab" id="tab-call" aria-controls="panel-call" aria-selected="true" tabindex="0"><svg><use href="#i-phone"/></svg><span>Domluvit <span class="t-long">15min&nbsp;</span>hovor</span></button>
+            <button type="button" role="tab" id="tab-form" aria-controls="panel-form" aria-selected="false" tabindex="-1"><svg><use href="#i-send"/></svg>Poslat poptávku</button>
+          </div>
+
+          <!-- ===== panel: call booking =====
+               Výběr termínu je jen návrh – Jan termín potvrdí e-mailem.
+               Později lze nahradit embedem Cal.com / Calendly (skutečná dostupnost v kalendáři). -->
+          <div role="tabpanel" id="panel-call" aria-labelledby="tab-call">
+            <div class="panel-head" id="bk-head">
+              <h3 class="qf-title" id="bk-title" tabindex="-1">Vyberte termín 15min hovoru</h3>
+              <p>Termín vám potvrdím e-mailem do 24 hodin (v&nbsp;pracovní dny).</p>
+            </div>
+            <form id="book-form" novalidate>
+              <div class="hp" aria-hidden="true"><label for="hp-bk">Nevyplňujte</label><input type="text" id="hp-bk" name="website" value="" tabindex="-1" autocomplete="off" aria-hidden="true"></div>
+              <div class="bk-q">
+                <p class="qf-label" id="bl-day">1. Den</p>
+                <div class="days" id="book-days" role="radiogroup" aria-labelledby="bl-day" aria-describedby="e-bk-day"></div>
+                <p class="err-msg" id="e-bk-day" role="alert"></p>
+              </div>
+              <div class="bk-q">
+                <p class="qf-label" id="bl-time" tabindex="-1">2. Čas</p>
+                <div class="chips times" role="radiogroup" aria-labelledby="bl-time" aria-describedby="e-bk-time">
+                  <label><input type="radio" name="bk_time" value="9:00"><span>9:00</span></label>
+                  <label><input type="radio" name="bk_time" value="10:00"><span>10:00</span></label>
+                  <label><input type="radio" name="bk_time" value="11:00"><span>11:00</span></label>
+                  <label><input type="radio" name="bk_time" value="13:00"><span>13:00</span></label>
+                  <label><input type="radio" name="bk_time" value="14:00"><span>14:00</span></label>
+                  <label><input type="radio" name="bk_time" value="15:00"><span>15:00</span></label>
+                  <label><input type="radio" name="bk_time" value="16:00"><span>16:00</span></label>
+                </div>
+                <p class="err-msg" id="e-bk-time" role="alert"></p>
+              </div>
+              <p class="bk-sel" id="bk-sel" hidden><svg><use href="#i-cal"/></svg><span>Vybráno: <b id="bk-sel-t"></b> · 15&nbsp;minut</span></p>
+              <div class="bk-q">
+                <p class="qf-label" id="bl-mode">3. Jak si chcete zavolat?</p>
+                <div class="chips" role="radiogroup" aria-labelledby="bl-mode">
+                  <label><input type="radio" name="bk_mode" value="Telefonicky" checked><span>Telefonicky</span></label>
+                  <label><input type="radio" name="bk_mode" value="Videohovor"><span>Videohovor (odkaz pošlu e-mailem)</span></label>
+                </div>
+              </div>
+              <div class="bk-q">
+                <p class="qf-label" id="bl-topic">O&nbsp;čem si promluvíme? <em>(nepovinné)</em></p>
+                <div class="chips" role="radiogroup" aria-labelledby="bl-topic">
+                  <label><input type="radio" name="bk_topic" value="Aplikace na míru" checked><span>Aplikace / systém</span></label>
+                  <label><input type="radio" name="bk_topic" value="Mobilní aplikace"><span>Mobilní aplikace</span></label>
+                  <label><input type="radio" name="bk_topic" value="Web"><span>Web</span></label>
+                  <label><input type="radio" name="bk_topic" value="E-shop"><span>E-shop</span></label>
+                  <label><input type="radio" name="bk_topic" value="Správa serveru"><span>Správa serveru</span></label>
+                  <label><input type="radio" name="bk_topic" value="Správa IT a sítí"><span>Správa IT a&nbsp;sítí</span></label>
+                  <label><input type="radio" name="bk_topic" value="Zatím nevím"><span>Zatím nevím</span></label>
+                </div>
+              </div>
+              <div class="qf-grid2">
+                <div class="fld">
+                  <label for="bk-name">Jméno *</label>
+                  <input id="bk-name" name="name" type="text" autocomplete="name" placeholder="Jan Novák" aria-describedby="e-bk-name" required>
+                  <p class="err-msg" id="e-bk-name"></p>
+                </div>
+                <div class="fld">
+                  <label for="bk-email">E-mail *</label>
+                  <input id="bk-email" name="email" type="email" autocomplete="email" placeholder="jan@firma.cz" aria-describedby="e-bk-email" required>
+                  <p class="err-msg" id="e-bk-email"></p>
+                </div>
+                <div class="fld full">
+                  <label for="bk-phone">Telefon <em id="bk-phone-req">* (zavolám vám na něj)</em></label>
+                  <input id="bk-phone" name="phone" type="tel" autocomplete="tel" placeholder="+420 …" aria-describedby="e-bk-phone">
+                  <p class="err-msg" id="e-bk-phone"></p>
+                </div>
+                <div class="fld full">
+                  <label for="bk-note">Pár slov předem <em>(nepovinné)</em></label>
+                  <textarea id="bk-note" name="note" rows="2" placeholder="Např. „Zakázky vedeme v Excelu a chceme to mít přehledně na jednom místě.“"></textarea>
+                </div>
+              </div>
+              <ul class="assure">
+                <li><svg><use href="#i-check"/></svg>Hovor je zdarma a&nbsp;nezávazný – nic neprodávám na sílu.</li>
+                <li><svg><use href="#i-check"/></svg>Údaje použiji jen k&nbsp;domluvě hovoru.</li>
+                <li><svg><use href="#i-check"/></svg>Kdyby vám termín nevyšel, stačí odepsat na potvrzovací e-mail.</li>
+              </ul>
+              <div class="qf-nav">
+                <button type="submit" class="btn btn-grad" id="bk-submit" data-cta="call_submit"><span class="lbl">Domluvit hovor</span> <span class="arr">→</span></button>
+              </div>
+              <p class="consent">Odesláním souhlasíte se zpracováním údajů pro vyřízení poptávky – <a href="/ochrana-osobnich-udaju.html">zásady ochrany osobních údajů</a>.</p>
+              <p class="form-status" id="bk-status" role="status" aria-live="polite"></p>
+              <div class="qf-fail" id="bk-fail" hidden>
+                <b>Odeslání se nepovedlo – žádost se ale neztratí.</b>
+                <p class="rate-msg" hidden>Zkuste to prosím za chvíli, nebo napište e-mailem.</p>
+                <p>Klikněte na tlačítko a&nbsp;pošlete ji e-mailem. Termín i&nbsp;kontakt jsou předvyplněné.</p>
+                <a class="btn btn-grad" id="bk-mailto" href="mailto:kontakt@webtitan.cz">Odeslat e-mailem <span class="arr">→</span></a>
+                <small>nebo napište přímo na <a href="mailto:kontakt@webtitan.cz">kontakt@webtitan.cz</a></small>
+              </div>
+            </form>
+            <div class="qf-done" id="bk-done" hidden>
+              <span class="done-ic"><svg><use href="#i-check"/></svg></span>
+              <h3 class="qf-title" id="bk-done-t" tabindex="-1">Díky! Žádost o&nbsp;hovor dorazila.</h3>
+              <p class="qf-sub" id="bk-done-p">Termín vám potvrdím e-mailem do 24 hodin (v&nbsp;pracovní dny).</p>
+              <ol class="next">
+                <li><span class="n">1</span><div><b>Potvrdím termín e-mailem</b><span>Kdyby se mi nehodil, navrhnu nejbližší jiný.</span></div></li>
+                <li><span class="n">2</span><div><b>15 minut hovoru</b><span>Telefonicky, nebo přes odkaz na videohovor.</span></div></li>
+                <li><span class="n">3</span><div><b>Návrh s&nbsp;pevnou cenou</b><span>Pokud to bude dávat smysl, pošlu rozsah, termín a&nbsp;cenu.</span></div></li>
+              </ol>
+              <a href="#reference" class="btn btn-line">Mezitím se podívejte na reference</a>
+            </div>
+          </div>
+
+          <!-- ===== panel: 3-step inquiry ===== -->
+          <div role="tabpanel" id="panel-form" aria-labelledby="tab-form" hidden>
+            <div class="qf-head" id="qf-head">
+              <div class="qf-top"><span id="qf-count">Krok 1 ze 3</span><span class="qf-time">zabere asi minutu</span></div>
+              <div class="qf-bar" aria-hidden="true"><span id="qf-bar"></span></div>
+              <p class="qf-resume" id="qf-resume" hidden>Pokračujete tam, kde jste skončili. <button type="button" id="qf-reset">Začít znovu</button></p>
+            </div>
+
+            <form id="contact-form" novalidate>
+              <div class="hp" aria-hidden="true"><label for="hp-qf">Nevyplňujte</label><input type="text" id="hp-qf" name="website" value="" tabindex="-1" autocomplete="off" aria-hidden="true"></div>
+              <!-- step 1 -->
+              <div class="qf-step" data-step="1" role="group" aria-labelledby="qs1">
+                <h3 class="qf-title" id="qs1" tabindex="-1">Co potřebujete?</h3>
+                <p class="qf-sub">Vyberte jednu možnost – zbytek doladíme spolu.</p>
+                <div class="qf-tiles">
+                  <button type="button" class="qtile" data-type="Aplikace na míru" aria-pressed="false"><span class="qt-ic"><svg><use href="#i-app"/></svg></span><span class="qt-tx"><b>Aplikace na míru</b><small>od&nbsp;24&nbsp;950&nbsp;Kč</small></span></button>
+                  <button type="button" class="qtile" data-type="Mobilní aplikace" aria-pressed="false"><span class="qt-ic"><svg><use href="#i-mobile"/></svg></span><span class="qt-tx"><b>Mobilní aplikace</b><small>iOS i&nbsp;Android</small></span></button>
+                  <button type="button" class="qtile" data-type="Web" aria-pressed="false"><span class="qt-ic"><svg><use href="#i-web"/></svg></span><span class="qt-tx"><b>Web</b><small>od&nbsp;9&nbsp;970&nbsp;Kč</small></span></button>
+                  <button type="button" class="qtile" data-type="E-shop" aria-pressed="false"><span class="qt-ic"><svg><use href="#i-shop"/></svg></span><span class="qt-tx"><b>E-shop</b><small>od&nbsp;19&nbsp;870&nbsp;Kč</small></span></button>
+                  <button type="button" class="qtile" data-type="Správa serveru" aria-pressed="false"><span class="qt-ic"><svg><use href="#i-srv"/></svg></span><span class="qt-tx"><b>Správa serveru</b><small>od&nbsp;990&nbsp;Kč/měs.</small></span></button>
+                  <button type="button" class="qtile" data-type="Zatím nevím" aria-pressed="false"><span class="qt-ic"><svg><use href="#i-q"/></svg></span><span class="qt-tx"><b>Zatím nevím</b><small>Poradím vám zdarma</small></span></button>
+                </div>
+                <p class="err-msg" id="e-typ" role="alert"></p>
+              </div>
+
+              <!-- step 2 -->
+              <div class="qf-step" data-step="2" role="group" aria-labelledby="qs2" hidden>
+                <div class="qf-chosen-row"><span class="qf-chosen">Vybráno: <b id="qf-type-label">–</b></span><button type="button" class="qf-change" data-goto="1">změnit</button></div>
+                <h3 class="qf-title" id="qs2" tabindex="-1">Upřesněte <em>(nepovinné)</em></h3>
+                <p class="qf-sub">Pomůže mi to připravit se na hovor. Klidně přeskočte.</p>
+
+                <div class="qf-q" data-for="Web" hidden>
+                  <p class="qf-label" id="ql-web">Máte už web?</p>
+                  <div class="chips" role="radiogroup" aria-labelledby="ql-web">
+                    <label><input type="radio" name="up_web" value="Nový web"><span>Nový web</span></label>
+                    <label><input type="radio" name="up_web" value="Předělat stávající"><span>Předělat stávající</span></label>
+                  </div>
+                </div>
+                <div class="qf-q" data-for="E-shop" hidden>
+                  <p class="qf-label" id="ql-shop">Kolik produktů?</p>
+                  <div class="chips" role="radiogroup" aria-labelledby="ql-shop">
+                    <label><input type="radio" name="up_eshop" value="do 50"><span>do 50</span></label>
+                    <label><input type="radio" name="up_eshop" value="50–500"><span>50–500</span></label>
+                    <label><input type="radio" name="up_eshop" value="500+"><span>500+</span></label>
+                  </div>
+                </div>
+                <div class="qf-q" data-for="Aplikace na míru" hidden>
+                  <p class="qf-label" id="ql-app">Co dnes používáte?</p>
+                  <div class="chips" role="radiogroup" aria-labelledby="ql-app">
+                    <label><input type="radio" name="up_app" value="Excel"><span>Excel</span></label>
+                    <label><input type="radio" name="up_app" value="Papír"><span>Papír</span></label>
+                    <label><input type="radio" name="up_app" value="Jiný systém"><span>Jiný systém</span></label>
+                    <label><input type="radio" name="up_app" value="Nic"><span>Nic</span></label>
+                  </div>
+                </div>
+                <div class="qf-q" data-for="Mobilní aplikace" hidden>
+                  <p class="qf-label" id="ql-mob">Pro koho je aplikace?</p>
+                  <div class="chips" role="radiogroup" aria-labelledby="ql-mob">
+                    <label><input type="radio" name="up_mob" value="Pro zákazníky"><span>Pro zákazníky</span></label>
+                    <label><input type="radio" name="up_mob" value="Pro zaměstnance"><span>Pro zaměstnance</span></label>
+                    <label><input type="radio" name="up_mob" value="Obojí"><span>Obojí</span></label>
+                  </div>
+                </div>
+                <div class="qf-q" data-for="Správa serveru" hidden>
+                  <p class="qf-label" id="ql-srv">Co spravovat?</p>
+                  <div class="chips" role="radiogroup" aria-labelledby="ql-srv">
+                    <label><input type="radio" name="up_srv" value="Web"><span>Web</span></label>
+                    <label><input type="radio" name="up_srv" value="E-shop"><span>E-shop</span></label>
+                    <label><input type="radio" name="up_srv" value="Aplikaci"><span>Aplikaci</span></label>
+                    <label><input type="radio" name="up_srv" value="Více serverů"><span>Více serverů</span></label>
+                  </div>
+                </div>
+
+                <div class="qf-q">
+                  <p class="qf-label" id="ql-term">Termín</p>
+                  <div class="chips" role="radiogroup" aria-labelledby="ql-term">
+                    <label><input type="radio" name="termin" value="Co nejdřív"><span>Co nejdřív</span></label>
+                    <label><input type="radio" name="termin" value="Do 1–2 měsíců"><span>Do 1–2 měsíců</span></label>
+                    <label><input type="radio" name="termin" value="Nespěchá"><span>Nespěchá</span></label>
+                  </div>
+                </div>
+                <div class="qf-q">
+                  <p class="qf-label" id="ql-bud">Rozpočet</p>
+                  <div class="chips" role="radiogroup" aria-labelledby="ql-bud">
+                    <label><input type="radio" name="rozpocet" value="do 15 000 Kč"><span>do 15&nbsp;000&nbsp;Kč</span></label>
+                    <label><input type="radio" name="rozpocet" value="15 000–40 000 Kč"><span>15&nbsp;000–40&nbsp;000&nbsp;Kč</span></label>
+                    <label><input type="radio" name="rozpocet" value="40 000–100 000 Kč"><span>40&nbsp;000–100&nbsp;000&nbsp;Kč</span></label>
+                    <label><input type="radio" name="rozpocet" value="100 000 Kč a více"><span>100&nbsp;000&nbsp;Kč+</span></label>
+                    <label><input type="radio" name="rozpocet" value="Zatím nevím"><span>Zatím nevím</span></label>
+                  </div>
+                </div>
+                <div class="qf-grid2">
+                  <div class="fld full">
+                    <label for="qf-url">Adresa současného webu <em>(nepovinné)</em></label>
+                    <input id="qf-url" name="url" type="text" inputmode="url" autocomplete="url" placeholder="www.vasefirma.cz">
+                  </div>
+                  <div class="fld full">
+                    <label for="qf-msg">Pár slov o&nbsp;projektu <em>(nepovinné)</em></label>
+                    <textarea id="qf-msg" name="zprava" rows="3" placeholder="Např. „Potřebujeme online rezervace, teď to řešíme po telefonu.“"></textarea>
+                  </div>
+                </div>
+                <div class="qf-nav">
+                  <button type="button" class="btn btn-line" data-goto="1">← Zpět</button>
+                  <button type="submit" class="btn btn-grad">Pokračovat <span class="arr">→</span></button>
+                  <button type="button" class="qf-skip" data-goto="3">Přeskočit</button>
+                </div>
+              </div>
+
+              <!-- step 3 -->
+              <div class="qf-step" data-step="3" role="group" aria-labelledby="qs3" hidden>
+                <h3 class="qf-title" id="qs3" tabindex="-1">Kam vám mám odpovědět?</h3>
+                <p class="qf-sub">Stačí jméno a&nbsp;e-mail. Telefon jen pokud chcete, abych zavolal.</p>
+                <div class="qf-grid2">
+                  <div class="fld">
+                    <label for="qf-name">Jméno *</label>
+                    <input id="qf-name" name="name" type="text" autocomplete="name" placeholder="Jan Novák" aria-describedby="e-qf-name" required>
+                    <p class="err-msg" id="e-qf-name"></p>
+                  </div>
+                  <div class="fld">
+                    <label for="qf-email">E-mail *</label>
+                    <input id="qf-email" name="email" type="email" autocomplete="email" placeholder="jan@firma.cz" aria-describedby="e-qf-email" required>
+                    <p class="err-msg" id="e-qf-email"></p>
+                  </div>
+                  <div class="fld full">
+                    <label for="qf-phone">Telefon <em>(nepovinné)</em></label>
+                    <input id="qf-phone" name="phone" type="tel" autocomplete="tel" placeholder="+420 …" aria-describedby="e-qf-phone">
+                    <p class="err-msg" id="e-qf-phone"></p>
+                  </div>
+                  <div class="fld full check-row">
+                    <label><input type="checkbox" id="qf-call" name="zavolat" value="ano">Raději mi zavolejte</label>
+                  </div>
+                </div>
+                <ul class="assure">
+                  <li><svg><use href="#i-check"/></svg>Nic nepodepisujete, vše je nezávazné.</li>
+                  <li><svg><use href="#i-check"/></svg>Údaje použiji jen k&nbsp;odpovědi na vaši poptávku.</li>
+                  <li><svg><use href="#i-check"/></svg>Odpovídám osobně do 24 hodin (v&nbsp;pracovní dny).</li>
+                </ul>
+                <div class="qf-nav">
+                  <button type="button" class="btn btn-line" data-goto="2">← Zpět</button>
+                  <button type="submit" class="btn btn-grad" id="qf-submit" data-cta="form_submit"><span class="lbl">Odeslat poptávku</span> <span class="arr">→</span></button>
+                </div>
+                <p class="consent">Odesláním souhlasíte se zpracováním údajů pro vyřízení poptávky – <a href="/ochrana-osobnich-udaju.html">zásady ochrany osobních údajů</a>.</p>
+                <div class="qf-fail" id="qf-fail" hidden>
+                  <b>Odeslání se nepovedlo – poptávka se ale neztratí.</b>
+                  <p class="rate-msg" hidden>Zkuste to prosím za chvíli, nebo napište e-mailem.</p>
+                  <p>Klikněte na tlačítko a&nbsp;pošlete ji e-mailem. Všechno, co jste vyplnili, je předvyplněné.</p>
+                  <a class="btn btn-grad" id="qf-mailto" href="mailto:kontakt@webtitan.cz">Odeslat e-mailem <span class="arr">→</span></a>
+                  <small>nebo napište přímo na <a href="mailto:kontakt@webtitan.cz">kontakt@webtitan.cz</a></small>
+                </div>
+              </div>
+              <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+            </form>
+
+            <div class="qf-done" id="qf-done" hidden>
+              <span class="done-ic"><svg><use href="#i-check"/></svg></span>
+              <h3 class="qf-title" id="qf-done-t" tabindex="-1">Díky! Poptávka dorazila.</h3>
+              <p class="qf-sub">Ozvu se vám osobně do 24 hodin (v&nbsp;pracovní dny).</p>
+              <ol class="next">
+                <li><span class="n">1</span><div><b>Projdu vaši poptávku</b><span>A&nbsp;připravím si otázky, ať je hovor krátký.</span></div></li>
+                <li><span class="n">2</span><div><b>Ozvu se do 24 hodin</b><span>E-mailem, nebo zavolám, pokud jste nechali číslo.</span></div></li>
+                <li><span class="n">3</span><div><b>Návrh s&nbsp;pevnou cenou</b><span>Rozsah, termín a&nbsp;cenu dostanete písemně.</span></div></li>
+              </ol>
+              <a href="#reference" class="btn btn-line">Mezitím se podívejte na reference</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<Footer variant="home" />
+
+<div class="mobile-cta" id="mobile-cta" aria-hidden="true">
+  <a href="tel:+420723793510" class="mc-tel" tabindex="-1" data-cta="mobile_bar_tel">Volejte rovnou<b>723&nbsp;793&nbsp;510</b></a>
+  <a href="#kontakt" class="btn btn-grad" tabindex="-1" data-open="call" data-cta="mobile_bar"><svg><use href="#i-phone"/></svg>Domluvit hovor</a>
+</div>
+
+<!-- exit-intent: desktop (mouse leaves the page) + phones (quick scroll back up, return to the tab) -->
+<dialog class="exit" id="exit-dlg" aria-labelledby="exit-t">
+  <div class="exit-in">
+    <button type="button" class="exit-x" data-close aria-label="Zavřít">✕</button>
+    <div class="exit-v" data-only="app">
+    <span class="kicker gt">Než odejdete</span>
+    <h2 id="exit-t-app">Vyplatí se vám aplikace? Řeknu vám to zdarma</h2>
+    <p>Popište v&nbsp;pár větách, jak dnes pracujete, nebo vložte odkaz na tabulku. Do 2 pracovních dnů vám napíšu, jestli a&nbsp;jak se to dá zjednodušit a&nbsp;kolik by to zhruba stálo.</p>
+    <form class="lm-form" data-kind="app" data-source="exit" novalidate>
+      <div class="hp" aria-hidden="true"><label for="hp-lm-exit-a">Nevyplňujte</label><input type="text" id="hp-lm-exit-a" name="website" value="" tabindex="-1" autocomplete="off" aria-hidden="true"></div>
+      <div class="lm-fields">
+        <div class="fld wide">
+          <label for="lm-text-x">Co dnes řešíte? *</label>
+          <textarea id="lm-text-x" name="text" rows="3" placeholder="Např. zakázky vedeme v&nbsp;Excelu a&nbsp;každý pátek je ručně přepisujeme do plánu…" aria-describedby="e-lm-text-x" required></textarea>
+          <p class="err-msg" id="e-lm-text-x"></p>
+        </div>
+        <div class="fld">
+          <label for="lm-email-xa">Kam vám pošlu posouzení? *</label>
+          <input id="lm-email-xa" name="email" type="email" autocomplete="email" placeholder="jan@firma.cz" aria-describedby="e-lm-email-xa" required>
+          <p class="err-msg" id="e-lm-email-xa"></p>
+        </div>
+        <button class="btn btn-grad" type="submit" data-cta="exit_lm_app"><span class="lbl">Chci posouzení zdarma</span> <span class="arr">→</span></button>
+        <p class="lm-note" style="width:100%">Zdarma, bez závazku a&nbsp;bez obchodních telefonátů.</p>
+        <p class="consent">Odesláním souhlasíte se zpracováním údajů pro vyřízení poptávky – <a href="/ochrana-osobnich-udaju.html">zásady ochrany osobních údajů</a>.</p>
+      </div>
+      <div class="lm-done" hidden tabindex="-1">
+        <span class="done-ic sm"><svg><use href="#i-check"/></svg></span>
+        <div><b>Díky, mám to u&nbsp;sebe.</b><p>Do 2 pracovních dnů vám napíšu, jestli a&nbsp;jak se dá váš proces zjednodušit.</p></div>
+      </div>
+      <div class="lm-fail" hidden>
+        <b>Odeslání se nepovedlo.</b>
+        <p class="rate-msg" hidden>Zkuste to prosím za chvíli, nebo napište e-mailem.</p>
+        <p>Pošlete mi to prosím e-mailem – text jsem vám připravil.</p>
+        <a class="btn btn-grad lm-mailto" href="mailto:kontakt@webtitan.cz">Odeslat e-mailem <span class="arr">→</span></a>
+        <small>nebo napište na <a href="mailto:kontakt@webtitan.cz">kontakt@webtitan.cz</a></small>
+      </div>
+    </form>
+    </div>
+    <div class="exit-v" data-only="web" hidden>
+    <span class="kicker gt">Než odejdete</span>
+    <h2 id="exit-t">Chcete zdarma zkontrolovat svůj web?</h2>
+    <p>Pošlete mi odkaz a&nbsp;do 2 pracovních dnů vám zdarma pošlu 5 konkrétních věcí, které vám berou poptávky.</p>
+    <form class="lm-form" data-kind="web" data-source="exit" novalidate>
+      <div class="hp" aria-hidden="true"><label for="hp-lm-exit">Nevyplňujte</label><input type="text" id="hp-lm-exit" name="website" value="" tabindex="-1" autocomplete="off" aria-hidden="true"></div>
+      <div class="lm-fields">
+        <div class="fld">
+          <label for="lm-url-x">Adresa vašeho webu *</label>
+          <input id="lm-url-x" name="url" type="text" inputmode="url" autocomplete="url" placeholder="www.vasefirma.cz" aria-describedby="e-lm-url-x" required>
+          <p class="err-msg" id="e-lm-url-x"></p>
+        </div>
+        <div class="fld">
+          <label for="lm-email-x">Váš e-mail *</label>
+          <input id="lm-email-x" name="email" type="email" autocomplete="email" placeholder="jan@firma.cz" aria-describedby="e-lm-email-x" required>
+          <p class="err-msg" id="e-lm-email-x"></p>
+        </div>
+        <button class="btn btn-grad" type="submit" data-cta="exit_lm"><span class="lbl">Chci kontrolu zdarma</span> <span class="arr">→</span></button>
+        <p class="lm-note" style="width:100%">E-mail použiji jen k&nbsp;zaslání výsledku.</p>
+        <p class="consent">Odesláním souhlasíte se zpracováním údajů pro vyřízení poptávky – <a href="/ochrana-osobnich-udaju.html">zásady ochrany osobních údajů</a>.</p>
+      </div>
+      <div class="lm-done" hidden tabindex="-1">
+        <span class="done-ic sm"><svg><use href="#i-check"/></svg></span>
+        <div><b>Děkuji, mám to!</b><p>Do 2 pracovních dnů vám pošlu 5 tipů pro <span class="lm-site"></span>.</p></div>
+      </div>
+      <div class="lm-fail" hidden>
+        <b>Odeslání se nepovedlo.</b>
+        <p class="rate-msg" hidden>Zkuste to prosím za chvíli, nebo napište e-mailem.</p>
+        <p>Pošlete mi žádost e-mailem – všechno je předvyplněné.</p>
+        <a class="btn btn-grad lm-mailto" href="mailto:kontakt@webtitan.cz">Odeslat e-mailem <span class="arr">→</span></a>
+        <small>nebo napište na <a href="mailto:kontakt@webtitan.cz">kontakt@webtitan.cz</a></small>
+      </div>
+    </form>
+    </div>
+    <p class="exit-alt">
+      <a href="#kontakt" class="link-cta" data-close data-open="call" data-cta="exit_call">Raději si domluvit 15min hovor <span class="arr">→</span></a>
+      <a href="#kontakt" class="link-cta" data-close data-open="form" data-cta="exit_form">Poslat poptávku <span class="arr">→</span></a>
+    </p>
+  </div>
+</dialog>
+<script is:inline set:html={homeJs}></script>
+</Base>
