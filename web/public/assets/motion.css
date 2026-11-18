@@ -42,13 +42,14 @@
 }
 .btn:focus-visible .arr, .link-cta:focus-visible .arr { transform: translateX(3px); }
 
-/* ---------- karty: zvedají se jen ty, na které jde kliknout ---------- */
+/* ---------- karty: zvedají se jen ty, na které jde kliknout ----------
+   Odkaz „Vyvinuto pro …“ (.ref-pro) se nepočítá – kvůli němu karta klikací není. */
 .lift { transition: transform var(--m-out) var(--m-ease), box-shadow var(--m-out) var(--m-ease); }
 .lift:hover { transform: none; }
-.lift:not(:has(a[href], button), .svc-swap):hover { box-shadow: var(--shadow); }
-.lift.gb:not(:has(a[href], button), .svc-swap):hover { box-shadow: var(--shadow-lg); }
+.lift:not(:has(a[href]:not(.ref-pro a), button), .svc-swap):hover { box-shadow: var(--shadow); }
+.lift.gb:not(:has(a[href]:not(.ref-pro a), button), .svc-swap):hover { box-shadow: var(--shadow-lg); }
 @media (hover: hover) and (pointer: fine) {
-  .lift:is(:has(a[href], button), .svc-swap):hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); transition-duration: 180ms; }
+  .lift:is(:has(a[href]:not(.ref-pro a), button), .svc-swap):hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); transition-duration: 180ms; }
 }
 
 /* ---------- přepínače, volby a výběr dne: stisk ---------- */

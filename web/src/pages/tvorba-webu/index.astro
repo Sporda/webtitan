@@ -1,6 +1,7 @@
 ---
 import RefCase from "../../components/RefCase.astro";
 import RefThumb from "../../components/RefThumb.astro";
+import { ZADAVATELE } from "../../data/reference";
 import Sub from "../../layouts/Sub.astro";
 import Faq from "../../components/Faq.astro";
 import OtherServices from "../../components/OtherServices.astro";
@@ -89,7 +90,7 @@ const jsonLd = graph(
       <div class="head"><div><span class="kicker">Reference</span><h2>Weby, které jsem postavil</h2></div></div>
       <div class="cases"><RefCase id="fitness-ural" /><RefCase id="gprooms" /><RefCase id="dev-duck" /></div>
       <div class="thumbs"><RefThumb id="penzion-loket" /><RefThumb id="kotelna55" /><RefThumb id="rybar-transport" /></div>
-      <div class="card others"><b>+ 12 dalších</b><p>2MSKV, Astos, BMP, Firemní balíček, František Slovák, Geowestmaster, Hostel Loket, Kanya Kage, Markop Okna, Plenkový servis, Recysmach, Sokolov Ubytování</p></div>
+      <div class="card others"><b>+ 12 dalších</b><p>2MSKV, Astos, BMP, Firemní balíček, František Slovák, Geowestmaster, Hostel Loket, Kanya Kage, Markop Okna, Plenkový servis, Recysmach, Sokolov Ubytování – vyvinuto pro <a href={ZADAVATELE.vujo.url} target="_blank" rel="noopener">{ZADAVATELE.vujo.nazev}</a></p></div>
       <p class="refs-more"><a href="/#reference" class="link-cta">Všechny reference <span class="arr" aria-hidden="true">→</span></a></p>
     </div>
   </section>

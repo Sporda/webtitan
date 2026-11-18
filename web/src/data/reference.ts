@@ -2,10 +2,17 @@
 // stránky si je vybírají podle id (<RefCase id="…" />, <RefThumb id="…" />), takže se úprava propíše všude.
 // Texty jsou HTML (&nbsp;). Obrázky jsou v public/assets/projects/.
 
+/** Pro koho jsem projekt vyvíjel (u karty a náhledu se zobrazí „Vyvinuto pro …“ s odkazem). */
+export const ZADAVATELE = {
+  vujo: { nazev: "VUJO s.r.o.", url: "https://www.vujo.cz/" },
+} as const;
+
 export interface Reference {
   id: string;
   /** Soubor v /assets/projects/. */
   obrazek: string;
+  /** Vyvinuto pro (agentura), viz ZADAVATELE. */
+  pro?: keyof typeof ZADAVATELE;
   /** Úvodní stránka: pro koho se zvýrazní ("app", "web" nebo "app web"). */
   rel?: string;
   /** Velká karta. */
@@ -35,6 +42,7 @@ export const REFERENCE: Reference[] = [
   {
     id: "fitness-ural",
     obrazek: "FitnessUral.webp",
+    pro: "vujo",
     rel: "web",
     karta: {
       domena: "fitnessural.cz",
@@ -103,6 +111,7 @@ export const REFERENCE: Reference[] = [
   {
     id: "gprooms",
     obrazek: "Gprooms.webp",
+    pro: "vujo",
     rel: "web",
     karta: {
       domena: "GP Rooms – rezervace",
@@ -159,6 +168,7 @@ export const REFERENCE: Reference[] = [
   {
     id: "skripta-prokop",
     obrazek: "SkriptaProkop.webp",
+    pro: "vujo",
     rel: "app web",
     karta: {
       domena: "Skripta Prokop",
@@ -181,6 +191,7 @@ export const REFERENCE: Reference[] = [
   {
     id: "penzion-loket",
     obrazek: "PenzionLoket.webp",
+    pro: "vujo",
     rel: "web",
     nahled: {
       alt: "Web Penzion Ve Skále – ubytování pod hradem Loket",
@@ -191,6 +202,7 @@ export const REFERENCE: Reference[] = [
   {
     id: "kotelna55",
     obrazek: "Kotelna55.webp",
+    pro: "vujo",
     rel: "web",
     nahled: {
       alt: "Web Kotelna 55 – uskupení marketingových agentur",
@@ -201,6 +213,7 @@ export const REFERENCE: Reference[] = [
   {
     id: "g-ptents",
     obrazek: "GPtents.webp",
+    pro: "vujo",
     rel: "web",
     nahled: {
       alt: "E-shop GP Tents",
@@ -211,6 +224,7 @@ export const REFERENCE: Reference[] = [
   {
     id: "rybar-transport",
     obrazek: "RybarTransport.webp",
+    pro: "vujo",
     rel: "web",
     nahled: {
       alt: "Web autodopravy Rybar Transport",
@@ -221,6 +235,7 @@ export const REFERENCE: Reference[] = [
   {
     id: "firemni-balicek",
     obrazek: "FiremniBalicek.webp",
+    pro: "vujo",
     rel: "web",
     nahled: {
       alt: "E-shop Firemní balíček – dárkové balíčky pro firmy",
@@ -231,6 +246,7 @@ export const REFERENCE: Reference[] = [
   {
     id: "hostel-loket",
     obrazek: "HostelLoket.webp",
+    pro: "vujo",
     rel: "web",
     nahled: {
       alt: "Web Hostel Loket",
@@ -241,6 +257,7 @@ export const REFERENCE: Reference[] = [
   {
     id: "vyroba-sperku",
     obrazek: "VyrobaSperku.webp",
+    pro: "vujo",
     nahled: {
       alt: "E-shop Výroba šperků",
       nazev: "Výroba šperků",

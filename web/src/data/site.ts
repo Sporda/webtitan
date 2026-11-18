@@ -9,7 +9,7 @@ export const V = {
   lead: 3,
   leadCss: 2,
   fontsCss: 2,
-  motion: 1,
+  motion: 2,
   icons: 2,
 };
 

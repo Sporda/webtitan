@@ -1,12 +1,13 @@
 ---
 // Velká karta reference (Zadání / Řešení / Přínos) z data/reference.ts.
 // home = úvodní stránka: karta se zvýrazní podle toho, co návštěvník hledá (data-rel, štítek „Podobné vašemu zadání“).
-import { reference } from "../data/reference";
+import { reference, ZADAVATELE } from "../data/reference";
 interface Props { id: string; home?: boolean }
 const r = reference(Astro.props.id);
 const k = r.karta;
 if (!k) throw new Error(`Reference ${r.id} nemá velkou kartu`);
 const home = Astro.props.home ?? false;
+const pro = r.pro && ZADAVATELE[r.pro];
 ---
 <article class={home ? "card case rv" : "card case"} data-rel={home ? r.rel : undefined}>
   {home && <span class="match-tag">Podobné vašemu zadání</span>}
@@ -25,5 +26,6 @@ const home = Astro.props.home ?? false;
       <div><dt>Přínos</dt><dd class="win" set:html={k.prinos}></dd></div>
     </dl>
     <p class="tech" set:html={k.technologie}></p>
+    {pro && <p class="tech ref-pro">Vyvinuto pro <a href={pro.url} target="_blank" rel="noopener">{pro.nazev}</a></p>}
   </div>
 </article>

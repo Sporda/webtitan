@@ -3,6 +3,7 @@
 // údaje o firmě pro vyhledávače z data/schema.ts, hlavní skript (rezervace, formuláře, kalkulačka…) ze src/scripts/home.js.
 import RefCase from "../components/RefCase.astro";
 import RefThumb from "../components/RefThumb.astro";
+import { ZADAVATELE } from "../data/reference";
 import Base from "../layouts/Base.astro";
 import Sprite from "../components/Sprite.astro";
 import Nav from "../components/Nav.astro";
@@ -400,7 +401,7 @@ const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#f
       </div>
       <div class="card others rv">
         <b>+ 11 dalších</b>
-        <p>2MSKV, Astos, František Slovák, Geowestmaster, Kanya Kage, Markop Okna, Plenkový servis, Recysmach, Sokolov Ubytování, Sunpoint, Výroba šperků</p>
+        <p>2MSKV, Astos, František Slovák, Geowestmaster, Kanya Kage, Markop Okna, Plenkový servis, Recysmach, Sokolov Ubytování, Sunpoint, Výroba šperků – vyvinuto pro <a href={ZADAVATELE.vujo.url} target="_blank" rel="noopener">{ZADAVATELE.vujo.nazev}</a></p>
       </div>
       <div class="cta-row rv">
         <a href="#kontakt" class="btn btn-grad" data-open="call" data-cta="refs_call"><svg><use href="#i-phone"/></svg>Domluvit 15min hovor</a>
