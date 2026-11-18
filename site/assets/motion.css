@@ -1,0 +1,109 @@
+/* WebTitan – vrstva mikrointerakcí (načítá se na všech stránkách po jejich vlastních stylech).
+ *
+ * Čísla podle skillu design-taste-frontend (references/motion.md):
+ *   najetí 150 ms, odjezd 120 ms, stisk 90 ms, posun ukazatele přepínače 240 ms;
+ *   tlačítko se při najetí zvedne o 1 px, při stisku klesne o 1 px pod klid a zmenší se na 98,5 %;
+ *   karta, na kterou jde kliknout, se zvedne o 2 px – karta bez odkazu se nehýbe (pohyb by sliboval klik);
+ *   jen transform, scale, opacity a barvy, žádné přestřelení cíle, nic se nehýbe kvůli scrollování.
+ * Zvednutí při najetí jen pro myš ((hover: hover) and (pointer: fine)), na dotyku nezůstane „přilepené“.
+ * Při omezení pohybu: barvy se mění dál, stisk se ukáže tmavším odstínem místo pohybu.
+ * Pohyblivou část (ukazatel přepínače, zvýraznění po dojezdu k formuláři) dělá motion.js.
+ */
+:root {
+  --m-in: 150ms;
+  --m-out: 120ms;
+  --m-press: 90ms;
+  --m-slide: 240ms;
+  --m-ease: cubic-bezier(.2, .8, .2, 1);
+  --m-ease-io: cubic-bezier(.65, 0, .35, 1);
+}
+
+/* ---------- tlačítka: najetí, stisk ---------- */
+.btn {
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--m-out) var(--m-ease), box-shadow var(--m-out) var(--m-ease),
+              background-color var(--m-out) var(--m-ease), border-color var(--m-out) var(--m-ease), color var(--m-out) var(--m-ease);
+}
+.btn:hover { transform: none; }
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover { transform: translateY(-1px); transition-duration: var(--m-in); }
+}
+.btn:active:not(:disabled, .is-loading) { transform: translateY(1px) scale(.985); transition-duration: var(--m-press); }
+/* stisk je vidět i tónem: oranžové tlačítko ztmavne a jeho záře se stáhne, bílé se lehce zabarví */
+.btn-grad:active:not(:disabled, .is-loading) { background: color-mix(in oklab, var(--orange) 86%, #000); box-shadow: 0 6px 14px -8px rgba(255, 107, 61, .8); }
+.btn-line:active:not(:disabled, .is-loading) { background: var(--soft, #f2ebdf); }
+.btn:disabled, .btn.is-loading { transform: none; }
+
+/* šipka v tlačítku a v odkazu „… →“ popojede o 3 px */
+.btn .arr, .link-cta .arr { display: inline-block; transition: transform var(--m-out) var(--m-ease); }
+.btn:hover .arr, .link-cta:hover .arr { transform: none; }
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover .arr, .link-cta:hover .arr { transform: translateX(3px); transition-duration: var(--m-in); }
+}
+.btn:focus-visible .arr, .link-cta:focus-visible .arr { transform: translateX(3px); }
+
+/* ---------- karty: zvedají se jen ty, na které jde kliknout ---------- */
+.lift { transition: transform var(--m-out) var(--m-ease), box-shadow var(--m-out) var(--m-ease); }
+.lift:hover { transform: none; }
+.lift:not(:has(a[href], button), .svc-swap):hover { box-shadow: var(--shadow); }
+.lift.gb:not(:has(a[href], button), .svc-swap):hover { box-shadow: var(--shadow-lg); }
+@media (hover: hover) and (pointer: fine) {
+  .lift:is(:has(a[href], button), .svc-swap):hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); transition-duration: 180ms; }
+}
+
+/* ---------- přepínače, volby a výběr dne: stisk ---------- */
+:is(.seg, .tabs, .lb-tabs) > [role="tab"] {
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color var(--m-in) var(--m-ease), color var(--m-slide) var(--m-ease), box-shadow var(--m-in) var(--m-ease), scale var(--m-out) var(--m-ease);
+}
+:is(.seg, .tabs, .lb-tabs) > [role="tab"]:active { scale: .97; transition-duration: var(--m-press); }
+:is(.chips, .days) span {
+  -webkit-tap-highlight-color: transparent;
+  transition: border-color var(--m-in) var(--m-ease), background-color var(--m-in) var(--m-ease), color var(--m-in) var(--m-ease),
+              box-shadow var(--m-in) var(--m-ease), scale var(--m-out) var(--m-ease);
+}
+:is(.chips, .days) label:active span { scale: .97; transition-duration: var(--m-press); }
+.svc-peek { transition: border-color var(--m-in) var(--m-ease), box-shadow var(--m-in) var(--m-ease), scale var(--m-out) var(--m-ease); }
+.svc-peek:active { scale: .96; transition-duration: var(--m-press); }
+summary { -webkit-tap-highlight-color: transparent; }
+summary:active .pm { scale: .9; }
+
+/* ---------- přepínač s ukazatelem (motion.js) ----------
+   Bílá tableta vybrané volby je jeden prvek, který k nové volbě přejede (jen transform: převezme velikost nové
+   volby hned, vyrazí zmenšený na velikost staré a cestou dorovná měřítko). Dokud není umístěný, zůstává původní
+   bílé pozadí vybrané volby, takže se výběr nikdy neztratí. */
+.m-has-ind { position: relative; isolation: isolate; }
+.m-has-ind > [role="tab"] { position: relative; z-index: 1; }
+.m-has-ind.is-placed > [role="tab"][aria-selected="true"] { background: transparent; box-shadow: none; }
+.m-ind {
+  position: absolute; left: 0; top: 0; z-index: 0; width: var(--w, 0px); height: var(--h, 0px);
+  border-radius: 999px; background: #fff; box-shadow: 0 6px 18px -8px rgba(0, 0, 0, .35); pointer-events: none;
+  transform: translate(var(--x, 0px), var(--y, 0px)) scale(var(--sx, 1), var(--sy, 1)); transform-origin: 0 0;
+  transition: transform var(--m-slide) var(--m-ease-io);
+}
+.m-ind.is-jump { transition: none; }
+
+/* ---------- výměna textu v úvodu (aplikace / web): nový text se rozsvítí za 200 ms ----------
+   Jen po načtení stránky (html.m-ready z motion.js), aby se úvod při prvním zobrazení neschovával. */
+@media (prefers-reduced-motion: no-preference) {
+  .m-ready #hero-copy [data-only] { transition: opacity 200ms var(--m-ease), translate 200ms var(--m-ease); }
+  @starting-style {
+    .m-ready #hero-copy [data-only] { opacity: 0; translate: 0 4px; }
+  }
+}
+
+/* ---------- po kliknutí na výzvu: formulář po dojezdu jednou krátce zvýrazní okraj (motion.js) ---------- */
+.m-arrive::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 5;
+  box-shadow: inset 0 0 0 3px var(--orange, #ff6b3d), inset 0 0 0 9px rgba(255, 107, 61, .18);
+  animation: m-arrive 1.2s var(--m-ease) both;
+}
+@keyframes m-arrive { 0% { opacity: 0; } 22% { opacity: 1; } 100% { opacity: 0; } }
+
+/* ---------- omezení pohybu ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .btn:is(:hover, :active), .lift:hover, .btn .arr, .link-cta .arr { transform: none !important; }
+  :is(.seg, .tabs, .lb-tabs) > [role="tab"]:active, :is(.chips, .days) label:active span, .svc-peek:active, summary:active .pm { scale: none !important; }
+  .m-ind { transition: none !important; }
+  .m-arrive::after { animation: none !important; display: none; }
+}

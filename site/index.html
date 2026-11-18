@@ -1365,8 +1365,8 @@
 </script>
 <script src="/assets/analytics.js?v=3" defer></script>
 <script src="/assets/consent.js?v=3" defer></script>
-<script src="/assets/lead.js?v=2" defer></script>
-</head>
+<script src="/assets/lead.js?v=3" defer></script>
+<link rel="stylesheet" href="/assets/motion.css?v=1"><script src="/assets/motion.js?v=1" defer></script></head>
 <body>
 
 <svg class="sprite" aria-hidden="true" focusable="false">
@@ -3352,6 +3352,7 @@
       qf.open({ type, message: opts.message });
       if (type) track("quickpick_select", { type, location: opts.loc || "page" });
     }
+    window.wtArrive?.($("#contact-card")); // po dojezdu formulář krátce zvýrazní okraj (assets/motion.js)
   }
   document.addEventListener("click", e => {
     const el = e.target.closest("[data-open]");

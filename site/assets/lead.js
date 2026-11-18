@@ -226,6 +226,7 @@
       open(m) {
         if (done.hidden) setMode(m);
         card.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+        window.wtArrive?.(card); // po dojezdu formulář krátce zvýrazní okraj (assets/motion.js)
         const target = done.hidden ? tabs.find(t => t.getAttribute("aria-selected") === "true") : $("[data-done=title]", done);
         if (target) target.focus({ preventScroll: true });
       }
