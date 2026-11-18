@@ -23,9 +23,9 @@
 <meta name="twitter:title" content="Jan Šporek – vývoj aplikací na míru, tvorba webů a e-shopů">
 <meta name="twitter:description" content="Vývoj aplikací na míru, mobilní aplikace, tvorba webů a e-shopů pro firmy ze západních Čech. Pevná cena předem, nezávazný 15min hovor zdarma.">
 <meta name="twitter:image" content="https://webtitan.cz/assets/og.jpg">
-<link rel="icon" href="/favicon.ico" sizes="32x32">
-<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
-<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico?v=2" sizes="32x32">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png?v=2">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=2">
 <link rel="preload" as="image" href="/assets/jan-cut.webp" imagesrcset="/assets/jan-cut-400.webp 400w, /assets/jan-cut.webp 800w" imagesizes="(max-width: 1040px) 90vw, 400px" type="image/webp" fetchpriority="high">
 <link rel="preload" href="/assets/fonts/unbounded-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/unbounded-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
@@ -467,18 +467,34 @@
   /* services */
   .svc-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--gap); }
   .svc { padding: 28px; display: flex; flex-direction: column; gap: 12px; }
-  .svc-app { grid-column: span 6; grid-row: span 2; }
-  .svc-mob { grid-column: span 6; }
-  .svc-web, .svc-shop { grid-column: span 3; }
+  /* Pozice karet: hlavní (velká vlevo), široká (vpravo nahoře) a dvě malé. Na desktopu jde kliknutím na kartu
+     přesunout službu na hlavní pozici – karty si pozice prohodí (skript „Služby“ níže). */
+  .svc-main { grid-column: span 6; grid-row: span 2; }
+  .svc-wide { grid-column: span 6; }
+  .svc-small { grid-column: span 3; }
   .svc-srv { grid-column: span 12; display: grid; grid-template-columns: auto minmax(0, .9fr) minmax(0, 1.4fr) auto; align-items: center; column-gap: 28px; row-gap: 12px; }
   .svc-srv h3 { margin-top: 0; }
   .svc-srv .link-cta { margin-top: 0; white-space: nowrap; }
   .srv-main { display: flex; flex-direction: column; gap: 4px; }
-  .svc-app .svc-shot { flex: 1 1 auto; min-height: 200px; aspect-ratio: auto; }
-  @media (max-width: 1080px) { .svc-app .svc-shot { flex: none; aspect-ratio: 2 / 1; min-height: 0; } }
+  /* Obrázek služby je vidět jen u karty na hlavní pozici. */
+  .svc-swap:not(.svc-main) .svc-shot { display: none; }
+  .svc-main .svc-shot { flex: 1 1 auto; min-height: 200px; aspect-ratio: auto; }
+  @media (max-width: 1080px) { .svc-main .svc-shot { flex: none; aspect-ratio: 2 / 1; min-height: 0; } }
+  .svc-peek { display: none; align-items: center; gap: 6px; padding: 7px 13px; border-radius: 999px; border: 1px solid var(--line); background: #fff; color: var(--text); font: inherit; font-size: 13px; font-weight: 700; white-space: nowrap; cursor: pointer; transition: border-color .2s, box-shadow .2s; }
+  .svc-peek:hover { border-color: var(--text); box-shadow: var(--shadow); }
+  .svc-peek:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+  @media (min-width: 1081px) {
+    .svc-swap:not(.svc-main) { cursor: pointer; }
+    .svc-swap:not(.svc-main) .svc-peek { display: inline-flex; }
+  }
+  /* Animace prohození (View Transitions): karta se přesune a zvětší, obsah se nedeformuje, jen ořízne. */
+  ::view-transition-group(*.svc) { animation-duration: .5s; animation-timing-function: cubic-bezier(.2, .8, .2, 1); }
+  ::view-transition-image-pair(*.svc) { overflow: hidden; border-radius: var(--r); }
+  ::view-transition-old(*.svc), ::view-transition-new(*.svc) { inline-size: auto; block-size: auto; }
   .srv-body { display: flex; flex-direction: column; gap: 8px; }
   .srv-body .bul { flex-direction: row; flex-wrap: wrap; gap: 6px 20px; }
-  .svc-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  .svc-top { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: flex-start; gap: 8px; }
+  .svc-top > .svc-ic { margin-right: auto; }
   .svc-ic { width: 52px; height: 52px; border-radius: 15px; display: grid; place-items: center; background: var(--grad-soft); flex: none; }
   .svc-ic svg { width: 24px; height: 24px; stroke: var(--violet); fill: none; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
   .tagline { font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; padding: 6px 11px; border-radius: 999px; background: var(--orange); color: var(--on-loud); box-shadow: 0 6px 16px -6px rgba(255, 107, 61, .7); white-space: nowrap; }
@@ -496,6 +512,7 @@
   .svc .link-cta { margin-top: auto; }
   .svc-shot { margin-top: 6px; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); aspect-ratio: 2 / 1; }
   .svc-shot img { width: 100%; height: 100%; object-fit: cover; object-position: top left; }
+  .svc-shot-c img { object-position: center top; }
   .note { margin-top: 18px; color: var(--muted); font-size: 14.5px; font-weight: 600; text-align: center; }
 
   /* cases + thumbs */
@@ -1026,8 +1043,8 @@
     .photo { grid-column: span 5; min-height: 340px; }
     .callc { grid-column: span 7; }
     .stat { grid-column: span 6; }
-    .svc-app, .svc-mob { grid-column: span 12; grid-row: auto; }
-    .svc-web, .svc-shop { grid-column: span 6; }
+    .svc-main, .svc-wide { grid-column: span 12; grid-row: auto; }
+    .svc-small { grid-column: span 6; }
     .svc-srv { grid-template-columns: auto minmax(0, 1fr); }
     .srv-body, .svc-srv .link-cta { grid-column: 1 / -1; }
     .steps, .guarantees { grid-template-columns: 1fr 1fr; }
@@ -1115,7 +1132,7 @@
     .thumb b { font-size: 14.5px; }
     .thumb span { text-align: left; font-size: 12.5px; }
     .thumb .match-tag { display: none !important; }
-    .svc-web, .svc-shop { grid-column: span 12; }
+    .svc-small { grid-column: span 12; }
     .srv-body .bul { flex-direction: column; }
     .svc { padding: 24px; }
     .roi-row { grid-template-columns: 1fr; }
@@ -1194,7 +1211,7 @@
    "@id": "https://webtitan.cz/#webtitan",
    "name": "WebTitan",
    "url": "https://webtitan.cz/",
-   "logo": "https://webtitan.cz/assets/logo.png",
+   "logo": "https://webtitan.cz/assets/logo-webtitan.png",
    "image": "https://webtitan.cz/assets/og.jpg",
    "email": "kontakt@webtitan.cz",
    "telephone": "+420 723 793 510",
@@ -1635,10 +1652,11 @@
         <p>Hlavní specializací je vývoj aplikací na míru – webových i&nbsp;mobilních. Zajistím vám ale i&nbsp;tvorbu webových stránek nebo e-shopu a&nbsp;postarám se o&nbsp;servery, síť i&nbsp;počítače, na kterých všechno běží.</p>
       </div>
       <div class="svc-grid">
-        <article class="card svc svc-app gb lift rv">
+        <article class="card svc svc-swap svc-main gb lift rv" data-svc="app">
           <div class="svc-top">
             <span class="svc-ic"><svg><use href="#i-app"/></svg></span>
             <span class="tagline">Hlavní specializace</span>
+            <button type="button" class="svc-peek" aria-label="Ukázka – vývoj webových aplikací">Ukázka <span aria-hidden="true">↖</span></button>
           </div>
           <h3><a href="/vyvoj-aplikaci-na-miru/">Vývoj webových aplikací a&nbsp;interních systémů</a></h3>
           <p class="price">od <b class="gt">24&nbsp;950&nbsp;Kč</b><small>jednorázově, bez licencí za uživatele</small></p>
@@ -1652,8 +1670,8 @@
           <p class="tech">Next.js · React · Node.js · TypeScript · MongoDB</p>
           <a href="#kontakt" class="link-cta" data-open="form" data-type="Aplikace na míru" data-cta="svc_app">Poptat aplikaci <span class="arr">→</span></a>
         </article>
-        <article class="card svc svc-mob lift rv">
-          <div class="svc-top"><span class="svc-ic"><svg><use href="#i-mobile"/></svg></span></div>
+        <article class="card svc svc-swap svc-wide lift rv" data-svc="mob">
+          <div class="svc-top"><span class="svc-ic"><svg><use href="#i-mobile"/></svg></span><button type="button" class="svc-peek" aria-label="Ukázka – vývoj mobilních aplikací">Ukázka <span aria-hidden="true">↖</span></button></div>
           <h3><a href="/mobilni-aplikace/">Vývoj mobilních aplikací</a></h3>
           <p class="price">cena <b class="gt">podle rozsahu</b><small>nacením po úvodním hovoru</small></p>
           <p>Aplikace pro iOS i&nbsp;Android – pro vaše zákazníky nebo zaměstnance v&nbsp;terénu. Napojená na váš systém, web nebo e-shop.</p>
@@ -1662,11 +1680,12 @@
             <li>Napojení na váš systém a&nbsp;data</li>
             <li>Pomoc s&nbsp;vydáním v&nbsp;App Store a&nbsp;Google Play</li>
           </ul>
+          <div class="svc-shot svc-shot-c"><img src="/assets/projects/SluzbaMobil.webp" alt="Mobilní zobrazení aplikace DevCRM a e-shopu Bílé zlato" loading="lazy" width="1400" height="1200" decoding="async"></div>
           <p class="tech">React Native · iOS · Android</p>
           <a href="#kontakt" class="link-cta" data-open="form" data-type="Mobilní aplikace" data-cta="svc_mobile">Poptat mobilní aplikaci <span class="arr">→</span></a>
         </article>
-        <article class="card svc svc-web lift rv">
-          <div class="svc-top"><span class="svc-ic"><svg><use href="#i-web"/></svg></span></div>
+        <article class="card svc svc-swap svc-small lift rv" data-svc="web">
+          <div class="svc-top"><span class="svc-ic"><svg><use href="#i-web"/></svg></span><button type="button" class="svc-peek" aria-label="Ukázka – tvorba firemního webu">Ukázka <span aria-hidden="true">↖</span></button></div>
           <h3><a href="/tvorba-webu/">Tvorba firemního webu</a></h3>
           <p class="price">od <b class="gt">9&nbsp;970&nbsp;Kč</b></p>
           <p>Web, který zákazníkům rychle řekne, co děláte, a&nbsp;přivede vám poptávky. Je rychlý, srozumitelný a&nbsp;skvěle vypadá i&nbsp;na mobilu.</p>
@@ -1675,10 +1694,11 @@
             <li>Poptávkový formulář přímo do e-mailu</li>
             <li>Obsah si upravíte sami</li>
           </ul>
+          <div class="svc-shot svc-shot-c"><img src="/assets/projects/SluzbaWeb.webp" alt="Ukázka webu Fitness URAL v Sokolově" loading="lazy" width="1000" height="1250" decoding="async"></div>
           <a href="#kontakt" class="link-cta" data-open="form" data-type="Web" data-cta="svc_web">Poptat web <span class="arr">→</span></a>
         </article>
-        <article class="card svc svc-shop lift rv">
-          <div class="svc-top"><span class="svc-ic"><svg><use href="#i-shop"/></svg></span></div>
+        <article class="card svc svc-swap svc-small lift rv" data-svc="shop">
+          <div class="svc-top"><span class="svc-ic"><svg><use href="#i-shop"/></svg></span><button type="button" class="svc-peek" aria-label="Ukázka – tvorba e-shopu">Ukázka <span aria-hidden="true">↖</span></button></div>
           <h3><a href="/tvorba-e-shopu/">Tvorba e-shopu na míru</a></h3>
           <p class="price">od <b class="gt">19&nbsp;870&nbsp;Kč</b></p>
           <p>Prodávejte online a&nbsp;mějte objednávky pod kontrolou.</p>
@@ -1686,6 +1706,7 @@
             <li>Platby kartou a&nbsp;doprava</li>
             <li>Přehledná správa objednávek</li>
           </ul>
+          <div class="svc-shot"><img src="/assets/projects/SluzbaEshop.webp" alt="Ukázka e-shopu Bílé zlato s porcelánem Villeroy &amp; Boch" loading="lazy" width="1000" height="1250" decoding="async"></div>
           <a href="#kontakt" class="link-cta" data-open="form" data-type="E-shop" data-cta="svc_shop">Poptat e-shop <span class="arr">→</span></a>
         </article>
         <article class="card svc svc-srv lift rv">
@@ -2841,6 +2862,69 @@
       });
     });
     return { select, get current() { return current; } };
+  })();
+
+  // ---------- Služby: klik na kartu ji přesune na hlavní pozici vlevo ----------
+  // Jen na desktopu, kde jsou karty vedle sebe (na užším displeji jsou pod sebou a pořadí zůstává).
+  // Kliknutá karta jde na hlavní pozici, ostatní se seřadí podle původního pořadí (široká pozice, pak dvě malé) –
+  // nejdelší karta (aplikace) tak mimo hlavní pozici skončí vždy na široké. Karty se přesouvají i v DOM, aby
+  // pořadí pro čtečky odpovídalo tomu, co je vidět. Obrázek služby ukazuje CSS jen u karty na hlavní pozici.
+  (() => {
+    const grid = $(".svc-grid");
+    if (!grid) return;
+    const desktop = window.matchMedia("(min-width: 1081px)");
+    const ORDER = $$(".svc-swap", grid); // původní pořadí
+    const SLOTS = ["svc-main", "svc-wide", "svc-small", "svc-small"];
+    let running = null; // právě běžící animace prohození
+
+    // Obrázky ostatních služeb načíst dopředu, ať se po kliknutí neobjeví se zpožděním.
+    const preload = () => $$(".svc-shot img", grid).forEach(img => { img.loading = "eager"; });
+    grid.addEventListener("pointerenter", preload, { once: true });
+    grid.addEventListener("focusin", preload, { once: true });
+
+    function feature(card, focus) {
+      if (card.classList.contains("svc-main") || !desktop.matches) return;
+      const next = [card, ...ORDER.filter(c => c !== card)];
+      const anchor = $(".svc-srv", grid); // karty správy zůstávají pod nimi
+      const swap = () => {
+        next.forEach((c, i) => {
+          c.classList.remove(...SLOTS, "gb");
+          c.classList.add(SLOTS[i]);
+          if (i === 0) c.classList.add("gb");
+          grid.insertBefore(c, anchor);
+        });
+        // tlačítko „Ukázka“ na hlavní pozici zmizí – focus přejde na název služby v téže kartě
+        if (focus) $("h3 a", card)?.focus({ preventScroll: true });
+      };
+      const img = $(".svc-shot img", card);
+      img.loading = "eager";
+      const ready = Promise.race([
+        img.decode ? img.decode().catch(() => {}) : Promise.resolve(),
+        new Promise(r => setTimeout(r, 350))
+      ]);
+      ready.then(() => {
+        if (reduce || !document.startViewTransition) { swap(); return; }
+        ORDER.forEach(c => { c.style.viewTransitionName = "svc-" + c.dataset.svc; c.style.viewTransitionClass = "svc"; });
+        const vt = running = document.startViewTransition(swap);
+        // rychlý druhý klik přeruší běžící animaci (AbortError) – prohození se provede tak jako tak
+        vt.ready.catch(() => {});
+        vt.finished.catch(() => {}).then(() => {
+          if (running !== vt) return; // mezitím začala další animace, ta si názvy uklidí sama
+          running = null;
+          ORDER.forEach(c => { c.style.viewTransitionName = ""; c.style.viewTransitionClass = ""; });
+        });
+      });
+      track("svc_feature", { service: card.dataset.svc });
+    }
+
+    grid.addEventListener("click", e => {
+      const card = e.target.closest(".svc-swap");
+      if (!card) return;
+      // Odkazy v kartě (název služby, „Poptat …“) fungují normálně; tlačítko „Ukázka“ a zbytek karty přepínají.
+      if (e.target.closest("a") || (e.target.closest("button") && !e.target.closest(".svc-peek"))) return;
+      if (window.getSelection && String(window.getSelection()).length) return; // označování textu není klik
+      feature(card, !!e.target.closest(".svc-peek"));
+    });
   })();
 
   // ---------- segment switch (app / web) ----------
