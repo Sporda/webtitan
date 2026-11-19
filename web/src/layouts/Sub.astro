@@ -6,6 +6,7 @@ import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
 import MobileBar from "../components/MobileBar.astro";
 import LeadSection from "../components/LeadSection.astro";
+import ExitDialog from "../components/ExitDialog.astro";
 import subCss from "../styles/sub.css?raw";
 import articleCss from "../styles/article.css?raw";
 
@@ -16,11 +17,14 @@ interface Props extends Omit<BaseProps, "kind" | "css"> {
   lead: { heading: string; topic: string; placeholder: string; misto?: string };
   /** Styly článků (rozcestník a články). */
   articles?: boolean;
+  /** Okno při odchodu: "app" (posouzení procesu) nebo "web" (kontrola webu); bez něj se okno nevykreslí. */
+  offer?: string;
 }
-const { cta, lead, articles = false, ...base } = Astro.props;
+const { cta, lead, articles = false, offer, ...base } = Astro.props;
 const css = articles ? subCss.trimEnd() + articleCss : subCss;
 ---
 <Base kind="sub" css={css} {...base}>
+<slot name="head" slot="head" />
 <Sprite variant="sub" />
 <a class="skip" href="#obsah">Přeskočit na obsah</a>
 <Nav variant="sub" cta={cta} />
@@ -32,5 +36,5 @@ const css = articles ? subCss.trimEnd() + articleCss : subCss;
 
 <Footer variant="sub" current={base.path} cta={cta} />
 <MobileBar cta={cta} />
-<script is:inline>document.getElementById("year").textContent = new Date().getFullYear();</script>
+{offer && <ExitDialog offer={offer} />}
 </Base>

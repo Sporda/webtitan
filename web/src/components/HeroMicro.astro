@@ -1,0 +1,8 @@
+---
+// Řádek pod tlačítky v úvodu stránky služby: kdy se ozvu, kde působím osobně a telefon.
+// track = předpona měření kliknutí na telefon (<track>_tel), misto = HTML k ikoně místa.
+import { PHONE, PHONE_SHORT } from "../data/site";
+interface Props { track: string; misto?: string }
+const { track, misto = "Karlovarský a&nbsp;Plzeňský kraj – i&nbsp;osobně" } = Astro.props;
+---
+<p class="micro"><span class="mi"><svg aria-hidden="true"><use href="#i-clock"/></svg>Ozvu se do 24 hodin (v&nbsp;pracovní dny)</span><span class="mi"><svg aria-hidden="true"><use href="#i-pin"/></svg><Fragment set:html={misto} /></span><span class="mi"><svg aria-hidden="true"><use href="#i-phone"/></svg>Volejte rovnou: <a href={`tel:${PHONE}`} data-cta={`${track}_tel`} set:html={PHONE_SHORT}></a></span></p>

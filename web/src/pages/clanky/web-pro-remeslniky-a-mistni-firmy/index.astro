@@ -1,4 +1,5 @@
 ---
+import { castka } from "../../../data/sluzby";
 import Article from "../../../layouts/Article.astro";
 ---
 <Article slug="web-pro-remeslniky-a-mistni-firmy">
@@ -28,10 +29,5 @@ import Article from "../../../layouts/Article.astro";
 <li><strong>Přidejte pět fotek hotových zakázek.</strong></li>
 </ul>
 <h2>Kolik stojí nový web</h2>
-<p>Firemní web stavím od 9&nbsp;970&nbsp;Kč a&nbsp;obvykle je hotový za 2–4&nbsp;týdny. Pevnou cenu znáte předem, doména i&nbsp;web patří vám. O&nbsp;aktualizace, zálohy a&nbsp;dohled se můžu starat od 990&nbsp;Kč měsíčně. Nejsem plátce DPH, ceny jsou konečné. Víc o&nbsp;cenách v&nbsp;článku <a href="/clanky/kolik-stoji-web-a-e-shop/">Kolik stojí firemní web a&nbsp;e-shop</a>.</p>
-<div class="post-cta">
-  <b>Chcete web, ze kterého volají zákazníci?</b>
-  <p>Pošlete mi odkaz na současný web, nebo popište, co děláte. Řeknu vám, co zlepšit a&nbsp;kolik by stál nový. Nezávazně a&nbsp;zdarma.</p>
-  <div class="dual"><a href="#poptat" class="btn btn-grad" data-mode="call" data-cta="post_inline_call"><svg aria-hidden="true"><use href="#i-phone"/></svg>Domluvit 15min hovor</a><a href="#poptat" class="btn btn-line" data-mode="form" data-cta="post_inline_form">Poslat poptávku</a></div>
-</div>
+<p>Firemní web stavím od <Fragment set:html={castka("web")} /> a&nbsp;obvykle je hotový za 2–4&nbsp;týdny. Pevnou cenu znáte předem, doména i&nbsp;web patří vám. O&nbsp;aktualizace, zálohy a&nbsp;dohled se můžu starat od <Fragment set:html={castka("srv")} /> měsíčně. Nejsem plátce DPH, ceny jsou konečné. Víc o&nbsp;cenách v&nbsp;článku <a href="/clanky/kolik-stoji-web-a-e-shop/">Kolik stojí firemní web a&nbsp;e-shop</a>.</p>
 </Article>

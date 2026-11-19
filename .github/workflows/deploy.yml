@@ -3,6 +3,10 @@ name: Deploy webu na webtitan.cz
 # Web je statický (Astro ve složce web/ → čisté HTML ve web/dist/) + pár PHP endpointů (web/public/api).
 # Běží na hostingu v panelu (panel.webtitan.cz), žádný Docker – workflow web sestaví, zkopíruje web/dist/ na server
 # a ověří, že web odpovídá. Když build selže, nenasadí se nic.
+#
+# Dvě úlohy na oddělených strojích: „build“ instaluje balíčky z npm (spouští cizí instalační skripty) a nemá
+# přístup k žádnému tajemství; „deploy“ dostane jen hotový web/dist/ a npm vůbec nespouští – SSH klíč k serveru
+# tak nikdy neleží na stroji, kde běžel kód z npm.
 on:
   push:
     branches:
@@ -21,7 +25,7 @@ permissions:
   contents: read
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -33,11 +37,31 @@ jobs:
           cache: npm
           cache-dependency-path: web/package-lock.json
 
-      - name: Sestavit web (Astro)
+      - name: Zkontrolovat typy a sestavit web (Astro)
         working-directory: web
         run: |
           npm ci
+          npm run check
           npm run build
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: web-dist
+          path: web/dist/
+          if-no-files-found: error
+          retention-days: 1
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/download-artifact@v8
+        with:
+          name: web-dist
+          path: web/dist/
 
       - name: Připravit SSH klíč a otisk serveru
         env:

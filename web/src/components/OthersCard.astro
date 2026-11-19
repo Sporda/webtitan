@@ -1,0 +1,9 @@
+---
+// Karta „+ N dalších“ pod referencemi: drobnější zakázky vyvinuté pro VUJO s.r.o. Počet se spočítá ze seznamu jmen.
+// reveal = třída .rv (objeví se při posouvání; úvodní stránka).
+import { ZADAVATELE } from "../data/reference";
+interface Props { names: string[]; reveal?: boolean }
+const { names, reveal = false } = Astro.props;
+const pro = ZADAVATELE.vujo;
+---
+<div class={reveal ? "card others rv" : "card others"}><b>+ {names.length} dalších</b><p>{names.join(", ")} – vyvinuto pro <a href={pro.url} target="_blank" rel="noopener">{pro.nazev}</a></p></div>

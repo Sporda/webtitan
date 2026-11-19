@@ -1,17 +1,19 @@
-/* webtitan.cz – poptávky mimo úvodní stránku.
+/* webtitan.cz – poptávky: společné funkce formulářů pro celý web a formulář na podstránkách.
  *
  * 1. Odkud návštěvník přišel (vyhledávač, Sklik / Google Ads, odkaz, kampaň s utm_*). Drží se jen po dobu
  *    návštěvy v sessionStorage (po zavření panelu zmizí) a posílá se s formulářem, aby u poptávky v CRM bylo
- *    vidět, co ji přineslo. window.wtSrc() používá i úvodní stránka.
- * 2. Formulář „Zavolejte mi / Napsat poptávku“ přímo na stránce (#poptat). Odkazy href="#poptat" s data-mode
+ *    vidět, co ji přineslo.
+ * 2. window.wtLead – společné funkce formulářů (odeslání na /api/contact.php, chyby polí, záložní odeslání e-mailem,
+ *    měření, okno při odchodu, formulář „posouzení / kontrola zdarma“). Používá je i úvodní stránka (src/scripts/home.js);
+ *    tenhle soubor se načítá s defer, takže je home.js volá až při použití.
+ * 3. Formulář „Zavolejte mi / Napsat poptávku“ přímo na podstránce (#poptat). Odkazy href="#poptat" s data-mode
  *    (call | form) na něj skočí a přepnou ho.
- * 3. Okno při odchodu, když má <script> atribut data-offer="app|web" – stejná pravidla jako na úvodní stránce:
- *    nejvýš jednou za 7 dní, ne 30 dní po odeslaném formuláři, ?exit=1 ho ukáže hned (na vyzkoušení).
+ * 4. Okno při odchodu na podstránkách (dialog.wtx, vykreslí ho Sub.astro / ExitDialog.astro): nejvýš jednou za 7 dní,
+ *    ne 30 dní po odeslaném formuláři, ?exit=1 ho ukáže hned (na vyzkoušení).
  */
 (() => {
   "use strict";
 
-  const script = document.currentScript;
   const $ = (s, r) => (r || document).querySelector(s);
   const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
   const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -22,7 +24,8 @@
 
   const store = {
     get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } },
-    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* storage unavailable */ } }
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* storage unavailable */ } },
+    del(k) { try { localStorage.removeItem(k); } catch (e) { /* storage unavailable */ } }
   };
 
   // ---------- 1. odkud návštěvník přišel ----------
@@ -61,14 +64,16 @@
   })();
   window.wtSrc = () => sess.get();
 
-  // ---------- společné ----------
+  // ---------- 2. společné funkce formulářů ----------
+  // měření (PostHog / GTM jsou volitelné)
   function track(name, props) {
     props = props || {};
     try { window.posthog?.capture?.(name, props); } catch (e) { /* ignore */ }
     try { window.dataLayer?.push?.(Object.assign({ event: name }, props)); } catch (e) { /* ignore */ }
   }
+  // POST /api/contact.php → 200 {"ok":true} = úspěch; jiný stav nebo chyba sítě vyhodí chybu se status a data
   async function sendLead(source, form, p) {
-    const hp = form.querySelector('input[name="website"]');
+    const hp = form ? form.querySelector('input[name="website"]') : null;
     const body = {
       source,
       name: String(p.name || ""),
@@ -77,7 +82,7 @@
       message: String(p.message || ""),
       website: hp ? hp.value : "",
       page: location.pathname,
-      src: window.wtSrc()
+      src: sess.get()
     };
     let res;
     try {
@@ -100,34 +105,177 @@
     const p = document.getElementById("e-" + input.id);
     if (p) p.textContent = msg;
   }
-  // 429 = „zkuste za chvíli“, 400 s fields = zvýraznit pole, která server odmítl
+  // Po chybě: 429 = ukázat „zkuste za chvíli“, 400 s fields = zvýraznit pole, která server odmítl.
+  // map = { name: prvek nebo jeho id, … }; vrací { rate, field } (field = první zvýrazněné pole).
   function sendIssue(failBox, err, map) {
-    const rateMsg = $(".rate-msg", failBox);
-    if (rateMsg) rateMsg.hidden = !(err && err.status === 429);
+    const rate = !!(err && err.status === 429);
+    const rateMsg = failBox ? $(".rate-msg", failBox) : null;
+    if (rateMsg) rateMsg.hidden = !rate;
+    let field = null;
     const fields = err && err.status === 400 && err.data && err.data.fields;
     if (fields && typeof fields === "object") {
       Object.keys(fields).forEach(k => {
-        if (map[k]) setErr(map[k], typeof fields[k] === "string" && fields[k] ? fields[k] : "Zkontrolujte prosím toto pole.");
+        const el = typeof map[k] === "string" ? document.getElementById(map[k]) : map[k];
+        if (!el) return;
+        setErr(el, typeof fields[k] === "string" && fields[k] ? fields[k] : "Zkontrolujte prosím toto pole.");
+        field = field || el;
       });
     }
+    return { rate, field };
   }
-  const mailto = (subject, body) => "mailto:jan@webtitan.cz?subject=" + encodeURIComponent(subject)
-    + "&body=" + encodeURIComponent(body.length > 1800 ? body.slice(0, 1800) + "\n…" : body);
+  // Odkaz „Odeslat e-mailem“: adresa zůstává z HTML (data/site.ts), doplní se předmět a předvyplněný text.
+  function setMailto(a, subject, body) {
+    if (!a) return;
+    a.href = a.href.split("?")[0] + "?subject=" + encodeURIComponent(subject)
+      + "&body=" + encodeURIComponent(body.length > 1800 ? body.slice(0, 1800) + "\n…" : body);
+  }
+  // tlačítko odeslání: „Odesílám…“ s točícím se kolečkem, pak zpět původní text
   function busy(btn, on, text) {
     const lbl = $(".lbl", btn);
     btn.disabled = on;
     btn.classList.toggle("is-loading", on);
     if (lbl && text) lbl.textContent = text;
   }
-  function markSubmitted() {
-    submitted = true;
-    store.set("wt7-submitted", Date.now());
-  }
   const clearOnInput = inputs => inputs.filter(Boolean).forEach(i => i.addEventListener("input", () => {
     if (i.getAttribute("aria-invalid") === "true") setErr(i, "");
   }));
+  // odeslaný formulář: 30 dní žádné okno při odchodu, na podstránce zmizí mobilní lišta
+  function markSubmitted() {
+    submitted = true;
+    store.set("wt7-submitted", Date.now());
+    updateBar();
+  }
 
-  // ---------- 2. formulář na stránce ----------
+  // Formulář „kontrola webu / posouzení procesu zdarma“ (pole url nebo text, email). o = {
+  //   kind: "web" | "app", source: zdroj pro contact.php, origin: text „Zdroj: …“ do zprávy,
+  //   cls: { fields, done, fail, mailto } – třídy částí formuláře, props: data navíc k měření, onDone() }
+  const validUrl = u => /^(https?:\/\/)?[^\s/.]+(\.[^\s/.]+)+(\/\S*)?$/i.test(u.trim());
+  function leadMagnet(form, o) {
+    const url = $("[name=url]", form);
+    const text = $("[name=text]", form);
+    const email = $("[name=email]", form);
+    const btn = $("button[type=submit]", form);
+    const fields = $("." + o.cls.fields, form);
+    const ok = $("." + o.cls.done, form);
+    const failBox = $("." + o.cls.fail, form);
+    const web = o.kind === "web";
+    clearOnInput([url, text, email]);
+    form.addEventListener("submit", async e => {
+      e.preventDefault();
+      if (url) setErr(url, validUrl(url.value) ? "" : "Zadejte prosím adresu webu, např. www.vasefirma.cz.");
+      if (text) setErr(text, text.value.trim().length >= 10 ? "" : "Napište prosím aspoň pár slov nebo vložte odkaz.");
+      setErr(email, EMAIL_RE.test(email.value.trim()) ? "" : "Zadejte prosím platný e-mail.");
+      const bad = [url, text, email].filter(Boolean).find(i => i.getAttribute("aria-invalid") === "true");
+      if (bad) { bad.focus(); return; }
+      const mail = email.value.trim();
+      // začátek zprávy čte _mail.php (potvrzení zákazníkovi) – neměnit
+      const message = web
+        ? "Žádost o bezplatnou kontrolu webu: " + url.value.trim() + "\nE-mail: " + mail + "\nZdroj: " + o.origin
+        : "Žádost o bezplatné posouzení procesu:\n\n" + text.value.trim() + "\n\nE-mail: " + mail + "\nZdroj: " + o.origin;
+      const lblText = $(".lbl", btn).textContent;
+      busy(btn, true, "Odesílám…");
+      failBox.hidden = true;
+      try {
+        await sendLead(o.source, form, { name: web ? "Kontrola webu" : "Posouzení procesu", email: mail, phone: "", message });
+        track("leadmagnet_submit", Object.assign({ status: "ok" }, o.props));
+        markSubmitted();
+        window.wtConversion?.("check"); // Sklik / Google Ads – jen se souhlasem (assets/consent.js)
+        if (o.onDone) o.onDone();
+        fields.hidden = true;
+        ok.hidden = false;
+        ok.focus({ preventScroll: true });
+      } catch (err) {
+        track("leadmagnet_submit", Object.assign({ status: "error" }, o.props));
+        setMailto($("." + o.cls.mailto, failBox), web ? "Bezplatná kontrola webu" : "Bezplatné posouzení procesu", message);
+        failBox.hidden = false;
+        sendIssue(failBox, err, { email, message: text || url });
+      } finally {
+        busy(btn, false, lblText);
+      }
+    });
+  }
+
+  // Okno při odchodu – společná pravidla pro úvodní stránku i podstránky.
+  //   počítač: myš odjede horním okrajem (k panelům, adresnímu řádku, zavření), nejdřív 8 s po načtení;
+  //   telefon: rychlé švihnutí nahoru o víc než půl obrazovky po přečtení aspoň třetiny stránky, nebo návrat
+  //   do panelu po víc než 15 s jinde (nejdřív 15 s po načtení); okno vyjede zespodu (.sheet).
+  // Nejvýš jednou za 7 dní, ne 30 dní po odeslaném formuláři; ?exit=1 ho ukáže hned (nic si nepamatuje).
+  const exitForced = () => new URLSearchParams(location.search).has("exit");
+  const exitBlocked = () => {
+    const sent = store.get("wt7-submitted");
+    const last = store.get("wt7-exit");
+    return !!((sent && Date.now() - sent < 30 * 864e5) || (last && Date.now() - last < WEEK));
+  };
+  // o.paused() = stránka okno teď nechce (formulář na obrazovce…), o.prepare() = těsně před otevřením (popisek okna),
+  // o.onShow(trigger, desktop) = po otevření (fokus, měření), o.onClose()
+  function exitIntent(dlg, o) {
+    const force = exitForced();
+    // Když se okno v téhle návštěvě stejně ukázat nemůže, nic se nesleduje.
+    if (!dlg || typeof dlg.showModal !== "function" || (!force && exitBlocked())) return;
+    const desktop = window.matchMedia("(hover: hover) and (pointer: fine) and (min-width: 1024px)");
+    const t0 = Date.now();
+    const watch = new AbortController(); // po zobrazení okna se sledování vypne
+    let shown = false;
+    const allowed = minMs => {
+      if (shown || dlg.open) return false;
+      if (force) return true;
+      if (submitted || o.paused()) return false;
+      if (Date.now() - t0 < minMs) return false;
+      return !exitBlocked();
+    };
+    function show(trigger) {
+      shown = true;
+      watch.abort();
+      if (!force) store.set("wt7-exit", Date.now());
+      dlg.classList.toggle("sheet", !desktop.matches);
+      if (o.prepare) o.prepare();
+      dlg.showModal();
+      o.onShow(trigger, desktop.matches);
+    }
+    document.addEventListener("mouseout", e => {
+      if (e.relatedTarget || e.clientY > 8 || !desktop.matches) return;
+      if (allowed(8000)) show("mouse");
+    }, { signal: watch.signal });
+    let lastY = window.scrollY;
+    let upFrom = null;
+    let deepest = 0;
+    // výška stránky se čte po změně rozvržení (ResizeObserver), ne při každém posunu – to by vynutilo přepočet
+    let docH = document.documentElement.scrollHeight;
+    const ro = new ResizeObserver(() => { docH = document.documentElement.scrollHeight; });
+    ro.observe(document.body);
+    watch.signal.addEventListener("abort", () => ro.disconnect());
+    window.addEventListener("scroll", () => {
+      if (desktop.matches) return;
+      const y = window.scrollY;
+      const now = performance.now();
+      deepest = Math.max(deepest, (y + window.innerHeight) / docH);
+      if (y >= lastY) upFrom = null;
+      else if (!upFrom || now - upFrom.t > 600) upFrom = { y: lastY, t: now };
+      lastY = y;
+      if (upFrom && upFrom.y - y > window.innerHeight * 0.55 && deepest > 0.33 && y > 400 && allowed(15000)) show("scroll_up");
+    }, { passive: true, signal: watch.signal });
+    let hiddenAt = 0;
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) { hiddenAt = Date.now(); return; }
+      if (!desktop.matches && hiddenAt && Date.now() - hiddenAt > 15000 && allowed(15000)) show("return");
+    }, { signal: watch.signal });
+    if (force) setTimeout(() => { if (allowed(0)) show("test"); }, 700);
+    dlg.addEventListener("close", () => { if (o.onClose) o.onClose(); });
+    // zavření: klik mimo okno nebo na [data-close] (ne na odkaz, který otevírá kontaktní formulář)
+    dlg.addEventListener("click", e => {
+      if (e.target === dlg || (e.target.closest("[data-close]") && !e.target.closest("[data-open]"))) dlg.close();
+    });
+  }
+
+  window.wtLead = { store, track, sendLead, setErr, sendIssue, setMailto, busy, clearOnInput, markSubmitted, leadMagnet, exitIntent, EMAIL_RE };
+
+  // kliknutí na výzvy (data-cta) – na všech stránkách, kde se tenhle soubor načítá
+  document.addEventListener("click", e => {
+    const el = e.target.closest("[data-cta]");
+    if (el) track("cta_click", { location: el.dataset.cta, page: location.pathname });
+  });
+
+  // ---------- 3. formulář na podstránce ----------
   const lead = (() => {
     const form = $("#lb-form");
     if (!form) return null;
@@ -209,11 +357,10 @@
         tabBar.hidden = true;
         done.hidden = false;
         $("[data-done=title]", done).focus({ preventScroll: true });
-        updateBar();
       } catch (err) {
         track(event, { status: "error", form: "page", topic });
         const contact = "\n\n" + name + (phone ? "\nTelefon: " + phone : "") + (mode === "form" && email ? "\nE-mail: " + email : "");
-        $(".lb-mailto", failBox).href = mailto(mode === "call" ? "Prosím o zavolání" : "Poptávka z webu – " + topic, message + contact);
+        setMailto($(".lb-mailto", failBox), mode === "call" ? "Prosím o zavolání" : "Poptávka z webu – " + topic, message + contact);
         failBox.hidden = false;
         sendIssue(failBox, err, f);
       } finally {
@@ -233,13 +380,6 @@
     };
   })();
 
-  // Úvodní stránka (bez #lb-form) si kliknutí měří sama – tady jen podstránky a články.
-  if (lead) {
-    document.addEventListener("click", e => {
-      const el = e.target.closest("[data-cta]");
-      if (el) track("cta_click", { location: el.dataset.cta, page: location.pathname });
-    });
-  }
   document.addEventListener("click", e => {
     const a = e.target.closest('a[href="#poptat"]');
     if (!a || !lead) return;
@@ -249,8 +389,8 @@
     lead.open(a.dataset.mode || "call");
   });
 
-  // mobilní lišta s tlačítkem: vysune se až pod úvodem stránky (tam jsou vlastní tlačítka) a schová se,
-  // když je na obrazovce formulář nebo je otevřené okno
+  // mobilní lišta s tlačítkem (podstránky): vysune se až pod úvodem stránky (tam jsou vlastní tlačítka) a schová se,
+  // když je na obrazovce formulář, je otevřené okno nebo je poptávka odeslaná
   const bar = $(".mbar");
   const heroCard = $(".sp-hero .intro");
   let heroIn = !!heroCard;
@@ -267,173 +407,56 @@
   }
   updateBar();
 
-  // ---------- jemné objevení karet pod prvním zobrazením ----------
+  // ---------- jemné objevení karet pod prvním zobrazením (podstránky a články) ----------
   // Jen to, co při načtení není vidět (nic neblikne a nic nezdrží vykreslení), text článků zůstává v klidu.
+  // Co je vidět hned, pozná první odpověď IntersectionObserveru – bez měření každé karty při načtení.
+  // (Úvodní stránka má třídy .rv rovnou v HTML a objevování řeší home.js.)
   (function reveal() {
-    // úvodní stránka (bez #lb-form) si objevování řeší sama
     if (!lead || reduce || location.hash || typeof IntersectionObserver !== "function") return;
-    const vh = window.innerHeight;
-    const els = $$("main .sec .card, main .sec details, main .sec .head").filter(el => el.getBoundingClientRect().top > vh);
+    const els = $$("main .sec .card, main .sec details, main .sec .head");
     if (!els.length) return;
+    const seen = new Set();
     const io = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+      entries.forEach(e => {
+        if (!seen.has(e.target)) {
+          seen.add(e.target);
+          // horní hrana v prvním zobrazení → nechat být (i když je vidět jen kousek)
+          if (e.boundingClientRect.top <= window.innerHeight) { io.unobserve(e.target); return; }
+          const sibs = Array.from(e.target.parentElement.children).filter(c => els.includes(c));
+          const i = sibs.indexOf(e.target);
+          if (i > 0) e.target.style.setProperty("--d", Math.min(i, 4) * 70 + "ms");
+          e.target.classList.add("rv");
+          return;
+        }
+        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+      });
     }, { threshold: .08 });
-    els.forEach(el => {
-      const sibs = Array.from(el.parentElement.children).filter(c => els.includes(c));
-      const i = sibs.indexOf(el);
-      if (i > 0) el.style.setProperty("--d", Math.min(i, 4) * 70 + "ms");
-      el.classList.add("rv");
-      io.observe(el);
-    });
+    els.forEach(el => io.observe(el));
   })();
 
-  // ---------- 3. okno při odchodu ----------
-  const offer = script && script.dataset.offer;
-  if (!offer || typeof HTMLDialogElement !== "function") return;
-  const app = offer !== "web";
-  const dlg = document.createElement("dialog");
-  dlg.className = "wtx";
-  dlg.setAttribute("aria-labelledby", "wtx-t");
-  dlg.innerHTML = `
-  <div class="wtx-in">
-    <button type="button" class="wtx-x" data-close aria-label="Zavřít">✕</button>
-    <span class="kicker gt">Než odejdete</span>
-    <h2 id="wtx-t">${app ? "Vyplatí se vám aplikace? Řeknu vám to zdarma" : "Chcete zdarma zkontrolovat svůj web?"}</h2>
-    <form class="wtx-body" novalidate>
-      <p>${app
-        ? "Popište v&nbsp;pár větách, jak dnes pracujete, nebo vložte odkaz na tabulku. Do 2 pracovních dnů vám napíšu, jestli a&nbsp;jak se to dá zjednodušit a&nbsp;kolik by to zhruba stálo."
-        : "Pošlete mi odkaz a&nbsp;do 2 pracovních dnů vám zdarma pošlu 5 konkrétních věcí, které vám berou poptávky."}</p>
-      <div class="hp" aria-hidden="true"><label for="hp-wtx">Nevyplňujte</label><input type="text" id="hp-wtx" name="website" value="" tabindex="-1" autocomplete="off" aria-hidden="true"></div>
-      <div class="wtx-fields">
-        ${app
-          ? `<div class="fld full"><label for="wtx-text">Co dnes řešíte? *</label><textarea id="wtx-text" name="text" rows="3" placeholder="Např. zakázky vedeme v Excelu a každý pátek je ručně přepisujeme do plánu…" aria-describedby="e-wtx-text"></textarea><p class="err-msg" id="e-wtx-text"></p></div>`
-          : `<div class="fld"><label for="wtx-url">Adresa vašeho webu *</label><input id="wtx-url" name="url" type="text" inputmode="url" autocomplete="url" placeholder="www.vasefirma.cz" aria-describedby="e-wtx-url"><p class="err-msg" id="e-wtx-url"></p></div>`}
-        <div class="fld"><label for="wtx-email">Kam vám pošlu ${app ? "posouzení" : "tipy"}? *</label><input id="wtx-email" name="email" type="email" autocomplete="email" placeholder="jan@firma.cz" aria-describedby="e-wtx-email"><p class="err-msg" id="e-wtx-email"></p></div>
-        <button class="btn btn-grad" type="submit" data-cta="exit_lm_${app ? "app" : "web"}"><span class="lbl">${app ? "Chci posouzení zdarma" : "Chci kontrolu zdarma"}</span> <span class="arr">→</span></button>
-        <p class="wtx-note">Zdarma, bez závazku a&nbsp;bez obchodních telefonátů.</p>
-        <p class="consent">Odesláním souhlasíte se zpracováním údajů pro vyřízení poptávky – <a href="/ochrana-osobnich-udaju.html">zásady ochrany osobních údajů</a>.</p>
-      </div>
-      <div class="wtx-done" hidden tabindex="-1">
-        <span class="lb-ok sm"><svg aria-hidden="true"><use href="#i-check"/></svg></span>
-        <div><b>Díky, mám to u&nbsp;sebe.</b><p>${app
-          ? "Do 2 pracovních dnů vám napíšu, jestli a&nbsp;jak se dá váš proces zjednodušit."
-          : "Do 2 pracovních dnů vám pošlu tipy, co na webu zlepšit."}</p></div>
-      </div>
-      <div class="lb-fail" hidden>
-        <b>Odeslání se nepovedlo.</b>
-        <p class="rate-msg" hidden>Zkuste to prosím za chvíli, nebo napište e-mailem.</p>
-        <p>Pošlete mi to prosím e-mailem – text jsem vám připravil.</p>
-        <a class="btn btn-grad lb-mailto" href="mailto:jan@webtitan.cz">Odeslat e-mailem <span class="arr">→</span></a>
-        <small>nebo napište na <a href="mailto:jan@webtitan.cz">jan@webtitan.cz</a></small>
-      </div>
-    </form>
-    <p class="wtx-alt">${lead ? `<a href="#poptat" data-mode="call" data-cta="exit_call">Raději mi zavolejte <span class="arr" aria-hidden="true">→</span></a>` : ""}<a href="tel:+420723793510" data-cta="exit_tel">nebo volejte 723&nbsp;793&nbsp;510</a></p>
-  </div>`;
-  document.body.appendChild(dlg);
-
-  // odeslání nabídky z okna
-  (function () {
-    const form = $("form", dlg);
-    const text = $("#wtx-text", dlg);
-    const url = $("#wtx-url", dlg);
-    const email = $("#wtx-email", dlg);
-    const btn = $("button[type=submit]", form);
-    const fields = $(".wtx-fields", form);
-    const ok = $(".wtx-done", form);
-    const failBox = $(".lb-fail", form);
-    const validUrl = u => /^(https?:\/\/)?[^\s/.]+(\.[^\s/.]+)+(\/\S*)?$/i.test(u.trim());
-    clearOnInput([text, url, email]);
-    form.addEventListener("submit", async e => {
-      e.preventDefault();
-      if (url) setErr(url, validUrl(url.value) ? "" : "Zadejte prosím adresu webu, např. www.vasefirma.cz.");
-      if (text) setErr(text, text.value.trim().length >= 10 ? "" : "Napište prosím aspoň pár slov nebo vložte odkaz.");
-      setErr(email, EMAIL_RE.test(email.value.trim()) ? "" : "Zadejte prosím platný e-mail.");
-      const bad = [url, text, email].filter(Boolean).find(i => i.getAttribute("aria-invalid") === "true");
-      if (bad) { bad.focus(); return; }
-      const mail = email.value.trim();
-      const message = app
-        ? "Žádost o bezplatné posouzení procesu:\n\n" + text.value.trim() + "\n\nE-mail: " + mail + "\nZdroj: vyskakovací okno (" + location.pathname + ")"
-        : "Žádost o bezplatnou kontrolu webu: " + url.value.trim() + "\nE-mail: " + mail + "\nZdroj: vyskakovací okno (" + location.pathname + ")";
-      const lblText = $(".lbl", btn).textContent;
-      busy(btn, true, "Odesílám…");
-      failBox.hidden = true;
-      try {
-        await sendLead("exit", form, { name: app ? "Posouzení procesu" : "Kontrola webu", email: mail, phone: "", message });
-        track("leadmagnet_submit", { status: "ok", source: "exit", kind: app ? "app" : "web", page: location.pathname });
-        markSubmitted();
-        window.wtConversion?.("check");
-        fields.hidden = true;
-        ok.hidden = false;
-        ok.focus({ preventScroll: true });
-      } catch (err) {
-        track("leadmagnet_submit", { status: "error", source: "exit", kind: app ? "app" : "web", page: location.pathname });
-        $(".lb-mailto", failBox).href = mailto(app ? "Bezplatné posouzení procesu" : "Bezplatná kontrola webu", message);
-        failBox.hidden = false;
-        sendIssue(failBox, err, { email, message: text || url });
-      } finally {
-        busy(btn, false, lblText);
+  // ---------- 4. okno při odchodu (podstránky a články) ----------
+  const xdlg = $("dialog.wtx");
+  if (!xdlg) return;
+  const xform = $("form", xdlg);
+  const kind = xdlg.dataset.kind === "web" ? "web" : "app";
+  leadMagnet(xform, {
+    kind,
+    source: "exit",
+    origin: "vyskakovací okno (" + location.pathname + ")",
+    cls: { fields: "wtx-fields", done: "wtx-done", fail: "lb-fail", mailto: "lb-mailto" },
+    props: { source: "exit", kind, page: location.pathname }
+  });
+  exitIntent(xdlg, {
+    paused: () => leadIn,
+    onShow(trigger, desktop) {
+      if (desktop) {
+        const field = $(kind === "app" ? "#wtx-text" : "#wtx-url", xdlg);
+        if (field) field.focus();
       }
-    });
-  })();
-
-  // kdy okno ukázat
-  const force = new URLSearchParams(location.search).has("exit");
-  const desktop = window.matchMedia("(hover: hover) and (pointer: fine) and (min-width: 1024px)");
-  const t0 = Date.now();
-  let shown = false;
-  function allowed(minMs) {
-    if (shown || dlg.open) return false;
-    if (force) return true;
-    if (submitted || leadIn) return false;
-    if (Date.now() - t0 < minMs) return false;
-    // po odeslaném formuláři 30 dní nic nenabízet – pak se může vrátit s novou zakázkou
-    const sent = store.get("wt7-submitted");
-    if (sent && Date.now() - sent < 30 * 864e5) return false;
-    const last = store.get("wt7-exit");
-    if (last && Date.now() - last < WEEK) return false;
-    return true;
-  }
-  function show(trigger) {
-    shown = true;
-    if (!force) store.set("wt7-exit", Date.now());
-    dlg.classList.toggle("sheet", !desktop.matches);
-    dlg.showModal();
-    if (desktop.matches) {
-      const field = $(app ? "#wtx-text" : "#wtx-url", dlg);
-      if (field) field.focus();
-    }
-    dlgOpen = true;
-    updateBar();
-    track("exit_intent_shown", { trigger, segment: app ? "app" : "web", page: location.pathname });
-  }
-  // počítač: myš odjede horním okrajem (k panelům, adresnímu řádku, zavření)
-  document.addEventListener("mouseout", e => {
-    if (e.relatedTarget || e.clientY > 8 || !desktop.matches) return;
-    if (allowed(8000)) show("mouse");
-  });
-  // telefon: rychlé švihnutí nahoru o víc než půl obrazovky po přečtení aspoň třetiny stránky
-  let lastY = window.scrollY;
-  let upFrom = null;
-  let deepest = 0;
-  window.addEventListener("scroll", () => {
-    if (desktop.matches) return;
-    const y = window.scrollY;
-    const now = performance.now();
-    deepest = Math.max(deepest, (y + window.innerHeight) / document.documentElement.scrollHeight);
-    if (y >= lastY) upFrom = null;
-    else if (!upFrom || now - upFrom.t > 600) upFrom = { y: lastY, t: now };
-    lastY = y;
-    if (upFrom && upFrom.y - y > window.innerHeight * 0.55 && deepest > 0.33 && y > 400 && allowed(15000)) show("scroll_up");
-  }, { passive: true });
-  // telefon: návrat do panelu po víc než 15 s jinde
-  let hiddenAt = 0;
-  document.addEventListener("visibilitychange", () => {
-    if (document.hidden) { hiddenAt = Date.now(); return; }
-    if (!desktop.matches && hiddenAt && Date.now() - hiddenAt > 15000 && allowed(15000)) show("return");
-  });
-  if (force) setTimeout(() => { if (allowed(0)) show("test"); }, 700);
-  dlg.addEventListener("close", () => { dlgOpen = false; updateBar(); });
-  dlg.addEventListener("click", e => {
-    if (e.target === dlg || e.target.closest("[data-close]")) dlg.close();
+      dlgOpen = true;
+      updateBar();
+      track("exit_intent_shown", { trigger, segment: kind, page: location.pathname });
+    },
+    onClose() { dlgOpen = false; updateBar(); }
   });
 })();

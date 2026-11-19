@@ -1,0 +1,25 @@
+---
+// Karta „Shrnutí“ vedle úvodu stránky služby: cena, termín a pár jistot, představení.
+// price = HTML do ceny (např. `od ${castka("web")}`), priceNote = drobný text pod ní, termin = HTML k „Termín“.
+// facts = vlastní řádky místo výchozích tří (Termín / Komu patří kód a data / S kým jednáte); „DPH“ je vždy poslední.
+// me = vlastní text představení.
+interface Props { price: string; priceNote: string; termin?: string; facts?: [string, string][]; me?: string }
+const {
+  price,
+  priceNote,
+  termin = "",
+  facts,
+  me = "Weby a&nbsp;aplikace stavím od roku 2006, sídlím u&nbsp;Sokolova. Kdo s&nbsp;vámi mluví, ten to i&nbsp;staví – v&nbsp;Karlovarském a&nbsp;Plzeňském kraji klidně i&nbsp;osobně.",
+} = Astro.props;
+const rows: [string, string][] = [
+  ...(facts ?? [["Termín", termin], ["Komu patří kód a&nbsp;data", "Vám – kód, data i&nbsp;doména"], ["S&nbsp;kým jednáte", "Přímo s&nbsp;tím, kdo to staví"]]),
+  ["DPH", "Nejsem plátce DPH – ceny jsou konečné"],
+];
+---
+<aside class="card sum" aria-label="Shrnutí">
+  <div class="sum-price"><small>Cena</small><b class="gt" set:html={price}></b><span>{priceNote}</span></div>
+  <dl class="facts">
+    {rows.map(([dt, dd]) => <div class="fact"><dt set:html={dt}></dt><dd set:html={dd}></dd></div>)}
+  </dl>
+  <div class="me-row"><span class="avatar" role="img" aria-label="Jan Šporek"></span><div><b>Jan Šporek</b><span set:html={me}></span></div></div>
+</aside>

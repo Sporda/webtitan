@@ -1,0 +1,6 @@
+---
+// Skryté pole proti spamovým robotům (name="website"): člověk ho nevidí, robot ho vyplní a server poptávku zahodí.
+interface Props { id: string }
+const { id } = Astro.props;
+---
+<div class="hp" aria-hidden="true"><label for={id}>Nevyplňujte</label><input type="text" id={id} name="website" value="" tabindex="-1" autocomplete="off" aria-hidden="true"></div>

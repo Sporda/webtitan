@@ -3,7 +3,7 @@ import { SITE_URL, OG_IMAGE } from "../data/site";
 import { plain } from "./text";
 
 export const PROVIDER = { "@type": "ProfessionalService", "@id": `${SITE_URL}/#webtitan`, name: "WebTitan", url: `${SITE_URL}/` };
-const AUTHOR = { "@type": "Person", "@id": `${SITE_URL}/#jan`, name: "Jan Šporek", url: `${SITE_URL}/#o-mne` };
+export const AUTHOR = { "@type": "Person", "@id": `${SITE_URL}/#jan`, name: "Jan Šporek", url: `${SITE_URL}/#o-mne` };
 
 export const AREA_SERVED = [
   { "@type": "AdministrativeArea", name: "Karlovarský kraj" },
@@ -17,10 +17,11 @@ export const AREA_SERVED = [
 
 export const graph = (...items: unknown[]) => ({ "@context": "https://schema.org", "@graph": items.filter(Boolean) });
 
-/** Drobečková navigace: [["Domů", "/"], ["Tvorba webu", "/tvorba-webu/"]] */
+/** Drobečková navigace: [["Domů", "/"], ["Tvorba webu", "/tvorba-webu/"]] – stejné položky jako <Crumbs> (názvy
+ *  můžou být HTML, sem jdou jako prostý text). */
 export const crumbsLd = (items: [string, string][]) => ({
   "@type": "BreadcrumbList",
-  itemListElement: items.map(([name, path], i) => ({ "@type": "ListItem", position: i + 1, name, item: SITE_URL + path })),
+  itemListElement: items.map(([name, path], i) => ({ "@type": "ListItem", position: i + 1, name: plain(name), item: SITE_URL + path })),
 });
 
 /** Otázky a odpovědi (HTML z FAQ na stránce → prostý text). ld = jiný text odpovědi jen pro vyhledávače
@@ -69,7 +70,7 @@ export const blogLd = (description: string, posts: { path: string; headline: str
   url: `${SITE_URL}/clanky/`,
   inLanguage: "cs",
   description,
-  publisher: { "@id": `${SITE_URL}/#webtitan` },
+  publisher: { "@id": PROVIDER["@id"] },
   blogPost: posts.map((p) => ({ "@type": "BlogPosting", headline: p.headline, url: SITE_URL + p.path, datePublished: p.published, author: AUTHOR })),
 });
 

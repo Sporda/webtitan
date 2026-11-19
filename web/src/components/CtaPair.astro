@@ -1,0 +1,7 @@
+---
+// Dvojice tlačítek „Domluvit 15min hovor / Poslat poptávku“ – obě skočí na formulář #poptat a přepnou ho (lead.js).
+// track = předpona měření kliknutí: data-cta="<track>_call" a "<track>_form" (např. sp_hero, post_inline).
+interface Props { track: string }
+const { track } = Astro.props;
+---
+<div class="dual"><a href="#poptat" class="btn btn-grad" data-mode="call" data-cta={`${track}_call`}><svg aria-hidden="true"><use href="#i-phone"/></svg>Domluvit 15min hovor</a><a href="#poptat" class="btn btn-line" data-mode="form" data-cta={`${track}_form`}>Poslat poptávku</a></div>

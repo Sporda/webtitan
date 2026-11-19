@@ -7,7 +7,7 @@ const r = reference(Astro.props.id);
 const k = r.karta;
 if (!k) throw new Error(`Reference ${r.id} nemá velkou kartu`);
 const home = Astro.props.home ?? false;
-const pro = r.pro && ZADAVATELE[r.pro];
+const pro = r.pro && ZADAVATELE[r.pro]; // neznámý klíč zastaví už data/reference.ts
 ---
 <article class={home ? "card case rv" : "card case"} data-rel={home ? r.rel : undefined}>
   {home && <span class="match-tag">Podobné vašemu zadání</span>}

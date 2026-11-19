@@ -5,7 +5,7 @@
  * - Přepínače role="tablist" (.seg, .tabs, .lb-tabs): bílá tableta vybrané volby k nové volbě přejede (240 ms,
  *   jen transform), místo aby přeskočila. Výběr dál řídí stránka (aria-selected), tady se jen sleduje.
  * - window.wtArrive(el): po kliknutí na výzvu, která stránku posune k formuláři, formulář po dojezdu jednou krátce
- *   zvýrazní okraj – je vidět, kam klik vedl. Volá ho stránka (index.html openContact, lead.js open).
+ *   zvýrazní okraj – je vidět, kam klik vedl. Volá ho stránka (src/scripts/home.js openContact, lead.js open).
  * - html.m-ready po prvním vykreslení: od té chvíle se animuje výměna textu v úvodu (aplikace / web), ne při načtení.
  * Při omezení pohybu tableta jen skočí na místo a zvýraznění se nepouští.
  */

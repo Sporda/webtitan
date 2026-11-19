@@ -120,11 +120,11 @@ try {
     $db = wt_leads_db();
 
     $now = time();
-    $q = $db->prepare('SELECT COUNT(*) FROM leads WHERE ip = ? AND created > ?');
-    $q->execute([$ipHash, $now - 600]);
-    $n10 = (int) $q->fetchColumn();
-    $q->execute([$ipHash, $now - 86400]);
-    $nDay = (int) $q->fetchColumn();
+    // 10 min i 24 h z jednoho průchodu indexem (ip, created); celkový denní počet přes index (created)
+    $q = $db->prepare('SELECT SUM(CASE WHEN created > ? THEN 1 ELSE 0 END), COUNT(*) FROM leads WHERE ip = ? AND created > ?');
+    $q->execute([$now - 600, $ipHash, $now - 86400]);
+    [$n10, $nDay] = array_map('intval', $q->fetch(PDO::FETCH_NUM));
+    $q->closeCursor(); // ukončí čtení, ať INSERT níž nenarazí na starý snímek WAL
     $nAll = (int) $db->query('SELECT COUNT(*) FROM leads WHERE created > ' . ($now - 86400))->fetchColumn();
     if ($n10 >= LIMIT_10MIN || $nDay >= LIMIT_DAY || $nAll >= LIMIT_GLOBAL_DAY) {
         out(429, ['error' => 'rate']);

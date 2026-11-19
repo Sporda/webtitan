@@ -86,19 +86,20 @@
   if (!enabled) return;
 
   // ---------- lišta ----------
+  // barvy z proměnných stránky (všechny styly webu je definují stejně), v závorce záloha
   const css = `
   .ck { position: fixed; left: 16px; bottom: 16px; z-index: 90; width: min(440px, calc(100% - 32px)); padding: 20px 20px 18px;
-    border-radius: 22px; background: #faf6ef; color: #1b342c; border: 1px solid #e0d5c3;
+    border-radius: 22px; background: var(--card, #faf6ef); color: var(--text, #1b342c); border: 1px solid var(--line, #e0d5c3);
     box-shadow: 0 2px 4px rgba(31, 61, 52, .05), 0 30px 60px -24px rgba(31, 61, 52, .45); font: 15px/1.5 Manrope, "Manrope Fallback", system-ui, sans-serif; }
   .ck[hidden] { display: none; }
   .ck b { display: block; font-size: 16px; font-weight: 800; margin-bottom: 4px; }
-  .ck p { margin: 0 0 14px; color: #4d5a52; }
-  .ck p a { color: #1f3d34; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+  .ck p { margin: 0 0 14px; color: var(--muted, #4d5a52); }
+  .ck p a { color: var(--navy, #1f3d34); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
   .ck-btns { display: flex; gap: 10px; flex-wrap: wrap; }
-  .ck-btns button { flex: 1 1 140px; min-height: 46px; border-radius: 999px; font: inherit; font-weight: 800; cursor: pointer; border: 1px solid #1f3d34; }
-  .ck-yes { background: #1f3d34; color: #fff; }
-  .ck-no { background: #fff; color: #1f3d34; }
-  .ck-btns button:focus-visible, .ck-open:focus-visible { outline: 3px solid #c4400f; outline-offset: 2px; }
+  .ck-btns button { flex: 1 1 140px; min-height: 46px; border-radius: 999px; font: inherit; font-weight: 800; cursor: pointer; border: 1px solid var(--navy, #1f3d34); }
+  .ck-yes { background: var(--navy, #1f3d34); color: #fff; }
+  .ck-no { background: #fff; color: var(--navy, #1f3d34); }
+  .ck-btns button:focus-visible, .ck-open:focus-visible { outline: 3px solid var(--orange-lg, #c4400f); outline-offset: 2px; }
   .ck-open { background: none; border: 0; padding: 0; min-height: 44px; font: inherit; color: inherit; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
   @media (max-width: 600px) { .ck { left: 10px; right: 10px; bottom: 10px; width: auto; } }`;
   const style = document.createElement("style");

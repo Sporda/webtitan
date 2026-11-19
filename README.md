@@ -17,27 +17,29 @@ na jednom místě. Běží na hostingu v panelu (panel.webtitan.cz, nginx + PHP 
 
 | Co | Kde |
 |---|---|
-| Ceny, názvy a popisy služeb (patička, karty „Další služby“ a „Mohlo by vás zajímat“) | `web/src/data/sluzby.ts` |
+| Ceny, názvy, popisy a ikony služeb – cena (`od`) se odtud propíše všude: stránky služeb, úvodní stránka, kalkulačka, časté otázky, články, 404, JSON-LD, patička, karty „Další služby“ a „Mohlo by vás zajímat“ (v textech `castka("web")`, v řetězcích `castkaText("web")`) | `web/src/data/sluzby.ts` |
 | Reference (velké karty Zadání / Řešení / Přínos a malé náhledy) | `web/src/data/reference.ts`; na stránce `<RefCase id="…" />`, `<RefThumb id="…" />` |
 | Časté otázky (jedna sada pro celý web; na stránce i v JSON-LD) | `web/src/data/otazky.ts`; stránka si je vybírá `otazky([...])` |
-| Články: kategorie, nadpis, popis, datum, doba čtení, související | `web/src/data/clanky.ts`; text článku v `web/src/pages/clanky/<slug>/index.astro` |
-| Telefon, e-mail, odkazy, IČO, **verze souborů `?v=`** (po změně `analytics.js`, `lead.js`, `motion.css`…) | `web/src/data/site.ts` |
-| Údaje o mně a firmě pro vyhledávače (Person, ProfessionalService) | `web/src/data/schema.ts` |
+| Články: kategorie, nadpis, popis, datum, doba čtení, související, výzva na konci (`cta`), okno při odchodu (`nabidka`) | `web/src/data/clanky.ts`; text článku v `web/src/pages/clanky/<slug>/index.astro` |
+| Telefon, e-mail, odkazy, IČO (v `.astro` stránkách vždy přes konstanty, ne napevno), štítek volné kapacity (`VOLNA_KAPACITA`) | `web/src/data/site.ts` |
+| Údaje o mně a firmě pro vyhledávače (Person, ProfessionalService); kontakty bere ze `site.ts` | `web/src/data/schema.ts` |
 | Hlavička stránky (SEO, sdílení, ikony, písma, skripty) | `web/src/layouts/Base.astro` |
-| Menu, patička, kontaktní sekce podstránek, mobilní lišta | `web/src/components/Nav.astro`, `Footer.astro`, `LeadSection.astro`, `MobileBar.astro` |
+| Menu, patička, kontaktní sekce podstránek, mobilní lišta (`variant="home"` na úvodní stránce), okno při odchodu na podstránkách | `web/src/components/Nav.astro`, `Footer.astro`, `LeadSection.astro`, `MobileBar.astro`, `ExitDialog.astro` |
+| Opakující se kousky stránek: dvojice tlačítek hovor / poptávka, drobečková navigace, shrnutí a řádek s kontakty v úvodu služby, otázky, karta „+ N dalších“ (počet ze seznamu jmen), části formulářů (pole proti spamu, souhlas, „Odeslání se nepovedlo“) | `web/src/components/CtaPair.astro`, `Crumbs.astro`, `ServiceSum.astro`, `HeroMicro.astro`, `FaqItems.astro`, `OthersCard.astro`, `Honeypot.astro`, `Consent.astro`, `FormFail.astro` |
 | Obsah stránek | `web/src/pages/` (`index.astro` = úvodní stránka, `<služba>/index.astro`, `clanky/`) |
-| Styly (vkládají se do stránky) | `web/src/styles/` – `home.css` úvod, `sub.css` podstránky a články, `article.css` doplněk článků, `simple.css` ochrana údajů a 404 |
-| Hlavní skript úvodní stránky (rezervace, formuláře, kalkulačka) | `web/src/scripts/home.js` |
-| Soubory, které se jen kopírují (obrázky, `lead.js`, `consent.js`, `analytics.js`, `motion.*`, písma, PHP, robots, sitemap) | `web/public/` |
+| Styly (vkládají se do stránky, při buildu bez komentářů a mezer – `src/lib/minify.ts`) | `web/src/styles/` – `base.css` společný základ úvodu a podstránek, `home.css` úvod, `sub.css` podstránky a články, `article.css` doplněk článků, `simple.css` ochrana údajů a 404 |
+| Hlavní skript úvodní stránky (rezervace, poptávka, kalkulačka; vkládá se zmenšený) | `web/src/scripts/home.js` – společné funkce formulářů bere z `lead.js` (`window.wtLead`) |
+| Soubory, které se jen kopírují (obrázky, `lead.js`, `consent.js`, `analytics.js`, `motion.*`, písma, PHP, robots) | `web/public/` – v `<head>` je odkazuje `asset("/assets/…")` s otiskem obsahu (`?v=…`), takže se po změně souboru prohlížečům stáhne nová verze sama |
 
 | Soubor | Co dělá |
 |---|---|
-| `web/public/assets/lead.js`, `lead.css` | podstránky a články: formulář „Zavolejte mi / Napsat poptávku“ přímo na stránce (`#poptat`), okno při odchodu (`data-offer="app\|web"` na `<script>`), a na všech stránkách včetně hlavní: odkud návštěvník přišel (`window.wtSrc()`) |
+| `web/public/assets/lead.js`, `lead.css` | na všech stránkách kromě ochrany údajů a 404: odkud návštěvník přišel (`window.wtSrc()`), měření kliknutí na výzvy (`data-cta`) a společné funkce formulářů `window.wtLead` (odeslání na `contact.php`, chyby polí, záložní e-mail, okno při odchodu – pravidla a spouštěče, formulář posouzení / kontroly zdarma). Na podstránkách a v článcích navíc formulář „Zavolejte mi / Napsat poptávku“ (`#poptat`) a obsluha okna při odchodu (`dialog.wtx` vykreslí `Sub` podle `offer`) |
 | `web/public/api/contact.php` | formuláře (poptávka, 15min hovor, zavolání, bezplatná kontrola) → uloží do `data/leads.sqlite`, pošle mi e-mail, zákazníkovi krátké potvrzení (přes Resend) a s `CRM_TOKEN` i do CRM |
 | `web/public/api/_mail.php` | sdílená knihovna: databáze poptávek, e-mail s poptávkou, potvrzení zákazníkovi (zvenku vrací 404) |
 | `web/public/api/health.php` | pro hlídání dostupnosti: `OK` / `FAIL …`; zároveň znovu zkouší doručit poptávky, které napoprvé neodešly |
 | `web/public/api/inbound.php` | webhook Resend Receiving: e-maily na `*@webtitan.cz` přepošle na `MAIL_TO` (ověřuje podpis, zápis do `data/inbound.sqlite`) |
-| `web/public/robots.txt`, `sitemap.xml`, `favicon.ico` | pro vyhledávače a prohlížeče (sitemapu po přidání stránky nebo článku doplnit ručně) |
+| `web/public/robots.txt`, `favicon.ico` | pro vyhledávače a prohlížeče |
+| `web/src/pages/sitemap.xml.ts` | `sitemap.xml` se skládá při buildu ze všech stránek v `src/pages` (bez 404); `lastmod` jen u článků z `clanky.ts`. Build zároveň spadne, když článek v `clanky.ts` nemá stránku |
 | `web/public/seznam-wmt-….txt` | ověření webu v Seznam Webmaster – nemazat, jinak ověření propadne |
 | `web/public/index.php` | router pro nginx: `/` → `index.html`, neexistující adresy → `404.html` se stavem 404 |
 
@@ -52,6 +54,7 @@ Potřebuje Node 22.23+ (`web/.nvmrc`: 24).
 cd web
 npm install
 npm run dev       # náhled se změnami naživo: http://localhost:4321
+npm run check     # kontrola typů v .astro a .ts (běží i před nasazením)
 npm run build     # sestaví web/dist/
 npm run preview   # náhled sestaveného webu
 ```
@@ -62,7 +65,8 @@ mimo `/var/www` (na serveru se nenastavuje). Bez `RESEND_API_KEY` v `contact.env
 
 **Nový článek:** přidat záznam do `web/src/data/clanky.ts` (nahoru, nejnovější první) a stránku
 `web/src/pages/clanky/<slug>/index.astro` s textem uvnitř `<Article slug="…">…</Article>` – karta v rozcestníku,
-JSON-LD a „Mohlo by vás zajímat“ se doplní samy. Pak adresu přidat do `web/public/sitemap.xml`.
+JSON-LD, „Mohlo by vás zajímat“ i sitemapa se doplní samy. Po větší úpravě textu článku doplnit do `clanky.ts`
+`upraveno: "RRRR-MM-DD"` (propíše se do `dateModified` a `lastmod` v sitemapě).
 
 ### Poptávky z podstránek a odkud přišly
 
@@ -79,7 +83,7 @@ JSON-LD a „Mohlo by vás zajímat“ se doplní samy. Pak adresu přidat do `w
   Google tag se **bez souhlasu nenačtou vůbec**. Volba platí rok, v patičce přibude „Nastavení cookies“.
 - Formuláře po úspěšném odeslání volají `window.wtConversion("lead" | "check")` → Sklik `SEM('track', 'Lead', {currency: 'CZK', value})`
   a Google Ads `conversion`. Posílá se jen to, že poptávka vznikla, nikdy obsah ani kontakt.
-- Po změně `consent.js` zvednout jeho verzi v `web/src/data/site.ts` (`V.consent`; soubory se v prohlížeči drží 30 dní).
+- Soubory se v prohlížeči drží 30 dní; po změně `consent.js` se jeho `?v=` (otisk obsahu) změní při buildu sám.
 
 ### Animace
 
@@ -91,7 +95,7 @@ JSON-LD a „Mohlo by vás zajímat“ se doplní samy. Pak adresu přidat do `w
 - Objevení při posouvání: hlavní stránka třída `.rv` (skrývá se jen s `html.js`), podstránky a články ji `lead.js`
   dává jen kartám pod prvním zobrazením; text článků se nehýbe. Sourozenci postupně (`--d`, nejvýš 280 ms).
 - Čísla 20+ a 23 v úvodu naběhnou, otázky se rozbalují plynule (`::details-content`, kde to prohlížeč umí),
-  fajfka po odeslání se dokreslí, mezi stránkami krátké prolnutí (`@view-transition`, hlavička zůstává na místě).
+  fajfka po odeslání se dokreslí, mezi stránkami krátké prolnutí (`@view-transition` v `motion.css`, hlavička zůstává na místě).
 - Lišta s tlačítkem na mobilu na podstránkách vyjede až pod úvodem (`.mbar.on`).
 
 ### Telefon a písma
@@ -145,20 +149,25 @@ CRM_URL=https://crm.webtitan.cz/api/v1/leads             # výchozí hodnota
 - `inbound:N` – N příchozích e-mailů se ani po 30 min nepodařilo přeposlat
 - `db` – databázi nejde otevřít
 
+Opakované odesílání smí trvat nejvýš 20 s (UptimeRobot čeká 30 s); co se nestihne, zkusí další kontrola.
+
 Monitor typu Keyword (hledá `OK`) každých 5 min na tuto adresu + druhý na `https://webtitan.cz/` → upozornění e-mailem
 nebo do aplikace v telefonu, když web spadne nebo se poptávka zasekne.
 
 ## Nasazení
 
 Po pushi do `main`, který mění `web/`, `scripts/deploy.sh` nebo workflow, se web nasadí automaticky přes GitHub Actions
-(`.github/workflows/deploy.yml`): sestaví web (`npm ci && npm run build` ve `web/`; když build selže, nenasadí se nic),
-zkopíruje `web/dist/` na server, nastaví vlastníka a práva a ověří, že stránky i endpointy odpovídají. Ručně jde
-workflow spustit v záložce Actions („Run workflow“).
+(`.github/workflows/deploy.yml`) ve dvou úlohách: `build` sestaví web (`npm ci && npm run build` ve `web/`; když
+build selže, nenasadí se nic) a předá `web/dist/` jako artefakt; `deploy` ho zkopíruje na server, nastaví vlastníka
+a práva a ověří, že stránky i endpointy odpovídají. SSH klíč dostane jen úloha `deploy`, která npm nespouští – kód
+z balíčků npm se ke klíči nedostane. Ručně jde workflow spustit v záložce Actions („Run workflow“).
 
-Ruční nasazení z počítače (web musí být sestavený):
+Kontrola `api/health.php` po nasazení selže jen na `config` nebo `db`; nedoručené poptávky (`leads`, `crm`,
+`inbound`) jen vypíše jako POZOR – s nasazením nesouvisí.
+
+Ruční nasazení z počítače (skript web nejdřív sám sestaví; `SKIP_BUILD=1` to přeskočí):
 
 ```bash
-(cd web && npm ci && npm run build)
 env DEPLOY_HOST=158.180.50.98 DEPLOY_USER=ubuntu bash scripts/deploy.sh
 ```
 

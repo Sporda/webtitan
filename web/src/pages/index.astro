@@ -1,26 +1,37 @@
 ---
+import Honeypot from "../components/Honeypot.astro";
+import Consent from "../components/Consent.astro";
+import FormFail from "../components/FormFail.astro";
+import { castka, sluzba } from "../data/sluzby";
+import { PHONE, PHONE_SHORT, EMAIL, LINKEDIN, GITHUB, VOLNA_KAPACITA } from "../data/site";
 // Úvodní stránka. Obsah sekcí je tady; menu, patička, ikony a hlavička z komponent, otázky z data/otazky.ts,
 // údaje o firmě pro vyhledávače z data/schema.ts, hlavní skript (rezervace, formuláře, kalkulačka…) ze src/scripts/home.js.
 import RefCase from "../components/RefCase.astro";
 import RefThumb from "../components/RefThumb.astro";
+import OthersCard from "../components/OthersCard.astro";
 import { ZADAVATELE } from "../data/reference";
 import Base from "../layouts/Base.astro";
 import Sprite from "../components/Sprite.astro";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
+import FaqItems from "../components/FaqItems.astro";
+import MobileBar from "../components/MobileBar.astro";
 import homeCss from "../styles/home.css?raw";
 import homeJs from "../scripts/home.js?raw";
+import { minJs } from "../lib/minify";
 import { otazky } from "../data/otazky";
 import { PERSON, BUSINESS, WEBSITE } from "../data/schema";
 import { graph, faqLd } from "../lib/ld";
 
+/** Pás „Realizace pro“ v úvodu (běží dokola, proto se vypíše dvakrát). */
+const KLIENTI = ["Fitness Ural", "GP Rooms", "Hostel Loket", "Penzion Loket", "Skripta Prokop", "Markop Okna", "Rybar Transport", "Geowestmaster", "GP Tents", "Sunpoint", "2MSKV", "Recysmach", "Sokolov Ubytování"];
 const faq = otazky(["jak-probiha-15min-hovor", "kde-pusobite-muzeme-potkat", "kolik-bude-stat", "delate-mobilni-aplikace", "nemam-presne-zadani-vadi", "jak-dlouho-trva", "komu-patri-aplikace-web", "umite-prevzit-data-excelu", "budu-si-moci-web", "napojite-ucetnictvi-platby-nebo", "postarate-hosting-provoz", "co-stane-po-odeslani"]);
 const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#faq", ...faqLd(faq) });
 ---
 <Base
   kind="home"
   title="Vývoj aplikací, weby a e-shopy – Karlovy Vary, Plzeň | WebTitan"
-  description="Aplikace na míru od 24 950 Kč, weby od 9 970 Kč a e-shopy od 19 870 Kč pro firmy z Karlovarského a Plzeňského kraje. Pevná cena předem, přímo s programátorem."
+  description={BUSINESS.description}
   path="/"
   og={{ title: "Jan Šporek – vývoj aplikací na míru, tvorba webů a e-shopů", description: "Vývoj aplikací na míru, mobilní aplikace, tvorba webů a e-shopů pro firmy ze západních Čech. Pevná cena předem, nezávazný 15min hovor zdarma.", imageAlt: "Jan Šporek – WebTitan: aplikace, weby a e-shopy na míru" }}
   css={homeCss}
@@ -61,8 +72,8 @@ const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#f
                 <li><span class="tick"><svg><use href="#i-check"/></svg></span>Konzultace a&nbsp;návrh řešení zdarma a&nbsp;nezávazně</li>
                 <li><span class="tick"><svg><use href="#i-check"/></svg></span>Jednáte přímo se mnou – od prvního hovoru po spuštění</li>
               </ul>
-              <p class="anchor" data-only="app"><span>Aplikace na míru</span><b>od 24&nbsp;950&nbsp;Kč</b><span>jednorázově, bez licencí za uživatele</span></p>
-              <p class="anchor" data-only="web" hidden><span class="pair"><span>Web</span><b>od 9&nbsp;970&nbsp;Kč</b></span><i>·</i><span class="pair"><span>E-shop</span><b>od 19&nbsp;870&nbsp;Kč</b></span></p>
+              <p class="anchor" data-only="app"><span>Aplikace na míru</span><b>od <Fragment set:html={castka("app")} /></b><span>jednorázově, bez licencí za uživatele</span></p>
+              <p class="anchor" data-only="web" hidden><span class="pair"><span>Web</span><b>od <Fragment set:html={castka("web")} /></b></span><i>·</i><span class="pair"><span>E-shop</span><b>od <Fragment set:html={castka("shop")} /></b></span></p>
             </div>
           </div>
           <div>
@@ -71,10 +82,10 @@ const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#f
               <a href="#kontakt" class="btn btn-line" data-open="form" data-cta="hero_form">Poslat poptávku <span class="arr">→</span></a>
             </div>
             <p class="micro">
-              <span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Ozvu se do 24 hodin (v&nbsp;pracovní dny)</span>
-              <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Karlovarský a&nbsp;Plzeňský kraj – i&nbsp;osobně</span>
-              <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Volejte rovnou: <a href="tel:+420723793510" data-cta="hero_tel">723&nbsp;793&nbsp;510</a></span>
-              <span class="cap-badge" data-capacity hidden></span>
+              <span><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>Ozvu se do 24 hodin (v&nbsp;pracovní dny)</span>
+              <span><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-pin"/></svg>Karlovarský a&nbsp;Plzeňský kraj – i&nbsp;osobně</span>
+              <span><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-phone"/></svg>Volejte rovnou: <a href={`tel:${PHONE}`} data-cta="hero_tel" set:html={PHONE_SHORT}></a></span>
+              {VOLNA_KAPACITA && <span class="cap-badge">{VOLNA_KAPACITA}</span>}
             </p>
           </div>
         </div>
@@ -84,8 +95,8 @@ const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#f
           <p class="pnote">„Napište mi pár vět o&nbsp;tom, co potřebujete. Ozvu se vám osobně – žádné call centrum ani chatbot.“<b>— Jan</b></p>
           <div class="who">
             <div><b>Jan Šporek</b><span>20+ let praxe · 23 realizovaných projektů</span></div>
-            <a class="icon-btn" href="https://www.linkedin.com/in/jan-%C5%A1porek-07a39168/" target="_blank" rel="noopener" aria-label="LinkedIn">
-              <svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+            <a class="icon-btn" href={LINKEDIN} target="_blank" rel="noopener" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24"><use href="#i-in"/></svg>
             </a>
           </div>
         </div>
@@ -108,7 +119,7 @@ const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#f
         </div>
 
         <div class="card stat lift">
-          <div class="stat-top"><b class="gt">20+</b><span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span></div>
+          <div class="stat-top"><b class="gt">20+</b><span class="ic"><svg viewBox="0 0 24 24"><use href="#i-clock"/></svg></span></div>
           <span>let praxe – weby stavím od roku 2006</span>
         </div>
         <div class="card stat lift">
@@ -116,11 +127,11 @@ const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#f
           <span>realizovaných aplikací, webů a&nbsp;e-shopů</span>
         </div>
         <div class="card stat lift">
-          <div class="stat-top"><b class="gt">24&nbsp;h</b><span class="ic"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span></div>
+          <div class="stat-top"><b class="gt">24&nbsp;h</b><span class="ic"><svg viewBox="0 0 24 24"><use href="#i-chat"/></svg></span></div>
           <span>do odpovědi na poptávku (v&nbsp;pracovní dny)</span>
         </div>
         <div class="card stat lift">
-          <div class="stat-top"><b class="gt">1</b><span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span></div>
+          <div class="stat-top"><b class="gt">1</b><span class="ic"><svg viewBox="0 0 24 24"><use href="#i-user"/></svg></span></div>
           <span>člověk od návrhu přes vývoj po provoz</span>
         </div>
 
@@ -128,10 +139,11 @@ const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#f
           <span class="lbl">Realizace pro</span>
           <div class="marquee" aria-label="Vybraní klienti">
             <div class="marquee-track">
-              <span>Fitness Ural</span><span>GP Rooms</span><span>Hostel Loket</span><span>Penzion Loket</span><span>Skripta Prokop</span><span>Markop Okna</span><span>Rybar Transport</span><span>Geowestmaster</span><span>GP Tents</span><span>Sunpoint</span><span>2MSKV</span><span>Recysmach</span><span>Sokolov Ubytování</span>
-              <span aria-hidden="true">Fitness Ural</span><span aria-hidden="true">GP Rooms</span><span aria-hidden="true">Hostel Loket</span><span aria-hidden="true">Penzion Loket</span><span aria-hidden="true">Skripta Prokop</span><span aria-hidden="true">Markop Okna</span><span aria-hidden="true">Rybar Transport</span><span aria-hidden="true">Geowestmaster</span><span aria-hidden="true">GP Tents</span><span aria-hidden="true">Sunpoint</span><span aria-hidden="true">2MSKV</span><span aria-hidden="true">Recysmach</span><span aria-hidden="true">Sokolov Ubytování</span>
+              {KLIENTI.map((k) => <span>{k}</span>)}
+              {KLIENTI.map((k) => <span aria-hidden="true">{k}</span>)}
             </div>
           </div>
+          <span class="clients-pro">Část zakázek vznikla pro <a href={ZADAVATELE.vujo.url} target="_blank" rel="noopener">{ZADAVATELE.vujo.nazev}</a></span>
         </div>
       </div>
     </div>
@@ -151,7 +163,7 @@ const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#f
           <p>Když je na dovolené, nikdo neví, co platí. A&nbsp;verzí té tabulky je pět.</p>
         </article>
         <article class="card pain lift rv">
-          <span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>
+          <span class="ic"><svg viewBox="0 0 24 24"><use href="#i-cal"/></svg></span>
           <h3>Termíny v&nbsp;diáři a&nbsp;v&nbsp;hlavě</h3>
           <p>Stačí jeden zapomenutý termín a&nbsp;zákazník příště zavolá jinam.</p>
         </article>
@@ -262,8 +274,8 @@ const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#f
             <div><small>Za rok</small><b id="roi-year">218&nbsp;232&nbsp;Kč</b></div>
             <div><small>Aplikace by ušetřila</small><b id="roi-save">9&nbsp;093&nbsp;Kč/měs.</b></div>
           </div>
-          <p class="roi-pay" id="roi-pay">Aplikace od 24&nbsp;950&nbsp;Kč by se při této úspoře vrátila zhruba za <b>2,7&nbsp;měsíce</b>.</p>
-          <p class="roi-note">Orientační výpočet podle vašich čísel. 24&nbsp;950&nbsp;Kč je nejnižší cena aplikace – kolik bude stát ta vaše, vám řeknu po hovoru.</p>
+          <p class="roi-pay" id="roi-pay" data-price={sluzba("app").od} data-price-html={castka("app")}>Aplikace od <Fragment set:html={castka("app")} /> by se při této úspoře vrátila zhruba za <b>2,7&nbsp;měsíce</b>.</p>
+          <p class="roi-note">Orientační výpočet podle vašich čísel. <Fragment set:html={castka("app")} /> je nejnižší cena aplikace – kolik bude stát ta vaše, vám řeknu po hovoru.</p>
           <div class="dual">
             <a href="#kontakt" class="btn btn-grad" id="roi-cta" data-cta="roi">Chci to spočítat přesně <span class="arr">→</span></a>
           </div>
@@ -287,7 +299,7 @@ const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#f
             <button type="button" class="svc-peek" aria-label="Ukázka – vývoj webových aplikací">Ukázka <span aria-hidden="true">↖</span></button>
           </div>
           <h3><a href="/vyvoj-aplikaci-na-miru/">Vývoj webových aplikací a&nbsp;interních systémů</a></h3>
-          <p class="price">od <b class="gt">24&nbsp;950&nbsp;Kč</b><small>jednorázově, bez licencí za uživatele</small></p>
+          <p class="price">od <b class="gt"><Fragment set:html={castka("app")} /></b><small>jednorázově, bez licencí za uživatele</small></p>
           <p>Jedno přehledné místo pro zakázky, rezervace nebo evidenci – místo Excelu, papírků a&nbsp;e-mailů. Postavené přesně podle toho, jak pracujete.</p>
           <ul class="bul">
             <li>Evidence zakázek, zákazníků a&nbsp;termínů</li>
@@ -315,7 +327,7 @@ const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#f
         <article class="card svc svc-swap svc-small lift rv" data-svc="web">
           <div class="svc-top"><span class="svc-ic"><svg><use href="#i-web"/></svg></span><button type="button" class="svc-peek" aria-label="Ukázka – tvorba firemního webu">Ukázka <span aria-hidden="true">↖</span></button></div>
           <h3><a href="/tvorba-webu/">Tvorba firemního webu</a></h3>
-          <p class="price">od <b class="gt">9&nbsp;970&nbsp;Kč</b></p>
+          <p class="price">od <b class="gt"><Fragment set:html={castka("web")} /></b></p>
           <p>Web, který zákazníkům rychle řekne, co děláte, a&nbsp;přivede vám poptávky. Je rychlý, srozumitelný a&nbsp;skvěle vypadá i&nbsp;na mobilu.</p>
           <ul class="bul">
             <li>Design na míru, žádná šablona</li>
@@ -328,7 +340,7 @@ const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#f
         <article class="card svc svc-swap svc-small lift rv" data-svc="shop">
           <div class="svc-top"><span class="svc-ic"><svg><use href="#i-shop"/></svg></span><button type="button" class="svc-peek" aria-label="Ukázka – tvorba e-shopu">Ukázka <span aria-hidden="true">↖</span></button></div>
           <h3><a href="/tvorba-e-shopu/">Tvorba e-shopu na míru</a></h3>
-          <p class="price">od <b class="gt">19&nbsp;870&nbsp;Kč</b></p>
+          <p class="price">od <b class="gt"><Fragment set:html={castka("shop")} /></b></p>
           <p>Prodávejte online a&nbsp;mějte objednávky pod kontrolou.</p>
           <ul class="bul">
             <li>Platby kartou a&nbsp;doprava</li>
@@ -341,7 +353,7 @@ const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#f
           <div class="svc-top"><span class="svc-ic"><svg><use href="#i-srv"/></svg></span></div>
           <div class="srv-main">
             <h3><a href="/sprava-serveru/">Správa serverů a&nbsp;webů</a></h3>
-            <p class="price">od <b class="gt">990&nbsp;Kč</b>/měsíc</p>
+            <p class="price">od <b class="gt"><Fragment set:html={castka("srv")} /></b>/měsíc</p>
           </div>
           <div class="srv-body">
             <p>Aby všechno běželo a&nbsp;vy jste to nemuseli řešit.</p>
@@ -356,7 +368,7 @@ const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#f
           <div class="svc-top"><span class="svc-ic"><svg><use href="#i-net"/></svg></span></div>
           <div class="srv-main">
             <h3><a href="/sprava-it-a-siti/">Správa IT a&nbsp;sítí</a></h3>
-            <p class="price">od <b class="gt">1&nbsp;490&nbsp;Kč</b>/měsíc</p>
+            <p class="price">od <b class="gt"><Fragment set:html={castka("it")} /></b>/měsíc</p>
           </div>
           <div class="srv-body">
             <p>Síť, Wi-Fi, počítače a&nbsp;zálohy pod dohledem. V&nbsp;Karlovarském kraji i&nbsp;osobně na místě.</p>
@@ -399,10 +411,7 @@ const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#f
         <RefThumb id="skripta-prokop" home />
         <RefThumb id="hostel-loket" home />
       </div>
-      <div class="card others rv">
-        <b>+ 11 dalších</b>
-        <p>2MSKV, Astos, František Slovák, Geowestmaster, Kanya Kage, Markop Okna, Plenkový servis, Recysmach, Sokolov Ubytování, Sunpoint, Výroba šperků – vyvinuto pro <a href={ZADAVATELE.vujo.url} target="_blank" rel="noopener">{ZADAVATELE.vujo.nazev}</a></p>
-      </div>
+      <OthersCard reveal names={["2MSKV", "Astos", "František Slovák", "Geowestmaster", "Kanya Kage", "Markop Okna", "Plenkový servis", "Recysmach", "Sokolov Ubytování", "Sunpoint", "Výroba šperků"]} />
       <div class="cta-row rv">
         <a href="#kontakt" class="btn btn-grad" data-open="call" data-cta="refs_call"><svg><use href="#i-phone"/></svg>Domluvit 15min hovor</a>
         <a href="#kontakt" class="btn btn-line" data-open="form" data-cta="refs_form">Poslat poptávku</a>
@@ -430,7 +439,7 @@ const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#f
           <h3>Pošlete mi odkaz</h3>
           <p>Výsledek dostanete e-mailem, srozumitelně a&nbsp;bez technického žargonu.</p>
           <form class="lm-form" data-kind="web" data-source="section" novalidate>
-            <div class="hp" aria-hidden="true"><label for="hp-lm-web">Nevyplňujte</label><input type="text" id="hp-lm-web" name="website" value="" tabindex="-1" autocomplete="off" aria-hidden="true"></div>
+            <Honeypot id="hp-lm-web" />
             <div class="lm-fields">
               <div class="fld">
                 <label for="lm-url-s">Adresa vašeho webu *</label>
@@ -444,19 +453,13 @@ const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#f
               </div>
               <button class="btn btn-grad" type="submit" data-cta="lm_web"><span class="lbl">Chci kontrolu zdarma</span> <span class="arr">→</span></button>
               <p class="lm-note">E-mail použiji jen k&nbsp;zaslání výsledku.</p>
-              <p class="consent">Odesláním souhlasíte se zpracováním údajů pro vyřízení poptávky – <a href="/ochrana-osobnich-udaju.html">zásady ochrany osobních údajů</a>.</p>
+              <Consent />
             </div>
             <div class="lm-done" hidden tabindex="-1">
               <span class="done-ic sm"><svg><use href="#i-check"/></svg></span>
               <div><b>Děkuji, mám to!</b><p>Do 2 pracovních dnů vám pošlu 5 tipů pro <span class="lm-site"></span>.</p></div>
             </div>
-            <div class="lm-fail" hidden>
-              <b>Odeslání se nepovedlo.</b>
-              <p class="rate-msg" hidden>Zkuste to prosím za chvíli, nebo napište e-mailem.</p>
-              <p>Pošlete mi žádost e-mailem – všechno je předvyplněné.</p>
-              <a class="btn btn-grad lm-mailto" href="mailto:jan@webtitan.cz">Odeslat e-mailem <span class="arr">→</span></a>
-              <small>nebo napište na <a href="mailto:jan@webtitan.cz">jan@webtitan.cz</a></small>
-            </div>
+            <FormFail cls="lm-fail" title="Odeslání se nepovedlo." text="Pošlete mi žádost e-mailem – všechno je předvyplněné." mailtoClass="lm-mailto" />
           </form>
         </div>
       </div>
@@ -477,7 +480,7 @@ const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#f
           <h3>Bezplatné posouzení procesu</h3>
           <p>Do 2 pracovních dnů vám napíšu, jestli a&nbsp;jak se to dá zjednodušit.</p>
           <form class="lm-form" data-kind="app" data-source="section" novalidate>
-            <div class="hp" aria-hidden="true"><label for="hp-lm-app">Nevyplňujte</label><input type="text" id="hp-lm-app" name="website" value="" tabindex="-1" autocomplete="off" aria-hidden="true"></div>
+            <Honeypot id="hp-lm-app" />
             <div class="lm-fields">
               <div class="fld">
                 <label for="lm-text-s">Popište proces nebo vložte odkaz na tabulku *</label>
@@ -490,20 +493,14 @@ const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#f
                 <p class="err-msg" id="e-lm-email-a"></p>
               </div>
               <button class="btn btn-grad" type="submit" data-cta="lm_app"><span class="lbl">Chci posouzení zdarma</span> <span class="arr">→</span></button>
-              <p class="lm-note"><a href="mailto:jan@webtitan.cz?subject=Tabulka%20k%20posouzen%C3%AD" data-cta="lm_app_mail">Raději pošlete soubor e-mailem</a></p>
-              <p class="consent">Odesláním souhlasíte se zpracováním údajů pro vyřízení poptávky – <a href="/ochrana-osobnich-udaju.html">zásady ochrany osobních údajů</a>.</p>
+              <p class="lm-note"><a href={`mailto:${EMAIL}?subject=Tabulka%20k%20posouzen%C3%AD`} data-cta="lm_app_mail">Raději pošlete soubor e-mailem</a></p>
+              <Consent />
             </div>
             <div class="lm-done" hidden tabindex="-1">
               <span class="done-ic sm"><svg><use href="#i-check"/></svg></span>
               <div><b>Díky, mám to u&nbsp;sebe.</b><p>Do 2 pracovních dnů vám napíšu, jestli a&nbsp;jak se dá váš proces zjednodušit.</p></div>
             </div>
-            <div class="lm-fail" hidden>
-              <b>Odeslání se nepovedlo.</b>
-              <p class="rate-msg" hidden>Zkuste to prosím za chvíli, nebo napište e-mailem.</p>
-              <p>Pošlete to prosím e-mailem – text jsem vám připravil.</p>
-              <a class="btn btn-grad lm-mailto" href="mailto:jan@webtitan.cz">Odeslat e-mailem <span class="arr">→</span></a>
-              <small>nebo napište na <a href="mailto:jan@webtitan.cz">jan@webtitan.cz</a></small>
-            </div>
+            <FormFail cls="lm-fail" title="Odeslání se nepovedlo." text="Pošlete to prosím e-mailem – text jsem vám připravil." mailtoClass="lm-mailto" />
           </form>
         </div>
       </div>
@@ -519,7 +516,7 @@ const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#f
         <p>Každá cesta má své místo. Tady je poctivé srovnání, ať se rozhodnete správně.</p>
       </div>
       <div class="card cmp-anchor rv">
-        <p><b>Aplikace na míru od 24&nbsp;950&nbsp;Kč jednorázově.</b> Žádné měsíční licence za každého uživatele – zaplatíte jednou a&nbsp;aplikace je vaše. Platíte jen provoz a&nbsp;správu.</p>
+        <p><b>Aplikace na míru od <Fragment set:html={castka("app")} /> jednorázově.</b> Žádné měsíční licence za každého uživatele – zaplatíte jednou a&nbsp;aplikace je vaše. Platíte jen provoz a&nbsp;správu.</p>
         <a href="#kontakt" class="btn btn-grad" data-open="call" data-cta="compare_call"><svg><use href="#i-phone"/></svg>Probrat to na hovoru</a>
       </div>
       <div class="ctab rv" role="group" aria-label="Srovnání alternativ">
@@ -561,8 +558,8 @@ const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#f
         </div>
         <div class="ccol me">
           <div class="chd"><b>Se mnou</b><span>na míru, bez prostředníků</span></div>
-          <div class="cell"><span class="lb">Cena na začátku</span><span class="st good"></span><span>Aplikace od 24&nbsp;950&nbsp;Kč, web od 9&nbsp;970&nbsp;Kč</span></div>
-          <div class="cell"><span class="lb">Dlouhodobě</span><span class="st good"></span><span>Bez licencí za uživatele – jen provoz a&nbsp;správa od 990&nbsp;Kč/měsíc</span></div>
+          <div class="cell"><span class="lb">Cena na začátku</span><span class="st good"></span><span>Aplikace od <Fragment set:html={castka("app")} />, web od <Fragment set:html={castka("web")} /></span></div>
+          <div class="cell"><span class="lb">Dlouhodobě</span><span class="st good"></span><span>Bez licencí za uživatele – jen provoz a&nbsp;správa od <Fragment set:html={castka("srv")} />/měsíc</span></div>
           <div class="cell"><span class="lb">Přizpůsobení</span><span class="st good"></span><span>Přesně podle toho, jak pracujete</span></div>
           <div class="cell"><span class="lb">Čas do spuštění</span><span class="st good"></span><span>Typicky 3–6 týdnů</span></div>
           <div class="cell"><span class="lb">Data</span><span class="st good"></span><span>Vám – kód, data i&nbsp;doména</span></div>
@@ -572,9 +569,9 @@ const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#f
       <p class="cmp-foot rv">Srovnání je zjednodušené. Když bude pro vás lepší hotová krabice, rád vám to řeknu.</p>
       <div class="guarantees">
         <div class="card g rv"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5 3.4 9.3 8 11 4.6-1.7 8-6 8-11V5z"/><path d="m9 12 2 2 4-4"/></svg></span><div><b>Pevná cena předem</b><span>Co si odsouhlasíme, to platí.</span></div></div>
-        <div class="card g rv"><span class="ic"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><div><b>Konzultace zdarma a&nbsp;nezávazně</b><span>Nic nepodepisujete.</span></div></div>
+        <div class="card g rv"><span class="ic"><svg viewBox="0 0 24 24"><use href="#i-chat"/></svg></span><div><b>Konzultace zdarma a&nbsp;nezávazně</b><span>Nic nepodepisujete.</span></div></div>
         <div class="card g rv"><span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span><div><b>Kód, data i&nbsp;doména patří vám</b><span>Nejste na mně závislí.</span></div></div>
-        <div class="card g rv"><span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><div><b>Jednáte přímo se mnou</b><span>Kdo s&nbsp;vámi mluví, ten to i&nbsp;staví.</span></div></div>
+        <div class="card g rv"><span class="ic"><svg viewBox="0 0 24 24"><use href="#i-user"/></svg></span><div><b>Jednáte přímo se mnou</b><span>Kdo s&nbsp;vámi mluví, ten to i&nbsp;staví.</span></div></div>
       </div>
     </div>
   </section>
@@ -667,9 +664,9 @@ const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#f
           <div class="sign">
             <div class="name"><b>Jan Šporek</b><svg viewBox="0 0 170 18" aria-hidden="true"><path d="M2 12c30-8 60-10 90-6s50 3 76-4"/></svg><small>WebTitan · Karlovy Vary · Sokolov · Plzeň</small></div>
             <div class="socials">
-              <a class="icon-btn" href="mailto:jan@webtitan.cz" aria-label="E-mail"><svg viewBox="0 0 24 24"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm1 2.3V17h16V7.3l-8 5.6-8-5.6zM5.4 7l6.6 4.6L18.6 7H5.4z"/></svg></a>
-              <a class="icon-btn" href="https://www.linkedin.com/in/jan-%C5%A1porek-07a39168/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a>
-              <a class="icon-btn" href="https://github.com/jansporek" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.18 1.84 1.18 3.1 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.68.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg></a>
+              <a class="icon-btn" href={`mailto:${EMAIL}`} aria-label="E-mail"><svg viewBox="0 0 24 24"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm1 2.3V17h16V7.3l-8 5.6-8-5.6zM5.4 7l6.6 4.6L18.6 7H5.4z"/></svg></a>
+              <a class="icon-btn" href={LINKEDIN} target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><use href="#i-in"/></svg></a>
+              <a class="icon-btn" href={GITHUB} target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.18 1.84 1.18 3.1 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.68.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg></a>
             </div>
           </div>
           </div>
@@ -689,14 +686,7 @@ const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#f
           <a href="#kontakt" class="btn btn-grad" data-open="call" data-cta="faq_call"><svg><use href="#i-phone"/></svg>Domluvit 15min hovor</a>
           <a href="#kontakt" class="link-cta" data-open="form" data-cta="faq_form">nebo poslat poptávku <span class="arr">→</span></a>
         </div>
-        <div class="faq-list">
-          {faq.map((f, i) => (
-          <details class="rv" open={i === 0}>
-            <summary><Fragment set:html={f.q} /><span class="pm"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></summary>
-            <p class="ans" set:html={f.a}></p>
-          </details>
-          ))}
-        </div>
+        <div class="faq-list"><FaqItems items={faq} reveal /></div>
       </div>
     </div>
   </section>
@@ -711,7 +701,7 @@ const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#f
             <h2>Pojďme to nezávazně probrat</h2>
           </div>
           <p class="lead">Vyberte si, co je vám příjemnější: krátký hovor, nebo pár vět v&nbsp;poptávce. Ozvu se do 24 hodin (v&nbsp;pracovní dny).</p>
-          <p><span class="cap-badge" data-capacity hidden></span></p>
+          {VOLNA_KAPACITA && <p><span class="cap-badge">{VOLNA_KAPACITA}</span></p>}
           <div class="me-row">
             <span class="avatar" role="img" aria-label="Jan Šporek"></span>
             <div><b>Napíšete přímo mně</b><span>Jan Šporek · odpovídám osobně do 24 hodin (v&nbsp;pracovní dny)</span></div>
@@ -729,8 +719,8 @@ const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#f
             <li><span class="tick"><svg><use href="#i-check"/></svg></span>Konzultace zdarma a&nbsp;nezávazně</li>
             <li><span class="tick"><svg><use href="#i-check"/></svg></span>Kód, data i&nbsp;doména patří vám</li>
           </ul>
-          <p class="clients-mini"><b>Realizace pro:</b> Fitness Ural, GP Rooms, Hostel Loket, Skripta Prokop, GP Tents a&nbsp;další</p>
-          <p class="direct">Radši rovnou zavolat? <a href="tel:+420723793510" data-cta="contact_tel">723&nbsp;793&nbsp;510</a><br>Nebo pište na <a href="mailto:jan@webtitan.cz">jan@webtitan.cz</a></p>
+          <p class="clients-mini"><b>Realizace pro:</b> Fitness Ural, GP Rooms, Hostel Loket, Skripta Prokop, GP Tents a&nbsp;další – část z&nbsp;nich vznikla pro <a href={ZADAVATELE.vujo.url} target="_blank" rel="noopener">{ZADAVATELE.vujo.nazev}</a></p>
+          <p class="direct">Radši rovnou zavolat? <a href={`tel:${PHONE}`} data-cta="contact_tel" set:html={PHONE_SHORT}></a><br>Nebo pište na <a href={`mailto:${EMAIL}`}>{EMAIL}</a></p>
         </aside>
 
         <div class="card form-card gb rv" id="contact-card">
@@ -752,7 +742,7 @@ const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#f
               <p>Termín vám potvrdím e-mailem do 24 hodin (v&nbsp;pracovní dny).</p>
             </div>
             <form id="book-form" novalidate>
-              <div class="hp" aria-hidden="true"><label for="hp-bk">Nevyplňujte</label><input type="text" id="hp-bk" name="website" value="" tabindex="-1" autocomplete="off" aria-hidden="true"></div>
+              <Honeypot id="hp-bk" />
               <div class="bk-q">
                 <p class="qf-label" id="bl-day">1. Den</p>
                 <div class="days" id="book-days" role="radiogroup" aria-labelledby="bl-day" aria-describedby="e-bk-day"></div>
@@ -820,15 +810,9 @@ const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#f
               <div class="qf-nav">
                 <button type="submit" class="btn btn-grad" id="bk-submit" data-cta="call_submit"><span class="lbl">Domluvit hovor</span> <span class="arr">→</span></button>
               </div>
-              <p class="consent">Odesláním souhlasíte se zpracováním údajů pro vyřízení poptávky – <a href="/ochrana-osobnich-udaju.html">zásady ochrany osobních údajů</a>.</p>
+              <Consent />
               <p class="form-status" id="bk-status" role="status" aria-live="polite"></p>
-              <div class="qf-fail" id="bk-fail" hidden>
-                <b>Odeslání se nepovedlo – žádost se ale neztratí.</b>
-                <p class="rate-msg" hidden>Zkuste to prosím za chvíli, nebo napište e-mailem.</p>
-                <p>Klikněte na tlačítko a&nbsp;pošlete ji e-mailem. Termín i&nbsp;kontakt jsou předvyplněné.</p>
-                <a class="btn btn-grad" id="bk-mailto" href="mailto:jan@webtitan.cz">Odeslat e-mailem <span class="arr">→</span></a>
-                <small>nebo napište přímo na <a href="mailto:jan@webtitan.cz">jan@webtitan.cz</a></small>
-              </div>
+              <FormFail cls="qf-fail" id="bk-fail" title="Odeslání se nepovedlo – žádost se ale neztratí." text="Klikněte na tlačítko a&nbsp;pošlete ji e-mailem. Termín i&nbsp;kontakt jsou předvyplněné." mailtoId="bk-mailto" directly />
             </form>
             <div class="qf-done" id="bk-done" hidden>
               <span class="done-ic"><svg><use href="#i-check"/></svg></span>
@@ -852,17 +836,17 @@ const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#f
             </div>
 
             <form id="contact-form" novalidate>
-              <div class="hp" aria-hidden="true"><label for="hp-qf">Nevyplňujte</label><input type="text" id="hp-qf" name="website" value="" tabindex="-1" autocomplete="off" aria-hidden="true"></div>
+              <Honeypot id="hp-qf" />
               <!-- step 1 -->
               <div class="qf-step" data-step="1" role="group" aria-labelledby="qs1">
                 <h3 class="qf-title" id="qs1" tabindex="-1">Co potřebujete?</h3>
                 <p class="qf-sub">Vyberte jednu možnost – zbytek doladíme spolu.</p>
                 <div class="qf-tiles">
-                  <button type="button" class="qtile" data-type="Aplikace na míru" aria-pressed="false"><span class="qt-ic"><svg><use href="#i-app"/></svg></span><span class="qt-tx"><b>Aplikace na míru</b><small>od&nbsp;24&nbsp;950&nbsp;Kč</small></span></button>
+                  <button type="button" class="qtile" data-type="Aplikace na míru" aria-pressed="false"><span class="qt-ic"><svg><use href="#i-app"/></svg></span><span class="qt-tx"><b>Aplikace na míru</b><small>od&nbsp;<Fragment set:html={castka("app")} /></small></span></button>
                   <button type="button" class="qtile" data-type="Mobilní aplikace" aria-pressed="false"><span class="qt-ic"><svg><use href="#i-mobile"/></svg></span><span class="qt-tx"><b>Mobilní aplikace</b><small>iOS i&nbsp;Android</small></span></button>
-                  <button type="button" class="qtile" data-type="Web" aria-pressed="false"><span class="qt-ic"><svg><use href="#i-web"/></svg></span><span class="qt-tx"><b>Web</b><small>od&nbsp;9&nbsp;970&nbsp;Kč</small></span></button>
-                  <button type="button" class="qtile" data-type="E-shop" aria-pressed="false"><span class="qt-ic"><svg><use href="#i-shop"/></svg></span><span class="qt-tx"><b>E-shop</b><small>od&nbsp;19&nbsp;870&nbsp;Kč</small></span></button>
-                  <button type="button" class="qtile" data-type="Správa serveru" aria-pressed="false"><span class="qt-ic"><svg><use href="#i-srv"/></svg></span><span class="qt-tx"><b>Správa serveru</b><small>od&nbsp;990&nbsp;Kč/měs.</small></span></button>
+                  <button type="button" class="qtile" data-type="Web" aria-pressed="false"><span class="qt-ic"><svg><use href="#i-web"/></svg></span><span class="qt-tx"><b>Web</b><small>od&nbsp;<Fragment set:html={castka("web")} /></small></span></button>
+                  <button type="button" class="qtile" data-type="E-shop" aria-pressed="false"><span class="qt-ic"><svg><use href="#i-shop"/></svg></span><span class="qt-tx"><b>E-shop</b><small>od&nbsp;<Fragment set:html={castka("shop")} /></small></span></button>
+                  <button type="button" class="qtile" data-type="Správa serveru" aria-pressed="false"><span class="qt-ic"><svg><use href="#i-srv"/></svg></span><span class="qt-tx"><b>Správa serveru</b><small>od&nbsp;<Fragment set:html={castka("srv")} />/měs.</small></span></button>
                   <button type="button" class="qtile" data-type="Zatím nevím" aria-pressed="false"><span class="qt-ic"><svg><use href="#i-q"/></svg></span><span class="qt-tx"><b>Zatím nevím</b><small>Poradím vám zdarma</small></span></button>
                 </div>
                 <p class="err-msg" id="e-typ" role="alert"></p>
@@ -984,14 +968,8 @@ const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#f
                   <button type="button" class="btn btn-line" data-goto="2">← Zpět</button>
                   <button type="submit" class="btn btn-grad" id="qf-submit" data-cta="form_submit"><span class="lbl">Odeslat poptávku</span> <span class="arr">→</span></button>
                 </div>
-                <p class="consent">Odesláním souhlasíte se zpracováním údajů pro vyřízení poptávky – <a href="/ochrana-osobnich-udaju.html">zásady ochrany osobních údajů</a>.</p>
-                <div class="qf-fail" id="qf-fail" hidden>
-                  <b>Odeslání se nepovedlo – poptávka se ale neztratí.</b>
-                  <p class="rate-msg" hidden>Zkuste to prosím za chvíli, nebo napište e-mailem.</p>
-                  <p>Klikněte na tlačítko a&nbsp;pošlete ji e-mailem. Všechno, co jste vyplnili, je předvyplněné.</p>
-                  <a class="btn btn-grad" id="qf-mailto" href="mailto:jan@webtitan.cz">Odeslat e-mailem <span class="arr">→</span></a>
-                  <small>nebo napište přímo na <a href="mailto:jan@webtitan.cz">jan@webtitan.cz</a></small>
-                </div>
+                <Consent />
+                <FormFail cls="qf-fail" id="qf-fail" title="Odeslání se nepovedlo – poptávka se ale neztratí." text="Klikněte na tlačítko a&nbsp;pošlete ji e-mailem. Všechno, co jste vyplnili, je předvyplněné." mailtoId="qf-mailto" directly />
               </div>
               <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
             </form>
@@ -1016,10 +994,7 @@ const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#f
 
 <Footer variant="home" />
 
-<div class="mobile-cta" id="mobile-cta" aria-hidden="true">
-  <a href="tel:+420723793510" class="mc-tel" tabindex="-1" data-cta="mobile_bar_tel">Volejte rovnou<b>723&nbsp;793&nbsp;510</b></a>
-  <a href="#kontakt" class="btn btn-grad" tabindex="-1" data-open="call" data-cta="mobile_bar"><svg><use href="#i-phone"/></svg>Domluvit hovor</a>
-</div>
+<MobileBar variant="home" />
 
 <!-- exit-intent: desktop (mouse leaves the page) + phones (quick scroll back up, return to the tab) -->
 <dialog class="exit" id="exit-dlg" aria-labelledby="exit-t">
@@ -1030,7 +1005,7 @@ const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#f
     <h2 id="exit-t-app">Vyplatí se vám aplikace? Řeknu vám to zdarma</h2>
     <p>Popište v&nbsp;pár větách, jak dnes pracujete, nebo vložte odkaz na tabulku. Do 2 pracovních dnů vám napíšu, jestli a&nbsp;jak se to dá zjednodušit a&nbsp;kolik by to zhruba stálo.</p>
     <form class="lm-form" data-kind="app" data-source="exit" novalidate>
-      <div class="hp" aria-hidden="true"><label for="hp-lm-exit-a">Nevyplňujte</label><input type="text" id="hp-lm-exit-a" name="website" value="" tabindex="-1" autocomplete="off" aria-hidden="true"></div>
+      <Honeypot id="hp-lm-exit-a" />
       <div class="lm-fields">
         <div class="fld wide">
           <label for="lm-text-x">Co dnes řešíte? *</label>
@@ -1044,19 +1019,13 @@ const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#f
         </div>
         <button class="btn btn-grad" type="submit" data-cta="exit_lm_app"><span class="lbl">Chci posouzení zdarma</span> <span class="arr">→</span></button>
         <p class="lm-note" style="width:100%">Zdarma, bez závazku a&nbsp;bez obchodních telefonátů.</p>
-        <p class="consent">Odesláním souhlasíte se zpracováním údajů pro vyřízení poptávky – <a href="/ochrana-osobnich-udaju.html">zásady ochrany osobních údajů</a>.</p>
+        <Consent />
       </div>
       <div class="lm-done" hidden tabindex="-1">
         <span class="done-ic sm"><svg><use href="#i-check"/></svg></span>
         <div><b>Díky, mám to u&nbsp;sebe.</b><p>Do 2 pracovních dnů vám napíšu, jestli a&nbsp;jak se dá váš proces zjednodušit.</p></div>
       </div>
-      <div class="lm-fail" hidden>
-        <b>Odeslání se nepovedlo.</b>
-        <p class="rate-msg" hidden>Zkuste to prosím za chvíli, nebo napište e-mailem.</p>
-        <p>Pošlete mi to prosím e-mailem – text jsem vám připravil.</p>
-        <a class="btn btn-grad lm-mailto" href="mailto:jan@webtitan.cz">Odeslat e-mailem <span class="arr">→</span></a>
-        <small>nebo napište na <a href="mailto:jan@webtitan.cz">jan@webtitan.cz</a></small>
-      </div>
+      <FormFail cls="lm-fail" title="Odeslání se nepovedlo." text="Pošlete mi to prosím e-mailem – text jsem vám připravil." mailtoClass="lm-mailto" />
     </form>
     </div>
     <div class="exit-v" data-only="web" hidden>
@@ -1064,7 +1033,7 @@ const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#f
     <h2 id="exit-t">Chcete zdarma zkontrolovat svůj web?</h2>
     <p>Pošlete mi odkaz a&nbsp;do 2 pracovních dnů vám zdarma pošlu 5 konkrétních věcí, které vám berou poptávky.</p>
     <form class="lm-form" data-kind="web" data-source="exit" novalidate>
-      <div class="hp" aria-hidden="true"><label for="hp-lm-exit">Nevyplňujte</label><input type="text" id="hp-lm-exit" name="website" value="" tabindex="-1" autocomplete="off" aria-hidden="true"></div>
+      <Honeypot id="hp-lm-exit" />
       <div class="lm-fields">
         <div class="fld">
           <label for="lm-url-x">Adresa vašeho webu *</label>
@@ -1078,19 +1047,13 @@ const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#f
         </div>
         <button class="btn btn-grad" type="submit" data-cta="exit_lm"><span class="lbl">Chci kontrolu zdarma</span> <span class="arr">→</span></button>
         <p class="lm-note" style="width:100%">E-mail použiji jen k&nbsp;zaslání výsledku.</p>
-        <p class="consent">Odesláním souhlasíte se zpracováním údajů pro vyřízení poptávky – <a href="/ochrana-osobnich-udaju.html">zásady ochrany osobních údajů</a>.</p>
+        <Consent />
       </div>
       <div class="lm-done" hidden tabindex="-1">
         <span class="done-ic sm"><svg><use href="#i-check"/></svg></span>
         <div><b>Děkuji, mám to!</b><p>Do 2 pracovních dnů vám pošlu 5 tipů pro <span class="lm-site"></span>.</p></div>
       </div>
-      <div class="lm-fail" hidden>
-        <b>Odeslání se nepovedlo.</b>
-        <p class="rate-msg" hidden>Zkuste to prosím za chvíli, nebo napište e-mailem.</p>
-        <p>Pošlete mi žádost e-mailem – všechno je předvyplněné.</p>
-        <a class="btn btn-grad lm-mailto" href="mailto:jan@webtitan.cz">Odeslat e-mailem <span class="arr">→</span></a>
-        <small>nebo napište na <a href="mailto:jan@webtitan.cz">jan@webtitan.cz</a></small>
-      </div>
+      <FormFail cls="lm-fail" title="Odeslání se nepovedlo." text="Pošlete mi žádost e-mailem – všechno je předvyplněné." mailtoClass="lm-mailto" />
     </form>
     </div>
     <p class="exit-alt">
@@ -1099,5 +1062,5 @@ const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#f
     </p>
   </div>
 </dialog>
-<script is:inline set:html={homeJs}></script>
+<script is:inline set:html={minJs(homeJs, "home.js")}></script>
 </Base>

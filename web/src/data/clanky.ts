@@ -18,13 +18,15 @@ export interface Clanek {
   perex: string;
   /** Datum vydání (RRRR-MM-DD). */
   datum: string;
+  /** Datum poslední větší úpravy textu (RRRR-MM-DD) – do strukturovaných dat (dateModified) a sitemapy. */
+  upraveno?: string;
   /** Doba čtení v minutách. */
   cteni: number;
   /** <title> stránky. */
   title: string;
   /** Titulek pro sdílení (og:title). */
   ogTitulek: string;
-  /** Nabídka pro lead.js (data-offer), např. "app", "web". */
+  /** Okno při odchodu: "app" (posouzení procesu) nebo "web" (kontrola webu); bez něj se okno nezobrazí. */
   nabidka?: string;
   /** Kontaktní sekce pod článkem. */
   poptavka: { heading: string; topic: string; placeholder: string };
@@ -33,6 +35,8 @@ export interface Clanek {
   sluzby: SluzbaId[];
   /** Úvod medailonku autora, když se má lišit od výchozího „weby a aplikace stavím od roku 2006.“ */
   autorUvod?: string;
+  /** Výzva na konci textu článku (nadpis a odstavec, pod nimi tlačítka hovor / poptávka). */
+  cta: { nadpis: string; text: string };
 }
 
 export const CLANKY: Clanek[] = [
@@ -51,6 +55,7 @@ export const CLANKY: Clanek[] = [
     souvisejici: ["weby-a-aplikace-karlovy-vary-plzen", "online-rezervace-pro-penzion"],
     sluzby: ["it", "srv"],
     autorUvod: "weby, aplikace a&nbsp;servery stavím od roku 2006.",
+    cta: { nadpis: "Chcete vědět, jak na tom vaše firma je? Probereme to za 15&nbsp;minut", text: "Řekněte mi, kolik máte počítačů, co dnes zálohujete a&nbsp;co po vás chtějí odběratelé. Poradím, čím začít. Nezávazně a&nbsp;zdarma." },
   },
   {
     slug: "online-rezervace-pro-penzion",
@@ -68,6 +73,7 @@ export const CLANKY: Clanek[] = [
     poptavka: {"heading": "Rezervace pro váš penzion? Probereme to", "topic": "Rezervační systém", "placeholder": "Např. máme penzion s 8 pokoji u Lokte a chceme rezervace přímo na webu."},
     souvisejici: ["weby-a-aplikace-karlovy-vary-plzen", "kolik-stoji-web-a-e-shop"],
     sluzby: ["web", "app"],
+    cta: { nadpis: "Chcete víc přímých rezervací? Probereme to za 15&nbsp;minut", text: "Řekněte mi, kolik máte pokojů a&nbsp;jak dnes rezervace řešíte. Poradím, jestli stačí hotová služba, nebo se vyplatí vlastní systém. Nezávazně a&nbsp;zdarma." },
   },
   {
     slug: "web-pro-remeslniky-a-mistni-firmy",
@@ -85,6 +91,7 @@ export const CLANKY: Clanek[] = [
     poptavka: {"heading": "Web pro vaši firmu? Probereme to", "topic": "Web", "placeholder": "Např. jsme truhlářství ze Sokolova a chceme web, ze kterého budou chodit zakázky."},
     souvisejici: ["kolik-stoji-web-a-e-shop", "weby-a-aplikace-karlovy-vary-plzen"],
     sluzby: ["web", "srv"],
+    cta: { nadpis: "Chcete web, ze kterého volají zákazníci?", text: "Pošlete mi odkaz na současný web, nebo popište, co děláte. Řeknu vám, co zlepšit a&nbsp;kolik by stál nový. Nezávazně a&nbsp;zdarma." },
   },
   {
     slug: "jak-vybrat-dodavatele-webu",
@@ -101,6 +108,7 @@ export const CLANKY: Clanek[] = [
     poptavka: {"heading": "Porovnáváte nabídky? Probereme to", "topic": "Zatím nevím", "placeholder": "Např. máme nabídku na nový web za 60 000 Kč a nevíme, jestli je to hodně."},
     souvisejici: ["kolik-stoji-aplikace-na-miru", "kolik-stoji-web-a-e-shop"],
     sluzby: ["app", "web"],
+    cta: { nadpis: "Porovnáváte nabídky? Ozvěte se", text: "Pošlete mi zadání nebo nabídku, kterou máte na stole. Řeknu vám, co v&nbsp;ní případně chybí a&nbsp;kolik by to stálo u&nbsp;mě. Nezávazně a&nbsp;zdarma." },
   },
   {
     slug: "kolik-stoji-aplikace-na-miru",
@@ -117,6 +125,7 @@ export const CLANKY: Clanek[] = [
     poptavka: {"heading": "Kolik by stála ta vaše? Řeknu vám to", "topic": "Aplikace na míru", "placeholder": "Např. potřebujeme evidenci zakázek pro 5 lidí, dnes to vedeme v Excelu."},
     souvisejici: ["excel-nebo-aplikace", "kolik-stoji-web-a-e-shop"],
     sluzby: ["app", "mob"],
+    cta: { nadpis: "Chcete vědět, kolik by stála vaše aplikace?", text: "Popište mi v&nbsp;pár větách, co vás dnes zdržuje. Do 24 hodin (v&nbsp;pracovní dny) se ozvu s&nbsp;tím, jestli a&nbsp;jak to jde a&nbsp;v&nbsp;jakém cenovém rozmezí se pohybujeme." },
   },
   {
     slug: "excel-nebo-aplikace",
@@ -133,6 +142,7 @@ export const CLANKY: Clanek[] = [
     poptavka: {"heading": "Vyplatí se to i u&nbsp;vás? Probereme to", "topic": "Aplikace na míru", "placeholder": "Např. máme tři tabulky, které každý týden ručně slučujeme."},
     souvisejici: ["kolik-stoji-aplikace-na-miru", "weby-a-aplikace-karlovy-vary-plzen"],
     sluzby: ["app", "mob"],
+    cta: { nadpis: "Poznali jste se? Probereme to za 15 minut", text: "Ukažte mi, jak dnes pracujete, a&nbsp;já vám řeknu, jestli se aplikace vyplatí, nebo jestli stačí tabulky jen lépe uspořádat. Nezávazně a&nbsp;zdarma." },
   },
   {
     slug: "kolik-stoji-web-a-e-shop",
@@ -149,6 +159,7 @@ export const CLANKY: Clanek[] = [
     poptavka: {"heading": "Kolik by stál ten váš? Řeknu vám to", "topic": "Web", "placeholder": "Např. potřebujeme web pro truhlářství s galerií a poptávkovým formulářem."},
     souvisejici: ["weby-a-aplikace-karlovy-vary-plzen", "kolik-stoji-aplikace-na-miru"],
     sluzby: ["web", "shop"],
+    cta: { nadpis: "Chcete web, který přivádí poptávky?", text: "Napište mi, co vaše firma dělá a&nbsp;co má web umět. Ozvu se do 24 hodin (v&nbsp;pracovní dny) s&nbsp;návrhem a&nbsp;pevnou cenou." },
   },
   {
     slug: "weby-a-aplikace-karlovy-vary-plzen",
@@ -165,6 +176,7 @@ export const CLANKY: Clanek[] = [
     poptavka: {"heading": "Jste z&nbsp;Karlovarského nebo Plzeňského kraje? Potkejme se", "topic": "Zatím nevím", "placeholder": "Např. potřebujeme nový web a rezervace pro náš penzion u Karlových Varů."},
     souvisejici: ["kolik-stoji-web-a-e-shop", "excel-nebo-aplikace"],
     sluzby: ["web", "app"],
+    cta: { nadpis: "Jste z&nbsp;Karlovarského nebo Plzeňského kraje?", text: "Domluvme si nezávazný 15minutový hovor – a&nbsp;pokud to dává smysl, rád se za vámi zastavím osobně." },
   },
 ];
 

@@ -46,38 +46,67 @@ function wt_config(): array
     return $cfg;
 }
 
+/** Verze schématu leads (PRAGMA user_version). Při změně tabulky, sloupců nebo indexů níž zvýšit o 1. */
+const WT_LEADS_SCHEMA = 1;
+
 /**
  * Databáze poptávek; založí tabulku a doplní sloupce, které přibyly později:
  * attempts / last_try = opakované doručení (health.php), confirm = stav potvrzení zákazníkovi.
+ * Schéma se zakládá a kontroluje jen jednou na verzi (user_version), ne při každém požadavku.
  */
 function wt_leads_db(): PDO
 {
     $db = new PDO('sqlite:' . WT_DATA_DIR . '/leads.sqlite', null, null, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+    // platí jen pro toto spojení → vždy
     $db->exec('PRAGMA busy_timeout = 3000');
+    if ((int) $db->query('PRAGMA user_version')->fetchColumn() >= WT_LEADS_SCHEMA) {
+        return $db;
+    }
+    // WAL se uloží do souboru databáze, stačí jednou (uvnitř transakce ho změnit nejde)
     $db->exec('PRAGMA journal_mode = WAL');
-    $db->exec('CREATE TABLE IF NOT EXISTS leads (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        created INTEGER NOT NULL,
-        source TEXT NOT NULL, name TEXT NOT NULL, email TEXT NOT NULL, phone TEXT NOT NULL,
-        message TEXT NOT NULL, page TEXT NOT NULL, ip TEXT NOT NULL, ua TEXT NOT NULL,
-        spam INTEGER NOT NULL DEFAULT 0, status TEXT NOT NULL DEFAULT \'new\', info TEXT NOT NULL DEFAULT \'\'
-    )');
-    $db->exec('CREATE INDEX IF NOT EXISTS leads_ip_created ON leads (ip, created)');
-    $have = array_column($db->query('PRAGMA table_info(leads)')->fetchAll(PDO::FETCH_ASSOC), 'name');
-    $add = [
-        'attempts' => 'INTEGER NOT NULL DEFAULT 0',
-        'last_try' => 'INTEGER NOT NULL DEFAULT 0',
-        'confirm'  => 'TEXT NOT NULL DEFAULT \'\'',
-        // '' = CRM není nastavené, pending = čeká na odeslání, sent / failed
-        'crm'      => 'TEXT NOT NULL DEFAULT \'\'',
-        // odkud návštěvník přišel: srozumitelný kanál („Google (vyhledávání)“) a podrobnosti jako JSON
-        'channel'     => 'TEXT NOT NULL DEFAULT \'\'',
-        'attribution' => 'TEXT NOT NULL DEFAULT \'\'',
-    ];
-    foreach ($add as $col => $def) {
-        if (!in_array($col, $have, true)) {
-            $db->exec("ALTER TABLE leads ADD COLUMN $col $def");
+    // IMMEDIATE: dva souběžné první požadavky nemigrují zároveň – druhý počká a verzi už najde hotovou
+    $db->exec('BEGIN IMMEDIATE');
+    try {
+        if ((int) $db->query('PRAGMA user_version')->fetchColumn() < WT_LEADS_SCHEMA) {
+            $db->exec('CREATE TABLE IF NOT EXISTS leads (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                created INTEGER NOT NULL,
+                source TEXT NOT NULL, name TEXT NOT NULL, email TEXT NOT NULL, phone TEXT NOT NULL,
+                message TEXT NOT NULL, page TEXT NOT NULL, ip TEXT NOT NULL, ua TEXT NOT NULL,
+                spam INTEGER NOT NULL DEFAULT 0, status TEXT NOT NULL DEFAULT \'new\', info TEXT NOT NULL DEFAULT \'\'
+            )');
+            $have = array_column($db->query('PRAGMA table_info(leads)')->fetchAll(PDO::FETCH_ASSOC), 'name');
+            $add = [
+                'attempts' => 'INTEGER NOT NULL DEFAULT 0',
+                'last_try' => 'INTEGER NOT NULL DEFAULT 0',
+                'confirm'  => 'TEXT NOT NULL DEFAULT \'\'',
+                // '' = CRM není nastavené, pending = čeká na odeslání, sent / failed
+                'crm'      => 'TEXT NOT NULL DEFAULT \'\'',
+                // odkud návštěvník přišel: srozumitelný kanál („Google (vyhledávání)“) a podrobnosti jako JSON
+                'channel'     => 'TEXT NOT NULL DEFAULT \'\'',
+                'attribution' => 'TEXT NOT NULL DEFAULT \'\'',
+            ];
+            foreach ($add as $col => $def) {
+                if (!in_array($col, $have, true)) {
+                    $db->exec("ALTER TABLE leads ADD COLUMN $col $def");
+                }
+            }
+            // limity na IP (contact.php)
+            $db->exec('CREATE INDEX IF NOT EXISTS leads_ip_created ON leads (ip, created)');
+            // časová okna: denní limit, potvrzení, CRM v health.php
+            $db->exec('CREATE INDEX IF NOT EXISTS leads_created ON leads (created)');
+            // nedoručené poptávky v health.php (status = 'failed' AND created > ?)
+            $db->exec('CREATE INDEX IF NOT EXISTS leads_status_created ON leads (status, created)');
+            $db->exec('PRAGMA user_version = ' . WT_LEADS_SCHEMA);
         }
+        $db->exec('COMMIT');
+    } catch (Throwable $e) {
+        try {
+            $db->exec('ROLLBACK');
+        } catch (Throwable) {
+            // transakci už zrušilo samo SQLite
+        }
+        throw $e;
     }
     return $db;
 }

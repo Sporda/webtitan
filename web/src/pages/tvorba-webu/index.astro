@@ -1,7 +1,12 @@
 ---
+import ServiceSum from "../../components/ServiceSum.astro";
+import HeroMicro from "../../components/HeroMicro.astro";
+import Crumbs from "../../components/Crumbs.astro";
+import CtaPair from "../../components/CtaPair.astro";
+import { castka, castkaText, sluzba } from "../../data/sluzby";
 import RefCase from "../../components/RefCase.astro";
 import RefThumb from "../../components/RefThumb.astro";
-import { ZADAVATELE } from "../../data/reference";
+import OthersCard from "../../components/OthersCard.astro";
 import Sub from "../../layouts/Sub.astro";
 import Faq from "../../components/Faq.astro";
 import OtherServices from "../../components/OtherServices.astro";
@@ -9,12 +14,14 @@ import { graph, serviceLd, crumbsLd, faqLd } from "../../lib/ld";
 import { otazky } from "../../data/otazky";
 
 const path = "/tvorba-webu/";
-const description = "Tvorba webových stránek na míru od 9 970 Kč pro firmy z Karlovarského a Plzeňského kraje. Design bez šablony, poptávky do e-mailu, obsah si upravíte sami.";
+const description = `Tvorba webových stránek na míru od ${castkaText("web")} pro firmy z Karlovarského a Plzeňského kraje. Design bez šablony, poptávky do e-mailu, obsah si upravíte sami.`;
 /** Časté otázky (data/otazky.ts) – zobrazí se na stránce a zároveň jdou do strukturovaných dat. */
 const faq = otazky(["budu-si-moci-web", "jak-dlouho-trva", "kolik-bude-stat", "komu-patri-aplikace-web", "postarate-hosting-provoz", "nemam-presne-zadani-vadi"]);
+/** Drobečková navigace – na stránce i ve strukturovaných datech. */
+const crumbs: [string, string][] = [["Domů", "/"], ["Tvorba webových stránek", path]];
 const jsonLd = graph(
-  serviceLd({ path, name: "Tvorba webových stránek", serviceType: "Tvorba webových stránek", description, minPrice: 9970 }),
-  crumbsLd([["Domů", "/"], ["Tvorba webových stránek", path]]),
+  serviceLd({ path, name: "Tvorba webových stránek", serviceType: "Tvorba webových stránek", description, minPrice: sluzba("web").od }),
+  crumbsLd(crumbs),
   faqLd(faq),
 );
 ---
@@ -22,7 +29,7 @@ const jsonLd = graph(
   title="Tvorba webových stránek – Karlovy Vary, Sokolov, Plzeň | WebTitan"
   description={description}
   path={path}
-  og={{ title: "Tvorba webových stránek na míru od 9 970 Kč – WebTitan" }}
+  og={{ title: `Tvorba webových stránek na míru od ${castkaText("web")} – WebTitan` }}
   jsonLd={jsonLd}
   offer="web"
   cta="sp"
@@ -30,26 +37,17 @@ const jsonLd = graph(
 >
   <section class="sp-hero">
     <div class="wrap">
-      <nav class="crumbs" aria-label="Drobečková navigace"><ol><li><a href="/">Domů</a></li><li aria-current="page">Tvorba webových stránek</li></ol></nav>
+      <Crumbs items={crumbs} />
       <div class="hero-grid">
         <div class="card intro">
           <div><span class="kicker">Firemní web</span></div>
           <h1>Tvorba webových stránek na míru</h1>
           <p class="lead">Firemní web, který zákazníkům rychle řekne, co děláte, a&nbsp;přivede vám poptávky. Postavím vám rychlý a&nbsp;přehledný web přesně podle toho, jak vaše firma funguje – bez agentury, bez zbytečných schůzek, s&nbsp;jedním člověkem, který to celé udělá.</p>
           <ul class="checks"><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Design na míru, žádná šablona</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Poptávkový formulář přímo do e-mailu</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Obsah si upravíte sami</li></ul>
-          <div class="dual"><a href="#poptat" class="btn btn-grad" data-mode="call" data-cta="sp_hero_call"><svg aria-hidden="true"><use href="#i-phone"/></svg>Domluvit 15min hovor</a><a href="#poptat" class="btn btn-line" data-mode="form" data-cta="sp_hero_form">Poslat poptávku</a></div>
-          <p class="micro"><span class="mi"><svg aria-hidden="true"><use href="#i-clock"/></svg>Ozvu se do 24 hodin (v&nbsp;pracovní dny)</span><span class="mi"><svg aria-hidden="true"><use href="#i-pin"/></svg>Karlovarský a&nbsp;Plzeňský kraj – i&nbsp;osobně</span><span class="mi"><svg aria-hidden="true"><use href="#i-phone"/></svg>Volejte rovnou: <a href="tel:+420723793510" data-cta="sp_hero_tel">723&nbsp;793&nbsp;510</a></span></p>
+          <CtaPair track="sp_hero" />
+          <HeroMicro track="sp_hero" />
         </div>
-        <aside class="card sum" aria-label="Shrnutí">
-          <div class="sum-price"><small>Cena</small><b class="gt">od 9 970 Kč</b><span>pevná cena předem</span></div>
-          <dl class="facts">
-            <div class="fact"><dt>Termín</dt><dd>obvykle 2–4 týdny</dd></div>
-            <div class="fact"><dt>Komu patří kód a&nbsp;data</dt><dd>Vám – kód, data i&nbsp;doména</dd></div>
-            <div class="fact"><dt>S&nbsp;kým jednáte</dt><dd>Přímo s&nbsp;tím, kdo to staví</dd></div>
-            <div class="fact"><dt>DPH</dt><dd>Nejsem plátce DPH – ceny jsou konečné</dd></div>
-          </dl>
-          <div class="me-row"><span class="avatar" role="img" aria-label="Jan Šporek"></span><div><b>Jan Šporek</b><span>Weby a&nbsp;aplikace stavím od roku 2006, sídlím u&nbsp;Sokolova. Kdo s&nbsp;vámi mluví, ten to i&nbsp;staví – v&nbsp;Karlovarském a&nbsp;Plzeňském kraji klidně i&nbsp;osobně.</span></div></div>
-        </aside>
+        <ServiceSum price={`od ${castka("web")}`} priceNote="pevná cena předem" termin="obvykle 2–4 týdny" />
       </div>
     </div>
   </section>
@@ -64,7 +62,7 @@ const jsonLd = graph(
   <section class="sec" id="co-dostanete">
     <div class="wrap">
       <div class="head"><div><span class="kicker">Co dostanete</span><h2>Co dostanete s&nbsp;novým webem</h2></div><p>Web je rychlý, srozumitelný a&nbsp;skvěle vypadá i&nbsp;na mobilu – a&nbsp;hlavně je postavený tak, aby z&nbsp;návštěvníků byli zákazníci.</p></div>
-      <div class="get"><div class="card get-item"><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><div><h3>Design na míru, žádná šablona</h3><p>Web navrhnu podle vaší firmy, ne podle hotové šablony.</p></div></div><div class="card get-item"><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><div><h3>Poptávkový formulář přímo do e-mailu</h3><p>Zákazník napíše pár vět a&nbsp;poptávka vám rovnou přijde do e-mailu.</p></div></div><div class="card get-item"><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><div><h3>Obsah si upravíte sami</h3><p>Texty, fotky i&nbsp;novinky si upravíte v&nbsp;jednoduché administraci. Větší změny rád udělám za vás.</p></div></div><div class="card get-item"><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><div><h3>Rychlý a&nbsp;dobře čitelný i&nbsp;na mobilu</h3><p>Web zákazníkům rychle řekne, co děláte, ať si ho prohlížejí kdekoli.</p></div></div><div class="card get-item"><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><div><h3>Doména, kód i&nbsp;data patří vám</h3><p>Nejste na mně závislí – web je celý váš.</p></div></div><div class="card get-item"><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><div><h3>Hosting a&nbsp;správa</h3><p>O&nbsp;servery, aktualizace i&nbsp;zálohy se můžu postarat já, od 990 Kč měsíčně.</p></div></div></div>
+      <div class="get"><div class="card get-item"><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><div><h3>Design na míru, žádná šablona</h3><p>Web navrhnu podle vaší firmy, ne podle hotové šablony.</p></div></div><div class="card get-item"><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><div><h3>Poptávkový formulář přímo do e-mailu</h3><p>Zákazník napíše pár vět a&nbsp;poptávka vám rovnou přijde do e-mailu.</p></div></div><div class="card get-item"><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><div><h3>Obsah si upravíte sami</h3><p>Texty, fotky i&nbsp;novinky si upravíte v&nbsp;jednoduché administraci. Větší změny rád udělám za vás.</p></div></div><div class="card get-item"><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><div><h3>Rychlý a&nbsp;dobře čitelný i&nbsp;na mobilu</h3><p>Web zákazníkům rychle řekne, co děláte, ať si ho prohlížejí kdekoli.</p></div></div><div class="card get-item"><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><div><h3>Doména, kód i&nbsp;data patří vám</h3><p>Nejste na mně závislí – web je celý váš.</p></div></div><div class="card get-item"><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span><div><h3>Hosting a&nbsp;správa</h3><p>O&nbsp;servery, aktualizace i&nbsp;zálohy se můžu postarat já, od <Fragment set:html={castka("srv")} /> měsíčně.</p></div></div></div>
     </div>
   </section>
 
@@ -79,8 +77,8 @@ const jsonLd = graph(
     <div class="wrap">
       <div class="head"><div><span class="kicker">Cena</span><h2>Kolik stojí tvorba webových stránek</h2></div></div>
       <div class="card price-card gb">
-        <div class="price-big"><small>Cena</small><b class="gt">od 9 970 Kč</b><span>pevná cena za konkrétní rozsah</span></div>
-        <div><ul><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Pevnou cenu dostanete po úvodním hovoru – co si odsouhlasíme, to platí.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Firemní web bývá hotový obvykle za 2–4 týdny.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Provoz a&nbsp;správa se platí zvlášť, od 990 Kč měsíčně.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Nejsem plátce DPH, takže uvedené ceny jsou konečné.</li></ul><p class="price-note">Výsledná cena záleží na rozsahu – co má řešení umět a&nbsp;na co ho napojíme. Přesnou cenu vám řeknu po úvodním hovoru. Podrobněji v&nbsp;článku <a href="/clanky/kolik-stoji-web-a-e-shop/">Kolik stojí firemní web a&nbsp;e-shop</a>, co by měl umět web místní firmy, najdete v&nbsp;článku <a href="/clanky/web-pro-remeslniky-a-mistni-firmy/">Web pro řemeslníky a&nbsp;místní firmy</a>.</p></div>
+        <div class="price-big"><small>Cena</small><b class="gt">od <Fragment set:html={castka("web")} /></b><span>pevná cena za konkrétní rozsah</span></div>
+        <div><ul><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Pevnou cenu dostanete po úvodním hovoru – co si odsouhlasíme, to platí.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Firemní web bývá hotový obvykle za 2–4 týdny.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Provoz a&nbsp;správa se platí zvlášť, od <Fragment set:html={castka("srv")} /> měsíčně.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Nejsem plátce DPH, takže uvedené ceny jsou konečné.</li></ul><p class="price-note">Výsledná cena záleží na rozsahu – co má řešení umět a&nbsp;na co ho napojíme. Přesnou cenu vám řeknu po úvodním hovoru. Podrobněji v&nbsp;článku <a href="/clanky/kolik-stoji-web-a-e-shop/">Kolik stojí firemní web a&nbsp;e-shop</a>, co by měl umět web místní firmy, najdete v&nbsp;článku <a href="/clanky/web-pro-remeslniky-a-mistni-firmy/">Web pro řemeslníky a&nbsp;místní firmy</a>.</p></div>
       </div>
     </div>
   </section>
@@ -90,7 +88,7 @@ const jsonLd = graph(
       <div class="head"><div><span class="kicker">Reference</span><h2>Weby, které jsem postavil</h2></div></div>
       <div class="cases"><RefCase id="fitness-ural" /><RefCase id="gprooms" /><RefCase id="dev-duck" /></div>
       <div class="thumbs"><RefThumb id="penzion-loket" /><RefThumb id="kotelna55" /><RefThumb id="rybar-transport" /></div>
-      <div class="card others"><b>+ 12 dalších</b><p>2MSKV, Astos, BMP, Firemní balíček, František Slovák, Geowestmaster, Hostel Loket, Kanya Kage, Markop Okna, Plenkový servis, Recysmach, Sokolov Ubytování – vyvinuto pro <a href={ZADAVATELE.vujo.url} target="_blank" rel="noopener">{ZADAVATELE.vujo.nazev}</a></p></div>
+      <OthersCard names={["2MSKV", "Astos", "Firemní balíček", "František Slovák", "Geowestmaster", "Hostel Loket", "Kanya Kage", "Markop Okna", "Plenkový servis", "Recysmach", "Sokolov Ubytování"]} />
       <p class="refs-more"><a href="/#reference" class="link-cta">Všechny reference <span class="arr" aria-hidden="true">→</span></a></p>
     </div>
   </section>

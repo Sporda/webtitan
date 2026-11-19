@@ -1,4 +1,5 @@
 ---
+import { castka } from "../../../data/sluzby";
 import Article from "../../../layouts/Article.astro";
 ---
 <Article slug="online-rezervace-pro-penzion">
@@ -20,7 +21,7 @@ import Article from "../../../layouts/Article.astro";
 <p>Řešení na míru se vyplatí, když potřebujete něco, co hotové služby neumí nebo umí draze: balíčky s&nbsp;procedurami či vstupenkami, vlastní pravidla cen, napojení na účetnictví, nebo když chcete mít data i&nbsp;vzhled pod kontrolou bez měsíčních licencí.</p>
 <p>Například pro GP Rooms jsem postavil rezervační systém, ve kterém si návštěvníci Velké ceny v&nbsp;Brně vyberou ubytování, vstupenky i&nbsp;dopravu a&nbsp;rovnou zaplatí online. Weby s&nbsp;rezervacemi mám i&nbsp;pro Hostel Loket, Penzion Loket nebo Sokolov Ubytování – ukázky najdete v&nbsp;<a href="/#reference">referencích</a>.</p>
 <h2>Kolik to stojí</h2>
-<p>Web penzionu s&nbsp;formulářem pro poptávku termínu stojí jako firemní web, od 9&nbsp;970&nbsp;Kč. Plnohodnotný rezervační systém s&nbsp;kalendářem, ceníkem a&nbsp;platbami je aplikace na míru od 24&nbsp;950&nbsp;Kč. Přesnou cenu pošlu po krátkém hovoru, kdy projdeme, kolik máte pokojů, jak dnes rezervace řešíte a&nbsp;co má systém umět. Nejsem plátce DPH, ceny jsou konečné.</p>
+<p>Web penzionu s&nbsp;formulářem pro poptávku termínu stojí jako firemní web, od <Fragment set:html={castka("web")} />. Plnohodnotný rezervační systém s&nbsp;kalendářem, ceníkem a&nbsp;platbami je aplikace na míru od <Fragment set:html={castka("app")} />. Přesnou cenu pošlu po krátkém hovoru, kdy projdeme, kolik máte pokojů, jak dnes rezervace řešíte a&nbsp;co má systém umět. Nejsem plátce DPH, ceny jsou konečné.</p>
 <h2>Jak začít</h2>
 <ol class="list">
 <li><strong>Spočítejte si provize.</strong> Kolik jste loni zaplatili portálům? I&nbsp;malý podíl přímých rezervací se rychle vrátí.</li>
@@ -28,9 +29,4 @@ import Article from "../../../layouts/Article.astro";
 <li><strong>Propojte kalendáře.</strong> Obsazenost na webu a&nbsp;v&nbsp;portálech se nesmí překrývat.</li>
 <li><strong>Dejte hostům důvod rezervovat přímo.</strong> Třeba snídani navíc nebo pozdní odjezd při rezervaci na webu.</li>
 </ol>
-<div class="post-cta">
-  <b>Chcete víc přímých rezervací? Probereme to za 15&nbsp;minut</b>
-  <p>Řekněte mi, kolik máte pokojů a&nbsp;jak dnes rezervace řešíte. Poradím, jestli stačí hotová služba, nebo se vyplatí vlastní systém. Nezávazně a&nbsp;zdarma.</p>
-  <div class="dual"><a href="#poptat" class="btn btn-grad" data-mode="call" data-cta="post_inline_call"><svg aria-hidden="true"><use href="#i-phone"/></svg>Domluvit 15min hovor</a><a href="#poptat" class="btn btn-line" data-mode="form" data-cta="post_inline_form">Poslat poptávku</a></div>
-</div>
 </Article>

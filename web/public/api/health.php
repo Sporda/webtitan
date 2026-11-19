@@ -5,7 +5,8 @@ declare(strict_types=1);
  * Kontrola pro hlídání dostupnosti (UptimeRobot apod.): GET /api/health.php → „OK“ (200), nebo „FAIL …“ (503).
  *
  * Při každém zavolání zároveň znovu zkusí doručit poptávky, které se napoprvé nepodařilo poslat e-mailem
- * (nejvýš 3 najednou; první hodinu každé 4 min, pak jednou za hodinu, nejdéle 3 dny).
+ * (nejvýš 3 najednou; první hodinu každé 4 min, pak jednou za hodinu, nejdéle 3 dny). Odpověď přijde nejpozději
+ * zhruba za 20 s – pokusy, které by se do toho nevešly, počkají na další kontrolu.
  * Poptávku, kterou zákazník mezitím úspěšně poslal znovu (stejný e-mail, novější záznam), už neposílá.
  *
  * FAIL znamená:
@@ -27,7 +28,14 @@ header('X-Content-Type-Options: nosniff');
 const RETRY_BATCH = 3;
 const CRM_BATCH = 2;
 const RETRY_DAYS = 3;
+// UptimeRobot čeká na odpověď 30 s. Opakované odesílání proto smí trvat nejvýš 20 s: další pokus se spustí, jen
+// když se i v nejhorším případě (vypršení limitu volání) vejde. Co se nestihne, zkusí další kontrola.
+const TIME_BUDGET = 20;
+const RESEND_MAX = 15; // CURLOPT_TIMEOUT ve wt_resend()
+const CRM_MAX = 8;     // CURLOPT_TIMEOUT ve wt_push_crm()
 
+$started = microtime(true);
+$hasTime = static fn (int $callMax): bool => microtime(true) - $started + $callMax <= TIME_BUDGET;
 $now = time();
 $cfg = wt_config();
 $problems = [];
@@ -44,10 +52,18 @@ if (is_file(WT_DATA_DIR . '/leads.sqlite')) {
 
         // Zákazník po chybě poslal formulář znovu a to už prošlo → starou poptávku neposílat dvakrát.
         // (Jen podle e-mailu – „Zavolejte mi“ ho mít nemusí a prázdné adresy spolu nesouvisí.)
-        $db->prepare('UPDATE leads SET status = \'superseded\' WHERE status = \'failed\' AND spam = 0 AND leads.email <> \'\' AND EXISTS (
-                          SELECT 1 FROM leads AS l2 WHERE lower(l2.email) = lower(leads.email)
-                          AND l2.id > leads.id AND l2.status = \'sent\')')
-           ->execute();
+        // Jen v okně RETRY_DAYS – starší se už nezkouší ani nepočítají. UPDATE (zámek zápisu) jen když je co měnit.
+        // „+l2.status“: novější řádky hledat podle id, ne indexem (status, created) – ten by prošel všechny odeslané.
+        $superseded = 'status = \'failed\' AND spam = 0 AND created > ? AND leads.email <> \'\' AND EXISTS (
+                           SELECT 1 FROM leads AS l2 WHERE lower(l2.email) = lower(leads.email)
+                           AND l2.id > leads.id AND +l2.status = \'sent\')';
+        $q = $db->prepare("SELECT 1 FROM leads WHERE $superseded LIMIT 1");
+        $q->execute([$since]);
+        $found = $q->fetchColumn();
+        $q->closeCursor(); // ukončí čtení, ať zápis nenarazí na starý snímek WAL
+        if ($found) {
+            $db->prepare("UPDATE leads SET status = 'superseded' WHERE $superseded")->execute([$since]);
+        }
 
         if ($configured) {
             $q = $db->prepare('SELECT * FROM leads WHERE status = \'failed\' AND spam = 0 AND created > ?
@@ -56,6 +72,9 @@ if (is_file(WT_DATA_DIR . '/leads.sqlite')) {
             $q->execute([$since, $now]);
             $mark = $db->prepare('UPDATE leads SET status = ?, info = ?, attempts = attempts + 1, last_try = ? WHERE id = ?');
             foreach ($q->fetchAll(PDO::FETCH_ASSOC) as $lead) {
+                if (!$hasTime(RESEND_MAX)) {
+                    break;
+                }
                 [$ok, $info] = wt_send_lead($lead, $cfg, true);
                 $mark->execute([$ok ? 'sent' : 'failed', mb_substr(($ok ? 'retry ' : '') . $info, 0, 500), $now, $lead['id']]);
                 if (!$ok) {
@@ -78,6 +97,9 @@ if (is_file(WT_DATA_DIR . '/leads.sqlite')) {
             $q->execute([$since, $now - 120]);
             $mark = $db->prepare('UPDATE leads SET crm = ? WHERE id = ?');
             foreach ($q->fetchAll(PDO::FETCH_ASSOC) as $lead) {
+                if (!$hasTime(CRM_MAX)) {
+                    break;
+                }
                 [$ok, $info] = wt_push_crm($lead, $cfg);
                 $mark->execute([$ok ? 'sent' : 'failed', $lead['id']]);
                 if (!$ok) {

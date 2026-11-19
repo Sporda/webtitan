@@ -266,6 +266,11 @@ export const REFERENCE: Reference[] = [
   },
 ];
 
+// Překlep v „pro“ shodí build – jinak by se u reference řádek „Vyvinuto pro …“ potichu nevypsal.
+for (const r of REFERENCE) {
+  if (r.pro && !Object.hasOwn(ZADAVATELE, r.pro)) throw new Error(`Reference ${r.id}: neznámý zadavatel „${r.pro}“ (doplňte ho do ZADAVATELE)`);
+}
+
 export const reference = (id: string): Reference => {
   const r = REFERENCE.find((x) => x.id === id);
   if (!r) throw new Error(`Neznámá reference: ${id}`);

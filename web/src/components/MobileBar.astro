@@ -1,7 +1,17 @@
 ---
-// Spodní lišta na mobilu (podstránky a články): telefon a tlačítko na formulář. cta = předpona měření.
+// Spodní lišta na mobilu: telefon a tlačítko na formulář. cta = předpona měření.
+//   sub (podstránky a články): .mbar, tlačítko skočí na #poptat (lead.js), vysouvá ji lead.js (.on)
+//   home (úvodní stránka): .mobile-cta, tlačítko otevře kontakt #kontakt (home.js), vysouvá ji home.js (.show) –
+//   dokud je schovaná, je skrytá i pro čtečky a klávesnici (aria-hidden, tabindex -1; home.js je přepíná)
 import { PHONE, PHONE_SHORT } from "../data/site";
-interface Props { cta?: string }
-const { cta = "sp" } = Astro.props;
+interface Props { variant?: "home" | "sub"; cta?: string }
+const { variant = "sub", cta = "sp" } = Astro.props;
 ---
-<div class="mbar"><a href={`tel:${PHONE}`} class="mc-tel" data-cta={`${cta}_mbar_tel`}>Volejte rovnou<b set:html={PHONE_SHORT}></b></a><a href="#poptat" class="btn btn-grad" data-mode="call" data-cta={`${cta}_mbar`}><svg aria-hidden="true"><use href="#i-phone"/></svg>Domluvit hovor</a></div>
+{variant === "home" ? (
+  <div class="mobile-cta" id="mobile-cta" aria-hidden="true">
+    <a href={`tel:${PHONE}`} class="mc-tel" tabindex="-1" data-cta="mobile_bar_tel">Volejte rovnou<b set:html={PHONE_SHORT}></b></a>
+    <a href="#kontakt" class="btn btn-grad" tabindex="-1" data-open="call" data-cta="mobile_bar"><svg><use href="#i-phone"/></svg>Domluvit hovor</a>
+  </div>
+) : (
+  <div class="mbar"><a href={`tel:${PHONE}`} class="mc-tel" data-cta={`${cta}_mbar_tel`}>Volejte rovnou<b set:html={PHONE_SHORT}></b></a><a href="#poptat" class="btn btn-grad" data-mode="call" data-cta={`${cta}_mbar`}><svg aria-hidden="true"><use href="#i-phone"/></svg>Domluvit hovor</a></div>
+)}

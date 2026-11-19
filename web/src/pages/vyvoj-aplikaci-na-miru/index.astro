@@ -1,6 +1,10 @@
 ---
+import ServiceSum from "../../components/ServiceSum.astro";
+import HeroMicro from "../../components/HeroMicro.astro";
+import Crumbs from "../../components/Crumbs.astro";
+import CtaPair from "../../components/CtaPair.astro";
+import { castka, castkaText, sluzba } from "../../data/sluzby";
 import RefCase from "../../components/RefCase.astro";
-import RefThumb from "../../components/RefThumb.astro";
 import Sub from "../../layouts/Sub.astro";
 import Faq from "../../components/Faq.astro";
 import OtherServices from "../../components/OtherServices.astro";
@@ -8,12 +12,14 @@ import { graph, serviceLd, crumbsLd, faqLd } from "../../lib/ld";
 import { otazky } from "../../data/otazky";
 
 const path = "/vyvoj-aplikaci-na-miru/";
-const description = "Vývoj webových aplikací a interních systémů na míru od 24 950 Kč pro firmy ze západních Čech. Z Excelu do přehledné aplikace, pevná cena, kód i data patří vám.";
+const description = `Vývoj webových aplikací a interních systémů na míru od ${castkaText("app")} pro firmy ze západních Čech. Z Excelu do přehledné aplikace, pevná cena, kód i data patří vám.`;
 /** Časté otázky (data/otazky.ts) – zobrazí se na stránce a zároveň jdou do strukturovaných dat. */
 const faq = otazky(["jak-dlouho-trva", "umite-prevzit-data-excelu", "komu-patri-aplikace-web", "napojite-ucetnictvi-platby-nebo", "nemam-presne-zadani-vadi"]);
+/** Drobečková navigace – na stránce i ve strukturovaných datech. */
+const crumbs: [string, string][] = [["Domů", "/"], ["Vývoj aplikací na míru", path]];
 const jsonLd = graph(
-  serviceLd({ path, name: "Vývoj aplikací na míru", serviceType: "Vývoj webových aplikací na míru", description, minPrice: 24950 }),
-  crumbsLd([["Domů", "/"], ["Vývoj aplikací na míru", path]]),
+  serviceLd({ path, name: "Vývoj aplikací na míru", serviceType: "Vývoj webových aplikací na míru", description, minPrice: sluzba("app").od }),
+  crumbsLd(crumbs),
   faqLd(faq),
 );
 ---
@@ -29,26 +35,17 @@ const jsonLd = graph(
 >
   <section class="sp-hero">
     <div class="wrap">
-      <nav class="crumbs" aria-label="Drobečková navigace"><ol><li><a href="/">Domů</a></li><li aria-current="page">Vývoj aplikací na míru</li></ol></nav>
+      <Crumbs items={crumbs} />
       <div class="hero-grid">
         <div class="card intro">
           <div><span class="kicker">Hlavní specializace</span></div>
           <h1>Vývoj aplikací na míru – z&nbsp;Excelu do přehledné aplikace</h1>
           <p class="lead">Zakázky, termíny, zákazníci i&nbsp;rezervace na jednom místě. Jako programátor na zakázku navrhnu a&nbsp;postavím webovou aplikaci nebo interní systém přesně podle toho, jak vaše firma pracuje – a&nbsp;postarám se, aby spolehlivě běžel.</p>
           <ul class="checks"><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Pevná cena předem – co si odsouhlasíme, to platí</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Začnete v&nbsp;malém, rozšíříte, až to bude dávat smysl</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Aplikace, kód i&nbsp;data patří vám</li></ul>
-          <div class="dual"><a href="#poptat" class="btn btn-grad" data-mode="call" data-cta="sp_hero_call"><svg aria-hidden="true"><use href="#i-phone"/></svg>Domluvit 15min hovor</a><a href="#poptat" class="btn btn-line" data-mode="form" data-cta="sp_hero_form">Poslat poptávku</a></div>
-          <p class="micro"><span class="mi"><svg aria-hidden="true"><use href="#i-clock"/></svg>Ozvu se do 24 hodin (v&nbsp;pracovní dny)</span><span class="mi"><svg aria-hidden="true"><use href="#i-pin"/></svg>Karlovarský a&nbsp;Plzeňský kraj – i&nbsp;osobně</span><span class="mi"><svg aria-hidden="true"><use href="#i-phone"/></svg>Volejte rovnou: <a href="tel:+420723793510" data-cta="sp_hero_tel">723&nbsp;793&nbsp;510</a></span></p>
+          <CtaPair track="sp_hero" />
+          <HeroMicro track="sp_hero" />
         </div>
-        <aside class="card sum" aria-label="Shrnutí">
-          <div class="sum-price"><small>Cena</small><b class="gt">od 24 950 Kč</b><span>jednorázově, bez licencí za uživatele</span></div>
-          <dl class="facts">
-            <div class="fact"><dt>Termín</dt><dd>typicky 3–6 týdnů od schválení rozsahu</dd></div>
-            <div class="fact"><dt>Komu patří kód a&nbsp;data</dt><dd>Vám – kód, data i&nbsp;doména</dd></div>
-            <div class="fact"><dt>S&nbsp;kým jednáte</dt><dd>Přímo s&nbsp;tím, kdo to staví</dd></div>
-            <div class="fact"><dt>DPH</dt><dd>Nejsem plátce DPH – ceny jsou konečné</dd></div>
-          </dl>
-          <div class="me-row"><span class="avatar" role="img" aria-label="Jan Šporek"></span><div><b>Jan Šporek</b><span>Weby a&nbsp;aplikace stavím od roku 2006, sídlím u&nbsp;Sokolova. Kdo s&nbsp;vámi mluví, ten to i&nbsp;staví – v&nbsp;Karlovarském a&nbsp;Plzeňském kraji klidně i&nbsp;osobně.</span></div></div>
-        </aside>
+        <ServiceSum price={`od ${castka("app")}`} priceNote="jednorázově, bez licencí za uživatele" termin="typicky 3–6 týdnů od schválení rozsahu" />
       </div>
     </div>
   </section>
@@ -83,8 +80,8 @@ const jsonLd = graph(
     <div class="wrap">
       <div class="head"><div><span class="kicker">Cena</span><h2>Kolik stojí vývoj aplikace na míru</h2></div></div>
       <div class="card price-card gb">
-        <div class="price-big"><small>Cena</small><b class="gt">od 24 950 Kč</b><span>jednorázově, bez licencí za uživatele</span></div>
-        <div><ul><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Pevnou cenu dostanete po úvodním hovoru – co si odsouhlasíme, to platí.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Začít můžete i&nbsp;menší první verzí a&nbsp;rozšiřovat, až to bude dávat smysl.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Provoz a&nbsp;správa se platí zvlášť, od 990 Kč měsíčně.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Nejsem plátce DPH, takže uvedené ceny jsou konečné.</li></ul><p class="price-note">Výsledná cena záleží na rozsahu – co má řešení umět a&nbsp;na co ho napojíme. Přesnou cenu vám řeknu po úvodním hovoru. Podrobněji v&nbsp;článku <a href="/clanky/kolik-stoji-aplikace-na-miru/">Kolik stojí aplikace na míru a&nbsp;co cenu ovlivňuje</a>.</p><a href="/#kalkulacka" class="link-cta">Spočítejte si, kolik vás stojí ruční práce <span class="arr" aria-hidden="true">→</span></a></div>
+        <div class="price-big"><small>Cena</small><b class="gt">od <Fragment set:html={castka("app")} /></b><span>jednorázově, bez licencí za uživatele</span></div>
+        <div><ul><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Pevnou cenu dostanete po úvodním hovoru – co si odsouhlasíme, to platí.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Začít můžete i&nbsp;menší první verzí a&nbsp;rozšiřovat, až to bude dávat smysl.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Provoz a&nbsp;správa se platí zvlášť, od <Fragment set:html={castka("srv")} /> měsíčně.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Nejsem plátce DPH, takže uvedené ceny jsou konečné.</li></ul><p class="price-note">Výsledná cena záleží na rozsahu – co má řešení umět a&nbsp;na co ho napojíme. Přesnou cenu vám řeknu po úvodním hovoru. Podrobněji v&nbsp;článku <a href="/clanky/kolik-stoji-aplikace-na-miru/">Kolik stojí aplikace na míru a&nbsp;co cenu ovlivňuje</a>.</p><a href="/#kalkulacka" class="link-cta">Spočítejte si, kolik vás stojí ruční práce <span class="arr" aria-hidden="true">→</span></a></div>
       </div>
     </div>
   </section>

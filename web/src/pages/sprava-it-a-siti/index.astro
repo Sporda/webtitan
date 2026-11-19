@@ -1,4 +1,9 @@
 ---
+import ServiceSum from "../../components/ServiceSum.astro";
+import HeroMicro from "../../components/HeroMicro.astro";
+import Crumbs from "../../components/Crumbs.astro";
+import CtaPair from "../../components/CtaPair.astro";
+import { castka, castkaText, sluzba } from "../../data/sluzby";
 import Sub from "../../layouts/Sub.astro";
 import Faq from "../../components/Faq.astro";
 import OtherServices from "../../components/OtherServices.astro";
@@ -9,8 +14,10 @@ const path = "/sprava-it-a-siti/";
 const description = "Správa sítě, Wi-Fi a počítačů pro malé firmy, hotely a penziony v Karlovarském kraji: zálohy, aktualizace, Microsoft 365 a dohled za pevnou měsíční cenu. Jednáte přímo se mnou.";
 /** Časté otázky (data/otazky.ts) – zobrazí se na stránce a zároveň jdou do strukturovaných dat. */
 const faq = otazky(["prijedete-osobne", "kolik-stoji-sprava-it", "co-kdyz-budete-nemocny", "tyka-nas-novy-zakon", "komu-patri-hesla-pristupy", "jak-probiha-15min-hovor"]);
+/** Drobečková navigace – na stránce i ve strukturovaných datech. */
+const crumbs: [string, string][] = [["Domů", "/"], ["Správa IT a sítí", path]];
 const jsonLd = graph(
-  serviceLd({ path, name: "Správa IT a sítí pro malé firmy", serviceType: "Správa počítačových sítí a IT", description, minPrice: 1490, monthly: true, areaServed: [
+  serviceLd({ path, name: "Správa IT a sítí pro malé firmy", serviceType: "Správa počítačových sítí a IT", description, minPrice: sluzba("it").od, monthly: true, areaServed: [
     { "@type": "AdministrativeArea", name: "Karlovarský kraj" },
     { "@type": "City", name: "Karlovy Vary" },
     { "@type": "City", name: "Sokolov" },
@@ -19,7 +26,7 @@ const jsonLd = graph(
     { "@type": "City", name: "Ostrov" },
     { "@type": "City", name: "Františkovy Lázně" },
   ] }),
-  crumbsLd([["Domů", "/"], ["Správa IT a sítí", path]]),
+  crumbsLd(crumbs),
   faqLd(faq),
 );
 ---
@@ -27,33 +34,24 @@ const jsonLd = graph(
   title="Správa IT a sítí pro malé firmy – Karlovy Vary, Sokolov, Cheb | WebTitan"
   description={description}
   path={path}
-  og={{ title: "Správa IT a sítí pro malé firmy od 1 490 Kč/měsíc – WebTitan" }}
+  og={{ title: `Správa IT a sítí pro malé firmy od ${castkaText("it")}/měsíc – WebTitan` }}
   jsonLd={jsonLd}
   cta="it"
   lead={{"heading": "Pojďme probrat IT ve vaší firmě", "topic": "Správa IT a sítí", "placeholder": "Např. máme 8 počítačů, Wi-Fi v patře vypadává a nevíme, jestli fungují zálohy.", "misto": "Karlovarský kraj – osobně na místě"}}
 >
   <section class="sp-hero">
     <div class="wrap">
-      <nav class="crumbs" aria-label="Drobečková navigace"><ol><li><a href="/">Domů</a></li><li aria-current="page">Správa IT a sítí</li></ol></nav>
+      <Crumbs items={crumbs} />
       <div class="hero-grid">
         <div class="card intro">
           <div><span class="kicker">IT pro malé firmy</span></div>
           <h1>Správa IT a&nbsp;sítí pro malé firmy</h1>
           <p class="lead">Jeden člověk na celé IT vaší firmy – síť a&nbsp;Wi-Fi, počítače, e-maily, zálohy, web i&nbsp;aplikace. Za pevnou měsíční cenu, bez překvapení na faktuře a&nbsp;s&nbsp;dokumentací, která zůstane vám.</p>
           <ul class="checks"><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Síť, Wi-Fi a&nbsp;počítače pod dohledem</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Zálohy, které opravdu jdou obnovit</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Pevná měsíční cena, jednáte se mnou</li></ul>
-          <div class="dual"><a href="#poptat" class="btn btn-grad" data-mode="call" data-cta="it_hero_call"><svg aria-hidden="true"><use href="#i-phone"/></svg>Domluvit 15min hovor</a><a href="#poptat" class="btn btn-line" data-mode="form" data-cta="it_hero_form">Poslat poptávku</a></div>
-          <p class="micro"><span class="mi"><svg aria-hidden="true"><use href="#i-clock"/></svg>Ozvu se do 24 hodin (v&nbsp;pracovní dny)</span><span class="mi"><svg aria-hidden="true"><use href="#i-pin"/></svg>Karlovarský kraj – osobně na místě</span><span class="mi"><svg aria-hidden="true"><use href="#i-phone"/></svg>Volejte rovnou: <a href="tel:+420723793510" data-cta="it_hero_tel">723&nbsp;793&nbsp;510</a></span></p>
+          <CtaPair track="it_hero" />
+          <HeroMicro track="it_hero" misto="Karlovarský kraj – osobně na místě" />
         </div>
-        <aside class="card sum" aria-label="Shrnutí">
-          <div class="sum-price"><small>Cena</small><b class="gt">od 1&nbsp;490 Kč</b><span>měsíčně</span></div>
-          <dl class="facts">
-            <div class="fact"><dt>Pro koho</dt><dd>Firmy do cca 30 lidí, hotely a&nbsp;penziony</dd></div>
-            <div class="fact"><dt>Hesla a&nbsp;dokumentace</dt><dd>Patří vám – nejste na mně závislí</dd></div>
-            <div class="fact"><dt>S&nbsp;kým jednáte</dt><dd>Přímo se mnou, i&nbsp;osobně</dd></div>
-            <div class="fact"><dt>DPH</dt><dd>Nejsem plátce DPH – ceny jsou konečné</dd></div>
-          </dl>
-          <div class="me-row"><span class="avatar" role="img" aria-label="Jan Šporek"></span><div><b>Jan Šporek</b><span>Weby, aplikace a&nbsp;servery stavím od roku 2006, sídlím u&nbsp;Sokolova. Kdo s&nbsp;vámi mluví, ten to i&nbsp;nastavuje – v&nbsp;Karlovarském kraji přijedu osobně.</span></div></div>
-        </aside>
+        <ServiceSum price={`od ${castka("it")}`} priceNote="měsíčně" facts={[["Pro koho", "Firmy do cca 30 lidí, hotely a&nbsp;penziony"], ["Hesla a&nbsp;dokumentace", "Patří vám – nejste na mně závislí"], ["S&nbsp;kým jednáte", "Přímo se mnou, i&nbsp;osobně"]]} me="Weby, aplikace a&nbsp;servery stavím od roku 2006, sídlím u&nbsp;Sokolova. Kdo s&nbsp;vámi mluví, ten to i&nbsp;nastavuje – v&nbsp;Karlovarském kraji přijedu osobně." />
       </div>
     </div>
   </section>
@@ -83,7 +81,7 @@ const jsonLd = graph(
     <div class="wrap">
       <div class="head"><div><span class="kicker">Cena</span><h2>Kolik stojí správa IT a&nbsp;sítě</h2></div></div>
       <div class="card price-card gb">
-        <div class="price-big"><small>Cena</small><b class="gt">od 1&nbsp;490 Kč</b><span>měsíčně</span></div>
+        <div class="price-big"><small>Cena</small><b class="gt">od <Fragment set:html={castka("it")} /></b><span>měsíčně</span></div>
         <div><ul><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Cena podle počtu počítačů a&nbsp;zařízení – pevná, co si odsouhlasíme, to platí.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Výjezdy a&nbsp;větší práce mimo běžnou péči vždy předem odsouhlasíte.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Zařízení doporučím a&nbsp;nastavím – nemusíte kupovat nic, co nepotřebujete.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Nejsem plátce DPH, takže uvedené ceny jsou konečné.</li></ul><p class="price-note">Přesnou cenu vám řeknu po prohlídce sítě.</p></div>
       </div>
     </div>

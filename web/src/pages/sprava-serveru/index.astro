@@ -1,4 +1,9 @@
 ---
+import ServiceSum from "../../components/ServiceSum.astro";
+import HeroMicro from "../../components/HeroMicro.astro";
+import Crumbs from "../../components/Crumbs.astro";
+import CtaPair from "../../components/CtaPair.astro";
+import { castka, castkaText, sluzba } from "../../data/sluzby";
 import Sub from "../../layouts/Sub.astro";
 import Faq from "../../components/Faq.astro";
 import OtherServices from "../../components/OtherServices.astro";
@@ -6,12 +11,14 @@ import { graph, serviceLd, crumbsLd, faqLd } from "../../lib/ld";
 import { otazky } from "../../data/otazky";
 
 const path = "/sprava-serveru/";
-const description = "Správa serverů a webů od 990 Kč měsíčně pro firmy ze západních Čech: hosting, aktualizace, zálohy a hlídání dostupnosti i bezpečnosti. Jednáte přímo se mnou.";
+const description = `Správa serverů a webů od ${castkaText("srv")} měsíčně pro firmy ze západních Čech: hosting, aktualizace, zálohy a hlídání dostupnosti i bezpečnosti. Jednáte přímo se mnou.`;
 /** Časté otázky (data/otazky.ts) – zobrazí se na stránce a zároveň jdou do strukturovaných dat. */
 const faq = otazky(["postarate-hosting-provoz", "kolik-stoji-sprava-serveru", "komu-patri-aplikace-web", "jak-probiha-15min-hovor", "co-stane-po-odeslani"]);
+/** Drobečková navigace – na stránce i ve strukturovaných datech. */
+const crumbs: [string, string][] = [["Domů", "/"], ["Správa serverů a webů", path]];
 const jsonLd = graph(
-  serviceLd({ path, name: "Správa serverů a webů", serviceType: "Správa serverů a webů", description, minPrice: 990, monthly: true }),
-  crumbsLd([["Domů", "/"], ["Správa serverů a webů", path]]),
+  serviceLd({ path, name: "Správa serverů a webů", serviceType: "Správa serverů a webů", description, minPrice: sluzba("srv").od, monthly: true }),
+  crumbsLd(crumbs),
   faqLd(faq),
 );
 ---
@@ -19,7 +26,7 @@ const jsonLd = graph(
   title="Správa serverů a webů – Karlovy Vary, Plzeň | WebTitan"
   description={description}
   path={path}
-  og={{ title: "Správa serverů a webů od 990 Kč/měsíc – WebTitan" }}
+  og={{ title: `Správa serverů a webů od ${castkaText("srv")}/měsíc – WebTitan` }}
   jsonLd={jsonLd}
   offer="web"
   cta="sp"
@@ -27,26 +34,17 @@ const jsonLd = graph(
 >
   <section class="sp-hero">
     <div class="wrap">
-      <nav class="crumbs" aria-label="Drobečková navigace"><ol><li><a href="/">Domů</a></li><li aria-current="page">Správa serverů a webů</li></ol></nav>
+      <Crumbs items={crumbs} />
       <div class="hero-grid">
         <div class="card intro">
           <div><span class="kicker">Hosting a provoz</span></div>
           <h1>Správa serverů a&nbsp;webů</h1>
           <p class="lead">Aby všechno běželo a&nbsp;vy jste to nemuseli řešit. Servery spravuji sám – hosting, aktualizace, zálohy i&nbsp;dohled – pro weby, e-shopy i&nbsp;aplikace. Nemusíte hledat dalšího dodavatele ani „toho, kdo to kdysi dělal“.</p>
           <ul class="checks"><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Aktualizace a&nbsp;pravidelné zálohy</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Hlídání dostupnosti a&nbsp;bezpečnosti</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Jednáte přímo se mnou</li></ul>
-          <div class="dual"><a href="#poptat" class="btn btn-grad" data-mode="call" data-cta="sp_hero_call"><svg aria-hidden="true"><use href="#i-phone"/></svg>Domluvit 15min hovor</a><a href="#poptat" class="btn btn-line" data-mode="form" data-cta="sp_hero_form">Poslat poptávku</a></div>
-          <p class="micro"><span class="mi"><svg aria-hidden="true"><use href="#i-clock"/></svg>Ozvu se do 24 hodin (v&nbsp;pracovní dny)</span><span class="mi"><svg aria-hidden="true"><use href="#i-pin"/></svg>Karlovarský a&nbsp;Plzeňský kraj – i&nbsp;osobně</span><span class="mi"><svg aria-hidden="true"><use href="#i-phone"/></svg>Volejte rovnou: <a href="tel:+420723793510" data-cta="sp_hero_tel">723&nbsp;793&nbsp;510</a></span></p>
+          <CtaPair track="sp_hero" />
+          <HeroMicro track="sp_hero" />
         </div>
-        <aside class="card sum" aria-label="Shrnutí">
-          <div class="sum-price"><small>Cena</small><b class="gt">od 990 Kč</b><span>měsíčně</span></div>
-          <dl class="facts">
-            <div class="fact"><dt>Termín</dt><dd>průběžně – starám se o&nbsp;provoz</dd></div>
-            <div class="fact"><dt>Komu patří kód a&nbsp;data</dt><dd>Vám – kód, data i&nbsp;doména</dd></div>
-            <div class="fact"><dt>S&nbsp;kým jednáte</dt><dd>Přímo s&nbsp;tím, kdo to staví</dd></div>
-            <div class="fact"><dt>DPH</dt><dd>Nejsem plátce DPH – ceny jsou konečné</dd></div>
-          </dl>
-          <div class="me-row"><span class="avatar" role="img" aria-label="Jan Šporek"></span><div><b>Jan Šporek</b><span>Weby a&nbsp;aplikace stavím od roku 2006, sídlím u&nbsp;Sokolova. Kdo s&nbsp;vámi mluví, ten to i&nbsp;staví – v&nbsp;Karlovarském a&nbsp;Plzeňském kraji klidně i&nbsp;osobně.</span></div></div>
-        </aside>
+        <ServiceSum price={`od ${castka("srv")}`} priceNote="měsíčně" termin="průběžně – starám se o&nbsp;provoz" />
       </div>
     </div>
   </section>
@@ -76,7 +74,7 @@ const jsonLd = graph(
     <div class="wrap">
       <div class="head"><div><span class="kicker">Cena</span><h2>Kolik stojí správa serveru a&nbsp;webu</h2></div></div>
       <div class="card price-card gb">
-        <div class="price-big"><small>Cena</small><b class="gt">od 990 Kč</b><span>měsíčně</span></div>
+        <div class="price-big"><small>Cena</small><b class="gt">od <Fragment set:html={castka("srv")} /></b><span>měsíčně</span></div>
         <div><ul><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Pevnou cenu dostanete po úvodním hovoru – co si odsouhlasíme, to platí.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Správu můžete mít k&nbsp;webu, e-shopu i&nbsp;aplikaci.</li><li><span class="tick" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Nejsem plátce DPH, takže uvedené ceny jsou konečné.</li></ul><p class="price-note">Přesnou cenu podle toho, co budu spravovat, vám řeknu po úvodním hovoru.</p></div>
       </div>
     </div>

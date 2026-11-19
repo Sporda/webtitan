@@ -1,0 +1,8 @@
+---
+// Drobečková navigace. Stejné položky jdou do strukturovaných dat (crumbsLd v lib/ld.ts), takže se nerozejdou.
+// items = [název (HTML), adresa]; poslední položka je aktuální stránka (bez odkazu).
+interface Props { items: [string, string][] }
+const { items } = Astro.props;
+const [current] = items[items.length - 1];
+---
+<nav class="crumbs" aria-label="Drobečková navigace"><ol>{items.slice(0, -1).map(([name, href]) => <li><a href={href} set:html={name}></a></li>)}<li aria-current="page" set:html={current}></li></ol></nav>

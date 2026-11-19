@@ -2,6 +2,7 @@
 // Patička: odkazy, služby (z data/sluzby.ts), kontakt a právní údaje.
 // home = úvodní stránka (kotvy na sekce), sub = podstránky a články (nadpis „Služby“, zvýrazněná aktuální služba),
 // simple = ochrana údajů a 404. current = adresa aktuální stránky (aria-current), cta = předpona měření.
+// Rok se vypíše při buildu a v prohlížeči se doplní aktuální (web se mezi lety nemusí znovu sestavit).
 import { PHONE, PHONE_LONG, EMAIL, LINKEDIN, GITHUB, LEGAL } from "../data/site";
 import { SLUZBY } from "../data/sluzby";
 
@@ -31,6 +32,7 @@ const year = new Date().getFullYear();
     <nav class="foot-svc" aria-label="Služby">{variant === "sub" && <b>Služby</b>}{SLUZBY.map((s) => <a href={s.url} aria-current={variant === "sub" && s.url === current ? "page" : undefined} set:html={s.nazev}></a>)}</nav>
     <div class="foot-bottom">
       <span>© <span id="year">{year}</span> Jan Šporek · WebTitan</span>
+      <script is:inline>document.getElementById("year").textContent = new Date().getFullYear();</script>
       <span class="foot-contact">
         <a href={`tel:${PHONE}`} data-cta={telCta} set:html={PHONE_LONG}></a>
         <a href={`mailto:${EMAIL}`}>{EMAIL}</a>

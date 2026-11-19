@@ -1,4 +1,5 @@
 ---
+import { castka } from "../../../data/sluzby";
 import Article from "../../../layouts/Article.astro";
 ---
 <Article slug="kolik-stoji-web-a-e-shop">
@@ -13,9 +14,9 @@ import Article from "../../../layouts/Article.astro";
 <div class="tbl-wrap"><table>
 <thead><tr><th>Služba</th><th>Co obsahuje</th><th>Cena</th></tr></thead>
 <tbody>
-<tr><td>Firemní web</td><td>design na míru, poptávkový formulář, obsah si upravíte sami; obvykle 2–4 týdny</td><td><b>od 9&nbsp;970&nbsp;Kč</b></td></tr>
-<tr><td>E-shop</td><td>platby kartou, doprava, přehledná správa objednávek</td><td><b>od 19&nbsp;870&nbsp;Kč</b></td></tr>
-<tr><td>Provoz a&nbsp;správa</td><td>server, zálohy, aktualizace a&nbsp;hlídání dostupnosti</td><td><b>od 990&nbsp;Kč měsíčně</b></td></tr>
+<tr><td>Firemní web</td><td>design na míru, poptávkový formulář, obsah si upravíte sami; obvykle 2–4 týdny</td><td><b>od <Fragment set:html={castka("web")} /></b></td></tr>
+<tr><td>E-shop</td><td>platby kartou, doprava, přehledná správa objednávek</td><td><b>od <Fragment set:html={castka("shop")} /></b></td></tr>
+<tr><td>Provoz a&nbsp;správa</td><td>server, zálohy, aktualizace a&nbsp;hlídání dostupnosti</td><td><b>od <Fragment set:html={castka("srv")} /> měsíčně</b></td></tr>
 </tbody>
 </table></div>
 <p>Všechny ceny jsou konečné – nejsem plátce DPH. Pevnou cenu za konkrétní rozsah dostanete po úvodním hovoru.</p>
@@ -37,9 +38,4 @@ import Article from "../../../layouts/Article.astro";
 <li>Být vidět ve vyhledávání: správné nadpisy a&nbsp;popisy, rychlost a&nbsp;údaje o&nbsp;tom, kde působíte.</li>
 </ol>
 <div class="callout"><p>Máte web, který nepřivádí poptávky? Nabízím <a href="/#kontrola">bezplatné posouzení webu</a> – pošlu vám konkrétní tipy, co zlepšit.</p></div>
-<div class="post-cta">
-  <b>Chcete web, který přivádí poptávky?</b>
-  <p>Napište mi, co vaše firma dělá a&nbsp;co má web umět. Ozvu se do 24 hodin (v&nbsp;pracovní dny) s&nbsp;návrhem a&nbsp;pevnou cenou.</p>
-  <div class="dual"><a href="#poptat" class="btn btn-grad" data-mode="call" data-cta="post_inline_call"><svg aria-hidden="true"><use href="#i-phone"/></svg>Domluvit 15min hovor</a><a href="#poptat" class="btn btn-line" data-mode="form" data-cta="post_inline_form">Poslat poptávku</a></div>
-</div>
 </Article>

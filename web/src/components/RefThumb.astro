@@ -7,5 +7,12 @@ const n = r.nahled;
 if (!n) throw new Error(`Reference ${r.id} nemá náhled`);
 const home = Astro.props.home ?? false;
 const pro = r.pro && ZADAVATELE[r.pro];
+// Dvě velikosti: Nazev-400.webp (400×200, vedle originálu v public/assets/projects/) a originál 800×400.
+// Nová reference s náhledem potřebuje i -400 variantu. sizes odpovídá mřížce .thumbs (home.css: 4 sloupce, sub.css: 3).
+const img = `/assets/projects/${r.obrazek}`;
+const srcset = `${img.replace(/(\.\w+)$/, "-400$1")} 400w, ${img} 800w`;
+const sizes = home
+  ? "(max-width: 860px) calc(50vw - 21px), (max-width: 1240px) calc(25vw - 24px), 286px"
+  : "(max-width: 374px) calc(100vw - 32px), (max-width: 860px) calc(50vw - 21px), (max-width: 1240px) calc(33vw - 27px), 387px";
 ---
-<div class={home ? "card thumb lift rv" : "card thumb"} data-rel={home ? r.rel : undefined}>{home && <span class="match-tag">Pro vás</span>}<img src={`/assets/projects/${r.obrazek}`} alt={n.alt} width="800" height="400" loading="lazy" decoding="async"><div><b set:html={n.nazev}></b><span set:html={n.popis}></span></div>{pro && <p class="ref-pro">Vyvinuto pro <a href={pro.url} target="_blank" rel="noopener">{pro.nazev}</a></p>}</div>
+<div class={home ? "card thumb lift rv" : "card thumb"} data-rel={home ? r.rel : undefined}>{home && <span class="match-tag">Pro vás</span>}<img src={img} srcset={srcset} sizes={sizes} alt={n.alt} width="800" height="400" loading="lazy" decoding="async"><div><b set:html={n.nazev}></b><span set:html={n.popis}></span></div>{pro && <p class="ref-pro">Vyvinuto pro <a href={pro.url} target="_blank" rel="noopener">{pro.nazev}</a></p>}</div>

@@ -1,4 +1,7 @@
 ---
+import Honeypot from "./Honeypot.astro";
+import Consent from "./Consent.astro";
+import FormFail from "./FormFail.astro";
 // Kontaktní sekce podstránek a článků (#poptat): přepínač „Zavolejte mi / Napsat poptávku“, formulář pro lead.js
 // a panel „Co bude dál“. Liší se jen nadpisem, tématem poptávky a vzorovým textem zprávy.
 import { PHONE, PHONE_SHORT, EMAIL } from "../data/site";
@@ -29,7 +32,7 @@ const { heading, topic, placeholder, cta = "sp", misto = "Karlovarský a&nbsp;Pl
         <form class="lb-form" id="lb-form" role="tabpanel" aria-labelledby="lb-tab-call" data-topic={topic} data-mode="call" novalidate>
           <p class="lb-sub" data-for="call">Stačí jméno a&nbsp;telefon. Zavolám vám do 24 hodin (v&nbsp;pracovní dny), hovor zabere asi 15 minut.</p>
           <p class="lb-sub" data-for="form" hidden>Stačí pár vět – co dnes řešíte a&nbsp;co by mělo fungovat jinak. Odpovím do 24 hodin (v&nbsp;pracovní dny).</p>
-          <div class="hp" aria-hidden="true"><label for="hp-lb">Nevyplňujte</label><input type="text" id="hp-lb" name="website" value="" tabindex="-1" autocomplete="off" aria-hidden="true"></div>
+          <Honeypot id="hp-lb" />
           <div class="lb-grid">
             <div class="fld"><label for="lb-name">Jméno *</label><input id="lb-name" name="name" type="text" autocomplete="name" placeholder="Jan Novák" aria-describedby="e-lb-name"><p class="err-msg" id="e-lb-name"></p></div>
             <div class="fld" data-for="form" hidden><label for="lb-email">E-mail *</label><input id="lb-email" name="email" type="email" autocomplete="email" placeholder="jan@firma.cz" aria-describedby="e-lb-email"><p class="err-msg" id="e-lb-email"></p></div>
@@ -38,14 +41,8 @@ const { heading, topic, placeholder, cta = "sp", misto = "Karlovarský a&nbsp;Pl
             <div class="fld full"><label for="lb-msg"><span data-for="call">O&nbsp;čem si promluvíme? <em>(nepovinné)</em></span><span data-for="form" hidden>Co potřebujete? *</span></label><textarea id="lb-msg" name="message" rows="3" placeholder={placeholder} aria-describedby="e-lb-msg"></textarea><p class="err-msg" id="e-lb-msg"></p></div>
           </div>
           <div class="lb-foot"><button type="submit" class="btn btn-grad" data-cta={`${cta}_lead_submit`}><span class="lbl">Zavolejte mi</span> <span class="arr">→</span></button><small>Zdarma a&nbsp;nezávazně, nic neprodávám na sílu.</small></div>
-          <p class="consent">Odesláním souhlasíte se zpracováním údajů pro vyřízení poptávky – <a href="/ochrana-osobnich-udaju.html">zásady ochrany osobních údajů</a>.</p>
-          <div class="lb-fail" hidden>
-            <b>Odeslání se nepovedlo – poptávka se ale neztratí.</b>
-            <p class="rate-msg" hidden>Zkuste to prosím za chvíli, nebo napište e-mailem.</p>
-            <p>Klikněte na tlačítko a&nbsp;pošlete ji e-mailem, všechno je předvyplněné.</p>
-            <a class="btn btn-grad lb-mailto" href={`mailto:${EMAIL}`}>Odeslat e-mailem <span class="arr">→</span></a>
-            <small>nebo napište přímo na <a href={`mailto:${EMAIL}`}>{EMAIL}</a></small>
-          </div>
+          <Consent />
+          <FormFail cls="lb-fail" title="Odeslání se nepovedlo – poptávka se ale neztratí." text="Klikněte na tlačítko a&nbsp;pošlete ji e-mailem, všechno je předvyplněné." mailtoClass="lb-mailto" directly />
         </form>
         <div class="lb-done" hidden>
           <span class="lb-ok"><svg aria-hidden="true"><use href="#i-check"/></svg></span>

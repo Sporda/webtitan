@@ -1,0 +1,38 @@
+---
+// Okno při odchodu na podstránkách a v článcích. offer = co nabídnout: "app" = posouzení procesu, "web" = kontrola webu.
+// Kdy se ukáže a odeslání řeší /assets/lead.js (wtLead.exitIntent a wtLead.leadMagnet).
+import Honeypot from "./Honeypot.astro";
+import Consent from "./Consent.astro";
+import FormFail from "./FormFail.astro";
+import { PHONE, PHONE_SHORT } from "../data/site";
+interface Props { offer: string }
+const app = Astro.props.offer !== "web";
+---
+<dialog class="wtx" aria-labelledby="wtx-t" data-kind={app ? "app" : "web"}>
+  <div class="wtx-in">
+    <button type="button" class="wtx-x" data-close aria-label="Zavřít">✕</button>
+    <span class="kicker gt">Než odejdete</span>
+    <h2 id="wtx-t">{app ? "Vyplatí se vám aplikace? Řeknu vám to zdarma" : "Chcete zdarma zkontrolovat svůj web?"}</h2>
+    <form class="wtx-body" novalidate>
+      <p set:html={app
+        ? "Popište v&nbsp;pár větách, jak dnes pracujete, nebo vložte odkaz na tabulku. Do 2 pracovních dnů vám napíšu, jestli a&nbsp;jak se to dá zjednodušit a&nbsp;kolik by to zhruba stálo."
+        : "Pošlete mi odkaz a&nbsp;do 2 pracovních dnů vám zdarma pošlu 5 konkrétních věcí, které vám berou poptávky."}></p>
+      <Honeypot id="hp-wtx" />
+      <div class="wtx-fields">
+        {app
+          ? <div class="fld full"><label for="wtx-text">Co dnes řešíte? *</label><textarea id="wtx-text" name="text" rows="3" placeholder="Např. zakázky vedeme v Excelu a každý pátek je ručně přepisujeme do plánu…" aria-describedby="e-wtx-text"></textarea><p class="err-msg" id="e-wtx-text"></p></div>
+          : <div class="fld"><label for="wtx-url">Adresa vašeho webu *</label><input id="wtx-url" name="url" type="text" inputmode="url" autocomplete="url" placeholder="www.vasefirma.cz" aria-describedby="e-wtx-url"><p class="err-msg" id="e-wtx-url"></p></div>}
+        <div class="fld"><label for="wtx-email">Kam vám pošlu {app ? "posouzení" : "tipy"}? *</label><input id="wtx-email" name="email" type="email" autocomplete="email" placeholder="jan@firma.cz" aria-describedby="e-wtx-email"><p class="err-msg" id="e-wtx-email"></p></div>
+        <button class="btn btn-grad" type="submit" data-cta={`exit_lm_${app ? "app" : "web"}`}><span class="lbl">{app ? "Chci posouzení zdarma" : "Chci kontrolu zdarma"}</span> <span class="arr">→</span></button>
+        <p class="wtx-note">Zdarma, bez závazku a&nbsp;bez obchodních telefonátů.</p>
+        <Consent />
+      </div>
+      <div class="wtx-done" hidden tabindex="-1">
+        <span class="lb-ok sm"><svg aria-hidden="true"><use href="#i-check"/></svg></span>
+        <div><b>Díky, mám to u&nbsp;sebe.</b><p set:html={app ? "Do 2 pracovních dnů vám napíšu, jestli a&nbsp;jak se dá váš proces zjednodušit." : "Do 2 pracovních dnů vám pošlu tipy, co na webu zlepšit."}></p></div>
+      </div>
+      <FormFail cls="lb-fail" title="Odeslání se nepovedlo." text="Pošlete mi to prosím e-mailem – text jsem vám připravil." mailtoClass="lb-mailto" />
+    </form>
+    <p class="wtx-alt"><a href="#poptat" data-mode="call" data-cta="exit_call">Raději mi zavolejte <span class="arr" aria-hidden="true">→</span></a><a href={`tel:${PHONE}`} data-cta="exit_tel">nebo volejte <Fragment set:html={PHONE_SHORT} /></a></p>
+  </div>
+</dialog>

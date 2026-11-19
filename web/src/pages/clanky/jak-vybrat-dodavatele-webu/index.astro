@@ -1,4 +1,5 @@
 ---
+import { castka } from "../../../data/sluzby";
 import Article from "../../../layouts/Article.astro";
 ---
 <Article slug="jak-vybrat-dodavatele-webu">
@@ -26,16 +27,11 @@ import Article from "../../../layouts/Article.astro";
 <ul class="list">
 <li><strong>Kód, data i&nbsp;doména patří vám.</strong> Data si můžete kdykoli vyexportovat.</li>
 <li><strong>Pevná cena předem.</strong> Co si odsouhlasíme, to platí. Nejsem plátce DPH, ceny jsou konečné.</li>
-<li><strong>Provoz a&nbsp;správa od 990&nbsp;Kč měsíčně,</strong> bez licencí za uživatele.</li>
+<li><strong>Provoz a&nbsp;správa od <Fragment set:html={castka("srv")} /> měsíčně,</strong> bez licencí za uživatele.</li>
 <li><strong>Jednáte přímo se mnou</strong> – kdo s&nbsp;vámi mluví, ten to i&nbsp;staví.</li>
 <li><strong>Reference na webu</strong> – 3D konfigurátor pro BMP Bohemia (konfigurator-bmp.webtitan.cz), aplikace crm.webtitan.cz, Moje bojovka (mojevyprava.webtitan.cz) a&nbsp;další v&nbsp;<a href="/#reference">referencích</a>.</li>
 <li><strong>Termíny:</strong> firemní web obvykle 2–4&nbsp;týdny, aplikace typicky 3–6&nbsp;týdnů od schválení rozsahu.</li>
 <li><strong>Průběžné ukázky</strong> během vývoje, žádná černá skříňka.</li>
 <li><strong>Běžné technologie</strong> – Next.js, React, Node.js, TypeScript.</li>
 </ul>
-<div class="post-cta">
-  <b>Porovnáváte nabídky? Ozvěte se</b>
-  <p>Pošlete mi zadání nebo nabídku, kterou máte na stole. Řeknu vám, co v&nbsp;ní případně chybí a&nbsp;kolik by to stálo u&nbsp;mě. Nezávazně a&nbsp;zdarma.</p>
-  <div class="dual"><a href="#poptat" class="btn btn-grad" data-mode="call" data-cta="post_inline_call"><svg aria-hidden="true"><use href="#i-phone"/></svg>Domluvit 15min hovor</a><a href="#poptat" class="btn btn-line" data-mode="form" data-cta="post_inline_form">Poslat poptávku</a></div>
-</div>
 </Article>

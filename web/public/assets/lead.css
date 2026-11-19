@@ -92,14 +92,9 @@
   details::details-content { height: 0; overflow: clip; transition: height .32s cubic-bezier(.2, .8, .2, 1), content-visibility .32s allow-discrete; }
   details[open]::details-content { height: auto; }
 }
-/* přechod mezi stránkami webu: krátké prolnutí, hlavička zůstává na místě */
-@view-transition { navigation: auto; }
-.nav-wrap { view-transition-name: site-nav; }
-::view-transition-old(root), ::view-transition-new(root) { animation-duration: .22s; }
 @media (prefers-reduced-motion: reduce) {
   .rv { opacity: 1; transform: none; }
   details::details-content { transition: none !important; }
-  @view-transition { navigation: none; }
 }
 
 /* telefon: v hlavičce číslo (kde je místo) nebo kulatá ikona, v liště na mobilu, v úvodu stránky */

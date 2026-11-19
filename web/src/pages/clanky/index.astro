@@ -1,4 +1,5 @@
 ---
+import Crumbs from "../../components/Crumbs.astro";
 import Sub from "../../layouts/Sub.astro";
 import ArticleCard from "../../components/ArticleCard.astro";
 import { CLANKY } from "../../data/clanky";
@@ -7,9 +8,11 @@ import { plain } from "../../lib/text";
 
 const path = "/clanky/";
 const description = "Praktické články o tom, kolik stojí web, e-shop a aplikace na míru, kdy přejít z Excelu a jak získat zákazníky z regionu. Píše Jan Šporek.";
+/** Drobečková navigace – na stránce i ve strukturovaných datech. */
+const crumbs: [string, string][] = [["Domů", "/"], ["Články", path]];
 const jsonLd = graph(
   blogLd(description, CLANKY.map((c) => ({ path: `/clanky/${c.slug}/`, headline: plain(c.titulek), published: c.datum }))),
-  crumbsLd([["Domů", "/"], ["Články", path]]),
+  crumbsLd(crumbs),
 );
 ---
 <Sub
@@ -25,7 +28,7 @@ const jsonLd = graph(
 >
   <section class="sp-hero">
     <div class="wrap">
-      <nav class="crumbs" aria-label="Drobečková navigace"><ol><li><a href="/">Domů</a></li><li aria-current="page">Články</li></ol></nav>
+      <Crumbs items={crumbs} />
       <header class="card intro">
         <div><span class="kicker">Články</span></div>
         <h1>Články o&nbsp;webech, e-shopech a&nbsp;aplikacích</h1>

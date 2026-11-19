@@ -1,1 +1,0 @@
-@view-transition{navigation:auto}.nav-wrap{view-transition-name:site-nav}::view-transition-old(root),::view-transition-new(root){animation-duration:.22s}@media (prefers-reduced-motion:reduce){@view-transition{navigation:none}}

@@ -1,17 +1,22 @@
 // Společné údaje webu – mění se tady a propíšou se do všech stránek.
+import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
+import { publicDir } from "astro:config/server";
 
 export const SITE_URL = "https://webtitan.cz";
 
-/** Verze souborů v /public/assets (?v=…): zvednout po změně souboru, aby si prohlížeče stáhly novou verzi. */
-export const V = {
-  analytics: 3,
-  consent: 3,
-  lead: 3,
-  leadCss: 2,
-  fontsCss: 2,
-  motion: 2,
-  icons: 2,
-};
+/** Obsah souboru ze složky public (cesta od kořene webu, např. "/assets/lead.js") – čte se při buildu. */
+export const publicFile = (path: string): Buffer => readFileSync(new URL(`.${path}`, publicDir));
+
+/** Adresa souboru z /public s otiskem obsahu („/assets/lead.js?v=1a2b3c4d“). Otisk se při buildu spočítá
+ *  ze souboru, takže po každé jeho změně si prohlížeče samy stáhnou novou verzi – nic se nezvedá ručně. */
+export function asset(path: string): string {
+  return `${path}?v=${createHash("sha1").update(publicFile(path)).digest("hex").slice(0, 8)}`;
+}
+
+/** Volná kapacita – např. "Volno na nové projekty od ledna 2027" (štítek v úvodu a u kontaktu na úvodní stránce).
+ *  Prázdné = štítek se nevypíše. */
+export const VOLNA_KAPACITA = "";
 
 export const PHONE = "+420723793510";
 /** Telefon do textu (HTML, nezlomitelné mezery). */

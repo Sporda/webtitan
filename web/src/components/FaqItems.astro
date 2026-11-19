@@ -1,0 +1,9 @@
+---
+// Rozbalovací otázky a odpovědi (data/otazky.ts) – na úvodní stránce i na podstránkách (Faq.astro).
+// reveal = třída .rv (objeví se při posouvání; úvodní stránka). První otázka je otevřená.
+interface Props { items: { q: string; a: string }[]; reveal?: boolean }
+const { items, reveal = false } = Astro.props;
+---
+{items.map((f, i) => (
+  <details class={reveal ? "rv" : undefined} open={i === 0}><summary><Fragment set:html={f.q} /><span class="pm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></summary><p class="ans" set:html={f.a}></p></details>
+))}

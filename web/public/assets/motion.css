@@ -101,10 +101,16 @@ summary:active .pm { scale: .9; }
 }
 @keyframes m-arrive { 0% { opacity: 0; } 22% { opacity: 1; } 100% { opacity: 0; } }
 
+/* ---------- přechod mezi stránkami webu: krátké prolnutí, hlavička zůstává na místě ---------- */
+@view-transition { navigation: auto; }
+.nav-wrap { view-transition-name: site-nav; }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: .22s; }
+
 /* ---------- omezení pohybu ---------- */
 @media (prefers-reduced-motion: reduce) {
   .btn:is(:hover, :active), .lift:hover, .btn .arr, .link-cta .arr { transform: none !important; }
   :is(.seg, .tabs, .lb-tabs) > [role="tab"]:active, :is(.chips, .days) label:active span, .svc-peek:active, summary:active .pm { scale: none !important; }
   .m-ind { transition: none !important; }
   .m-arrive::after { animation: none !important; display: none; }
+  @view-transition { navigation: none; }
 }

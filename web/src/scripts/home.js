@@ -1,105 +1,33 @@
 (() => {
   "use strict";
 
-  // Volná kapacita – např. "Volno na nové projekty od ledna 2027". Prázdné = štítek se nezobrazí.
-  const VOLNA_KAPACITA = "";
-
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const $ = (s, r) => (r || document).querySelector(s);
   const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
-  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-  const WEEK = 7 * 864e5;
-  const APP_PRICE = 24950;
-  let submitted = false;
+  // Společné funkce formulářů (odeslání, chyby polí, záložní e-mail, měření, okno při odchodu, posouzení zdarma) jsou
+  // v /assets/lead.js jako window.wtLead. Ten se načítá s defer, tedy až po tomhle skriptu – proto se volají až při
+  // použití (odeslání, kliknutí), nebo přes onLead() po jeho načtení, ne hned při načtení stránky.
+  const L = () => window.wtLead;
+  const onLead = fn => (window.wtLead ? fn() : document.addEventListener("DOMContentLoaded", fn));
+  const track = (name, props) => L()?.track(name, props);
+  const setErr = (input, msg) => L().setErr(input, msg);
+  const emailOk = v => L().EMAIL_RE.test(v.trim());
 
+  // localStorage už při načtení stránky (obnovení přepínače a rozpracované poptávky), kdy lead.js ještě neběží
   const store = {
     get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } },
     set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* storage unavailable */ } },
     del(k) { try { localStorage.removeItem(k); } catch (e) { /* storage unavailable */ } }
   };
 
-  // analytics hooks (PostHog / GTM are optional)
-  function track(name, props) {
-    props = props || {};
-    try { window.posthog?.capture?.(name, props); } catch (e) { /* ignore */ }
-    try { window.dataLayer?.push?.(Object.assign({ event: name }, props)); } catch (e) { /* ignore */ }
-  }
-  // Odeslání všech formulářů – jeden společný helper.
-  // POST /api/contact.php → 200 {"ok":true} = úspěch; jiný stav nebo chyba sítě = záložní odeslání e-mailem.
-  class SendError extends Error {
-    constructor(status, data) { super("HTTP " + status); this.status = status; this.data = data || {}; }
-  }
-  async function sendLead(source, form, p) {
-    const hp = form ? form.querySelector('input[name="website"]') : null;
-    const body = {
-      source,
-      name: String(p.name || ""),
-      email: String(p.email || ""),
-      phone: String(p.phone || ""),
-      message: String(p.message || ""),
-      website: hp ? hp.value : "",
-      page: location.pathname,
-      // odkud návštěvník přišel (/assets/lead.js) – v e-mailu a v CRM pak vidím, co poptávku přineslo
-      src: typeof window.wtSrc === "function" ? window.wtSrc() : null
-    };
-    let res;
-    try {
-      res = await fetch("/api/contact.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "Accept": "application/json" },
-        body: JSON.stringify(body)
-      });
-    } catch (e) {
-      throw new SendError(0);
-    }
-    let data = null;
-    try { data = await res.json(); } catch (e) { data = null; }
-    if (res.status === 200 && data && data.ok === true) return data;
-    throw new SendError(res.status, data);
-  }
-  // Po chybě: 429 = ukázat „zkuste za chvíli“, 400 s fields = zvýraznit pole, která server odmítl.
-  function sendIssue(failBox, err, fieldIds) {
-    const rate = !!(err && err.status === 429);
-    const rateMsg = failBox ? failBox.querySelector(".rate-msg") : null;
-    if (rateMsg) rateMsg.hidden = !rate;
-    let field = null;
-    const fields = err && err.status === 400 && err.data && err.data.fields;
-    if (fields && typeof fields === "object") {
-      Object.keys(fields).forEach(k => {
-        const el = fieldIds && fieldIds[k] ? document.getElementById(fieldIds[k]) : null;
-        if (!el) return;
-        setErr(el, typeof fields[k] === "string" && fields[k] ? fields[k] : "Zkontrolujte prosím toto pole.");
-        field = field || el;
-      });
-    }
-    return { rate, field };
-  }
-  const mailto = (subject, body) => "mailto:jan@webtitan.cz?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body.length > 1800 ? body.slice(0, 1800) + "\n…" : body);
-  const kc = n => Math.round(n).toLocaleString("cs-CZ") + " Kč";
+  // Formátování čísel: formátovače se vytvoří jednou (kalkulačka přepočítává při každém posunu jezdce).
+  const NUM = [new Intl.NumberFormat("cs-CZ", { maximumFractionDigits: 0 }), new Intl.NumberFormat("cs-CZ", { maximumFractionDigits: 1 })];
+  const kc = n => NUM[0].format(Math.round(n)) +" Kč";
 
-  function setErr(input, msg) {
-    input.setAttribute("aria-invalid", msg ? "true" : "false");
-    const p = document.getElementById("e-" + input.id);
-    if (p) p.textContent = msg;
-  }
   function scrollToEl(el) {
     el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
   }
-  function markSubmitted() {
-    submitted = true;
-    store.set("wt7-submitted", Date.now());
-    ui.updateBar();
-  }
-
-  document.addEventListener("click", e => {
-    const el = e.target.closest("[data-cta]");
-    if (el) track("cta_click", { location: el.dataset.cta });
-  });
-
-  // ---------- capacity badge ----------
-  if (VOLNA_KAPACITA.trim()) {
-    $$("[data-capacity]").forEach(b => { b.textContent = VOLNA_KAPACITA.trim(); b.hidden = false; });
-  }
+  // kliknutí na výzvy (data-cta) měří lead.js na všech stránkách
 
   // ---------- mobile menu ----------
   const menu = $("#menu");
@@ -213,7 +141,9 @@
     // Obrázky ostatních služeb (schované, jinak by se načetly až po kliknutí) stáhnout a rozbalit dopředu, jakmile se
     // sekce blíží k obrazovce – první prohození pak nečeká na síť a obrázek nenaskočí pozdě. Jen na desktopu:
     // na užším displeji se karty nepřehazují, data se šetří.
+    // Sleduje se, dokud se opravdu nestáhnou – tablet na výšku (bez přehazování) se může otočit na šířku.
     let preloaded = false;
+    let near = false;
     const preload = () => {
       if (preloaded || !desktop.matches) return;
       preloaded = true;
@@ -224,12 +154,15 @@
     };
     if ("IntersectionObserver" in window) {
       const io = new IntersectionObserver(es => {
-        if (es.some(e => e.isIntersecting)) { preload(); io.disconnect(); }
+        near = es.some(e => e.isIntersecting);
+        if (near) preload();
+        if (preloaded) io.disconnect();
       }, { rootMargin: "900px 0px" });
       io.observe(grid);
     }
-    grid.addEventListener("pointerenter", preload, { once: true });
-    grid.addEventListener("focusin", preload, { once: true });
+    desktop.addEventListener("change", () => { if (near) preload(); });
+    grid.addEventListener("pointerenter", preload);
+    grid.addEventListener("focusin", preload);
 
     function feature(card, focus) {
       if (card.classList.contains("svc-main") || !desktop.matches) return;
@@ -385,11 +318,7 @@
       if (e.target.name === "bk_day" || e.target.name === "bk_time") updateSel();
       if (e.target.name === "bk_mode") updatePhoneReq();
     });
-    ["bk-name", "bk-email", "bk-phone"].forEach(id => {
-      document.getElementById(id).addEventListener("input", e => {
-        if (e.target.getAttribute("aria-invalid") === "true") setErr(e.target, "");
-      });
-    });
+    onLead(() => L().clearOnInput(["bk-name", "bk-email", "bk-phone"].map(id => document.getElementById(id))));
 
     function summary() {
       const day = dayObj(radio("bk_day"));
@@ -414,7 +343,7 @@
       if (!radio("bk_time")) { $("#e-bk-time").textContent = "Vyberte prosím čas."; first = first || $('input[name="bk_time"]', form); }
       const name = $("#bk-name"), email = $("#bk-email"), phone = $("#bk-phone");
       setErr(name, name.value.trim().length < 2 ? "Napište prosím své jméno." : "");
-      setErr(email, EMAIL_RE.test(email.value.trim()) ? "" : "Zadejte prosím platný e-mail – pošlu na něj potvrzení termínu.");
+      setErr(email, emailOk(email.value) ? "" : "Zadejte prosím platný e-mail – pošlu na něj potvrzení termínu.");
       const needPhone = radio("bk_mode") === "Telefonicky" && phone.value.replace(/\D/g, "").length < 9;
       setErr(phone, needPhone ? "Zadejte prosím telefon, ať vám můžu zavolat – nebo zvolte videohovor." : "");
       const badField = [name, email, phone].find(i => i.getAttribute("aria-invalid") === "true");
@@ -426,10 +355,7 @@
         return;
       }
       const btn = $("#bk-submit");
-      const lbl = $(".lbl", btn);
-      btn.disabled = true;
-      btn.classList.add("is-loading");
-      lbl.textContent = "Odesílám…";
+      L().busy(btn, true, "Odesílám…");
       fail.hidden = true;
       status.className = "form-status";
       status.textContent = "Odesílám žádost o hovor…";
@@ -437,9 +363,9 @@
       const time = radio("bk_time");
       const props = { day: radio("bk_day"), time, mode: radio("bk_mode"), segment: seg.value };
       try {
-        await sendLead("hovor", form, { name: name.value.trim(), email: email.value.trim(), phone: phone.value.trim(), message: summary() });
+        await L().sendLead("hovor", form, { name: name.value.trim(), email: email.value.trim(), phone: phone.value.trim(), message: summary() });
         track("call_request", Object.assign({ status: "ok" }, props));
-        markSubmitted();
+        L().markSubmitted();
         window.wtConversion?.("lead"); // Sklik / Google Ads – jen se souhlasem (assets/consent.js)
         status.textContent = "";
         const firstName = name.value.trim().split(/\s+/)[0];
@@ -453,17 +379,15 @@
         $("#bk-done-t").focus({ preventScroll: true });
       } catch (err) {
         track("call_request", Object.assign({ status: "error" }, props));
-        $("#bk-mailto").href = mailto("Žádost o 15min hovor – " + day.long + " " + time, summary() + "\n\nJméno: " + name.value.trim() + "\nE-mail: " + email.value.trim());
+        L().setMailto($("#bk-mailto"), "Žádost o 15min hovor – " + day.long + " " + time, summary() + "\n\nJméno: " + name.value.trim() + "\nE-mail: " + email.value.trim());
         fail.hidden = false;
-        const issue = sendIssue(fail, err, { name: "bk-name", email: "bk-email", phone: "bk-phone", message: "bk-note" });
+        const issue = L().sendIssue(fail, err, { name: "bk-name", email: "bk-email", phone: "bk-phone", message: "bk-note" });
         status.className = "form-status err";
         status.textContent = issue.field ? "Zkontrolujte prosím zvýrazněná pole – nebo žádost pošlete e-mailem."
           : issue.rate ? "Zkuste to prosím za chvíli, nebo napište e-mailem."
           : "Žádost můžete poslat e-mailem – vše je předvyplněné.";
       } finally {
-        btn.disabled = false;
-        btn.classList.remove("is-loading");
-        lbl.textContent = "Domluvit hovor";
+        L().busy(btn, false, "Domluvit hovor");
       }
     });
 
@@ -513,11 +437,19 @@
     const radio = n => form.querySelector('input[name="' + n + '"]:checked')?.value || "";
 
     function save() {
+      // po odeslání už nic neukládat – přesun fokusu na poděkování vyvolá „change“ u posledního pole
+      // a odeslaná poptávka by se jinak znovu uložila jako rozpracovaná
+      if (!done.hidden) return;
       const data = { ts: Date.now(), step, type, radios: {}, fields: {}, call: $("#qf-call").checked };
       $$("input[type=radio]:checked", form).forEach(r => { data.radios[r.name] = r.value; });
       TEXT_IDS.forEach(id => { data.fields[id] = document.getElementById(id).value; });
       store.set(KEY, data);
     }
+    // Při psaní se ukládá chvíli po poslední změně (ne při každé klávese), při odchodu ze stránky hned.
+    let saveT = 0;
+    const saveSoon = () => { clearTimeout(saveT); saveT = setTimeout(() => { saveT = 0; save(); }, 400); };
+    const forget = () => { clearTimeout(saveT); saveT = 0; store.del(KEY); };
+    window.addEventListener("pagehide", () => { if (saveT) { clearTimeout(saveT); saveT = 0; save(); } });
     function setType(t) {
       type = t;
       tiles.forEach(b => b.setAttribute("aria-pressed", String(b.dataset.type === t)));
@@ -552,7 +484,7 @@
     function validate() {
       const name = $("#qf-name"), email = $("#qf-email"), phone = $("#qf-phone");
       setErr(name, name.value.trim().length < 2 ? "Napište prosím své jméno." : "");
-      setErr(email, EMAIL_RE.test(email.value.trim()) ? "" : "Zadejte prosím platný e-mail, ať vám můžu odpovědět.");
+      setErr(email, emailOk(email.value) ? "" : "Zadejte prosím platný e-mail, ať vám můžu odpovědět.");
       const needPhone = $("#qf-call").checked && phone.value.replace(/\D/g, "").length < 9;
       setErr(phone, needPhone ? "Zadejte prosím telefon, ať vám můžu zavolat." : "");
       return [name, email, phone].find(i => i.getAttribute("aria-invalid") === "true") || null;
@@ -574,13 +506,9 @@
 
     tiles.forEach(b => b.addEventListener("click", () => { setType(b.dataset.type); go(2); }));
     $$("[data-goto]", form).forEach(b => b.addEventListener("click", () => go(Number(b.dataset.goto))));
-    form.addEventListener("input", save);
-    form.addEventListener("change", save);
-    ["qf-name", "qf-email", "qf-phone"].forEach(id => {
-      document.getElementById(id).addEventListener("input", e => {
-        if (e.target.getAttribute("aria-invalid") === "true") setErr(e.target, "");
-      });
-    });
+    form.addEventListener("input", saveSoon);
+    form.addEventListener("change", saveSoon);
+    onLead(() => L().clearOnInput(["qf-name", "qf-email", "qf-phone"].map(id => document.getElementById(id))));
 
     form.addEventListener("submit", async e => {
       e.preventDefault();
@@ -600,41 +528,36 @@
       const name = val("qf-name");
       const email = val("qf-email");
       const btn = $("#qf-submit");
-      const lbl = $(".lbl", btn);
-      btn.disabled = true;
-      btn.classList.add("is-loading");
-      lbl.textContent = "Odesílám…";
+      L().busy(btn, true, "Odesílám…");
       fail.hidden = true;
       status.className = "form-status";
       status.textContent = "Odesílám poptávku…";
       try {
-        await sendLead("poptavka", form, { name, email, phone: val("qf-phone"), message: summary() });
+        await L().sendLead("poptavka", form, { name, email, phone: val("qf-phone"), message: summary() });
         track("form_submit", { status: "ok", type: type || "neuvedeno" });
-        store.del(KEY);
-        markSubmitted();
+        forget();
+        L().markSubmitted();
         window.wtConversion?.("lead");
         status.textContent = "";
         showDone(name);
       } catch (err) {
         track("form_submit", { status: "error", type: type || "neuvedeno" });
-        $("#qf-mailto").href = mailto("Poptávka z webu – " + (type || "nezařazeno"), summary() + "\n\nJméno: " + name + "\nE-mail: " + email);
+        L().setMailto($("#qf-mailto"), "Poptávka z webu – " + (type || "nezařazeno"), summary() + "\n\nJméno: " + name + "\nE-mail: " + email);
         fail.hidden = false;
-        const issue = sendIssue(fail, err, { name: "qf-name", email: "qf-email", phone: "qf-phone", message: "qf-msg" });
+        const issue = L().sendIssue(fail, err, { name: "qf-name", email: "qf-email", phone: "qf-phone", message: "qf-msg" });
         status.className = "form-status err";
         status.textContent = issue.field ? "Zkontrolujte prosím zvýrazněná pole – nebo poptávku pošlete e-mailem."
           : issue.rate ? "Zkuste to prosím za chvíli, nebo napište e-mailem."
           : "Poptávku můžete poslat e-mailem – vše je předvyplněné.";
       } finally {
-        btn.disabled = false;
-        btn.classList.remove("is-loading");
-        lbl.textContent = "Odeslat poptávku";
+        L().busy(btn, false, "Odeslat poptávku");
       }
     });
 
     $("#qf-reset").addEventListener("click", () => {
       form.reset();
       setType("");
-      store.del(KEY);
+      forget();
       resume.hidden = true;
       ["qf-name", "qf-email", "qf-phone"].forEach(id => setErr(document.getElementById(id), ""));
       go(1);
@@ -723,7 +646,11 @@
       if (n >= 2 && n <= 4) return few;
       return many;
     };
-    const fmt = (n, d) => n.toLocaleString("cs-CZ", { maximumFractionDigits: d || 0 });
+    const fmt = (n, d) => NUM[d ? 1 : 0].format(n);
+    const out = {
+      people: $("#roi-people-o"), hours: $("#roi-hours-o"), share: $("#roi-share-o"), month: $("#roi-month"),
+      monthHours: $("#roi-hours-month"), year: $("#roi-year"), save: $("#roi-save"), pay: $("#roi-pay")
+    };
     let last = {};
     function calc() {
       const p = Number(people.value) || 0;
@@ -734,18 +661,18 @@
       const monthHours = p * h * WEEKS;
       const month = monthHours * r;
       const saving = month * s;
-      $("#roi-people-o").textContent = p + " " + plural(p, "člověk", "lidé", "lidí");
-      $("#roi-hours-o").textContent = fmt(h, 1) + " h";
-      $("#roi-share-o").textContent = Math.round(s * 100) + " %";
-      $("#roi-month").textContent = kc(month);
-      $("#roi-hours-month").textContent = fmt(monthHours, 0);
-      $("#roi-year").textContent = kc(month * 12);
-      $("#roi-save").textContent = kc(saving) + "/měs.";
-      const pay = $("#roi-pay");
+      out.people.textContent = p + " " + plural(p, "člověk", "lidé", "lidí");
+      out.hours.textContent = fmt(h, 1) + " h";
+      out.share.textContent = Math.round(s * 100) + " %";
+      out.month.textContent = kc(month);
+      out.monthHours.textContent = fmt(monthHours, 0);
+      out.year.textContent = kc(month * 12);
+      out.save.textContent = kc(saving) + "/měs.";
+      const pay = out.pay;
       if (saving <= 0) {
         pay.innerHTML = "Zadejte hodinové náklady – pak spočítám, za jak dlouho by se aplikace vrátila.";
       } else {
-        const m = APP_PRICE / saving;
+        const m = Number(pay.dataset.price) / saving;
         let txt;
         if (m < 1) txt = "<b>méně než měsíc</b>";
         else if (m > 36) txt = "<b>víc než 3 roky</b> – v&nbsp;tom případě vám upřímně řeknu, jestli se to vyplatí";
@@ -753,7 +680,8 @@
           const v = Math.round(m * 10) / 10;
           txt = "<b>" + fmt(v, 1) + "&nbsp;" + plural(v, "měsíc", "měsíce", "měsíců") + "</b>";
         }
-        pay.innerHTML = "Aplikace od 24&nbsp;950&nbsp;Kč by se při této úspoře vrátila zhruba za " + txt + ".";
+        // cena aplikace z data/sluzby.ts (data-price / data-price-html na #roi-pay)
+        pay.innerHTML = "Aplikace od " + pay.dataset.priceHtml + " by se při této úspoře vrátila zhruba za " + txt + ".";
       }
       last = { people: p, hours: h, share: Math.round(s * 100), rate: r, month: Math.round(month), saving: Math.round(saving) };
     }
@@ -774,136 +702,44 @@
     calc();
   })();
 
-  // ---------- lead magnets (web check / process review) ----------
-  const validUrl = u => /^(https?:\/\/)?[^\s/.]+(\.[^\s/.]+)+(\/\S*)?$/i.test(u.trim());
-  $$(".lm-form").forEach(f => {
+  // ---------- posouzení / kontrola zdarma (sekce #kontrola a okno při odchodu) – odeslání řeší lead.js ----------
+  onLead(() => $$(".lm-form").forEach(f => {
     const kind = f.dataset.kind;
     const src = f.dataset.source;
-    const url = $("[name=url]", f);
-    const text = $("[name=text]", f);
-    const email = $("[name=email]", f);
-    const btn = $("button[type=submit]", f);
-    const lbl = $(".lbl", btn);
-    const lblText = lbl.textContent;
-    const fields = $(".lm-fields", f);
-    const ok = $(".lm-done", f);
-    const failBox = $(".lm-fail", f);
-    [url, text, email].filter(Boolean).forEach(i => i.addEventListener("input", () => {
-      if (i.getAttribute("aria-invalid") === "true") setErr(i, "");
-    }));
-    f.addEventListener("submit", async e => {
-      e.preventDefault();
-      if (url) setErr(url, validUrl(url.value) ? "" : "Zadejte prosím adresu webu, např. www.vasefirma.cz.");
-      if (text) setErr(text, text.value.trim().length >= 10 ? "" : "Napište prosím aspoň pár slov nebo vložte odkaz.");
-      setErr(email, EMAIL_RE.test(email.value.trim()) ? "" : "Zadejte prosím platný e-mail.");
-      const bad = [url, text, email].filter(Boolean).find(i => i.getAttribute("aria-invalid") === "true");
-      if (bad) { bad.focus(); return; }
-      const mail = email.value.trim();
-      const srcLabel = src === "exit" ? "vyskakovací okno" : "sekce na webu";
-      const message = kind === "web"
-        ? "Žádost o bezplatnou kontrolu webu: " + url.value.trim() + "\nE-mail: " + mail + "\nZdroj: " + srcLabel
-        : "Žádost o bezplatné posouzení procesu:\n\n" + text.value.trim() + "\n\nE-mail: " + mail + "\nZdroj: " + srcLabel;
-      btn.disabled = true;
-      btn.classList.add("is-loading");
-      lbl.textContent = "Odesílám…";
-      failBox.hidden = true;
-      try {
-        await sendLead(src === "exit" ? "exit" : "kontrola", f, { name: kind === "web" ? "Kontrola webu" : "Posouzení procesu", email: mail, phone: "", message });
-        track("leadmagnet_submit", { status: "ok", source: src, kind });
-        markSubmitted();
-        window.wtConversion?.("check");
+    L().leadMagnet(f, {
+      kind,
+      source: src === "exit" ? "exit" : "kontrola",
+      origin: src === "exit" ? "vyskakovací okno" : "sekce na webu",
+      cls: { fields: "lm-fields", done: "lm-done", fail: "lm-fail", mailto: "lm-mailto" },
+      props: { source: src, kind },
+      onDone() {
         const site = $(".lm-site", f);
+        const url = $("[name=url]", f);
         if (site && url) site.textContent = url.value.trim();
-        fields.hidden = true;
-        ok.hidden = false;
-        ok.focus({ preventScroll: true });
-      } catch (err) {
-        track("leadmagnet_submit", { status: "error", source: src, kind });
-        $(".lm-mailto", f).href = mailto(kind === "web" ? "Bezplatná kontrola webu" : "Bezplatné posouzení procesu", message);
-        failBox.hidden = false;
-        sendIssue(failBox, err, { email: email.id, message: (url || text).id });
-      } finally {
-        btn.disabled = false;
-        btn.classList.remove("is-loading");
-        lbl.textContent = lblText;
+        ui.updateBar();
       }
+    });
+  }));
+
+  // ---------- okno při odchodu – kdy se ukáže, řeší lead.js (wtLead.exitIntent) ----------
+  // Nabídka se řídí přepínačem aplikace / web; okno se neukáže, když je na obrazovce kontaktní sekce.
+  onLead(() => {
+    const dlg = $("#exit-dlg");
+    let contactIn = false;
+    new IntersectionObserver(([e]) => { contactIn = e.isIntersecting; }, { threshold: 0 }).observe($("#kontakt"));
+    L().exitIntent(dlg, {
+      paused: () => contactIn,
+      prepare() { dlg.setAttribute("aria-labelledby", seg.value === "app" ? "exit-t-app" : "exit-t"); },
+      onShow(trigger, desktop) {
+        if (desktop) {
+          const field = $(seg.value === "app" ? "#lm-text-x" : "#lm-url-x");
+          if (field) field.focus();
+        }
+        ui.dlgOpen = true;
+        ui.updateBar();
+        track("exit_intent_shown", { trigger, segment: seg.value });
+      },
+      onClose() { ui.dlgOpen = false; ui.updateBar(); }
     });
   });
-
-  // ---------- exit-intent ----------
-  // Desktop: the mouse leaves through the top edge (towards the tabs / address bar / close button).
-  // Phones and tablets: a quick scroll back up after reading a good part of the page, or coming back
-  // to the tab after a while away; shown as a sheet from the bottom. The offer follows the app / web switch.
-  // At most once per 7 days, not for 30 days after a sent form, not while the contact section is on screen.
-  // ?exit=1 shows it right away and ignores all of that (for testing; nothing is remembered).
-  (function () {
-    const dlg = $("#exit-dlg");
-    if (!dlg || typeof dlg.showModal !== "function") return;
-    const force = new URLSearchParams(location.search).has("exit");
-    const desktop = window.matchMedia("(hover: hover) and (pointer: fine) and (min-width: 1024px)");
-    const t0 = Date.now();
-    let contactIn = false;
-    let shown = false;
-    new IntersectionObserver(([e]) => { contactIn = e.isIntersecting; }, { threshold: 0 }).observe($("#kontakt"));
-    function allowed(minMs) {
-      if (shown || dlg.open || ui.dlgOpen) return false;
-      if (force) return true;
-      if (submitted || contactIn) return false;
-      if (Date.now() - t0 < minMs) return false;
-      // po odeslaném formuláři 30 dní nic nenabízet – pak se může vrátit s novou zakázkou
-      const sent = store.get("wt7-submitted");
-      if (sent && Date.now() - sent < 30 * 864e5) return false;
-      const last = store.get("wt7-exit");
-      if (last && Date.now() - last < WEEK) return false;
-      return true;
-    }
-    function show(trigger) {
-      shown = true;
-      if (!force) store.set("wt7-exit", Date.now());
-      const app = seg.value === "app";
-      dlg.setAttribute("aria-labelledby", app ? "exit-t-app" : "exit-t");
-      dlg.classList.toggle("sheet", !desktop.matches);
-      dlg.showModal();
-      if (desktop.matches) {
-        const field = $(app ? "#lm-text-x" : "#lm-url-x");
-        if (field) field.focus();
-      }
-      ui.dlgOpen = true;
-      ui.updateBar();
-      track("exit_intent_shown", { trigger, segment: seg.value });
-    }
-    document.addEventListener("mouseout", e => {
-      if (e.relatedTarget || e.clientY > 8 || !desktop.matches) return;
-      if (allowed(8000)) show("mouse");
-    });
-    // phones: an upward flick of more than half a screen within ~0.6 s, after reading at least a third
-    let lastY = window.scrollY;
-    let upFrom = null;
-    let deepest = 0;
-    window.addEventListener("scroll", () => {
-      if (desktop.matches) return;
-      const y = window.scrollY;
-      const now = performance.now();
-      deepest = Math.max(deepest, (y + window.innerHeight) / document.documentElement.scrollHeight);
-      if (y >= lastY) upFrom = null;
-      else if (!upFrom || now - upFrom.t > 600) upFrom = { y: lastY, t: now };
-      lastY = y;
-      if (upFrom && upFrom.y - y > window.innerHeight * 0.55 && deepest > 0.33 && y > 400 && allowed(15000)) {
-        show("scroll_up");
-      }
-    }, { passive: true });
-    // phones: back in the tab after at least 15 s somewhere else
-    let hiddenAt = 0;
-    document.addEventListener("visibilitychange", () => {
-      if (document.hidden) { hiddenAt = Date.now(); return; }
-      if (!desktop.matches && hiddenAt && Date.now() - hiddenAt > 15000 && allowed(15000)) show("return");
-    });
-    if (force) setTimeout(() => { if (allowed(0)) show("test"); }, 700);
-    dlg.addEventListener("close", () => { ui.dlgOpen = false; ui.updateBar(); });
-    dlg.addEventListener("click", e => {
-      if (e.target === dlg || (e.target.closest("[data-close]") && !e.target.closest("[data-open]"))) dlg.close();
-    });
-  })();
-
-  document.getElementById("year").textContent = new Date().getFullYear();
 })();

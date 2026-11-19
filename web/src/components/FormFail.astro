@@ -1,0 +1,15 @@
+---
+// Box „Odeslání se nepovedlo“ pod formulářem: záložní odeslání e-mailem (skript doplní odkaz s předvyplněným textem).
+// cls = třída boxu, podle které ho najde skript (lm-fail, qf-fail, lb-fail); mailtoClass / mailtoId = tlačítko e-mailu.
+// title a text jsou HTML; directly = „nebo napište přímo na …“ (bez něj „nebo napište na …“).
+import { EMAIL } from "../data/site";
+interface Props { cls: string; id?: string; title: string; text: string; mailtoClass?: string; mailtoId?: string; directly?: boolean }
+const { cls, id, title, text, mailtoClass, mailtoId, directly = false } = Astro.props;
+---
+<div class={cls} id={id} hidden>
+  <b set:html={title}></b>
+  <p class="rate-msg" hidden>Zkuste to prosím za chvíli, nebo napište e-mailem.</p>
+  <p set:html={text}></p>
+  <a class={mailtoClass ? `btn btn-grad ${mailtoClass}` : "btn btn-grad"} id={mailtoId} href={`mailto:${EMAIL}`}>Odeslat e-mailem <span class="arr">→</span></a>
+  <small>nebo napište {directly ? "přímo na" : "na"} <a href={`mailto:${EMAIL}`}>{EMAIL}</a></small>
+</div>

@@ -1,13 +1,14 @@
 ---
 // Kostra každé stránky: <head> (SEO, sdílení, ikony, písma, vložené CSS, strukturovaná data, skripty) a <body>.
 // Tři druhy stránek se liší jen načítáním písma a skripty:
-//   home   – úvodní stránka: písmo vložené přímo + předem načtená fotka (slot "head"), lead.js bez nabídky
-//   sub    – podstránky služeb, články: písmo souborem fonts.css, lead.css, lead.js s nabídkou (data-offer)
-//   simple – ochrana údajů, 404: písmo vložené přímo + přechody mezi stránkami, bez formuláře
+//   home   – úvodní stránka: písmo vložené přímo + předem načtená fotka (slot "head"), lead.js
+//   sub    – podstránky služeb, články: písmo souborem fonts.css, lead.css, lead.js
+//   simple – ochrana údajů, 404: písmo vložené přímo, bez formuláře
 // CSS i skripty zůstávají vložené ve stránce (is:inline), stejně jako před převodem na Astro.
-import { SITE_URL, V, OG_IMAGE } from "../data/site";
-import fontsInline from "../styles/fonts-inline.css?raw";
-import viewTransition from "../styles/view-transition.css?raw";
+// Přechody mezi stránkami (@view-transition) jsou v motion.css, který se načítá všude.
+import { SITE_URL, OG_IMAGE, asset, publicFile } from "../data/site";
+import baseCss from "../styles/base.css?raw";
+import { minCss } from "../lib/minify";
 
 export interface Props {
   kind: "home" | "sub" | "simple";
@@ -21,15 +22,19 @@ export interface Props {
   css: string;
   /** Strukturovaná data (schema.org) – objekt, vypíše se jako JSON-LD. */
   jsonLd?: unknown;
-  /** Podstránky: nabídka pro lead.js (data-offer), např. "web", "app". */
-  offer?: string;
 }
 
-const { kind, title, description, path, robots, og = {}, css, jsonLd, offer } = Astro.props;
+const { kind, title, description, path, robots, og = {}, css, jsonLd } = Astro.props;
 const url = path ? SITE_URL + path : undefined;
 const ogTitle = og.title ?? title;
 const ogDescription = og.description ?? description;
-const fonts = kind === "simple" ? fontsInline + viewTransition : fontsInline;
+// Písmo vložené přímo do stránky = public/assets/fonts/fonts.css (podstránky ho načítají souborem) bez komentářů
+// a zalomení – jeden zdroj pro obě varianty.
+const fonts = publicFile("/assets/fonts/fonts.css").toString().replace(/\/\*[\s\S]*?\*\//g, "").replace(/\n/g, "");
+const motionCss = asset("/assets/motion.css");
+// Společný základ úvodní stránky a podstránek (styles/base.css) jde před jejich vlastní styly; ochrana údajů a 404
+// mají jednodušší simple.css.
+const pageCss = minCss(kind === "simple" ? css : baseCss + css);
 ---
 <html lang="cs">
 <head>
@@ -41,6 +46,8 @@ const fonts = kind === "simple" ? fontsInline + viewTransition : fontsInline;
 {robots && <meta name="robots" content={robots}>}
 {url && <link rel="canonical" href={url}>}
 <meta name="theme-color" content="#ece3d4">
+{/* motion.css se připojuje až za styly stránky (přebíjí je), tady se jen začne stahovat hned, ne až za vloženým CSS */}
+<link rel="preload" href={motionCss} as="style">
 {url && (
   <Fragment>
     <meta name="author" content="Jan Šporek">
@@ -62,15 +69,16 @@ const fonts = kind === "simple" ? fontsInline + viewTransition : fontsInline;
     <meta name="twitter:image" content={OG_IMAGE}>
   </Fragment>
 )}
-<link rel="icon" href={`/favicon.ico?v=${V.icons}`} sizes="32x32">
-<link rel="icon" type="image/png" sizes="32x32" href={`/assets/favicon-32.png?v=${V.icons}`}>
-<link rel="apple-touch-icon" href={`/assets/apple-touch-icon.png?v=${V.icons}`}>
+<link rel="icon" href={asset("/favicon.ico")} sizes="32x32">
+<link rel="icon" type="image/png" sizes="32x32" href={asset("/assets/favicon-32.png")}>
+<link rel="apple-touch-icon" href={asset("/assets/apple-touch-icon.png")}>
 <slot name="head" />
 {kind === "sub" ? (
   <Fragment>
     <link rel="preload" href="/assets/fonts/unbounded-latin.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="stylesheet" href={`/assets/fonts/fonts.css?v=${V.fontsCss}`}>
-    <link rel="stylesheet" href={`/assets/lead.css?v=${V.leadCss}`}>
+    <link rel="preload" href="/assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href={asset("/assets/fonts/fonts.css")}>
+    <link rel="stylesheet" href={asset("/assets/lead.css")}>
   </Fragment>
 ) : (
   <Fragment>
@@ -81,13 +89,14 @@ const fonts = kind === "simple" ? fontsInline + viewTransition : fontsInline;
     <style is:inline set:html={fonts}></style>
   </Fragment>
 )}
-<style is:inline set:html={css}></style>
-{jsonLd && <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd, null, 1)}></script>}
-<script is:inline src={`/assets/analytics.js?v=${V.analytics}`} defer></script>
-<script is:inline src={`/assets/consent.js?v=${V.consent}`} defer></script>
-{kind !== "simple" && <script is:inline src={`/assets/lead.js?v=${V.lead}`} data-offer={offer} defer></script>}
-<link rel="stylesheet" href={`/assets/motion.css?v=${V.motion}`}>
-<script is:inline src={`/assets/motion.js?v=${V.motion}`} defer></script>
+<style is:inline set:html={pageCss}></style>
+{/* „<“ jako \u003c: text z FAQ nebo popisu (např. „</script>“) tak nemůže blok JSON-LD předčasně ukončit */}
+{jsonLd && <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd).replace(/</g, "\\u003c")}></script>}
+<script is:inline src={asset("/assets/analytics.js")} defer></script>
+<script is:inline src={asset("/assets/consent.js")} defer></script>
+{kind !== "simple" && <script is:inline src={asset("/assets/lead.js")} defer></script>}
+<link rel="stylesheet" href={motionCss}>
+<script is:inline src={asset("/assets/motion.js")} defer></script>
 </head>
 <body>
 <slot />

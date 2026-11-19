@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Nasadí web webtitan.cz: zkopíruje sestavený web (web/dist/) na server do /var/www/webtitan/public_html.
-# Web se sestavuje předem (GitHub Actions; ručně: cd web && npm ci && npm run build).
+# V GitHub Actions se web sestaví v samostatné úloze; ručně z počítače ho skript sestaví sám (viz níže).
 #
 # - Statický web z Astra + pár PHP endpointů (api/contact.php, api/inbound.php, api/health.php), žádný Docker.
 # - Kopíruje bez --delete (ve webrootu můžou být soubory panelu): smazaný soubor je potřeba odstranit i na serveru ručně.
@@ -25,6 +25,15 @@ SITE="$ROOT/web/dist"
 SSH_OPTS=(-p "$PORT" -o BatchMode=yes -o ConnectTimeout=20)
 if [ -n "${DEPLOY_KEY:-}" ]; then SSH_OPTS+=(-i "$DEPLOY_KEY" -o IdentitiesOnly=yes); fi
 if [ -n "${DEPLOY_KNOWN_HOSTS:-}" ]; then SSH_OPTS+=(-o "UserKnownHostsFile=$DEPLOY_KNOWN_HOSTS" -o StrictHostKeyChecking=yes); fi
+
+# Ručně z počítače se web před nahráním vždy sestaví – jinak by se mohl nahrát starý web/dist/. V GitHub Actions
+# (CI=true) přichází web/dist/ hotový z úlohy build a npm se tu záměrně nespouští (vedle SSH klíče).
+# SKIP_BUILD=1 sestavení přeskočí (web/dist/ je čerstvě sestavený).
+if [ -z "${CI:-}" ] && [ -z "${SKIP_BUILD:-}" ]; then
+  echo "Sestavuji web (npm ci && npm run build ve web/)…"
+  npm --prefix "$ROOT/web" ci
+  npm --prefix "$ROOT/web" run build
+fi
 
 for f in index.html api/contact.php; do
   [ -f "$SITE/$f" ] || { echo "Chybí web/dist/$f – je web sestavený (cd web && npm run build)?" >&2; exit 1; }
@@ -66,6 +75,23 @@ expect assets/consent.js 200 # lišta souhlasu + konverze Sklik / Google Ads (be
 expect api/contact.php 405   # přijímá jen POST – GET nic neodesílá
 expect api/inbound.php 405   # webhook Resendu – jen POST s podpisem
 expect api/_mail.php 404     # sdílená knihovna – zvenku se nespouští
-expect api/health.php 200    # „OK“ = konfigurace v pořádku a žádná nedoručená poptávka ani příchozí e-mail
+
+# health.php: 200 „OK“, nebo 503 „FAIL …“. S nasazením souvisí jen „config“ (chybí contact.env) a „db“ (databáze
+# nejde otevřít). „leads:N“, „crm:N“, „inbound:N“ jsou stav doručování poptávek (hlídá ho UptimeRobot) – kvůli
+# nim nasazení neselže, jen se vypíšou. (Volání zároveň zkusí neodeslané poptávky doručit, stejně jako UptimeRobot.)
+health="$(curl -s -w '\n%{http_code}' -A 'webtitan-deploy-check' "$SITE_URL/api/health.php" || true)"
+health_code="${health##*$'\n'}"
+health_body="${health%$'\n'*}"
+health_body="${health_body%$'\n'}"
+case "$health_code" in
+  200) echo "  OK    /api/health.php" ;;
+  503)
+    if grep -qwE 'config|db' <<<"$health_body"; then
+      echo "  CHYBA /api/health.php -> $health_body"; fail=1
+    else
+      echo "  POZOR /api/health.php -> $health_body (doručování poptávek, s nasazením nesouvisí)"
+    fi ;;
+  *) echo "  CHYBA /api/health.php -> $health_code (čekáno 200 nebo 503)"; fail=1 ;;
+esac
 if [ "$fail" -ne 0 ]; then echo "Nasazení proběhlo, ale něco na webu neodpovídá." >&2; exit 1; fi
 echo "Hotovo: $SITE_URL/"

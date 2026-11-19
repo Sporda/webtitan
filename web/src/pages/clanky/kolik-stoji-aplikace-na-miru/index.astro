@@ -1,10 +1,11 @@
 ---
+import { castka } from "../../../data/sluzby";
 import Article from "../../../layouts/Article.astro";
 ---
 <Article slug="kolik-stoji-aplikace-na-miru">
 <h2>Krátká odpověď</h2>
-<p>Jednodušší webová aplikace na míru – například evidence zakázek, rezervace nebo interní přehled místo sdílené tabulky – u&nbsp;mě začíná <strong>od 24&nbsp;950&nbsp;Kč</strong>. Většina menších firemních aplikací se pohybuje v&nbsp;desítkách tisíc korun. Systémy s&nbsp;mnoha agendami, napojením na účetnictví, sklad nebo e-shop a&nbsp;s&nbsp;různými rolemi uživatelů stojí víc – podle rozsahu i&nbsp;stovky tisíc.</p>
-<p>U&nbsp;aplikace na míru platíte <strong>jednorázově za vývoj</strong>, ne měsíčně za každého uživatele. Provoz – server, zálohy a&nbsp;aktualizace – se platí zvlášť, u&nbsp;mě od 990&nbsp;Kč měsíčně.</p>
+<p>Jednodušší webová aplikace na míru – například evidence zakázek, rezervace nebo interní přehled místo sdílené tabulky – u&nbsp;mě začíná <strong>od <Fragment set:html={castka("app")} /></strong>. Většina menších firemních aplikací se pohybuje v&nbsp;desítkách tisíc korun. Systémy s&nbsp;mnoha agendami, napojením na účetnictví, sklad nebo e-shop a&nbsp;s&nbsp;různými rolemi uživatelů stojí víc – podle rozsahu i&nbsp;stovky tisíc.</p>
+<p>U&nbsp;aplikace na míru platíte <strong>jednorázově za vývoj</strong>, ne měsíčně za každého uživatele. Provoz – server, zálohy a&nbsp;aktualizace – se platí zvlášť, u&nbsp;mě od <Fragment set:html={castka("srv")} /> měsíčně.</p>
 <h2>Co cenu ovlivňuje nejvíc</h2>
 <ul class="list">
 <li><strong>Počet agend a&nbsp;obrazovek.</strong> Zakázky, zákazníci, faktury, sklad, docházka… Každá agenda je samostatný kus práce: seznam, detail, formulář a&nbsp;filtry.</li>
@@ -19,7 +20,7 @@ import Article from "../../../layouts/Article.astro";
 <div class="tbl-wrap"><table>
 <thead><tr><th>Typ aplikace</th><th>Co obvykle umí</th><th>Orientačně</th></tr></thead>
 <tbody>
-<tr><td>Jednoduchá evidence</td><td>jedna až dvě agendy, pár uživatelů, export do Excelu</td><td><b>od 24&nbsp;950&nbsp;Kč</b></td></tr>
+<tr><td>Jednoduchá evidence</td><td>jedna až dvě agendy, pár uživatelů, export do Excelu</td><td><b>od <Fragment set:html={castka("app")} /></b></td></tr>
 <tr><td>Firemní aplikace</td><td>více agend, role uživatelů, upozornění e-mailem, převod dat z&nbsp;Excelu</td><td><b>desítky tisíc Kč</b></td></tr>
 <tr><td>Systém napojený na další služby</td><td>účetnictví, platby, sklad nebo e-shop, přehledy pro vedení</td><td><b>vyšší desítky až stovky tisíc Kč</b></td></tr>
 </tbody>
@@ -50,9 +51,4 @@ import Article from "../../../layouts/Article.astro";
 <li><strong>Jak se bude aplikace dál rozvíjet?</strong> Kolik stojí úpravy a&nbsp;jak rychle se dají udělat.</li>
 <li><strong>Uvidíte průběžné ukázky?</strong> Pravidelné ukázky během vývoje zabrání tomu, že na konci dostanete něco jiného, než jste čekali.</li>
 </ol>
-<div class="post-cta">
-  <b>Chcete vědět, kolik by stála vaše aplikace?</b>
-  <p>Popište mi v&nbsp;pár větách, co vás dnes zdržuje. Do 24 hodin (v&nbsp;pracovní dny) se ozvu s&nbsp;tím, jestli a&nbsp;jak to jde a&nbsp;v&nbsp;jakém cenovém rozmezí se pohybujeme.</p>
-  <div class="dual"><a href="#poptat" class="btn btn-grad" data-mode="call" data-cta="post_inline_call"><svg aria-hidden="true"><use href="#i-phone"/></svg>Domluvit 15min hovor</a><a href="#poptat" class="btn btn-line" data-mode="form" data-cta="post_inline_form">Poslat poptávku</a></div>
-</div>
 </Article>

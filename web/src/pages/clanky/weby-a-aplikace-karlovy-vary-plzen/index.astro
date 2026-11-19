@@ -1,4 +1,5 @@
 ---
+import { castka } from "../../../data/sluzby";
 import Article from "../../../layouts/Article.astro";
 ---
 <Article slug="weby-a-aplikace-karlovy-vary-plzen">
@@ -32,10 +33,5 @@ import Article from "../../../layouts/Article.astro";
 </ol>
 <p>Při stavbě webu tyto věci nastavím, nebo vám poradím, jak je udělat.</p>
 <h2>Ceny a&nbsp;jak začít</h2>
-<p>Firemní web od 9&nbsp;970&nbsp;Kč, e-shop od 19&nbsp;870&nbsp;Kč, aplikace na míru od 24&nbsp;950&nbsp;Kč – vždy pevná cena předem a&nbsp;nejsem plátce DPH. Začíná se nezávazným 15minutovým hovorem. Pokud jste z&nbsp;regionu, můžeme se klidně rovnou potkat.</p>
-<div class="post-cta">
-  <b>Jste z&nbsp;Karlovarského nebo Plzeňského kraje?</b>
-  <p>Domluvme si nezávazný 15minutový hovor – a&nbsp;pokud to dává smysl, rád se za vámi zastavím osobně.</p>
-  <div class="dual"><a href="#poptat" class="btn btn-grad" data-mode="call" data-cta="post_inline_call"><svg aria-hidden="true"><use href="#i-phone"/></svg>Domluvit 15min hovor</a><a href="#poptat" class="btn btn-line" data-mode="form" data-cta="post_inline_form">Poslat poptávku</a></div>
-</div>
+<p>Firemní web od <Fragment set:html={castka("web")} />, e-shop od <Fragment set:html={castka("shop")} />, aplikace na míru od <Fragment set:html={castka("app")} /> – vždy pevná cena předem a&nbsp;nejsem plátce DPH. Začíná se nezávazným 15minutovým hovorem. Pokud jste z&nbsp;regionu, můžeme se klidně rovnou potkat.</p>
 </Article>
