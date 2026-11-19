@@ -48,7 +48,8 @@ Původní ručně psané HTML (před Astrem) je v historii gitu ve složce `site
 
 ### Práce na webu
 
-Potřebuje Node 22.23+ (`web/.nvmrc`: 24).
+Potřebuje Node 22.23+ (`web/.nvmrc`: 24). Když je výchozí Node starší, ve složce `web/` nejdřív `nvm use` – přepne
+na verzi z `.nvmrc` jen v tom terminálu.
 
 ```bash
 cd web
@@ -165,11 +166,17 @@ z balíčků npm se ke klíči nedostane. Ručně jde workflow spustit v zálož
 Kontrola `api/health.php` po nasazení selže jen na `config` nebo `db`; nedoručené poptávky (`leads`, `crm`,
 `inbound`) jen vypíše jako POZOR – s nasazením nesouvisí.
 
-Ruční nasazení z počítače (skript web nejdřív sám sestaví; `SKIP_BUILD=1` to přeskočí):
+Běžně se nic ručně nenasazuje: commit a push do `main` stačí. Ruční nasazení z počítače je pro případ, že GitHub
+Actions nejede:
 
 ```bash
 env DEPLOY_HOST=158.180.50.98 DEPLOY_USER=ubuntu bash scripts/deploy.sh
 ```
+
+Skript nasadí jen commitnutý stav. Když jsou ve `web/` nebo `scripts/` necommitnuté změny, nebo je na GitHubu novější
+`main` (nasazení by web vrátilo zpátky), skončí dřív, než cokoli nahraje. Web pak sám sestaví (`npm ci`, `check`,
+`build`) s Node podle `web/.nvmrc` – když je výchozí Node v počítači jiný, vezme verzi z nvm (výchozí nemění).
+`SKIP_BUILD=1` sestavení přeskočí.
 
 Nasazení kopíruje bez mazání: soubor smazaný z webu je potřeba odstranit i na serveru ručně.
 

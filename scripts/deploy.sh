@@ -26,12 +26,53 @@ SSH_OPTS=(-p "$PORT" -o BatchMode=yes -o ConnectTimeout=20)
 if [ -n "${DEPLOY_KEY:-}" ]; then SSH_OPTS+=(-i "$DEPLOY_KEY" -o IdentitiesOnly=yes); fi
 if [ -n "${DEPLOY_KNOWN_HOSTS:-}" ]; then SSH_OPTS+=(-o "UserKnownHostsFile=$DEPLOY_KNOWN_HOSTS" -o StrictHostKeyChecking=yes); fi
 
+# Ručně z počítače jde nasadit jen commitnutý stav, který není starší než GitHub. Necommitnuté změny by se jinak
+# dostaly na web, aniž by byly v gitu, a starší checkout by web vrátil zpátky. (V GitHub Actions je checkout čistý.)
+if [ -z "${CI:-}" ]; then
+  dirty="$(git -C "$ROOT" status --porcelain -- web scripts)"
+  if [ -n "$dirty" ]; then
+    echo "Ve web/ nebo scripts/ jsou necommitnuté změny – nasadit jde jen commitnutý stav:" >&2
+    echo "$dirty" | head -20 >&2
+    echo "Commitni je a pushni do main (web se pak nasadí sám), nebo je odlož: git stash -u" >&2
+    exit 1
+  fi
+  git -C "$ROOT" fetch --quiet origin main || { echo "Nejde načíst origin/main z GitHubu." >&2; exit 1; }
+  if ! git -C "$ROOT" merge-base --is-ancestor origin/main HEAD; then
+    echo "Na GitHubu (origin/main) je novější stav než u tebe – nasazení by web vrátilo zpátky. Nejdřív git pull." >&2
+    exit 1
+  fi
+  ahead="$(git -C "$ROOT" rev-list --count origin/main..HEAD)"
+  if [ "$ahead" -gt 0 ]; then
+    echo "Pozor: $ahead commit(ů) ještě není na GitHubu – po pushi do main se web nasadí znovu sám."
+  fi
+  echo "Nasazuji commit $(git -C "$ROOT" log -1 --format='%h %s')"
+fi
+
+# Node podle web/.nvmrc (stejná verze jako v GitHub Actions). Když je v počítači výchozí jiná (Astro starší odmítne),
+# vezme se nejnovější odpovídající verze z nvm – jen pro tenhle skript, výchozí Node se nemění.
+use_node() {
+  local need have dir
+  need="$(tr -d '[:space:]' < "$ROOT/web/.nvmrc")"
+  have="$(node -v 2>/dev/null || true)"
+  case "$have" in "v$need".*) return 0 ;; esac
+  dir="$(ls -d "${NVM_DIR:-$HOME/.nvm}/versions/node/v$need."* 2>/dev/null | sort -V | tail -1 || true)"
+  if [ -n "$dir" ]; then PATH="$dir/bin:$PATH"; fi
+  have="$(node -v 2>/dev/null || true)"
+  case "$have" in
+    "v$need".*) echo "Node $have (podle web/.nvmrc)" ;;
+    *) echo "Na sestavení je potřeba Node $need (web/.nvmrc), teď je ${have:-žádný}. Nainstaluj: nvm install $need" >&2
+       exit 1 ;;
+  esac
+}
+
 # Ručně z počítače se web před nahráním vždy sestaví – jinak by se mohl nahrát starý web/dist/. V GitHub Actions
 # (CI=true) přichází web/dist/ hotový z úlohy build a npm se tu záměrně nespouští (vedle SSH klíče).
 # SKIP_BUILD=1 sestavení přeskočí (web/dist/ je čerstvě sestavený).
 if [ -z "${CI:-}" ] && [ -z "${SKIP_BUILD:-}" ]; then
-  echo "Sestavuji web (npm ci && npm run build ve web/)…"
+  use_node
+  echo "Sestavuji web (npm ci, check a build ve web/, stejně jako GitHub Actions)…"
   npm --prefix "$ROOT/web" ci
+  npm --prefix "$ROOT/web" run check
   npm --prefix "$ROOT/web" run build
 fi
 
