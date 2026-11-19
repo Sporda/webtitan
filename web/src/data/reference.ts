@@ -127,6 +127,23 @@ export const REFERENCE: Reference[] = [
     },
   },
   {
+    id: "penzion-erp",
+    obrazek: "PenzionErp.webp",
+    rel: "app",
+    karta: {
+      domena: "penzion-demo.webtitan.cz",
+      alt: "Ukázka provozního systému pro penzion – dnešní příjezdy, zálohy a upozornění (ukázková data)",
+      w: 800,
+      h: 400,
+      stitek: "Systém pro penziony · klikací demo",
+      titulek: "Penzion ERP – rezervace, zálohy, zvonky a&nbsp;topení v&nbsp;jednom systému",
+      zadani: "Penzion bez stálé recepce potřebuje mít pod kontrolou rezervace z&nbsp;webu i&nbsp;portálů, zálohy, příjezdy hostů a&nbsp;úklid – a&nbsp;nehlídat to v&nbsp;pěti různých aplikacích.",
+      reseni: "Webová aplikace s&nbsp;časovou osou rezervací, zálohami s&nbsp;QR platbou a&nbsp;párováním plateb z&nbsp;banky, PIN kódy a&nbsp;elektronickými zvonky, topením podle obsazenosti, úklidem, zprávami hostům a&nbsp;ceníkem se sezónami.",
+      prinos: "Recepce na jedné obrazovce vidí, kdo dnes přijíždí, kdo nezaplatil zálohu a&nbsp;kde zůstalo otevřené okno – a&nbsp;vyřeší to jedním kliknutím.",
+      technologie: "Astro · Laravel · PostgreSQL · <a href=\"https://penzion-demo.webtitan.cz/\" target=\"_blank\" rel=\"noopener\">penzion-demo.webtitan.cz</a>",
+    },
+  },
+  {
     id: "vb-porcelan",
     obrazek: "VbPorcelan.webp",
     rel: "web",
