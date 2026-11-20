@@ -1,0 +1,25 @@
+---
+// Upoutávka na klikací demo Penzion ERP – nejhezčí ukázka provozního systému (ERP), kterou si návštěvník proklikne sám.
+// Úvodní stránka (pod „Dnes / S aplikací na míru“) a stránka Vývoj aplikací. Obrázek, adresa a odkaz jsou z reference
+// „penzion-erp“ v data/reference.ts. track = předpona pro data-cta (měření kliků).
+import { reference } from "../data/reference";
+interface Props { track: string; reveal?: boolean }
+const { track, reveal = false } = Astro.props;
+const r = reference("penzion-erp");
+const k = r.karta;
+if (!k?.demo) throw new Error("Reference penzion-erp nemá velkou kartu s demem");
+---
+<aside class={reveal ? "card demo-teaser gb rv" : "card demo-teaser gb"} aria-labelledby={`${track}-demo-t`}>
+  <a class="demo-teaser-shot case-shot-link" href={k.demo.url} target="_blank" rel="noopener" data-cta={`${track}_demo_shot`} aria-label="Otevřít klikací demo (otevře se v novém okně)">
+    <div class="browser">
+      <div class="browser-bar"><i></i><i></i><i></i><span set:html={k.domena}></span></div>
+      <img src={`/assets/projects/${r.obrazek}`} alt={k.alt} width={k.w} height={k.h} loading="lazy" decoding="async">
+    </div>
+  </a>
+  <div>
+    <span class="case-tag">Klikací demo</span>
+    <h3 id={`${track}-demo-t`}>Vyzkoušejte si, jak taková aplikace vypadá</h3>
+    <p>Provozní systém pro penzion: rezervace, zálohy s&nbsp;QR platbou, PIN kódy a&nbsp;elektronické zvonky, topení podle obsazenosti i&nbsp;úklid na jedné obrazovce. Data jsou testovací na základě reálného projektu, takže klidně klikejte na všechno.</p>
+    <p class="demo-teaser-cta"><a class="btn btn-grad" href={k.demo.url} target="_blank" rel="noopener" data-cta={`${track}_demo`}>Otevřít demo&nbsp;↗</a><span>Bez registrace, otevře se rovnou přehled recepce</span></p>
+  </div>
+</aside>

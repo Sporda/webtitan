@@ -5,6 +5,7 @@ import Crumbs from "../../components/Crumbs.astro";
 import CtaPair from "../../components/CtaPair.astro";
 import { castka, castkaText, sluzba } from "../../data/sluzby";
 import RefCase from "../../components/RefCase.astro";
+import DemoTeaser from "../../components/DemoTeaser.astro";
 import Sub from "../../layouts/Sub.astro";
 import Faq from "../../components/Faq.astro";
 import OtherServices from "../../components/OtherServices.astro";
@@ -58,6 +59,7 @@ const jsonLd = graph(
         <div class="card ba-col before"><span class="ba-label">Dnes</span><h3>Excel, diář a&nbsp;papírky</h3><ul><li><span class="mk" aria-hidden="true"><svg><use href="#i-x"/></svg></span>Data v&nbsp;několika tabulkách a&nbsp;e-mailech</li><li><span class="mk" aria-hidden="true"><svg><use href="#i-x"/></svg></span>Aktuální stav zná jen ten, kdo zrovna zvedl telefon</li><li><span class="mk" aria-hidden="true"><svg><use href="#i-x"/></svg></span>Stejné údaje přepisujete několikrát – i&nbsp;s&nbsp;chybami</li><li><span class="mk" aria-hidden="true"><svg><use href="#i-x"/></svg></span>Přehled pro vedení znamená obvolat lidi</li><li><span class="mk" aria-hidden="true"><svg><use href="#i-x"/></svg></span>Zaučit nového kolegu trvá dlouho</li></ul></div>
         <div class="card ba-col after gb"><span class="ba-label">S&nbsp;aplikací na míru</span><h3>Jedna přehledná aplikace</h3><ul><li><span class="mk" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Zakázky, zákazníci a&nbsp;termíny na jednom místě</li><li><span class="mk" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Každý vidí aktuální stav – v&nbsp;kanceláři i&nbsp;z&nbsp;mobilu</li><li><span class="mk" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Údaj zadáte jednou, aplikace ho použije všude</li><li><span class="mk" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Přehledy a&nbsp;exporty na jedno kliknutí</li><li><span class="mk" aria-hidden="true"><svg><use href="#i-check"/></svg></span>Aplikace vede krok za krokem – i&nbsp;nováčka</li></ul></div>
       </div>
+      <DemoTeaser track="sp_app" />
     </div>
   </section>
 
@@ -89,7 +91,7 @@ const jsonLd = graph(
   <section class="sec" id="reference">
     <div class="wrap">
       <div class="head"><div><span class="kicker">Reference</span><h2>Aplikace a&nbsp;systémy, které jsem postavil</h2></div></div>
-      <div class="cases"><RefCase id="dev-c-r-m" /><RefCase id="penzion-erp" /><RefCase id="bmp-konfigurator" /><RefCase id="moje-bojovka" /><RefCase id="e-podnikam" /><RefCase id="skripta-prokop" /><RefCase id="gprooms" /></div>
+      <div class="cases"><RefCase id="penzion-erp" /><RefCase id="dev-c-r-m" /><RefCase id="bmp-konfigurator" /><RefCase id="moje-bojovka" /><RefCase id="e-podnikam" /><RefCase id="skripta-prokop" /><RefCase id="gprooms" /></div>
       <p class="refs-more"><a href="/#reference" class="link-cta">Všechny reference <span class="arr" aria-hidden="true">→</span></a></p>
     </div>
   </section>

@@ -124,4 +124,11 @@
   .ref-pro a, .others p a { text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line-2); }
   .ref-pro a:hover, .others p a:hover { color: var(--text); text-decoration-color: currentColor; }
   .case .tech.ref-pro { margin-top: 4px; }
+  /* Upoutávka na klikací demo (components/DemoTeaser.astro) – stejné rozvržení jako karta reference, výraznější rámeček. */
+  .demo-teaser { margin-top: var(--gap); display: grid; grid-template-columns: 1.15fr 1fr; gap: clamp(22px, 4vw, 52px); align-items: center; padding: clamp(18px, 2.8vw, 32px); }
+  .demo-teaser h3 { font-family: var(--display); font-weight: 700; font-size: clamp(20px, 2.1vw, 26px); letter-spacing: -.04em; line-height: 1.2; margin-bottom: 10px; }
+  .demo-teaser p { color: var(--muted); }
+  .demo-teaser-cta { margin-top: 20px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+  .demo-teaser-cta span { font-size: 14px; font-weight: 600; }
+  @media (max-width: 860px) { .demo-teaser { grid-template-columns: 1fr; } }
   .thumb .ref-pro { padding: 0 16px 14px; margin-top: -6px; font-size: 12.5px; font-weight: 600; color: var(--dim); }

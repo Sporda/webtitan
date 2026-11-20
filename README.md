@@ -19,6 +19,7 @@ na jednom místě. Běží na hostingu v panelu (panel.webtitan.cz, nginx + PHP 
 |---|---|
 | Ceny, názvy, popisy a ikony služeb – cena (`od`) se odtud propíše všude: stránky služeb, úvodní stránka, kalkulačka, časté otázky, články, 404, JSON-LD, patička, karty „Další služby“ a „Mohlo by vás zajímat“ (v textech `castka("web")`, v řetězcích `castkaText("web")`) | `web/src/data/sluzby.ts` |
 | Reference (velké karty Zadání / Řešení / Přínos a malé náhledy) | `web/src/data/reference.ts`; na stránce `<RefCase id="…" />`, `<RefThumb id="…" />` |
+| Upoutávka na klikací demo Penzion ERP (úvodní stránka pod „Řešení“, stránka Vývoj aplikací); obrázek a odkaz bere z reference `penzion-erp` | `web/src/components/DemoTeaser.astro`, styl v `web/src/styles/base.css` (`.demo-teaser`) |
 | Časté otázky (jedna sada pro celý web; na stránce i v JSON-LD) | `web/src/data/otazky.ts`; stránka si je vybírá `otazky([...])` |
 | Články: kategorie, nadpis, popis, datum, doba čtení, související, výzva na konci (`cta`), okno při odchodu (`nabidka`) | `web/src/data/clanky.ts`; text článku v `web/src/pages/clanky/<slug>/index.astro` |
 | Telefon, e-mail, odkazy, IČO (v `.astro` stránkách vždy přes konstanty, ne napevno), štítek volné kapacity (`VOLNA_KAPACITA`) | `web/src/data/site.ts` |

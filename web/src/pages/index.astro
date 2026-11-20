@@ -9,6 +9,7 @@ import { PHONE, PHONE_SHORT, EMAIL, LINKEDIN, GITHUB, VOLNA_KAPACITA } from "../
 import RefCase from "../components/RefCase.astro";
 import RefThumb from "../components/RefThumb.astro";
 import OthersCard from "../components/OthersCard.astro";
+import DemoTeaser from "../components/DemoTeaser.astro";
 import { ZADAVATELE } from "../data/reference";
 import Base from "../layouts/Base.astro";
 import Sprite from "../components/Sprite.astro";
@@ -234,6 +235,7 @@ const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#f
           </ul>
         </div>
       </div>
+      <DemoTeaser track="reseni" reveal />
     </div>
   </section>
 
@@ -392,13 +394,13 @@ const jsonLd = graph(PERSON, BUSINESS, WEBSITE, { "@id": "https://webtitan.cz/#f
         <p class="seg-hint" aria-live="polite">Zvýrazňuji ukázky pro: <b id="seg-hint-label">aplikace a&nbsp;systémy</b></p>
       </div>
       <div class="cases">
+        <RefCase id="penzion-erp" home />
         <RefCase id="dev-c-r-m" home />
         <RefCase id="fitness-ural" home />
         <RefCase id="bmp-konfigurator" home />
         <RefCase id="moje-bojovka" home />
         <RefCase id="e-podnikam" home />
         <RefCase id="gprooms" home />
-        <RefCase id="penzion-erp" home />
         <RefCase id="vb-porcelan" home />
       </div>
 
