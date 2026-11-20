@@ -14,7 +14,9 @@ const pro = r.pro && ZADAVATELE[r.pro]; // neznámý klíč zastaví už data/re
   <div class="case-shot">
     <div class="browser">
       <div class="browser-bar"><i></i><i></i><i></i><span set:html={k.domena}></span></div>
-      <img src={`/assets/projects/${r.obrazek}`} alt={k.alt} width={k.w} height={k.h} loading="lazy" decoding="async">
+      {k.demo
+        ? <a class="case-shot-link" href={k.demo.url} target="_blank" rel="noopener" data-cta={`ref_shot_${r.id}`} aria-label={`${k.demo.text} (otevře se v novém okně)`}><img src={`/assets/projects/${r.obrazek}`} alt={k.alt} width={k.w} height={k.h} loading="lazy" decoding="async"></a>
+        : <img src={`/assets/projects/${r.obrazek}`} alt={k.alt} width={k.w} height={k.h} loading="lazy" decoding="async">}
     </div>
   </div>
   <div>
@@ -25,6 +27,7 @@ const pro = r.pro && ZADAVATELE[r.pro]; // neznámý klíč zastaví už data/re
       <div><dt>Řešení</dt><dd set:html={k.reseni}></dd></div>
       <div><dt>Přínos</dt><dd class="win" set:html={k.prinos}></dd></div>
     </dl>
+    {k.demo && <p class="case-demo"><a class="btn btn-line" href={k.demo.url} target="_blank" rel="noopener" data-cta={`ref_demo_${r.id}`}>{k.demo.text}&nbsp;↗</a></p>}
     <p class="tech" set:html={k.technologie}></p>
     {pro && <p class="tech ref-pro">Vyvinuto pro <a href={pro.url} target="_blank" rel="noopener">{pro.nazev}</a></p>}
   </div>

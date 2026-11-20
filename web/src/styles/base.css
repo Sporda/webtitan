@@ -93,6 +93,10 @@
   .browser-bar i { width: 10px; height: 10px; border-radius: 50%; background: #d6cbb8; }
   .browser-bar span { margin-left: 10px; flex: 1; max-width: 280px; font-size: 12px; font-weight: 600; color: var(--muted); background: #fff; border: 1px solid var(--line); border-radius: 6px; padding: 2px 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .browser img { width: 100%; aspect-ratio: 2 / 1; object-fit: cover; object-position: top left; }
+  .case-shot-link { display: block; }
+  .case-shot-link img { transition: opacity .2s; }
+  .case-shot-link:hover img { opacity: .9; }
+  .case-demo { margin-top: 16px; }
   .case-tag { display: inline-block; font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--orange-ink); background: var(--peach); padding: 5px 11px; border-radius: 8px; margin-bottom: 12px; }
   .case dl { display: grid; gap: 12px; }
   .case dt { font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); margin-bottom: 2px; }

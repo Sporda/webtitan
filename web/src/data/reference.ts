@@ -15,8 +15,8 @@ export interface Reference {
   pro?: keyof typeof ZADAVATELE;
   /** Úvodní stránka: pro koho se zvýrazní ("app", "web" nebo "app web"). */
   rel?: string;
-  /** Velká karta. */
-  karta?: { domena: string; alt: string; w: number; h: number; stitek: string; titulek: string; zadani: string; reseni: string; prinos: string; technologie: string };
+  /** Velká karta. `demo` = živá ukázka, kterou si návštěvník může proklikat (tlačítko pod kartou, klikací náhled). */
+  karta?: { domena: string; alt: string; w: number; h: number; stitek: string; titulek: string; zadani: string; reseni: string; prinos: string; technologie: string; demo?: { url: string; text: string } };
   /** Malý náhled. */
   nahled?: { alt: string; nazev: string; popis: string };
 }
@@ -37,6 +37,7 @@ export const REFERENCE: Reference[] = [
       reseni: "Webová aplikace s&nbsp;docházkou a&nbsp;výkazy, projekty a&nbsp;úkoly, zákazníky, fakturací a&nbsp;přehledy. Týmové prostory s&nbsp;rolemi a&nbsp;oprávněními, napojení přes API.",
       prinos: "Používám ji sám: poptávky z&nbsp;tohoto webu v&nbsp;ní přistanou automaticky, i&nbsp;s&nbsp;tím, odkud zákazník přišel.",
       technologie: "SvelteKit · PostgreSQL · API · <a href=\"https://crm.webtitan.cz/\" target=\"_blank\" rel=\"noopener\">crm.webtitan.cz</a>",
+      demo: { url: "https://crm.webtitan.cz/", text: "Prohlédnout aplikaci" },
     },
   },
   {
@@ -72,6 +73,7 @@ export const REFERENCE: Reference[] = [
       reseni: "Konfigurátor v&nbsp;8 krocích – model, rozměry, konstrukce, vrata, zastřešení, barva, příslušenství a&nbsp;souhrn – s&nbsp;3D modelem, který jde otáčet, průběžnou cenou, uloženými konfiguracemi a&nbsp;poptávkou. Česky i&nbsp;německy.",
       prinos: "Poptávka přijde rovnou s&nbsp;hotovou konfigurací – bez dlouhého zjišťování rozměrů a&nbsp;výbavy.",
       technologie: "three.js (3D) · Astro + Svelte · Laravel · PostgreSQL · <a href=\"https://konfigurator-bmp.webtitan.cz/\" target=\"_blank\" rel=\"noopener\">konfigurator-bmp.webtitan.cz</a>",
+      demo: { url: "https://konfigurator-bmp.webtitan.cz/", text: "Vyzkoušet konfigurátor" },
     },
   },
   {
@@ -105,7 +107,8 @@ export const REFERENCE: Reference[] = [
       zadani: "Malá firma potřebuje mít zakázky, faktury, docházku, vozidla i&nbsp;sklad na jednom místě – bez Excelu a&nbsp;bez drahého podnikového systému.",
       reseni: "Modulární webová aplikace: zakázky se stavy od poptávky po fakturaci, plán práce podle pracovníků, kontakty s&nbsp;načtením údajů z&nbsp;ARES, faktury, docházka, vozový park a&nbsp;sklad. Každý zaměstnanec vidí jen to, co má.",
       prinos: "Majitel má na jednom místě přehled, co se děje, kdo na čem pracuje a&nbsp;co je potřeba vyfakturovat.",
-      technologie: "NestJS · React · PostgreSQL · role a oprávnění",
+      technologie: "NestJS · React · PostgreSQL · role a oprávnění · <a href=\"https://epodnikam.webtitan.cz/\" target=\"_blank\" rel=\"noopener\">epodnikam.webtitan.cz</a>",
+      demo: { url: "https://epodnikam.webtitan.cz/", text: "Vyzkoušet demo" },
     },
   },
   {
@@ -141,6 +144,7 @@ export const REFERENCE: Reference[] = [
       reseni: "Webová aplikace s&nbsp;časovou osou rezervací, zálohami s&nbsp;QR platbou a&nbsp;párováním plateb z&nbsp;banky, PIN kódy a&nbsp;elektronickými zvonky, topením podle obsazenosti, úklidem, zprávami hostům a&nbsp;ceníkem se sezónami.",
       prinos: "Recepce na jedné obrazovce vidí, kdo dnes přijíždí, kdo nezaplatil zálohu a&nbsp;kde zůstalo otevřené okno – a&nbsp;vyřeší to jedním kliknutím.",
       technologie: "Astro · Laravel · PostgreSQL · <a href=\"https://penzion-demo.webtitan.cz/\" target=\"_blank\" rel=\"noopener\">penzion-demo.webtitan.cz</a>",
+      demo: { url: "https://penzion-demo.webtitan.cz/", text: "Vyzkoušet demo" },
     },
   },
   {
@@ -158,6 +162,7 @@ export const REFERENCE: Reference[] = [
       reseni: "E-shop na míru: katalog podle kategorií a&nbsp;kolekcí, filtry, vyhledávání, oblíbené, košík a&nbsp;objednávka, ke které patří administrace. Design si klient vybral ze šesti návrhů. V&nbsp;ukázkové verzi odejde objednávka jako nezávazná poptávka.",
       prinos: "Zákazník si porcelán projde podle kolekcí a&nbsp;objedná na pár kliknutí – majitel má každou objednávku hned v&nbsp;e-mailu i&nbsp;v&nbsp;administraci.",
       technologie: "Laravel · SQLite · automatické testy · <a href=\"https://vb-porcelan.webtitan.cz/\" target=\"_blank\" rel=\"noopener\">vb-porcelan.webtitan.cz</a>",
+      demo: { url: "https://vb-porcelan.webtitan.cz/", text: "Projít e-shop" },
     },
   },
   {
@@ -174,7 +179,8 @@ export const REFERENCE: Reference[] = [
       zadani: "Ověřit zájem o&nbsp;novou značku designových postaviček pro lidi z&nbsp;IT ještě před výrobou první série.",
       reseni: "Výrazný web s&nbsp;představením postaviček, fotkami prvních prototypů z&nbsp;tiskárny, výběrem favorita a&nbsp;čekací listinou se slevou pro první zájemce.",
       prinos: "Zájem se dá změřit dřív, než se zaplatí výroba – podle přihlášek se rozhodne, která postavička půjde do tisku první.",
-      technologie: "JavaScript · PHP · čekací listina",
+      technologie: "JavaScript · PHP · čekací listina · <a href=\"https://devduck.webtitan.cz/\" target=\"_blank\" rel=\"noopener\">devduck.webtitan.cz</a>",
+      demo: { url: "https://devduck.webtitan.cz/", text: "Otevřít web" },
     },
     nahled: {
       alt: "Web Dev Duck & crew – 3D tištěné postavičky pro programátory",
