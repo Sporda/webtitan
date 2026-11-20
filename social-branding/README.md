@@ -14,15 +14,17 @@ v `templates/ikony.svg`). Jediné bitmapové podklady jsou screenshoty projektů
 | `post-01-predstaveni.png` | 1080×1350 | úvodní příspěvek: „Ahoj, jsme WebTitan“ |
 | `post-02-sluzby.png` | 1080×1350 | služby ve 4 blocích s ikonami |
 | `post-03-ukazka.png` | 1080×1350 | ukázka práce: 3D konfigurátor BMP v notebooku a telefonu |
+| `post-04-penzion-erp.png` | 1080×1350 | reference: klikací demo Penzion ERP (provozní systém pro penziony) v notebooku a telefonu |
 | `story-template-1080x1920.png` | 1080×1920 | prázdná story (horních a dolních 250 px bez obsahu) |
 | `story-kontakt.png` | 1080×1920 | story s telefonem a e-mailem do zvýrazněného příběhu Kontakt |
 | `highlight-sluzby.png`, `-ukazky`, `-kontakt`, `-recenze` | 1080×1920 | obaly zvýrazněných příběhů |
 | `reklamy/reklama-web-feed-1080x1350.png`, `reklama-web-story-1080x1920.png` | 1080×1350, 1080×1920 | reklama A (Meta Ads): tvorba webu, ukázka fitnessural.cz, hotovo za 1–2 týdny, od 9 970 Kč |
 | `reklamy/reklama-app-feed-1080x1350.png`, `reklama-app-story-1080x1920.png` | 1080×1350, 1080×1920 | reklama B: aplikace místo Excelu, ukázka ePodnikám, od 24 950 Kč |
 | `reklamy/reklama-eshop-feed-1080x1350.png`, `reklama-eshop-story-1080x1920.png` | 1080×1350, 1080×1920 | reklama C: tvorba e-shopu, typografická s ikonami (bez screenshotu), od 19 870 Kč |
+| `reklamy/reklama-penzion-feed-1080x1350.png`, `reklama-penzion-story-1080x1920.png` | 1080×1350, 1080×1920 | reklama D: systém pro penziony, ukázka penzion-demo.webtitan.cz, od 24 950 Kč |
 | `nahledy/` | | kontrola ořezu: kruh profilovky, titulka na desktopu (851×315) a mobilu (640×360), mřížka IG (3:4), highlighty, reklamy ve feedu zmenšené na 30 % (`reklamy-feed-30pct.png`) a ve story se zónami rozhraní (`reklamy-story-zony-ui.png`) |
 | `sablony-prazdne/` | 1080×1350, 1080×1920 | vzory šablon: ukázka bez screenshotu, univerzální textový příspěvek, story s textem |
-| `podklady/` | | screenshoty pro ukázky: konfigurátor a fitnessural.cz (desktop 2880×1800, mobil 1170×2532), ePodnikám (1036×497, výřez z `materialy/firmy-cz/galerie/15-epodnikam.jpg`, ukázková data) |
+| `podklady/` | | screenshoty pro ukázky: konfigurátor, fitnessural.cz a demo Penzion ERP (desktop 2880×1800, mobil 1170×2532), ePodnikám (1036×497, výřez z `materialy/firmy-cz/galerie/15-epodnikam.jpg`, ukázková data) |
 | `templates/` | | HTML/SVG šablony, texty (`obsah.json`) a skripty pro render |
 
 Postup založení profilů a co kam nahrát: [`materialy/propagace/inzeraty/facebook/README.md`](../materialy/propagace/inzeraty/facebook/README.md).
@@ -136,5 +138,7 @@ node social-branding/templates/screenshot.mjs --moduly=/tmp/wt-render/node_modul
 
 Uloží `podklady/projekt-desktop.png` (2880×1800) a `podklady/projekt-mobil.png` (1170×2532). V `obsah.json` pak
 `"screenshot": "../podklady/projekt-desktop.png"`. Jak vznikl současný screenshot konfigurátoru, je popsané v hlavičce
-`screenshot.mjs`. `fitnessural-*.png` jsou z 20. 11. 2026 bez dalších voleb (`https://fitnessural.cz/ fitnessural`).
+`screenshot.mjs`. `fitnessural-*.png` jsou z 20. 11. 2026 bez dalších voleb (`https://fitnessural.cz/ fitnessural`),
+`penzion-*.png` z téhož dne bez lišty „Ukázka od WebTitan“
+(`--cekat=5000 --skryt="#demo-cta" https://penzion-demo.webtitan.cz/ penzion`; pozdrav „Dobrý večer“ se řídí časem focení).
 Screenshot s jiným poměrem než 16:10 se do notebooku ořízne, výřez určuje `"pozice"` (např. `"left top"` u ePodnikám).

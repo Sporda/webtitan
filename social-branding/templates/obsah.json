@@ -145,6 +145,25 @@
       }
     },
     {
+      "id": "post-04",
+      "sablona": "prispevek-ukazka.html",
+      "soubor": "post-04-penzion-erp.png",
+      "w": 1080,
+      "h": 1350,
+      "bezpecna": [80, 90, 1000, 1260],
+      "data": {
+        "kicker": "Ukázka práce",
+        "nadpis": "Provozní systém\n*pro penziony*",
+        "text": "Recepce na jedné obrazovce vidí příjezdy, nezaplacené zálohy i otevřená okna.",
+        "screenshot": "../podklady/penzion-desktop.png",
+        "screenshotMobil": "../podklady/penzion-mobil.png",
+        "adresa": "penzion-demo.webtitan.cz",
+        "stitky": ["Klikací demo", "QR platby", "PIN kódy"],
+        "url": "webtitan.cz",
+        "misto": "Horní Slavkov"
+      }
+    },
+    {
       "id": "post-03-sablona",
       "sablona": "prispevek-ukazka.html",
       "soubor": "sablony-prazdne/post-ukazka-bez-screenshotu.png",
@@ -371,6 +390,46 @@
         "pozice": "left top",
         "screenshotMobil": false,
         "adresa": "epodnikam.webtitan.cz",
+        "pilulka": "od 24 950 Kč",
+        "url": "webtitan.cz"
+      }
+    },
+    {
+      "id": "reklama-penzion-feed",
+      "sablona": "reklama.html",
+      "soubor": "reklamy/reklama-penzion-feed-1080x1350.png",
+      "w": 1080,
+      "h": 1350,
+      "bezpecna": [80, 80, 1000, 1270],
+      "nahledy": "reklama-feed",
+      "data": {
+        "format": "feed",
+        "kicker": "Systém pro penziony",
+        "nadpis": "Celý penzion\n*na jedné obrazovce*",
+        "veta": "Rezervace, zálohy s QR platbou, zvonky i úklid v jednom systému.",
+        "screenshot": "../podklady/penzion-desktop.png",
+        "screenshotMobil": "../podklady/penzion-mobil.png",
+        "adresa": "penzion-demo.webtitan.cz",
+        "pilulka": "od 24 950 Kč",
+        "url": "webtitan.cz"
+      }
+    },
+    {
+      "id": "reklama-penzion-story",
+      "sablona": "reklama.html",
+      "soubor": "reklamy/reklama-penzion-story-1080x1920.png",
+      "w": 1080,
+      "h": 1920,
+      "bezpecna": [80, 250, 1000, 1580],
+      "nahledy": "reklama-story",
+      "data": {
+        "format": "story",
+        "kicker": "Systém pro penziony",
+        "nadpis": "Celý penzion\n*na jedné obrazovce*",
+        "veta": "Rezervace, zálohy s QR platbou, zvonky i úklid v jednom systému.",
+        "screenshot": "../podklady/penzion-desktop.png",
+        "screenshotMobil": "../podklady/penzion-mobil.png",
+        "adresa": "penzion-demo.webtitan.cz",
         "pilulka": "od 24 950 Kč",
         "url": "webtitan.cz"
       }
