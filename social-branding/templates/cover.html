@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<title>WebTitan – titulní fotka Facebooku</title>
+<link rel="stylesheet" href="zaklad.css">
+<!--
+  Titulní fotka Facebooku 1640×624 (2× rozlišení pro 820×312).
+  Desktop ji zobrazí jako 851×315 (ořízne ~9 px nahoře a dole), mobil jako 640×360 (ořízne ~265 px z každého boku).
+  Proto je všechno důležité ve středovém sloupci 700 px (x 470–1170, poměr zhruba 1:1 k výšce) – hlídá render.mjs.
+  Vlnité linky jdou pod textem dolů a po stranách nahoru, takže fungují v obou ořezech.
+-->
+<style>
+  .platno { width: 1640px; height: 624px; }
+  .tecky {
+    --rozestup: 30px;
+    background-image: radial-gradient(circle, rgba(244, 237, 225, .2) 1.6px, transparent 2.2px);
+    -webkit-mask-image: linear-gradient(90deg, #000 0%, rgba(0, 0, 0, .45) 25%, rgba(0, 0, 0, .12) 42%, rgba(0, 0, 0, .12) 58%, rgba(0, 0, 0, .45) 75%, #000 100%);
+  }
+  /* Ztmavení pod textem pro čitelnost. */
+  .stin { position: absolute; inset: 0; z-index: -1; background: radial-gradient(28% 55% at 50% 44%, rgba(20, 43, 36, .7), transparent 75%); }
+  .vlny { z-index: -2; }
+
+  .obsah {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); margin-top: -18px;
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+  }
+  .lockup { font-size: 44px; }
+  .nadpis { margin-top: 40px; font-size: 50px; line-height: 1.12; }
+  .text { margin-top: 26px; font-size: 24px; font-weight: 600; letter-spacing: .01em; }
+  .text .tecka { color: var(--oranzova); padding: 0 .35em; }
+</style>
+</head>
+<body>
+<div class="platno">
+  <div class="pozadi"></div>
+  <div class="tecky"></div>
+  <svg class="vlny" aria-hidden="true"></svg>
+  <div class="stin"></div>
+  <div class="obsah">
+    <div class="lockup" data-dulezite="logo"><span class="helma"></span><span>WebTitan</span></div>
+    <h1 class="nadpis" data-t="nadpis" data-dulezite="claim"></h1>
+    <p class="text" data-dulezite="podnadpis"></p>
+  </div>
+</div>
+<script type="module">
+  import { nacti, vypln, vlozGrafiku, vlny, typo, hotovo } from "./zaklad.js";
+  const d = await nacti({
+    nadpis: "Aplikace, weby\na e-shopy *na míru*",
+    podnadpis: ["Karlovarský a Plzeňský kraj", "pevná cena předem"],
+  });
+  vypln(d);
+  // Podnadpis: pole = části oddělené oranžovou tečkou, text = jak je.
+  const p = document.querySelector(".obsah .text");
+  p.innerHTML = [].concat(d.podnadpis).map(typo).join('<span class="tecka">·</span>');
+  await vlozGrafiku();
+
+  // Svazek jde zleva shora pod text (nejníž uprostřed, y ≈ 545) a vpravo zase nahoru.
+  const W = 1640, H = 624;
+  vlny(document.querySelector(".vlny"), {
+    w: W, h: H, n: 17, vlneni: 14,
+    y: (x) => 330 + 210 * Math.cos(((x - 860) / W) * Math.PI * 2) + 30 * Math.sin((x / W) * Math.PI * 3.3),
+    rozevreni: (x) => 70 + 110 * Math.sin((x / W) * Math.PI * 1.6 + 0.9) ** 2,
+  });
+  await hotovo();
+</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+/* Mockup notebooku a telefonu pro ukázky práce (vektorové rámečky, žádné fotky).
+   Používá prispevek-ukazka.html a reklama.html. Umístění (.scena) určuje šablona.
+   Notebook: displej 16:10 (ideálně screenshot 2880×1800), telefon 390:844 (ideálně 1170×2532). */
+
+/* Notebook: displej 16:10 v tmavém rámečku + spodní díl. */
+.notebook { position: absolute; left: 44px; top: 0; width: 740px; }   /* spodní díl přesahuje o 44 px na každou stranu */
+.displej {
+  position: relative; padding: 16px 16px 20px; border-radius: 26px 26px 10px 10px;
+  background: linear-gradient(180deg, #2a2f2d, #121614); box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .08), 0 40px 70px -30px rgba(0, 0, 0, .75);
+}
+.displej::before { content: ""; position: absolute; left: 50%; top: 6px; width: 6px; height: 6px; margin-left: -3px; border-radius: 50%; background: #3c4441; }
+.obrazovka { position: relative; border-radius: 8px; overflow: hidden; background: #0e1311; }
+.obrazek { position: relative; aspect-ratio: 16 / 10; }
+.lista { display: flex; align-items: center; gap: 7px; height: 30px; padding: 0 12px; background: #f1ede6; border-bottom: 1px solid #ddd5c6; }
+.lista i { width: 9px; height: 9px; border-radius: 50%; background: #d4c8b4; }
+.lista span { margin-left: 10px; padding: 3px 14px; border-radius: 6px; background: #fff; font-size: 13px; font-weight: 700; color: #4d5a52; }
+.obrazek img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+.spodek {
+  position: relative; height: 26px; margin: 0 -44px; border-radius: 4px 4px 22px 22px;
+  background: linear-gradient(180deg, #d9d6cf 0%, #b7b3ab 55%, #8f8b84 100%);
+  box-shadow: 0 30px 40px -20px rgba(0, 0, 0, .7);
+}
+.spodek::before { content: ""; position: absolute; left: 50%; top: 0; width: 130px; height: 9px; margin-left: -65px; border-radius: 0 0 10px 10px; background: #9f9b94; }
+
+/* Telefon */
+.telefon {
+  position: absolute; right: 0; bottom: -8px; width: 232px; padding: 10px; border-radius: 42px;
+  background: linear-gradient(160deg, #2c3230, #101412);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .1), -20px 40px 60px -24px rgba(0, 0, 0, .8);
+}
+.telefon .obrazovka { border-radius: 33px; padding-top: 36px; background: #fff; }   /* horní pruh = stavový řádek s výřezem */
+.telefon .obrazek { aspect-ratio: 390 / 844; }
+.telefon::after { content: ""; position: absolute; left: 50%; top: 20px; width: 64px; height: 18px; margin-left: -32px; border-radius: 10px; background: #0b0e0d; }
+
+/* Místo pro screenshot, když ještě není. */
+.misto-pro-obrazek {
+  position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 12px; text-align: center;
+  background: repeating-linear-gradient(45deg, rgba(244, 237, 225, .04) 0 14px, transparent 14px 28px), #1b2e28;
+  color: var(--krem-3); font-size: 18px; font-weight: 700; outline: 2px dashed rgba(244, 237, 225, .3); outline-offset: -14px;
+}
+.misto-pro-obrazek .ikona { font-size: 54px; stroke-width: 2.5; }

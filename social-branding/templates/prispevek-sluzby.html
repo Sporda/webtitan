@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<title>WebTitan – příspěvek: služby</title>
+<link rel="stylesheet" href="zaklad.css">
+<link rel="stylesheet" href="prispevek.css">
+<!--
+  Příspěvek 1080×1350: 3–4 služby jako bloky s ikonou, názvem a jednou větou.
+  Data: kicker, nadpis, sluzby [{ ikona, nazev, popis }] (ikony viz ikony.svg), misto, url, pilulka.
+  Při 3 službách se bloky samy zvětší.
+-->
+<style>
+  .telo .nadpis { font-size: 80px; }
+  .seznam { margin-top: 48px; display: flex; flex-direction: column; gap: 14px; }
+  .seznam .karta { display: flex; align-items: center; gap: 28px; padding: 22px 32px 22px 22px; }
+  .seznam .dlazdice { width: 96px; height: 96px; font-size: 54px; }
+  .seznam b { display: block; font-family: var(--display); font-weight: 600; font-size: 33px; letter-spacing: -.02em; line-height: 1.15; }
+  .seznam p { margin-top: 8px; font-size: 25px; font-weight: 500; line-height: 1.35; color: var(--krem-2); }
+  .seznam.tri { gap: 24px; }
+  .seznam.tri .karta { padding-top: 38px; padding-bottom: 38px; }
+</style>
+</head>
+<body>
+<div class="platno">
+  <div class="pozadi"></div>
+  <div class="tecky"></div>
+  <svg class="vlny" aria-hidden="true"></svg>
+  <header class="hlava">
+    <div class="lockup" data-dulezite="logo"><span class="helma"></span><span>WebTitan</span></div>
+    <span class="misto" data-dulezite="misto"><svg class="ikona" aria-hidden="true"><use href="#i-misto"/></svg><span data-t="misto"></span></span>
+  </header>
+  <main class="telo">
+    <div class="kicker" data-t="kicker" data-dulezite></div>
+    <h1 class="nadpis" data-t="nadpis" data-dulezite></h1>
+    <div class="seznam" data-dulezite="sluzby"></div>
+  </main>
+  <footer class="pata" data-dulezite="pata">
+    <span class="url" data-t="url"></span>
+    <span class="pilulka" data-t="pilulka"></span>
+  </footer>
+</div>
+<script type="module">
+  import { nacti, vypln, vlozGrafiku, vlny, typo, ikona, hotovo } from "./zaklad.js";
+  const d = await nacti({
+    kicker: "Co pro vás uděláme",
+    nadpis: "Software *na míru*\npro vaši firmu",
+    sluzby: [
+      { ikona: "web", nazev: "Weby", popis: "Rychlé weby, ze kterých chodí poptávky." },
+      { ikona: "aplikace", nazev: "Aplikace na míru", popis: "Zakázky, sklad a faktury místo Excelu." },
+      { ikona: "eshop", nazev: "E-shopy", popis: "Online prodej s platbou kartou a dopravou." },
+      { ikona: "sit", nazev: "Správa sítí a serverů", popis: "Wi-Fi, servery a zálohy pod dohledem." },
+    ],
+    misto: "Horní Slavkov",
+    url: "webtitan.cz",
+    pilulka: "Pevná cena předem",
+  });
+  vypln(d);
+  const s = document.querySelector(".seznam");
+  s.classList.toggle("tri", d.sluzby.length <= 3);
+  s.innerHTML = d.sluzby
+    .map((x) => `<div class="karta"><span class="dlazdice">${ikona(x.ikona)}</span><div><b>${typo(x.nazev)}</b><p>${typo(x.popis)}</p></div></div>`).join("");
+  await vlozGrafiku();
+  // Úzký svazek linek mezi seznamem a patičkou – nahoře zůstává klid pro nadpis.
+  vlny(document.querySelector(".vlny"), {
+    w: 1080, h: 1350, n: 13, vlneni: 10,
+    y: (x) => 1146 + 24 * Math.sin((x / 1080) * Math.PI * 1.6 + 0.6),
+    rozevreni: (x) => 46 + 64 * Math.sin((x / 1080) * Math.PI * 1.2 + 0.2) ** 2,
+  });
+  await hotovo();
+</script>
+</body>
+</html>

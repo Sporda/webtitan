@@ -1,0 +1,423 @@
+{
+  "_napoveda": "Seznam výstupů pro render.mjs. id = jméno pro filtr a náhled (?p=id), sablona = HTML šablona, soubor = cesta PNG od social-branding/, w×h = přesný rozměr, bezpecna = zóna pro důležité prvky [x0, y0, x1, y1] nebo \"kruh\", data = texty (chybějící klíče doplní šablona). V textech: *zvýraznění* = oranžově, **tučně**, \\n = nový řádek; nezlomitelné mezery za předložkami se doplní samy.",
+  "vystupy": [
+    {
+      "id": "profil",
+      "sablona": "profil.html",
+      "soubor": "profile-1080.png",
+      "w": 1080,
+      "h": 1080,
+      "bezpecna": "kruh",
+      "nahledy": "profil",
+      "data": {}
+    },
+    {
+      "id": "cover",
+      "sablona": "cover.html",
+      "soubor": "fb-cover-1640x624.png",
+      "w": 1640,
+      "h": 624,
+      "bezpecna": [
+        470,
+        40,
+        1170,
+        584
+      ],
+      "nahledy": "cover",
+      "data": {
+        "nadpis": "Aplikace, weby\na e-shopy *na míru*",
+        "podnadpis": [
+          "Karlovarský a Plzeňský kraj",
+          "pevná cena předem"
+        ]
+      }
+    },
+    {
+      "id": "post-01",
+      "sablona": "prispevek-predstaveni.html",
+      "soubor": "post-01-predstaveni.png",
+      "w": 1080,
+      "h": 1350,
+      "bezpecna": [
+        80,
+        90,
+        1000,
+        1260
+      ],
+      "nahledy": "mrizka",
+      "data": {
+        "kicker": "Weby · aplikace · IT",
+        "nadpis": "Ahoj,\njsme *WebTitan.*",
+        "text": "Pomáháme firmám ze západních Čech s weby, aplikacemi na míru, e-shopy i firemní sítí.",
+        "polozky": [
+          {
+            "ikona": "web",
+            "nazev": "Weby"
+          },
+          {
+            "ikona": "aplikace",
+            "nazev": "Aplikace\nna míru"
+          },
+          {
+            "ikona": "eshop",
+            "nazev": "E-shopy"
+          },
+          {
+            "ikona": "sit",
+            "nazev": "Správa sítí"
+          }
+        ],
+        "misto": "Sídlíme v **Horním Slavkově** u Sokolova",
+        "url": "webtitan.cz",
+        "pilulka": "Pevná cena předem"
+      }
+    },
+    {
+      "id": "post-02",
+      "sablona": "prispevek-sluzby.html",
+      "soubor": "post-02-sluzby.png",
+      "w": 1080,
+      "h": 1350,
+      "bezpecna": [
+        80,
+        90,
+        1000,
+        1260
+      ],
+      "nahledy": "mrizka",
+      "data": {
+        "kicker": "Co pro vás uděláme",
+        "nadpis": "Software *na míru*\npro vaši firmu",
+        "sluzby": [
+          {
+            "ikona": "web",
+            "nazev": "Weby",
+            "popis": "Rychlé weby, ze kterých chodí poptávky."
+          },
+          {
+            "ikona": "aplikace",
+            "nazev": "Aplikace na míru",
+            "popis": "Zakázky, sklad a faktury místo Excelu."
+          },
+          {
+            "ikona": "eshop",
+            "nazev": "E-shopy",
+            "popis": "Online prodej s platbou kartou a dopravou."
+          },
+          {
+            "ikona": "sit",
+            "nazev": "Správa sítí a serverů",
+            "popis": "Wi-Fi, servery a zálohy pod dohledem."
+          }
+        ],
+        "misto": "Horní Slavkov",
+        "url": "webtitan.cz",
+        "pilulka": "Pevná cena předem"
+      }
+    },
+    {
+      "id": "post-03",
+      "sablona": "prispevek-ukazka.html",
+      "soubor": "post-03-ukazka.png",
+      "w": 1080,
+      "h": 1350,
+      "bezpecna": [
+        80,
+        90,
+        1000,
+        1260
+      ],
+      "nahledy": "mrizka",
+      "data": {
+        "kicker": "Ukázka práce",
+        "nadpis": "3D konfigurátor\n*kontejnerů*",
+        "text": "Zákazník si sám sestaví kontejner, otočí si ho ve 3D a hned vidí cenu.",
+        "screenshot": "../podklady/konfigurator-desktop.png",
+        "screenshotMobil": "../podklady/konfigurator-mobil.png",
+        "adresa": "konfigurator-bmp.webtitan.cz",
+        "stitky": [
+          "BMP Bohemia",
+          "3D v prohlížeči",
+          "CZ i DE"
+        ],
+        "url": "webtitan.cz",
+        "misto": "Horní Slavkov"
+      }
+    },
+    {
+      "id": "post-03-sablona",
+      "sablona": "prispevek-ukazka.html",
+      "soubor": "sablony-prazdne/post-ukazka-bez-screenshotu.png",
+      "w": 1080,
+      "h": 1350,
+      "bezpecna": [
+        80,
+        90,
+        1000,
+        1260
+      ],
+      "data": {
+        "kicker": "Ukázka práce",
+        "nadpis": "Název projektu\n*na dva řádky*",
+        "text": "Jedna věta o tom, co aplikace nebo web řeší.",
+        "adresa": "adresa-projektu.cz",
+        "stitky": [
+          "Klient",
+          "Technologie"
+        ]
+      }
+    },
+    {
+      "id": "story",
+      "sablona": "story.html",
+      "soubor": "story-template-1080x1920.png",
+      "w": 1080,
+      "h": 1920,
+      "bezpecna": [
+        60,
+        250,
+        1020,
+        1670
+      ],
+      "data": {}
+    },
+    {
+      "id": "story-kontakt",
+      "sablona": "story.html",
+      "soubor": "story-kontakt.png",
+      "w": 1080,
+      "h": 1920,
+      "bezpecna": [
+        60,
+        250,
+        1020,
+        1670
+      ],
+      "data": {
+        "kicker": "Kontakt",
+        "nadpis": "Napište\nnebo *zavolejte*",
+        "text": "**723 793 510**\njan@webtitan.cz\n\nPo–Pá 7–16 · Horní Slavkov",
+        "url": "webtitan.cz"
+      }
+    },
+    {
+      "id": "highlight-sluzby",
+      "sablona": "highlight.html",
+      "soubor": "highlight-sluzby.png",
+      "w": 1080,
+      "h": 1920,
+      "bezpecna": "kruh",
+      "nahledy": "highlight",
+      "data": {
+        "ikona": "sluzby"
+      }
+    },
+    {
+      "id": "highlight-ukazky",
+      "sablona": "highlight.html",
+      "soubor": "highlight-ukazky.png",
+      "w": 1080,
+      "h": 1920,
+      "bezpecna": "kruh",
+      "nahledy": "highlight",
+      "data": {
+        "ikona": "ukazky"
+      }
+    },
+    {
+      "id": "highlight-kontakt",
+      "sablona": "highlight.html",
+      "soubor": "highlight-kontakt.png",
+      "w": 1080,
+      "h": 1920,
+      "bezpecna": "kruh",
+      "nahledy": "highlight",
+      "data": {
+        "ikona": "kontakt"
+      }
+    },
+    {
+      "id": "highlight-recenze",
+      "sablona": "highlight.html",
+      "soubor": "highlight-recenze.png",
+      "w": 1080,
+      "h": 1920,
+      "bezpecna": "kruh",
+      "nahledy": "highlight",
+      "data": {
+        "ikona": "recenze"
+      }
+    },
+    {
+      "id": "post-vzor",
+      "sablona": "prispevek-text.html",
+      "soubor": "sablony-prazdne/post-text-vzor.png",
+      "w": 1080,
+      "h": 1350,
+      "bezpecna": [
+        80,
+        90,
+        1000,
+        1260
+      ],
+      "data": {
+        "kicker": "Tip pro firmy",
+        "nadpis": "Kdy se vyplatí\n*aplikace místo Excelu?*",
+        "text": "Když se v tabulce ztrácí zakázky a stejná data přepisujete na tři místa.",
+        "odrazky": [
+          "Víc lidí edituje stejný soubor",
+          "Data se ručně přepisují",
+          "Chybí přehled o termínech"
+        ],
+        "misto": "Horní Slavkov",
+        "url": "webtitan.cz",
+        "pilulka": "Konzultace zdarma"
+      }
+    },
+    {
+      "id": "story-vzor",
+      "sablona": "story.html",
+      "soubor": "sablony-prazdne/story-s-textem-vzor.png",
+      "w": 1080,
+      "h": 1920,
+      "bezpecna": [
+        60,
+        250,
+        1020,
+        1670
+      ],
+      "data": {
+        "kicker": "Novinka",
+        "nadpis": "Nový web pro\n*Fitness URAL*",
+        "text": "Lekce, trenéři a rezervace na jednom místě.",
+        "url": "webtitan.cz"
+      }
+    },
+    {
+      "id": "reklama-web-feed",
+      "sablona": "reklama.html",
+      "soubor": "reklamy/reklama-web-feed-1080x1350.png",
+      "w": 1080,
+      "h": 1350,
+      "bezpecna": [80, 80, 1000, 1270],
+      "nahledy": "reklama-feed",
+      "data": {
+        "format": "feed",
+        "kicker": "Tvorba webu",
+        "nadpis": "Web, ze kterého\nchodí *poptávky*",
+        "veta": "Pevná cena předem, hotovo obvykle za 2–4 týdny.",
+        "screenshot": "../podklady/fitnessural-desktop.png",
+        "screenshotMobil": "../podklady/fitnessural-mobil.png",
+        "adresa": "fitnessural.cz",
+        "pilulka": "od 9 970 Kč",
+        "url": "webtitan.cz"
+      }
+    },
+    {
+      "id": "reklama-web-story",
+      "sablona": "reklama.html",
+      "soubor": "reklamy/reklama-web-story-1080x1920.png",
+      "w": 1080,
+      "h": 1920,
+      "bezpecna": [80, 250, 1000, 1580],
+      "nahledy": "reklama-story",
+      "data": {
+        "format": "story",
+        "kicker": "Tvorba webu",
+        "nadpis": "Web, ze kterého\nchodí *poptávky*",
+        "veta": "Pevná cena předem, hotovo obvykle za 2–4 týdny.",
+        "screenshot": "../podklady/fitnessural-desktop.png",
+        "screenshotMobil": "../podklady/fitnessural-mobil.png",
+        "adresa": "fitnessural.cz",
+        "pilulka": "od 9 970 Kč",
+        "url": "webtitan.cz"
+      }
+    },
+    {
+      "id": "reklama-app-feed",
+      "sablona": "reklama.html",
+      "soubor": "reklamy/reklama-app-feed-1080x1350.png",
+      "w": 1080,
+      "h": 1350,
+      "bezpecna": [80, 80, 1000, 1270],
+      "nahledy": "reklama-feed",
+      "data": {
+        "format": "feed",
+        "kicker": "Aplikace na míru",
+        "nadpis": "Z Excelu do\n*přehledné aplikace*",
+        "veta": "Bez licencí za uživatele, pevná cena předem.",
+        "screenshot": "../podklady/epodnikam-desktop.png",
+        "pozice": "left top",
+        "screenshotMobil": false,
+        "adresa": "epodnikam.webtitan.cz",
+        "pilulka": "od 24 950 Kč",
+        "url": "webtitan.cz"
+      }
+    },
+    {
+      "id": "reklama-app-story",
+      "sablona": "reklama.html",
+      "soubor": "reklamy/reklama-app-story-1080x1920.png",
+      "w": 1080,
+      "h": 1920,
+      "bezpecna": [80, 250, 1000, 1580],
+      "nahledy": "reklama-story",
+      "data": {
+        "format": "story",
+        "kicker": "Aplikace na míru",
+        "nadpis": "Z Excelu do\n*přehledné aplikace*",
+        "veta": "Bez licencí za uživatele, pevná cena předem.",
+        "screenshot": "../podklady/epodnikam-desktop.png",
+        "pozice": "left top",
+        "screenshotMobil": false,
+        "adresa": "epodnikam.webtitan.cz",
+        "pilulka": "od 24 950 Kč",
+        "url": "webtitan.cz"
+      }
+    },
+    {
+      "id": "reklama-voucher-feed",
+      "sablona": "reklama.html",
+      "soubor": "reklamy/reklama-voucher-feed-1080x1350.png",
+      "w": 1080,
+      "h": 1350,
+      "bezpecna": [80, 80, 1000, 1270],
+      "nahledy": "reklama-feed",
+      "data": {
+        "format": "feed",
+        "kicker": "Vouchery pro podnikatele II",
+        "nadpis": "Až *60 %*\nna aplikaci od kraje",
+        "cislo": true,
+        "veta": "Nabídku k žádosti vám připravím.",
+        "fakty": [
+          { "ikona": "kalendar", "text": "Žádosti do 31. 3. 2028" },
+          { "ikona": "aplikace", "text": "Na software a jeho zavedení" },
+          { "ikona": "misto", "text": "Sídlo nebo provozovna v Karlovarském kraji" }
+        ],
+        "url": "webtitan.cz"
+      }
+    },
+    {
+      "id": "reklama-voucher-story",
+      "sablona": "reklama.html",
+      "soubor": "reklamy/reklama-voucher-story-1080x1920.png",
+      "w": 1080,
+      "h": 1920,
+      "bezpecna": [80, 250, 1000, 1580],
+      "nahledy": "reklama-story",
+      "data": {
+        "format": "story",
+        "kicker": "Vouchery pro podnikatele II",
+        "nadpis": "Až *60 %*\nna aplikaci od kraje",
+        "cislo": true,
+        "veta": "Nabídku k žádosti vám připravím.",
+        "fakty": [
+          { "ikona": "kalendar", "text": "Žádosti do 31. 3. 2028" },
+          { "ikona": "aplikace", "text": "Na software a jeho zavedení" },
+          { "ikona": "misto", "text": "Sídlo nebo provozovna v Karlovarském kraji" }
+        ],
+        "url": "webtitan.cz"
+      }
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+<!-- Vlastní ikony WebTitan (čárové, 48×48, barva = currentColor, tloušťku určuje .ikona v zaklad.css).
+     Použití: <svg class="ikona"><use href="#i-web"/></svg>, v JS ikona("web"). -->
+<svg xmlns="http://www.w3.org/2000/svg">
+  <!-- služby -->
+  <symbol id="i-web" viewBox="0 0 48 48"><rect x="5" y="8" width="38" height="32" rx="5"/><path d="M5 16.5h38M10.5 12.3h.01M15 12.3h.01M19.5 12.3h.01"/><path d="M19 24.5l-4.5 4.5 4.5 4.5M29 24.5l4.5 4.5-4.5 4.5M26 22.5l-4 13"/></symbol>
+  <symbol id="i-aplikace" viewBox="0 0 48 48"><rect x="5" y="8" width="38" height="32" rx="5"/><path d="M16 8v32M9.5 15h2.5M9.5 21h2.5M9.5 27h2.5"/><path d="M23 33v-6M29.5 33v-11M36 33v-16"/></symbol>
+  <symbol id="i-eshop" viewBox="0 0 48 48"><path d="M9.5 16.5h29l-2 21.2a4 4 0 0 1-4 3.6h-17a4 4 0 0 1-4-3.6z"/><path d="M17 21.5v-6.5a7 7 0 0 1 14 0v6.5"/></symbol>
+  <symbol id="i-sit" viewBox="0 0 48 48"><circle cx="24" cy="25" r="5"/><circle cx="9.5" cy="10.5" r="4"/><circle cx="38.5" cy="10.5" r="4"/><circle cx="9.5" cy="39.5" r="4"/><circle cx="38.5" cy="39.5" r="4"/><path d="M12.4 13.4l7.9 7.9M35.6 13.4l-7.9 7.9M12.4 36.6l7.9-7.9M35.6 36.6l-7.9-7.9"/></symbol>
+  <!-- zvýrazněné příběhy -->
+  <symbol id="i-sluzby" viewBox="0 0 48 48"><rect x="6" y="6" width="15" height="15" rx="4"/><rect x="27" y="6" width="15" height="15" rx="7.5"/><rect x="6" y="27" width="15" height="15" rx="4"/><rect x="27" y="27" width="15" height="15" rx="4"/></symbol>
+  <symbol id="i-ukazky" viewBox="0 0 48 48"><rect x="3" y="9" width="28" height="21" rx="3.5"/><path d="M12 38h10M17 30v8"/><rect x="33.5" y="16" width="12" height="23" rx="3"/><path d="M38 34.5h3"/></symbol>
+  <symbol id="i-kontakt" viewBox="0 0 48 48"><path d="M7 13a5 5 0 0 1 5-5h24a5 5 0 0 1 5 5v15a5 5 0 0 1-5 5H21l-9 7.5V33a5 5 0 0 1-5-5z"/><path d="M17 20.5h.01M24 20.5h.01M31 20.5h.01" stroke-width="4.2"/></symbol>
+  <symbol id="i-recenze" viewBox="0 0 48 48"><path d="M24.00 6.50L28.70 19.03L42.07 19.63L31.61 27.97L35.17 40.87L24.00 33.50L12.83 40.87L16.39 27.97L5.93 19.63L19.30 19.03Z"/></symbol>
+  <!-- drobné -->
+  <symbol id="i-misto" viewBox="0 0 48 48"><path d="M24 43s-13-12-13-22a13 13 0 0 1 26 0c0 10-13 22-13 22z"/><circle cx="24" cy="21" r="4.5"/></symbol>
+  <symbol id="i-sipka" viewBox="0 0 48 48"><path d="M9 24h29M28 14l10 10-10 10"/></symbol>
+  <symbol id="i-ok" viewBox="0 0 48 48"><path d="M10 25l9 9 19-20"/></symbol>
+  <symbol id="i-kalendar" viewBox="0 0 48 48"><rect x="6" y="10" width="36" height="32" rx="5"/><path d="M6 19.5h36M16 5.5v8.5M32 5.5v8.5"/><path d="M15.5 27.5h.01M24 27.5h.01M32.5 27.5h.01M15.5 34.5h.01M24 34.5h.01" stroke-width="4.2"/></symbol>
+  <symbol id="i-obrazek" viewBox="0 0 48 48"><rect x="5" y="8" width="38" height="32" rx="5"/><circle cx="17" cy="19" r="4"/><path d="M5 34l11-10 9 8 6-5 12 10"/></symbol>
+</svg>

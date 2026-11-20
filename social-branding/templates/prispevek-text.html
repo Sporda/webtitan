@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<title>WebTitan – příspěvek: text (univerzální)</title>
+<link rel="stylesheet" href="zaklad.css">
+<link rel="stylesheet" href="prispevek.css">
+<!--
+  Univerzální příspěvek 1080×1350 pro tipy, novinky a nabídky: nadpis, text a až 4 odrážky s fajfkou.
+  Data: kicker, nadpis, text, odrazky [..], misto, url, pilulka. Prázdné položky se nevypíšou.
+  Nadpis se sám zmenší, když by byl moc dlouhý (velikost = výchozí velikost nadpisu v px).
+-->
+<style>
+  .odrazky { margin-top: 54px; display: flex; flex-direction: column; gap: 16px; list-style: none; }
+  .odrazky li { display: flex; align-items: center; gap: 24px; padding: 24px 30px 24px 24px; font-size: 30px; font-weight: 600; line-height: 1.3; }
+  .odrazky .dlazdice { width: 64px; height: 64px; border-radius: 18px; font-size: 36px; }
+  .odrazky .ikona { stroke-width: 4.5; }
+</style>
+</head>
+<body>
+<div class="platno">
+  <div class="pozadi"></div>
+  <div class="tecky"></div>
+  <svg class="vlny" aria-hidden="true"></svg>
+  <header class="hlava">
+    <div class="lockup" data-dulezite="logo"><span class="helma"></span><span>WebTitan</span></div>
+    <span class="misto" data-dulezite="misto"><svg class="ikona" aria-hidden="true"><use href="#i-misto"/></svg><span data-t="misto"></span></span>
+  </header>
+  <main class="telo" data-dulezite="obsah">
+    <div class="kicker" data-t="kicker"></div>
+    <h1 class="nadpis" data-t="nadpis"></h1>
+    <p class="text" data-t="text"></p>
+    <ul class="odrazky"></ul>
+  </main>
+  <footer class="pata" data-dulezite="pata">
+    <span class="url" data-t="url"></span>
+    <span class="pilulka" data-t="pilulka"></span>
+  </footer>
+</div>
+<script type="module">
+  import { nacti, vypln, vlozGrafiku, vlny, typo, ikona, hotovo } from "./zaklad.js";
+  const d = await nacti({
+    kicker: "Tip",
+    nadpis: "Nadpis příspěvku\n*se zvýrazněním*",
+    text: "Krátký text na dva až tři řádky. Co čtenář získá a proč by měl číst dál.",
+    odrazky: [],
+    misto: "Horní Slavkov",
+    url: "webtitan.cz",
+    pilulka: "Pevná cena předem",
+    velikost: 88,
+  });
+  vypln(d);
+  const ul = document.querySelector(".odrazky");
+  ul.innerHTML = d.odrazky.filter(Boolean).map((o) => `<li class="karta"><span class="dlazdice">${ikona("ok")}</span><span>${typo(o)}</span></li>`).join("");
+  if (!ul.children.length) ul.remove();
+  await vlozGrafiku();
+  await document.fonts.ready;
+  // Nadpis: zmenšovat, dokud se obsah nevejde nad patičku (rezerva 60 px).
+  const h1 = document.querySelector(".nadpis"), telo = document.querySelector(".telo"), pata = document.querySelector(".pata");
+  for (let v = d.velikost; v >= 56; v -= 4) {
+    h1.style.fontSize = `${v}px`;
+    if (telo.getBoundingClientRect().bottom <= pata.getBoundingClientRect().top - 60 && h1.scrollWidth <= telo.clientWidth) break;
+  }
+  const spodek = telo.getBoundingClientRect().bottom;
+  // Linky ve volném místě mezi obsahem a patičkou (když tam žádné není, jdou těsně nad patičku).
+  const yS = Math.min(1150, Math.max(spodek + 90, 1060));
+  vlny(document.querySelector(".vlny"), {
+    w: 1080, h: 1350, n: 15, vlneni: 14,
+    y: (x) => yS + 40 * Math.sin((x / 1080) * Math.PI * 1.5 + 0.4),
+    rozevreni: (x) => 60 + 110 * Math.sin((x / 1080) * Math.PI * 1.2 + 0.3) ** 2,
+  });
+  await hotovo();
+</script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<title>WebTitan – reklama (Meta Ads)</title>
+<link rel="stylesheet" href="zaklad.css">
+<link rel="stylesheet" href="mockup.css">
+<link rel="stylesheet" href="reklama.css">
+<!--
+  Reklama pro Facebook a Instagram ve dvou formátech: format "feed" (1080×1350) nebo "story" (1080×1920).
+  Data:
+    format       "feed" | "story"
+    kicker       krátký štítek nad nadpisem
+    nadpis       2 řádky oddělené \n, *zvýraznění* oranžově; písmo se zmenší, aby se řádek vešel
+    cislo        true = první řádek nadpisu jako velké číslo (typografická reklama bez screenshotu)
+    veta         jedna krátká věta
+    screenshot   obrázek do notebooku (od složky templates/, např. ../podklady/xyz-desktop.png), 16:10
+    pozice       výřez screenshotu (object-position), výchozí "top center"
+    screenshotMobil  obrázek do telefonu (390:844), false = bez telefonu (notebook se zvětší a vycentruje)
+    adresa       text v liště prohlížeče
+    fakty        [{ ikona, text }] místo ukázky (ikony viz ikony.svg)
+    pilulka      cena („od 9 970 Kč“), prázdné = bez pilulky
+    url          webtitan.cz
+    velikost     výchozí velikost nadpisu v px (u cislo = velikost druhého řádku)
+-->
+</head>
+<body>
+<div class="platno">
+  <div class="pozadi"></div>
+  <div class="tecky"></div>
+  <svg class="vlny" aria-hidden="true"></svg>
+  <header class="hlava">
+    <div class="lockup" data-dulezite="logo"><span class="helma"></span><span>WebTitan</span></div>
+  </header>
+  <main class="telo">
+    <div class="kicker" data-t="kicker" data-dulezite></div>
+    <h1 class="nadpis" data-t="nadpis" data-dulezite></h1>
+    <p class="veta" data-t="veta" data-dulezite></p>
+  </main>
+  <div class="stred scena" data-dulezite="ukazka">
+    <div class="notebook">
+      <div class="displej"><div class="obrazovka"><div class="lista"><i></i><i></i><i></i><span data-t="adresa"></span></div><div class="obrazek"></div></div></div>
+      <div class="spodek"></div>
+    </div>
+    <div class="telefon"><div class="obrazovka"><div class="obrazek"></div></div></div>
+  </div>
+  <div class="stred fakty" data-dulezite="fakty"></div>
+  <footer class="pata">
+    <span class="url" data-t="url" data-dulezite="url"></span>
+    <span class="pilulka" data-t="pilulka" data-dulezite="cena"></span>
+  </footer>
+</div>
+<script type="module">
+  import { nacti, vypln, vlozGrafiku, vlny, typo, ikona, hotovo } from "./zaklad.js";
+  const q = (s) => document.querySelector(s);
+  const d = await nacti({
+    format: "feed",
+    kicker: "Tvorba webu",
+    nadpis: "Nadpis reklamy\n*na dva řádky*",
+    cislo: false,
+    veta: "Jedna krátká věta.",
+    screenshot: "",
+    pozice: "top center",
+    screenshotMobil: "",
+    adresa: "",
+    fakty: [],
+    pilulka: "",
+    url: "webtitan.cz",
+    velikost: null,
+  });
+  const story = d.format === "story";
+  const W = 1080, H = story ? 1920 : 1350;
+  q(".platno").classList.add(story ? "story" : "feed");
+  vypln(d);
+
+  // Střed: fakta s ikonami, nebo mockup se screenshotem.
+  const fakty = d.fakty.length > 0;
+  if (fakty) {
+    q(".scena").remove();
+    q(".fakty").innerHTML = d.fakty
+      .map((f) => `<div class="karta"><span class="dlazdice">${ikona(f.ikona)}</span><span class="fakt">${typo(f.text)}</span></div>`).join("");
+  } else {
+    q(".fakty").remove();
+    const obrazek = (src, popis) => src
+      ? `<img src="${src}" alt="" style="object-position:${d.pozice}">`
+      : `<div class="misto-pro-obrazek">${ikona("obrazek")}<span>${popis}</span></div>`;
+    q(".notebook .obrazek").innerHTML = obrazek(d.screenshot, "Místo pro screenshot<br>2880 × 1800 px (16:10)");
+    if (!d.adresa) q(".lista span").remove();
+    if (d.screenshotMobil === false) {
+      q(".telefon").remove();
+      q(".scena").classList.add("bez-telefonu");
+    } else {
+      q(".telefon .obrazek").innerHTML = obrazek(d.screenshotMobil, "Screenshot<br>z mobilu");
+    }
+  }
+  const h1 = q(".nadpis");
+  h1.classList.toggle("cislo", d.cislo === true);
+
+  await vlozGrafiku();
+  await document.fonts.ready;
+
+  // Nadpis: zmenšovat, dokud se nejdelší řádek nevejde na šířku.
+  const telo = q(".telo");
+  const max = d.velikost ?? (d.cislo ? (story ? 84 : 74) : (story ? 108 : 96));
+  for (let v = max; v >= 40; v -= 2) {
+    h1.style.fontSize = `${v}px`;
+    if (h1.scrollWidth <= telo.clientWidth + 0.5) break;
+  }
+
+  // Střed svisle doprostřed mezi text a patičku. U faktů ve feedu zůstane nad patičkou pás 150 px pro linky.
+  const stred = q(fakty ? ".fakty" : ".scena");
+  const horni = telo.getBoundingClientRect().bottom;
+  const dolni = q(".pata").getBoundingClientRect().top;
+  const pasLinek = fakty && !story ? 150 : 0;
+  stred.style.top = `${Math.round(horni + (dolni - pasLinek - horni - stred.getBoundingClientRect().height) / 2)}px`;
+  const r = stred.getBoundingClientRect();
+
+  // Vlnité linky – nikdy přes text:
+  // story: ve spodních 340 px, které stejně překryje rozhraní (vyplní prázdné místo pod tlačítkem CTA),
+  // feed s mockupem: za jeho spodní částí (jako post-03), feed s fakty: v pásu nad patičkou (jako post-02).
+  if (story) {
+    vlny(q(".vlny"), {
+      w: W, h: H, n: 17, vlneni: 16,
+      y: (x) => 1765 + 55 * Math.sin((x / W) * Math.PI * 1.4 + 2.2),
+      rozevreni: (x) => 70 + 110 * Math.sin((x / W) * Math.PI + 0.3) ** 2,
+    });
+  } else if (fakty) {
+    const yS = (r.bottom + dolni) / 2;
+    vlny(q(".vlny"), {
+      w: W, h: H, n: 13, vlneni: 10,
+      y: (x) => yS + 22 * Math.sin((x / W) * Math.PI * 1.6 + 0.6),
+      rozevreni: (x) => 40 + 60 * Math.sin((x / W) * Math.PI * 1.2 + 0.2) ** 2,
+    });
+  } else {
+    const yS = r.bottom - 120;
+    vlny(q(".vlny"), {
+      w: W, h: H, n: 15, vlneni: 14,
+      y: (x) => yS + 130 * Math.sin((x / W) * Math.PI * 1.4 + 2.2),
+      rozevreni: (x) => 150 + 160 * Math.sin((x / W) * Math.PI + 0.3) ** 2,
+    });
+  }
+  await hotovo();
+</script>
+</body>
+</html>

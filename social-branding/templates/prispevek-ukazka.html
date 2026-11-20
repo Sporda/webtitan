@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<title>WebTitan – příspěvek: ukázka práce</title>
+<link rel="stylesheet" href="zaklad.css">
+<link rel="stylesheet" href="prispevek.css">
+<link rel="stylesheet" href="mockup.css">
+<!--
+  Příspěvek 1080×1350: ukázka práce v mockupu notebooku a telefonu (vektorové rámečky, žádné fotky).
+  Data: kicker, nadpis, text, screenshot (notebook, poměr 16:10, ideálně 2880×1800),
+        screenshotMobil (telefon, poměr 390:844, ideálně 1170×2532; prázdné = místo pro obrázek, false = bez telefonu),
+        adresa (do lišty prohlížeče), stitky [..], url, misto.
+  Cesty ke screenshotům jsou od složky templates/ (např. ../podklady/xyz.png).
+  Prázdný screenshot = šablona s vyznačeným místem pro obrázek.
+-->
+<style>
+  .telo .nadpis { font-size: 78px; }
+  .telo .text { font-size: 31px; max-width: 880px; text-wrap: balance; }
+
+  /* Notebook a telefon jsou v mockup.css (sdílené s reklama.html). */
+  .scena { position: absolute; left: 80px; right: 80px; top: 622px; height: 540px; }
+
+  .stitky { display: flex; flex-wrap: wrap; gap: 12px; }
+  .stitky span { padding: 10px 20px; border-radius: 999px; font-size: 21px; font-weight: 700; color: var(--krem-2); box-shadow: inset 0 0 0 1.5px rgba(244, 237, 225, .25); }
+</style>
+</head>
+<body>
+<div class="platno">
+  <div class="pozadi"></div>
+  <div class="tecky"></div>
+  <svg class="vlny" aria-hidden="true"></svg>
+  <header class="hlava">
+    <div class="lockup" data-dulezite="logo"><span class="helma"></span><span>WebTitan</span></div>
+    <span class="misto" data-dulezite="misto"><svg class="ikona" aria-hidden="true"><use href="#i-misto"/></svg><span data-t="misto"></span></span>
+  </header>
+  <main class="telo">
+    <div class="kicker" data-t="kicker" data-dulezite></div>
+    <h1 class="nadpis" data-t="nadpis" data-dulezite></h1>
+    <p class="text" data-t="text" data-dulezite></p>
+  </main>
+  <div class="scena" data-dulezite="mockup">
+    <div class="notebook">
+      <div class="displej"><div class="obrazovka"><div class="lista"><i></i><i></i><i></i><span data-t="adresa"></span></div><div class="obrazek"></div></div></div>
+      <div class="spodek"></div>
+    </div>
+    <div class="telefon"><div class="obrazovka"><div class="obrazek"></div></div></div>
+  </div>
+  <footer class="pata" data-dulezite="pata">
+    <div class="stitky"></div>
+    <span class="url" data-t="url"></span>
+  </footer>
+</div>
+<script type="module">
+  import { nacti, vypln, vlozGrafiku, vlny, typo, ikona, hotovo } from "./zaklad.js";
+  const d = await nacti({
+    kicker: "Ukázka práce",
+    nadpis: "3D konfigurátor\n*kontejnerů*",
+    text: "Zákazník si sám sestaví kontejner, otočí si ho ve 3D a hned vidí cenu.",
+    screenshot: "",
+    screenshotMobil: "",
+    adresa: "",
+    stitky: [],
+    url: "webtitan.cz",
+    misto: "Horní Slavkov",
+  });
+  vypln(d);
+  const obrazek = (src, popis) => src
+    ? `<img src="${src}" alt="">`
+    : `<div class="misto-pro-obrazek">${ikona("obrazek")}<span>${popis}</span></div>`;
+  document.querySelector(".notebook .obrazek").innerHTML = obrazek(d.screenshot, "Místo pro screenshot<br>2880 × 1800 px (16:10)");
+  if (!d.adresa) document.querySelector(".lista span").remove();
+  const tel = document.querySelector(".telefon");
+  if (d.screenshotMobil === false) tel.remove();
+  else tel.querySelector(".obrazek").innerHTML = obrazek(d.screenshotMobil, "Screenshot<br>z mobilu<br>1170 × 2532");
+  document.querySelector(".stitky").innerHTML = d.stitky.map((s) => `<span>${typo(s)}</span>`).join("");
+  await vlozGrafiku();
+  vlny(document.querySelector(".vlny"), {
+    w: 1080, h: 1350, n: 15, vlneni: 14,
+    y: (x) => 940 + 130 * Math.sin((x / 1080) * Math.PI * 1.4 + 2.2),
+    rozevreni: (x) => 150 + 160 * Math.sin((x / 1080) * Math.PI + 0.3) ** 2,
+  });
+  await hotovo();
+</script>
+</body>
+</html>

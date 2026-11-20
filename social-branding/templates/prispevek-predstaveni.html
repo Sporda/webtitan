@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<title>WebTitan – příspěvek: představení</title>
+<link rel="stylesheet" href="zaklad.css">
+<link rel="stylesheet" href="prispevek.css">
+<!--
+  Příspěvek 1080×1350: pozdrav, co děláme (2×2 dlaždice s ikonami) a kde sídlíme.
+  Data: kicker, nadpis, text, polozky [{ ikona, nazev }] (ikony viz ikony.svg), misto, url, pilulka.
+-->
+<style>
+  .telo .nadpis { font-size: 96px; }
+  .mrizka { margin-top: 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .mrizka .karta { display: flex; align-items: center; gap: 24px; padding: 28px 28px; min-height: 170px; }
+  .mrizka .dlazdice { width: 88px; height: 88px; font-size: 50px; }
+  .mrizka b { font-family: var(--display); font-weight: 600; font-size: 29px; line-height: 1.15; letter-spacing: -.02em; }
+  .sidlo { margin-top: 44px; display: flex; align-items: center; gap: 16px; font-size: 30px; font-weight: 500; color: var(--krem-2); }
+  .sidlo .ikona { font-size: 40px; color: var(--oranzova); stroke-width: 3.4; }
+  .sidlo b { color: var(--krem); font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="platno">
+  <div class="pozadi"></div>
+  <div class="tecky"></div>
+  <svg class="vlny" aria-hidden="true"></svg>
+  <header class="hlava">
+    <div class="lockup" data-dulezite="logo"><span class="helma"></span><span>WebTitan</span></div>
+  </header>
+  <main class="telo">
+    <div class="kicker" data-t="kicker" data-dulezite></div>
+    <h1 class="nadpis" data-t="nadpis" data-dulezite></h1>
+    <p class="text" data-t="text" data-dulezite></p>
+    <div class="mrizka" data-dulezite="sluzby"></div>
+    <p class="sidlo" data-dulezite="sidlo"><svg class="ikona" aria-hidden="true"><use href="#i-misto"/></svg><span data-t="misto"></span></p>
+  </main>
+  <footer class="pata" data-dulezite="pata">
+    <span class="url" data-t="url"></span>
+    <span class="pilulka" data-t="pilulka"></span>
+  </footer>
+</div>
+<script type="module">
+  import { nacti, vypln, vlozGrafiku, vlny, typo, ikona, hotovo } from "./zaklad.js";
+  const d = await nacti({
+    kicker: "Weby · aplikace · IT",
+    nadpis: "Ahoj,\njsme *WebTitan.*",
+    text: "Pomáháme firmám ze západních Čech s weby, aplikacemi na míru, e-shopy i firemní sítí.",
+    polozky: [
+      { ikona: "web", nazev: "Weby" },
+      { ikona: "aplikace", nazev: "Aplikace\nna míru" },
+      { ikona: "eshop", nazev: "E-shopy" },
+      { ikona: "sit", nazev: "Správa sítí" },
+    ],
+    misto: "Sídlíme v **Horním Slavkově** u Sokolova",
+    url: "webtitan.cz",
+    pilulka: "Pevná cena předem",
+  });
+  vypln(d);
+  document.querySelector(".mrizka").innerHTML = d.polozky
+    .map((p) => `<div class="karta"><span class="dlazdice">${ikona(p.ikona)}</span><b>${typo(p.nazev)}</b></div>`).join("");
+  await vlozGrafiku();
+  vlny(document.querySelector(".vlny"), {
+    w: 1080, h: 1350, n: 15, vlneni: 16,
+    y: (x) => 870 - 110 * Math.sin((x / 1080) * Math.PI * 1.25 - 0.35),
+    rozevreni: (x) => 110 + 140 * Math.sin((x / 1080) * Math.PI * 1.1 + 0.4) ** 2,
+  });
+  await hotovo();
+</script>
+</body>
+</html>

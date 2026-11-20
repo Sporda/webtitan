@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<title>WebTitan – ikona zvýrazněného příběhu</title>
+<link rel="stylesheet" href="zaklad.css">
+<!--
+  Obal zvýrazněného příběhu (highlight) 1080×1920: krémová ikona ve středu na zeleném pozadí.
+  Instagram z něj vezme kruh ze středu – ikona proto musí být celá uvnitř kruhu i s rezervou (hlídá render.mjs).
+  Data: ikona = id z ikony.svg (sluzby, ukazky, kontakt, recenze, web, aplikace, eshop, sit, misto …), velikost = px (výchozí 430).
+-->
+<style>
+  .platno { width: 1080px; height: 1920px; display: grid; place-items: center; }
+  .pozadi { background: radial-gradient(circle at 50% 46%, var(--zelena-2) 0%, var(--zelena) 30%, #1a352d 60%, var(--zelena-tmava) 100%); }
+  .ikona { color: var(--krem); stroke-width: 3.2; }
+</style>
+</head>
+<body>
+<div class="platno">
+  <div class="pozadi"></div>
+  <svg class="ikona" data-dulezite="ikona" aria-hidden="true"><use href=""/></svg>
+</div>
+<script type="module">
+  import { nacti, vlozGrafiku, hotovo } from "./zaklad.js";
+  const d = await nacti({ ikona: "sluzby", velikost: 430 });
+  await vlozGrafiku();
+  const el = document.querySelector(".platno > .ikona");
+  el.querySelector("use").setAttribute("href", `#i-${d.ikona}`);
+  el.style.fontSize = `${d.velikost}px`;
+  await hotovo();
+</script>
+</body>
+</html>

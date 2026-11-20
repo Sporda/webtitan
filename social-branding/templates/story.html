@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<title>WebTitan – story</title>
+<link rel="stylesheet" href="zaklad.css">
+<!--
+  Story 1080×1920. Horních a dolních 250 px překrývá rozhraní Instagramu (profil, odpověď), proto je všechno
+  včetně linek a helmy v pásu y 250–1670 – hlídá render.mjs.
+  Bez dat = prázdná brandovaná šablona (pozadí, linky, malá helma dole) – do ní se v Instagramu přidá text nebo fotka.
+  Data (vše volitelné): kicker, nadpis, text, url. helma: false = bez helmy.
+-->
+<style>
+  .platno { width: 1080px; height: 1920px; }
+  .pozadi {
+    background:
+      radial-gradient(70% 35% at 25% 25%, rgba(45, 84, 71, .75), transparent 70%),
+      radial-gradient(60% 30% at 100% 85%, rgba(45, 84, 71, .45), transparent 70%),
+      linear-gradient(170deg, var(--zelena-tmava) 0%, var(--zelena) 48%, #183229 100%);
+  }
+  .tecky { -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 250px, #000 1670px, transparent 1920px); }
+  .vlny { -webkit-mask-image: linear-gradient(180deg, transparent 250px, #000 330px, #000 1590px, transparent 1670px); }
+
+  .obsah { position: absolute; left: 90px; right: 90px; top: 360px; }
+  .kicker { font-size: 26px; }
+  .nadpis { margin-top: 30px; font-size: 96px; }
+  .text { margin-top: 34px; font-size: 38px; }
+  .znacka { position: absolute; left: 50%; top: 1520px; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 22px; }
+  .znacka .helma { height: 76px; color: var(--krem); }
+  .znacka .url { font-size: 30px; }
+</style>
+</head>
+<body>
+<div class="platno">
+  <div class="pozadi"></div>
+  <div class="tecky"></div>
+  <svg class="vlny" aria-hidden="true"></svg>
+  <div class="obsah">
+    <div class="kicker" data-t="kicker" data-dulezite></div>
+    <h1 class="nadpis" data-t="nadpis" data-dulezite></h1>
+    <p class="text" data-t="text" data-dulezite></p>
+  </div>
+  <div class="znacka" data-dulezite="znacka">
+    <span class="helma"></span>
+    <span class="url" data-t="url"></span>
+  </div>
+</div>
+<script type="module">
+  import { nacti, vypln, vlozGrafiku, vlny, hotovo } from "./zaklad.js";
+  const d = await nacti({ kicker: "", nadpis: "", text: "", url: "", helma: true });
+  vypln(d);
+  if (d.helma === false) document.querySelector(".znacka .helma").remove();
+  await vlozGrafiku();
+  // Svazek linek přes spodní třetinu – nad ním je místo pro text nebo nálepky.
+  vlny(document.querySelector(".vlny"), {
+    w: 1080, h: 1920, n: 17, vlneni: 18,
+    y: (x) => 1290 - 150 * Math.sin((x / 1080) * Math.PI * 1.3 - 0.2),
+    rozevreni: (x) => 120 + 170 * Math.sin((x / 1080) * Math.PI * 1.1 + 0.5) ** 2,
+  });
+  await hotovo();
+</script>
+</body>
+</html>

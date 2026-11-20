@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<title>WebTitan – profilová fotka</title>
+<link rel="stylesheet" href="zaklad.css">
+<!--
+  Profilová fotka 1080×1080 (Facebook i Instagram ji ořezávají do kruhu).
+  Jen helma, bez nápisu. Rohy obdélníku helmy musí ležet uvnitř kruhu i s rezervou – hlídá render.mjs (bezpecna: "kruh").
+  Data: velikost = výška helmy v px (výchozí 600), posun = svislý posun v px (těžiště helmy je níž než střed jejího obdélníku, proto mírně nahoru).
+-->
+<style>
+  .platno { width: 1080px; height: 1080px; display: grid; place-items: center; }
+  .pozadi { background: radial-gradient(circle at 50% 34%, var(--zelena-2) 0%, var(--zelena) 62%, #1a352d 100%); }
+  .helma { color: var(--krem); }
+</style>
+</head>
+<body>
+<div class="platno">
+  <div class="pozadi"></div>
+  <span class="helma" data-dulezite="helma"></span>
+</div>
+<script type="module">
+  import { nacti, vlozGrafiku, hotovo } from "./zaklad.js";
+  const d = await nacti({ velikost: 600, posun: -12 });
+  await vlozGrafiku();
+  const h = document.querySelector(".helma");
+  h.style.height = `${d.velikost}px`;
+  h.style.transform = `translateY(${d.posun}px)`;
+  await hotovo();
+</script>
+</body>
+</html>

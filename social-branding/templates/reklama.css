@@ -1,0 +1,64 @@
+/* Reklamy pro Meta Ads (Facebook a Instagram) – feed 1080×1350 (4:5) a story/reels 1080×1920, jedna šablona reklama.html.
+   Rozložení shora: logo · kicker · nadpis na 2 řádky · jedna věta · ukázka (mockup) nebo fakta s ikonami · cena + web.
+   Bezpečné zóny hlídá render.mjs (data-dulezite × "bezpecna" v obsah.json):
+   - feed: okraj 80 px ze všech stran (x 80–1000, y 80–1270); mřížka Instagramu ořízne ~34 px z boků,
+   - story: nic důležitého v horních 250 px (profil, čas) ani ve spodních 340 px (odpověď, tlačítko CTA) → y 250–1580. */
+
+.platno.feed { width: 1080px; height: 1350px; }
+.platno.story { width: 1080px; height: 1920px; }
+
+.story .pozadi {
+  background:
+    radial-gradient(70% 35% at 25% 25%, rgba(45, 84, 71, .75), transparent 70%),
+    radial-gradient(60% 30% at 100% 85%, rgba(45, 84, 71, .45), transparent 70%),
+    linear-gradient(170deg, var(--zelena-tmava) 0%, var(--zelena) 48%, #183229 100%);
+}
+/* Ve story rastr teček ztichne v pásech, které překryje rozhraní Instagramu a Facebooku. */
+.story .tecky { -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 250px, #000 1580px, transparent 1920px); }
+
+.hlava { position: absolute; left: 80px; right: 80px; display: flex; align-items: center; }
+.feed .hlava { top: 92px; }
+.story .hlava { top: 300px; }
+.feed .hlava .lockup { font-size: 36px; }
+.story .hlava .lockup { font-size: 42px; }
+
+.telo { position: absolute; left: 80px; right: 80px; }
+.feed .telo { top: 214px; }
+.story .telo { top: 440px; }
+.feed .kicker { font-size: 24px; }
+.story .kicker { font-size: 28px; }
+/* Řádky nadpisu určuje \n v datech; šablona písmo zmenší, aby se každý řádek vešel na šířku. */
+.nadpis { white-space: nowrap; }
+.feed .nadpis { margin-top: 26px; }
+.story .nadpis { margin-top: 34px; }
+.veta { font-weight: 600; line-height: 1.35; color: var(--krem-2); text-wrap: balance; }
+.feed .veta { margin-top: 28px; font-size: 33px; }
+.story .veta { margin-top: 38px; font-size: 39px; }
+
+/* Typografická reklama (voucher): první řádek nadpisu jako velké číslo. */
+.nadpis.cislo { line-height: 1.14; }
+.nadpis.cislo::first-line { font-size: 2.6em; line-height: 1.02; }
+
+/* Střed (mockup nebo fakta) – svisle ho mezi text a patičku umístí šablona. */
+.stred { position: absolute; left: 80px; right: 80px; }
+.scena { height: 540px; transform-origin: 50% 0; }
+/* Bez telefonu: kontejner jen na šířku notebooku (828 px vč. spodního dílu), vycentrovaný a zvětšený o 10 % (911 px). */
+.scena.bez-telefonu { left: 126px; right: 126px; transform: scale(1.1); }
+
+.fakty { display: flex; flex-direction: column; gap: 16px; }
+.fakty .karta { display: flex; align-items: center; gap: 26px; padding: 20px 30px 20px 20px; }
+.fakty .dlazdice { width: 84px; height: 84px; font-size: 46px; }
+.fakty .ikona { stroke-width: 3.4; }
+.fakty .fakt { font-size: 32px; font-weight: 700; line-height: 1.25; text-wrap: balance; }
+.story .fakty { gap: 22px; }
+.story .fakty .karta { gap: 30px; padding: 26px 34px 26px 26px; }
+.story .fakty .dlazdice { width: 100px; height: 100px; font-size: 54px; }
+.story .fakty .fakt { font-size: 37px; }
+
+.pata { position: absolute; left: 80px; right: 80px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.feed .pata { bottom: 80px; }
+.story .pata { bottom: 340px; }
+.feed .pata .url { font-size: 32px; }
+.story .pata .url { font-size: 38px; }
+.feed .pata .pilulka { font-size: 36px; padding: 20px 38px; }
+.story .pata .pilulka { font-size: 42px; padding: 24px 44px; }

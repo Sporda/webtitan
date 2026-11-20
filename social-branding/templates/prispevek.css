@@ -1,0 +1,21 @@
+/* Společné pro příspěvky 1080×1350 (4:5).
+   Instagram v mřížce profilu ukazuje výřez 3:4 (1012×1350 ze středu, tj. ~34 px z každého boku) a některé náhledy
+   berou i čtverec ze středu. Všechno důležité je proto v rámečku x 80–1000, y 90–1260 – hlídá render.mjs. */
+
+.platno { width: 1080px; height: 1350px; }
+.hlava { position: absolute; left: 80px; top: 92px; right: 80px; display: flex; align-items: center; justify-content: space-between; }
+.hlava .lockup { font-size: 34px; }
+.hlava .misto { display: inline-flex; align-items: center; gap: 10px; font-size: 22px; font-weight: 700; color: var(--krem-3); letter-spacing: .02em; }
+.hlava .misto .ikona { font-size: 26px; color: var(--oranzova); stroke-width: 3.6; }
+
+.telo { position: absolute; left: 80px; right: 80px; top: 220px; }
+.telo .kicker { font-size: 22px; }
+.telo .nadpis { margin-top: 26px; font-size: 92px; }
+.telo .text { margin-top: 30px; font-size: 34px; max-width: 900px; }
+
+.pata { position: absolute; left: 80px; right: 80px; bottom: 92px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.pata .url { font-size: 30px; }
+.pata .pilulka { font-size: 24px; padding: 16px 28px; }
+.pata .pilulka .ikona { font-size: 26px; stroke-width: 4; }
+
+/* .karta a .dlazdice jsou v zaklad.css (používá je i reklama.html). */
