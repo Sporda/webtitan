@@ -71,7 +71,7 @@ jobs:
           printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
           # Otisk klíče serveru webtitan.cz – připojení k jinému (podvrženému) serveru selže.
-          echo '* ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGAULs93rZBiQ8SVfUe4QiQVLWD24UW9b/uTKjvn+NAT' > ~/.ssh/known_hosts_deploy
+          echo '* ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFkW4RlTA0WNVQfIlKHywPeYmISfglw85ADr1+jrSkTw' > ~/.ssh/known_hosts_deploy
 
       - name: Nasadit web
         env:

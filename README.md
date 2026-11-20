@@ -5,7 +5,7 @@ Web Jana Šporka (WebTitan) – webové a mobilní aplikace, weby a e-shopy na m
 Lehký statický web skládaný v [Astru](https://astro.build) (`web/`) a několik malých PHP endpointů. Výstup je čisté HTML
 jako dřív – žádný framework ani JavaScript navíc v prohlížeči, CSS i skripty stránek zůstávají vložené přímo ve stránce.
 Astro slouží jen k tomu, aby se společné části (menu, patička, formulář, reference, služby, ceny, otázky) měnily
-na jednom místě. Běží na hostingu v panelu (panel.webtitan.cz, nginx + PHP 8.3) na serveru `158.180.50.98`.
+na jednom místě. Běží na hostingu v panelu (panel.webtitan.cz, nginx + PHP 8.5) na serveru `62.240.171.218` (SSH na portu 8794).
 
 ## Struktura
 
@@ -170,7 +170,7 @@ Běžně se nic ručně nenasazuje: commit a push do `main` stačí. Ruční nas
 Actions nejede:
 
 ```bash
-env DEPLOY_HOST=158.180.50.98 DEPLOY_USER=ubuntu bash scripts/deploy.sh
+env DEPLOY_HOST=62.240.171.218 DEPLOY_PORT=8794 DEPLOY_USER=wtdeploy bash scripts/deploy.sh
 ```
 
 Skript nasadí jen commitnutý stav. Když jsou ve `web/` nebo `scripts/` necommitnuté změny, nebo je na GitHubu novější
@@ -181,6 +181,8 @@ Skript nasadí jen commitnutý stav. Když jsou ve `web/` nebo `scripts/` necomm
 Nasazení kopíruje bez mazání: soubor smazaný z webu je potřeba odstranit i na serveru ručně.
 
 GitHub secrets, které nasazení používá: `SERVER_HOST`, `SERVER_USERNAME`, `SERVER_PORT`, `SSH_PRIVATE_KEY`.
+Na serveru se přihlašuje účet `wtdeploy` (jen klíčem); přes sudo smí spustit jediný program
+`/usr/local/sbin/webtitan-deploy-install`, který nahraný web nainstaluje do webrootu.
 
 ## Starý web
 

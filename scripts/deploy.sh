@@ -9,7 +9,7 @@
 # - Po nasazení se ověří, že stránky a endpointy na webu odpovídají.
 #
 # Použití:
-#   env DEPLOY_HOST=158.180.50.98 DEPLOY_USER=ubuntu bash scripts/deploy.sh
+#   env DEPLOY_HOST=62.240.171.218 DEPLOY_PORT=8794 DEPLOY_USER=wtdeploy bash scripts/deploy.sh
 # Volitelně: DEPLOY_PORT (22), DEPLOY_KEY (cesta k SSH klíči), DEPLOY_KNOWN_HOSTS (soubor s otiskem serveru),
 #            SITE_URL (https://webtitan.cz)
 set -euo pipefail
@@ -84,8 +84,10 @@ echo "Nasazuji $(find "$SITE" -type f ! -name .DS_Store | wc -l | tr -d ' ') sou
 # 1) Nahrát do dočasné složky na serveru, 2) odtud nainstalovat se správným vlastníkem a právy
 REMOTE_TMP="$(ssh "${SSH_OPTS[@]}" "$LOGIN@$HOST" 'mktemp -d /tmp/webtitan-deploy.XXXXXX')"
 rsync -rlt --delete --exclude '.DS_Store' -e "ssh ${SSH_OPTS[*]}" "$SITE/" "$LOGIN@$HOST:$REMOTE_TMP/"
+# Na serveru smí nasazovací účet přes sudo jen tento jeden program: zkontroluje cestu a nainstaluje web
+# (rsync bez mazání, vlastník webtitan:webtitan, složky 750, soubory 640, symbolické odkazy nekopíruje).
 ssh "${SSH_OPTS[@]}" "$LOGIN@$HOST" \
-  "sudo -n rsync -rlt --chown=webtitan:webtitan --chmod=D750,F640 '$REMOTE_TMP/' '$WEBROOT/'; status=\$?; rm -rf '$REMOTE_TMP'; exit \$status"
+  "sudo -n /usr/local/sbin/webtitan-deploy-install '$REMOTE_TMP'; status=\$?; rm -rf '$REMOTE_TMP'; exit \$status"
 echo "Nahráno do $HOST:$WEBROOT"
 
 # 3) Ověřit, že web odpovídá
