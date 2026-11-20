@@ -17,9 +17,9 @@ v `templates/ikony.svg`). Jediné bitmapové podklady jsou screenshoty projektů
 | `story-template-1080x1920.png` | 1080×1920 | prázdná story (horních a dolních 250 px bez obsahu) |
 | `story-kontakt.png` | 1080×1920 | story s telefonem a e-mailem do zvýrazněného příběhu Kontakt |
 | `highlight-sluzby.png`, `-ukazky`, `-kontakt`, `-recenze` | 1080×1920 | obaly zvýrazněných příběhů |
-| `reklamy/reklama-web-feed-1080x1350.png`, `reklama-web-story-1080x1920.png` | 1080×1350, 1080×1920 | reklama A (Meta Ads): tvorba webu, ukázka fitnessural.cz, od 9 970 Kč |
+| `reklamy/reklama-web-feed-1080x1350.png`, `reklama-web-story-1080x1920.png` | 1080×1350, 1080×1920 | reklama A (Meta Ads): tvorba webu, ukázka fitnessural.cz, hotovo za 1–2 týdny, od 9 970 Kč |
 | `reklamy/reklama-app-feed-1080x1350.png`, `reklama-app-story-1080x1920.png` | 1080×1350, 1080×1920 | reklama B: aplikace místo Excelu, ukázka ePodnikám, od 24 950 Kč |
-| `reklamy/reklama-voucher-feed-1080x1350.png`, `reklama-voucher-story-1080x1920.png` | 1080×1350, 1080×1920 | reklama C: Vouchery pro podnikatele II (jen Karlovarský kraj), typografická s ikonami |
+| `reklamy/reklama-eshop-feed-1080x1350.png`, `reklama-eshop-story-1080x1920.png` | 1080×1350, 1080×1920 | reklama C: tvorba e-shopu, typografická s ikonami (bez screenshotu), od 19 870 Kč |
 | `nahledy/` | | kontrola ořezu: kruh profilovky, titulka na desktopu (851×315) a mobilu (640×360), mřížka IG (3:4), highlighty, reklamy ve feedu zmenšené na 30 % (`reklamy-feed-30pct.png`) a ve story se zónami rozhraní (`reklamy-story-zony-ui.png`) |
 | `sablony-prazdne/` | 1080×1350, 1080×1920 | vzory šablon: ukázka bez screenshotu, univerzální textový příspěvek, story s textem |
 | `podklady/` | | screenshoty pro ukázky: konfigurátor a fitnessural.cz (desktop 2880×1800, mobil 1170×2532), ePodnikám (1036×497, výřez z `materialy/firmy-cz/galerie/15-epodnikam.jpg`, ukázková data) |
@@ -100,7 +100,7 @@ a otevři vypsanou adresu, např. `http://127.0.0.1:4410/social-branding/templat
 | `cover.html` | `nadpis`, `podnadpis` [části oddělené tečkou] |
 | `profil.html` | `velikost`, `posun` |
 
-Ikony (`ikona`): `web`, `aplikace`, `eshop`, `sit`, `sluzby`, `ukazky`, `kontakt`, `recenze`, `misto`, `sipka`, `ok`, `kalendar`, `obrazek`.
+Ikony (`ikona`): `web`, `aplikace`, `eshop`, `sit`, `sluzby`, `ukazky`, `kontakt`, `recenze`, `misto`, `sipka`, `ok`, `karta`, `kalendar`, `obrazek`.
 Novou ikonu přidej jako `<symbol id="i-nazev" viewBox="0 0 48 48">` do `templates/ikony.svg` (čáry, bez výplně).
 
 Barvy, písma, pozadí, karty a dlaždice ikon jsou v `templates/zaklad.css`, společné rozložení příspěvků
@@ -116,13 +116,15 @@ v `obsah.json` u položek `reklama-*`, kampaň a texty reklam v
 - **Obsah:** logo · kicker · nadpis na 2 řádky (`\n`, nadpis se zmenší, aby se každý řádek vešel) · jedna krátká věta ·
   ukázka v notebooku (a telefonu) nebo `fakty` s ikonami · cenová pilulka · webtitan.cz. Textu co nejméně, nadpis musí
   jít přečíst i ve zmenšení na 30 % (`nahledy/reklamy-feed-30pct.png`).
-- **Typografická reklama** (bez screenshotu): `"cislo": true` udělá z prvního řádku nadpisu velké číslo
-  (`"Až *60 %*\nna aplikaci od kraje"`), místo ukázky se vypíšou `fakty`.
+- **Typografická reklama** (bez screenshotu, jako e-shop): místo ukázky se vypíšou `fakty` s ikonami.
+  `"cislo": true` navíc udělá z prvního řádku nadpisu velké číslo (např. `"Až *60 %*\nna …"`).
 - **Bezpečné zóny** (`bezpecna`): feed `[80, 80, 1000, 1270]` (okraj 80 px), story `[80, 250, 1000, 1580]` – horních
   250 px překrývá profil a průběh, spodních 340 px odpověď a tlačítko CTA. Ve story jsou v té dolní zóně jen vlnité
   linky (`nahledy/reklamy-story-zony-ui.png`).
-- **Fakta a ceny** ověřuj proti webu (`web/src/data/sluzby.ts`, stránky služeb). Voucher web nezmiňuje, platí podmínky
-  z README kampaně: jen software a jeho zavedení, ne weby a e-shopy.
+- **Fakta a ceny** ověřuj proti webu (`web/src/data/sluzby.ts`, stránky služeb). Výjimka: termín webu je v reklamě
+  1–2 týdny (podle Jana), web zatím uvádí 2–4 týdny.
+- **E-shop bez screenshotu** schválně: jediný e-shop v referencích (Bílé zlato) ukazuje značku Villeroy & Boch
+  a cizí značka v reklamě může Meta zamítnout.
 
 Render jen reklam: `node social-branding/templates/render.mjs --moduly=/tmp/wt-render/node_modules reklama`.
 

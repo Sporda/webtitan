@@ -305,7 +305,7 @@
         "format": "feed",
         "kicker": "Tvorba webu",
         "nadpis": "Web, ze kterého\nchodí *poptávky*",
-        "veta": "Pevná cena předem, hotovo obvykle za 2–4 týdny.",
+        "veta": "Pevná cena předem, hotovo obvykle za 1–2 týdny.",
         "screenshot": "../podklady/fitnessural-desktop.png",
         "screenshotMobil": "../podklady/fitnessural-mobil.png",
         "adresa": "fitnessural.cz",
@@ -325,7 +325,7 @@
         "format": "story",
         "kicker": "Tvorba webu",
         "nadpis": "Web, ze kterého\nchodí *poptávky*",
-        "veta": "Pevná cena předem, hotovo obvykle za 2–4 týdny.",
+        "veta": "Pevná cena předem, hotovo obvykle za 1–2 týdny.",
         "screenshot": "../podklady/fitnessural-desktop.png",
         "screenshotMobil": "../podklady/fitnessural-mobil.png",
         "adresa": "fitnessural.cz",
@@ -376,46 +376,46 @@
       }
     },
     {
-      "id": "reklama-voucher-feed",
+      "id": "reklama-eshop-feed",
       "sablona": "reklama.html",
-      "soubor": "reklamy/reklama-voucher-feed-1080x1350.png",
+      "soubor": "reklamy/reklama-eshop-feed-1080x1350.png",
       "w": 1080,
       "h": 1350,
       "bezpecna": [80, 80, 1000, 1270],
       "nahledy": "reklama-feed",
       "data": {
         "format": "feed",
-        "kicker": "Vouchery pro podnikatele II",
-        "nadpis": "Až *60 %*\nna aplikaci od kraje",
-        "cislo": true,
-        "veta": "Nabídku k žádosti vám připravím.",
+        "kicker": "Tvorba e-shopu",
+        "nadpis": "Prodávejte online,\nobjednávky *pod kontrolou*",
+        "veta": "Pevná cena předem, začít můžete i menší první verzí.",
         "fakty": [
-          { "ikona": "kalendar", "text": "Žádosti do 31. 3. 2028" },
-          { "ikona": "aplikace", "text": "Na software a jeho zavedení" },
-          { "ikona": "misto", "text": "Sídlo nebo provozovna v Karlovarském kraji" }
+          { "ikona": "karta", "text": "Platby kartou a doprava" },
+          { "ikona": "aplikace", "text": "Přehledná správa objednávek" },
+          { "ikona": "eshop", "text": "Produkty si upravíte sami" }
         ],
+        "pilulka": "od 19 870 Kč",
         "url": "webtitan.cz"
       }
     },
     {
-      "id": "reklama-voucher-story",
+      "id": "reklama-eshop-story",
       "sablona": "reklama.html",
-      "soubor": "reklamy/reklama-voucher-story-1080x1920.png",
+      "soubor": "reklamy/reklama-eshop-story-1080x1920.png",
       "w": 1080,
       "h": 1920,
       "bezpecna": [80, 250, 1000, 1580],
       "nahledy": "reklama-story",
       "data": {
         "format": "story",
-        "kicker": "Vouchery pro podnikatele II",
-        "nadpis": "Až *60 %*\nna aplikaci od kraje",
-        "cislo": true,
-        "veta": "Nabídku k žádosti vám připravím.",
+        "kicker": "Tvorba e-shopu",
+        "nadpis": "Prodávejte online,\nobjednávky *pod kontrolou*",
+        "veta": "Pevná cena předem, začít můžete i menší první verzí.",
         "fakty": [
-          { "ikona": "kalendar", "text": "Žádosti do 31. 3. 2028" },
-          { "ikona": "aplikace", "text": "Na software a jeho zavedení" },
-          { "ikona": "misto", "text": "Sídlo nebo provozovna v Karlovarském kraji" }
+          { "ikona": "karta", "text": "Platby kartou a doprava" },
+          { "ikona": "aplikace", "text": "Přehledná správa objednávek" },
+          { "ikona": "eshop", "text": "Produkty si upravíte sami" }
         ],
+        "pilulka": "od 19 870 Kč",
         "url": "webtitan.cz"
       }
     }
